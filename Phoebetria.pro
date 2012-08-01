@@ -9,7 +9,6 @@ QT       += core gui
 TARGET = Phoebetria
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         gui_mainwindow.cpp \
     phoebetriaapp.cpp
@@ -19,8 +18,19 @@ HEADERS  += gui_mainwindow.h \
 
 FORMS    += gui_mainwindow.ui
 
-INCLUDEPATH += hidapi-0.7.0/hidapi
-SOURCES += hidapi-0.7.0/windows/hid.c
-HEADERS += hidapi-0.7.0/hidapi/hidapi.h
+#-------------------------------------------------
+# Config for the HID API library
+#-------------------------------------------------
 
-LIBS += -lsetupapi
+INCLUDEPATH += hidapi-0.7.0/hidapi
+HEADERS += hidapi-0.7.0/hidapi/hidapi.h
+win32 {
+    SOURCES += hidapi-0.7.0/windows/hid.c
+    LIBS += -lsetupapi
+}
+unix {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += libusb-1.0
+    SOURCES += hidapi-0.7.0/linux/hid-libusb.c
+    LIBS += -lusb-1.0 -ludev -lrt
+}
