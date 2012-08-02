@@ -17,11 +17,14 @@
 #include "phoebetriaapp.h"
 
 QTimer PhoebetriaApp::m_fanController_pollTimer;
+IOManager PhoebetriaApp::m_io_manager;
 
 PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     : QApplication(argc, argv)
 {
     m_fanController_pollTimer.start(1000);
+
     QObject::connect(&m_fanController_pollTimer, SIGNAL(timeout()),
-                     this, SLOT(onPollDeviceTimeout()));
+                     &m_io_manager, SLOT(onPollTimerTriggered()));
 }
+

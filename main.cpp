@@ -18,6 +18,8 @@
 #include "gui_mainwindow.h"
 #include "phoebetriaapp.h"
 
+#include "device-io.h"
+
 int main(int argc, char *argv[])
 {
     PhoebetriaApp a(argc, argv);

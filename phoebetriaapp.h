@@ -19,12 +19,8 @@
 
 #include <QApplication>
 #include <QTimer>
+#include "io-manager.h"
 
-/*
- * Subclassing QApplication so that it has a timer (sort of like an
- * interrupt) so that we can regularly (a) send requests to the fan device
- * and (b) check if the fan device has any data ready
- */
 class PhoebetriaApp : public QApplication
 {
 public:
@@ -32,14 +28,9 @@ public:
 
     QTimer& fanController_pollTimer(void) { return m_fanController_pollTimer; }
 
-signals:
-    void deviceTimerTriggered(void);
-
-public slots:
-    void onPollDeviceTimeout(void) { emit deviceTimerTriggered(); }
-
 private:
     static QTimer m_fanController_pollTimer;
+    static IOManager m_io_manager;
 };
 
 
