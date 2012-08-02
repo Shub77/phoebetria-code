@@ -12,11 +12,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         gui_mainwindow.cpp \
     phoebetriaapp.cpp \
-    bfx-recon/fancontroller.cpp
+    bfx-recon/fancontroller.cpp \
+    fandata.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
-    bfx-recon/fancontroller.h
+    bfx-recon/fancontroller.h \
+    fandata.h
 
 FORMS    += gui_mainwindow.ui
 
