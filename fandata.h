@@ -20,7 +20,7 @@ private:
     int m_maxRPM;
     int m_voltage;
     double m_RPMcalibrationFactor;
-    TempatureSource* m_tempSrc; // probe/source used to control this fan
+    TemperatureSource* m_tempSrc; // probe/source used to control this fan
 };
 
 #endif // FANDATA_H

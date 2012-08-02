@@ -5,7 +5,7 @@
 
 /****************************************************************************
  ***************************************************************************/
-class TempatureSource : public QObject
+class TemperatureSource : public QObject
 {
     Q_OBJECT
 public:
