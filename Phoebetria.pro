@@ -28,11 +28,8 @@ win32 {
     SOURCES += hidapi-0.7.0/windows/hid.c
     LIBS += -lsetupapi
 }
-<<<<<<< HEAD
+
 linux-g++ {
-=======
-unix {
->>>>>>> 50e3a083e30e4e6a8347648bc1986b0ba5bd46db
     CONFIG += link_pkgconfig
     PKGCONFIG += libusb-1.0
     SOURCES += hidapi-0.7.0/linux/hid-libusb.c
