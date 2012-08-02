@@ -6,7 +6,6 @@ class FanData
 public:
     FanData();
 
-    int temperature(void) const;
     int RPM(void) const;
     int calibratedRPM(void) const;
     int maxRPM(void) const;
@@ -14,7 +13,6 @@ public:
     double RPMcalibrationFactor(void) const;
 
 private:
-    int m_temperature;
     int m_currentRPM;
     int m_maxRPM;
     int m_voltage;

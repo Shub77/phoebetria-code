@@ -5,11 +5,6 @@ FanData::FanData()
     m_RPMcalibrationFactor = 1.0;   // Default is to simply report what the controller says
 }
 
-int FanData::temperature(void) const
-{
-    return m_temperature;
-}
-
 int FanData::RPM(void) const
 {
     return m_currentRPM;
