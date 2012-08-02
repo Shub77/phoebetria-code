@@ -24,6 +24,7 @@ FanController::FanController(QObject *parent) :
     QObject(parent)
 {
     m_isConnected = false;
+    connectSignals();
 }
 
 int FanController::HID_vendorId(void)
@@ -40,7 +41,7 @@ bool FanController::connect(void)
 {
     bool r = false;
 
-    // TODO: Implement
+    r = m_io_device.connect(bitfenixrecon_vendorId, bitfenixrecon_productId);
 
     if (r) emit deviceConnected();
 
@@ -60,5 +61,25 @@ bool FanController::disconnect(void)
 
 bool FanController::isConnected(void) const
 {
-    return m_isConnected;   // TODO: probably should query the HID connection instead
+    return m_io_device.isConnected();
+}
+
+void FanController::connectSignals(void)
+{
+    QObject::connect(&m_io_device, SIGNAL(dataRX(QByteArray)),
+                     this, SLOT(onRawData(QByteArray)));
+}
+
+void FanController::onPollTimerTriggered(void)
+{
+    qDebug("Poll");
+    m_io_device.pollForData();
+}
+
+void FanController::onRawData(QByteArray rawdata)
+{
+#ifdef QT_DEBUG
+    qDebug("Got raw data");
+    qDebug(rawdata.toHex());
+#endif
 }

@@ -18,6 +18,7 @@
 #define PHOEBETRIA_FANCONTROLLER_H
 
 #include <QObject>
+#include "device-io.h"
 
 class FanController : public QObject
 {
@@ -38,9 +39,15 @@ signals:
     void deviceDisconnected(void);
 
 public slots:
+    void onPollTimerTriggered(void);
+    void onRawData(QByteArray rawdata);
+
+protected:
+    void connectSignals(void);
 
 private:
     bool m_isConnected;
+    DeviceIO m_io_device;
 };
 
 
