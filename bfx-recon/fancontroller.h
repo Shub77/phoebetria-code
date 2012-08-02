@@ -43,4 +43,16 @@ private:
     bool m_isConnected;
 };
 
+
+class FanControllerSettings
+{
+public:
+    FanControllerSettings();
+
+private:
+    bool m_autoControl;
+    bool m_reportTempInCelcius;
+    bool m_displayOn;
+};
+
 #endif // PHOEBETRIA_FANCONTROLLER_H
