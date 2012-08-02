@@ -10,9 +10,9 @@ class DeviceIO : public QObject
 public:
     explicit DeviceIO(QObject *parent = 0);
     
-    bool connect(int vendorId, int productId);
+    bool connect(unsigned short vendorId, unsigned short productId);
 
-    bool disconnect(void);
+    void disconnect(void);
 
     bool isConnected(void) const;
 
@@ -24,9 +24,10 @@ signals:
     void dataRX(QByteArray data);
 
 public slots:
-    
+    void pollForData(void);
+
 private:
-    hid_device *device;
+    hid_device *m_device;
 };
 
 #endif // DEVICEIO_H
