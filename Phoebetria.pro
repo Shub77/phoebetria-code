@@ -13,12 +13,14 @@ SOURCES += main.cpp\
         gui_mainwindow.cpp \
     phoebetriaapp.cpp \
     bfx-recon/fancontroller.cpp \
-    fandata.cpp
+    fandata.cpp \
+    device-io.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
     bfx-recon/fancontroller.h \
-    fandata.h
+    fandata.h \
+    device-io.h
 
 FORMS    += gui_mainwindow.ui
 
