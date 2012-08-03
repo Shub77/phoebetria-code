@@ -20,26 +20,29 @@
 static const int bitfenixrecon_vendorId = 3141;
 static const int bitfenixrecon_productId = 28928;
 
+static const unsigned bitfenix_flag_auto    = 1 << 0;
+static const unsigned bitfenix_flag_celcius = 1 << 1;
+static const unsigned bitfenix_flag_alarm   = 1 << 2;
 
 static const fcResponseCodeDef bfxReconResponseCodes[] = {
-    { fcResp_TempAndSpeed, 0x40, 7, QString("Channel 1 Temp & Speed") },
-    { fcResp_TempAndSpeed, 0x41, 7, QString("Channel 2 Temp & Speed") },
-    { fcResp_TempAndSpeed, 0x42, 7, QString("Channel 3 Temp & Speed") },
-    { fcResp_TempAndSpeed, 0x43, 7, QString("Channel 4 Temp & Speed") },
-    { fcResp_TempAndSpeed, 0x44, 7, QString("Channel 5 Temp & Speed") },
+    { fcResp_TempAndSpeed, 0, 0x40, 7, QString("Channel 1 Temp & Speed") },
+    { fcResp_TempAndSpeed, 1, 0x41, 7, QString("Channel 2 Temp & Speed") },
+    { fcResp_TempAndSpeed, 2, 0x42, 7, QString("Channel 3 Temp & Speed") },
+    { fcResp_TempAndSpeed, 3, 0x43, 7, QString("Channel 4 Temp & Speed") },
+    { fcResp_TempAndSpeed, 4, 0x44, 7, QString("Channel 5 Temp & Speed") },
 
-    { fcResp_DeviceFlags, 0x60, 2, QString("Device Flags (Common)") },
+    { fcResp_DeviceFlags, -1, 0x60, 2, QString("Device Flags (Common)") },
 
-    { fcResp_AlarmAndSpeed, 0x80, -1, QString ("Channel 1 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 0x81, -1, QString ("Channel 2 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 0x82, -1, QString ("Channel 3 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 0x83, -1, QString ("Channel 4 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 0x84, -1, QString ("Channel 5 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 0, 0x80, -1, QString ("Channel 1 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 1, 0x81, -1, QString ("Channel 2 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 2, 0x82, -1, QString ("Channel 3 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 3, 0x83, -1, QString ("Channel 4 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 4, 0x84, -1, QString ("Channel 5 Alarm Temp & Current Speed") },
 
-    { fcResp_DeviceStatus, 0xA0, 2, QString("Device Status") },
+    { fcResp_DeviceStatus, -1, 0xA0, 2, QString("Device Status") },
 
-    { fcResp_Handshake, 0xF0, -1, QString ("ACK") },
-    { fcResp_Handshake, 0xFA, -1, QString ("NAK") }
+    { fcResp_Handshake, -1, 0xF0, -1, QString ("ACK") },
+    { fcResp_Handshake, -1, 0xFA, -1, QString ("NAK") }
 
 };
 
@@ -50,7 +53,7 @@ QMap<char, const fcResponseCodeDef*> FanController::m_responseCodes;
 FanController::FanController(QObject *parent) :
     QObject(parent)
 {
-    m_isConnected = false;
+    m_deviceIsReady = false;
     initResponseCodeMap();
     connectSignals();
 }
@@ -78,6 +81,9 @@ bool FanController::connect(void)
     bool r = false;
 
     r = m_io_device.connect(bitfenixrecon_vendorId, bitfenixrecon_productId);
+
+    // assume device is ready until it tell us otherwise
+    m_deviceIsReady = true;
 
     if (r) emit deviceConnected();
 
@@ -139,12 +145,15 @@ void FanController::parseRawData(QByteArray rawdata)
     switch (responseDef->category)
     {
     case fcResp_TempAndSpeed:
+        parseTempAndSpeed(responseDef->channel, rawdata);
         break;
     case fcResp_DeviceFlags:
+        parseDeviceFlags(rawdata);
         break;
     case fcResp_AlarmAndSpeed:
         break;
     case fcResp_DeviceStatus:
+        parseDeviceStatus(rawdata);
         break;
     case fcResp_Handshake:
         break;
@@ -154,12 +163,62 @@ void FanController::parseRawData(QByteArray rawdata)
     }
 }
 
+void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
+{
+    // Byte 0:  data/packet length
+    // Byte 1:  response code
+    // Byte 2:  temp
+    // Byte 3:  rpm (lo byte)
+    // Byte 4:  rpm (hi byte)
+    // Byte 5:  checksum
+
+#ifdef QT_DEBUG
+    qDebug() << "Temp for channel " << channel + 1 << ":" << rawToTemp(rawdata[2]) << "F";
+    qDebug() << "Fan #" << channel + 1 << "@" << rawToRPM(rawdata[4], rawdata[3]) << "RPM";
+#endif
+
+}
+
+void FanController::parseDeviceFlags(const QByteArray& rawdata)
+{
+    bool isAuto, isCelcius, isAlarm;
+
+    isAuto =    rawdata[2] & bitfenix_flag_auto ? false : true;
+    isCelcius = rawdata[2] & bitfenix_flag_celcius ? false : true;
+    isAlarm =   rawdata[2] & bitfenix_flag_alarm ? true : false;
+
+    qDebug() << "Auto: " << isAuto << "Celcius: " << isCelcius
+             << "Alarm:" << isAlarm;
+}
+
+void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
+{
+
+}
+
+void FanController::parseDeviceStatus(const QByteArray& rawdata)
+{
+    m_deviceIsReady = rawdata[2] == 1 ? true : false;
+    qDebug() << "Device is: " << (m_deviceIsReady ? "Ready" : "Not Ready");
+}
+
+void FanController::parseHandshake(const QByteArray& rawdata)
+{
+
+}
+
+
 int FanController::rawToTemp(char byte) const
 {
     return byte;
 }
 
-int FanController::rawToRPM(char highByte, char lowByte) const
+unsigned FanController::rawToRPM(char highByte, char lowByte) const
 {
-    return highByte << 8 && lowByte;
+    return highByte*256 + lowByte;
+}
+
+char FanController::calcChecksum(QByteArray rawdata) const
+{
+
 }

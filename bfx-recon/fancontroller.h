@@ -33,6 +33,7 @@ typedef enum fcReponseCodeCategory {
 typedef struct fcResponseCodeDef
 {
     fcResponseCodeCategory category;
+    int channel;
     char code;
     int expectedPacketLen;
     const QString desc;
@@ -43,6 +44,19 @@ typedef struct fcRequestCodeDef
     char code;
     int expectedPacketLen;
 } fcRequestCodeDef;
+
+
+class fcData {
+
+public:
+    fcData();
+    fcData(QByteArray rawData);
+private:
+    unsigned len;
+    int channel;
+    char checksum;
+    QByteArray data;
+};
 
 
 /** @internal The main reason for this class (rather than doing everything in
@@ -61,6 +75,7 @@ public:
 
     bool connect(void);
     void disconnect(void);
+    bool isReady(void) { return m_deviceIsReady; }
 
     bool isConnected(void) const;
 
@@ -75,12 +90,22 @@ public slots:
 protected:
     void connectSignals(void);
     virtual void initResponseCodeMap(void);
+
     virtual void parseRawData(QByteArray rawdata);
+
+    virtual void parseTempAndSpeed(int channel, const QByteArray& rawdata);
+    virtual void parseDeviceFlags(const QByteArray& rawdata);
+    virtual void parseAlarmAndSpeed(int channel, const QByteArray& rawdata);
+    virtual void parseDeviceStatus(const QByteArray& rawdata);
+    virtual void parseHandshake(const QByteArray& rawdata);
+
     virtual int rawToTemp(char byte) const;
-    virtual int rawToRPM(char highByte, char lowByte) const;
+    virtual unsigned rawToRPM(char highByte, char lowByte) const;
+
+    virtual char calcChecksum(QByteArray rawdata) const;
 
 private:
-    bool m_isConnected;
+    bool m_deviceIsReady;
     DeviceIO m_io_device;
 
     static QMap<char, const fcResponseCodeDef*> m_responseCodes;
