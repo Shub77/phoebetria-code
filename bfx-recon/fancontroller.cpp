@@ -84,15 +84,11 @@ bool FanController::connect(void)
     return r;
 }
 
-bool FanController::disconnect(void)
+void FanController::disconnect(void)
 {
-    bool r = false;
-
     m_io_device.disconnect();
 
-    if (r) emit deviceDisconnected();
-
-    return r;
+    emit deviceDisconnected();
 }
 
 bool FanController::isConnected(void) const
