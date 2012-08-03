@@ -60,6 +60,8 @@ protected:
     void connectSignals(void);
     virtual void initResponseCodeMap(void);
     virtual void parseRawData(QByteArray rawdata);
+    virtual void rawToTemp(QByteArray rawdata);
+    virtual void rawToRPM(QByteArray rawdata);
 
 private:
     bool m_isConnected;

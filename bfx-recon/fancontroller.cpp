@@ -140,3 +140,13 @@ void FanController::parseRawData(QByteArray rawdata)
     qDebug() << debugOut;
 #endif
 }
+
+void FanController::rawToTemp(QByteArray rawdata)
+{
+
+}
+
+void FanController::rawToRPM(QByteArray rawdata)
+{
+
+}
