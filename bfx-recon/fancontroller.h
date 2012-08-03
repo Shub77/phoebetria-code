@@ -99,7 +99,7 @@ protected:
     virtual void parseDeviceStatus(const QByteArray& rawdata);
     virtual void parseHandshake(const QByteArray& rawdata);
 
-    virtual int rawToTemp(char byte) const;
+    virtual int rawToTemp(unsigned char byte) const;
     virtual unsigned rawToRPM(char highByte, char lowByte) const;
 
     virtual char calcChecksum(QByteArray rawdata) const;

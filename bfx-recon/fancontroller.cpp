@@ -151,6 +151,7 @@ void FanController::parseRawData(QByteArray rawdata)
         parseDeviceFlags(rawdata);
         break;
     case fcResp_AlarmAndSpeed:
+        parseAlarmAndSpeed(responseDef->channel, rawdata);
         break;
     case fcResp_DeviceStatus:
         parseDeviceStatus(rawdata);
@@ -181,18 +182,33 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
 
 void FanController::parseDeviceFlags(const QByteArray& rawdata)
 {
-    bool isAuto, isCelcius, isAlarm;
+    bool isAuto, isCelcius, isAudibleAlarm;
 
     isAuto =    rawdata[2] & bitfenix_flag_auto ? false : true;
     isCelcius = rawdata[2] & bitfenix_flag_celcius ? false : true;
-    isAlarm =   rawdata[2] & bitfenix_flag_alarm ? true : false;
+    isAudibleAlarm =   rawdata[2] & bitfenix_flag_alarm ? true : false;
 
-    qDebug() << "Auto: " << isAuto << "Celcius: " << isCelcius
-             << "Alarm:" << isAlarm;
+    qDebug() << "##Auto: " << isAuto << "## is Celcius: " << isCelcius
+             << "##Audible alarm:" << isAudibleAlarm;
 }
 
 void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
 {
+    // Byte 0:  data/packet length
+    // Byte 1:  response code
+    // Byte 2:  alarm temp
+    // Byte 3:  rpm (lo byte)
+    // Byte 4:  rpm (hi byte)
+    // Byte 5:  checksum
+
+#ifdef QT_DEBUG
+
+    // TODO: Not sure if the fan speed repoted is the speed to set the fan when
+    //       the alarm is reached
+
+    qDebug() << "Alarm temp for channel " << channel + 1 << ":" << rawToTemp(rawdata[2]) << "F";
+    qDebug() << "Fan # speed on alarm" << channel + 1 << "@" << rawToRPM(rawdata[4], rawdata[3]) << "RPM";
+#endif
 
 }
 
@@ -208,7 +224,7 @@ void FanController::parseHandshake(const QByteArray& rawdata)
 }
 
 
-int FanController::rawToTemp(char byte) const
+int FanController::rawToTemp(unsigned char byte) const
 {
     return byte;
 }
