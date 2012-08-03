@@ -18,7 +18,21 @@
 #define PHOEBETRIA_FANCONTROLLER_H
 
 #include <QObject>
+#include <QMap>
 #include "device-io.h"
+
+typedef struct fcResponseCodeDef
+{
+    char code;
+    int expectedPacketLen;
+    const QString desc;
+} fcResponseCodeDef;
+
+typedef struct fcRequestCodeDef
+{
+    char code;
+    int expectedPacketLen;
+} fcRequestCodeDef;
 
 class FanController : public QObject
 {
@@ -44,10 +58,14 @@ public slots:
 
 protected:
     void connectSignals(void);
+    virtual void initResponseCodeMap(void);
+    virtual void parseRawData(QByteArray rawdata);
 
 private:
     bool m_isConnected;
     DeviceIO m_io_device;
+
+    static QMap<char, const fcResponseCodeDef*> m_responseCodes;
 };
 
 

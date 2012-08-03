@@ -14,17 +14,53 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QDebug>
 #include "fancontroller.h"
 
 static const int bitfenixrecon_vendorId = 3141;
 static const int bitfenixrecon_productId = 28928;
 
 
+static const fcResponseCodeDef bfxReconResponseCodes[] = {
+    { 0x40, 7, QString("Channel 1 Temp & Speed") },
+    { 0x41, 7, QString("Channel 2 Temp & Speed") },
+    { 0x42, 7, QString("Channel 3 Temp & Speed") },
+    { 0x43, 7, QString("Channel 4 Temp & Speed") },
+    { 0x44, 7, QString("Channel 5 Temp & Speed") },
+
+    { 0x60, 2, QString("Device Flags (Common)") },
+
+    { 0x80, -1, QString ("Channel 1 Alarm Temp & Current Speed") },
+    { 0x81, -1, QString ("Channel 2 Alarm Temp & Current Speed") },
+    { 0x82, -1, QString ("Channel 3 Alarm Temp & Current Speed") },
+    { 0x83, -1, QString ("Channel 4 Alarm Temp & Current Speed") },
+    { 0x84, -1, QString ("Channel 5 Alarm Temp & Current Speed") },
+
+    { 0xA0, 2, QString("Device Status") },
+
+    { 0xF0, -1, QString ("ACK") },
+    { 0xFA, -1, QString ("NAK") }
+
+};
+
+#define RESPONSECODE_COUNT (sizeof(bfxReconResponseCodes) / sizeof(bfxReconResponseCodes[0]))
+
+QMap<char, const fcResponseCodeDef*> FanController::m_responseCodes;
+
 FanController::FanController(QObject *parent) :
     QObject(parent)
 {
     m_isConnected = false;
+    initResponseCodeMap();
     connectSignals();
+}
+
+void FanController::initResponseCodeMap(void)
+{
+    for (unsigned i = 0; i < RESPONSECODE_COUNT; i++) {
+        m_responseCodes.insert(bfxReconResponseCodes[i].code,
+                               &bfxReconResponseCodes[i]);
+    }
 }
 
 int FanController::HID_vendorId(void)
@@ -52,7 +88,7 @@ bool FanController::disconnect(void)
 {
     bool r = false;
 
-    // TODO: Implement
+    m_io_device.disconnect();
 
     if (r) emit deviceDisconnected();
 
@@ -81,5 +117,26 @@ void FanController::onRawData(QByteArray rawdata)
 #ifdef QT_DEBUG
     qDebug("Got raw data");
     qDebug(rawdata.toHex());
+#endif
+    parseRawData(rawdata);
+}
+
+void FanController::parseRawData(QByteArray rawdata)
+{
+    const fcResponseCodeDef* responseDef;
+
+    if (rawdata.length() < 2) {
+        qDebug ("FanController::parseRawData() given empty array");
+        return;
+    }
+    responseDef = m_responseCodes.value(rawdata[1]);
+    if (responseDef == NULL) {
+        qDebug("============== Unknown response code from device");
+        return;
+    }
+#ifdef QT_DEBUG
+    QString debugOut;
+    debugOut = "Got " + responseDef->desc;
+    qDebug() << debugOut;
 #endif
 }
