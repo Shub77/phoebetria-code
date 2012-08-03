@@ -21,8 +21,18 @@
 #include <QMap>
 #include "device-io.h"
 
+typedef enum fcReponseCodeCategory {
+    fcResp_TempAndSpeed,
+    fcResp_DeviceFlags,
+    fcResp_AlarmAndSpeed,
+    fcResp_DeviceStatus,
+    fcResp_Handshake
+} fcResponseCodeCategory;
+
+
 typedef struct fcResponseCodeDef
 {
+    fcResponseCodeCategory category;
     char code;
     int expectedPacketLen;
     const QString desc;
@@ -34,6 +44,12 @@ typedef struct fcRequestCodeDef
     int expectedPacketLen;
 } fcRequestCodeDef;
 
+
+/** @internal The main reason for this class (rather than doing everything in
+  * the DeviceIO class is to somewhat separate the specific parsing for the
+  * bitfenix recon controller; i.e. in the future possibly other fan controllers can
+  * be supported.
+  */
 class FanController : public QObject
 {
     Q_OBJECT
@@ -44,7 +60,7 @@ public:
     static int HID_productId(void);
 
     bool connect(void);
-    bool disconnect(void);
+    void disconnect(void);
 
     bool isConnected(void) const;
 
@@ -60,8 +76,8 @@ protected:
     void connectSignals(void);
     virtual void initResponseCodeMap(void);
     virtual void parseRawData(QByteArray rawdata);
-    virtual void rawToTemp(QByteArray rawdata);
-    virtual void rawToRPM(QByteArray rawdata);
+    virtual int rawToTemp(char byte) const;
+    virtual int rawToRPM(char highByte, char lowByte) const;
 
 private:
     bool m_isConnected;

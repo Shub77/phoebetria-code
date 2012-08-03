@@ -22,24 +22,24 @@ static const int bitfenixrecon_productId = 28928;
 
 
 static const fcResponseCodeDef bfxReconResponseCodes[] = {
-    { 0x40, 7, QString("Channel 1 Temp & Speed") },
-    { 0x41, 7, QString("Channel 2 Temp & Speed") },
-    { 0x42, 7, QString("Channel 3 Temp & Speed") },
-    { 0x43, 7, QString("Channel 4 Temp & Speed") },
-    { 0x44, 7, QString("Channel 5 Temp & Speed") },
+    { fcResp_TempAndSpeed, 0x40, 7, QString("Channel 1 Temp & Speed") },
+    { fcResp_TempAndSpeed, 0x41, 7, QString("Channel 2 Temp & Speed") },
+    { fcResp_TempAndSpeed, 0x42, 7, QString("Channel 3 Temp & Speed") },
+    { fcResp_TempAndSpeed, 0x43, 7, QString("Channel 4 Temp & Speed") },
+    { fcResp_TempAndSpeed, 0x44, 7, QString("Channel 5 Temp & Speed") },
 
-    { 0x60, 2, QString("Device Flags (Common)") },
+    { fcResp_DeviceFlags, 0x60, 2, QString("Device Flags (Common)") },
 
-    { 0x80, -1, QString ("Channel 1 Alarm Temp & Current Speed") },
-    { 0x81, -1, QString ("Channel 2 Alarm Temp & Current Speed") },
-    { 0x82, -1, QString ("Channel 3 Alarm Temp & Current Speed") },
-    { 0x83, -1, QString ("Channel 4 Alarm Temp & Current Speed") },
-    { 0x84, -1, QString ("Channel 5 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 0x80, -1, QString ("Channel 1 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 0x81, -1, QString ("Channel 2 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 0x82, -1, QString ("Channel 3 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 0x83, -1, QString ("Channel 4 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 0x84, -1, QString ("Channel 5 Alarm Temp & Current Speed") },
 
-    { 0xA0, 2, QString("Device Status") },
+    { fcResp_DeviceStatus, 0xA0, 2, QString("Device Status") },
 
-    { 0xF0, -1, QString ("ACK") },
-    { 0xFA, -1, QString ("NAK") }
+    { fcResp_Handshake, 0xF0, -1, QString ("ACK") },
+    { fcResp_Handshake, 0xFA, -1, QString ("NAK") }
 
 };
 
@@ -135,14 +135,31 @@ void FanController::parseRawData(QByteArray rawdata)
     debugOut = "Got " + responseDef->desc;
     qDebug() << debugOut;
 #endif
+
+    switch (responseDef->category)
+    {
+    case fcResp_TempAndSpeed:
+        break;
+    case fcResp_DeviceFlags:
+        break;
+    case fcResp_AlarmAndSpeed:
+        break;
+    case fcResp_DeviceStatus:
+        break;
+    case fcResp_Handshake:
+        break;
+    default:
+        qDebug() << "Unhandled response category";
+        break;
+    }
 }
 
-void FanController::rawToTemp(QByteArray rawdata)
+int FanController::rawToTemp(char byte) const
 {
-
+    return byte;
 }
 
-void FanController::rawToRPM(QByteArray rawdata)
+int FanController::rawToRPM(char highByte, char lowByte) const
 {
-
+    return highByte << 8 && lowByte;
 }
