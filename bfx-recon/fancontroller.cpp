@@ -70,20 +70,20 @@ FcData::FcData(const QByteArray &rawData)
     setFromRawData(rawData);
 }
 
-#if 0
-char FcData::calcChecksum(QByteArray rawdata, int length) const
-{
-    unsigned checksum = length + 1;
 
-    for (int i = 1; i < length; ++i) {
-        checksum += rawdata[i];
+unsigned char FcData::calcChecksum(void) const
+{
+    int len = data.length();
+    unsigned checksum = len + 1;
+
+    for (int i = 0; i < len; ++i) {
+        checksum += data.at(i);
     }
     checksum ^= 0xff;
-    checksum = (checksum + 2) & 0xff;
+    checksum = (checksum + 1) & 0xff;
 
     return checksum;
 }
-#endif
 
 
 bool FcData::setFromRawData(const QByteArray& rawdata)
@@ -116,6 +116,12 @@ bool FcData::setFromRawData(const QByteArray& rawdata)
     }
     checksum = rawdata.at(len);
 
+#ifdef QT_DEBUG
+    if (checksum != calcChecksum()) {
+        qDebug() << "Checksum failed (calculated" << calcChecksum()
+                 << "expected" << checksum;
+    }
+#endif
     return true;
 }
 
