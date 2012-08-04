@@ -71,10 +71,12 @@ FcData::FcData(const QByteArray &rawData)
 }
 
 
-unsigned char FcData::calcChecksum(void) const
+unsigned char FcData::calcChecksum(bool isRequest) const
 {
     int len = data.length();
     unsigned checksum = len + 1;
+
+    if (isRequest) checksum += command->commandByte;
 
     for (int i = 0; i < len; ++i) {
         checksum += data.at(i);
@@ -117,13 +119,42 @@ bool FcData::setFromRawData(const QByteArray& rawdata)
     checksum = rawdata.at(len);
 
 #ifdef QT_DEBUG
-    if (checksum != calcChecksum()) {
-        qDebug() << "Checksum failed (calculated" << calcChecksum()
-                 << "expected" << checksum;
+    if (checksum != calcChecksum(false)) {
+        qDebug() << "Checksum failed (calculated" << calcChecksum(false)
+                 << "expected" << checksum << ")";
     }
 #endif
     return true;
 }
+
+
+bool FcData::toRawData(char *dest, int buffLen, bool pad)
+{
+    // pre: Always need 3 extra bytes for:
+    //      1) the data length
+    //      2) the command
+    //      3) the checksum at the end
+    Q_ASSERT (buffLen >= data.length() + 3);
+
+    int dataLen = data.length();
+
+    *(dest) = dataLen + 2;
+    *(dest + 1) = command->commandByte;
+    int i;
+    for (i = 0; i < dataLen; i++) {
+        *(dest + i + 2) = data.at(i);
+    }
+    *(dest + i + 2) = calcChecksum(true) - 1;
+    i++;
+    if (pad) {
+        for (; i < buffLen; i++) {
+            *(dest + i + 2) = (char)0x00;
+        }
+    }
+
+    return true;
+}
+
 
 /****************************************************************************
  class FanController
@@ -196,7 +227,6 @@ void FanController::connectSignals(void)
 
 void FanController::onPollTimerTriggered(void)
 {
-    qDebug("Poll");
     m_pollNumber++;
     m_pollNumber &= 0x07;       // 0 <= m_pollNumber <= 7
 
@@ -211,8 +241,7 @@ void FanController::onPollTimerTriggered(void)
 void FanController::onRawData(QByteArray rawdata)
 {
 #ifdef QT_DEBUG
-    qDebug("Got raw data");
-    qDebug(rawdata.toHex());
+    qDebug() << "Got raw data:" << rawdata.toHex();
 #endif
     FcData parsedData;
     parseRawData(rawdata, &parsedData);
@@ -314,28 +343,6 @@ void FanController::parseHandshake(const QByteArray& rawdata)
 }
 
 
-void FanController::requestDeviceStatus(void)
-{
-#if 0
-    const fcRequestCodeDef* def;
-    QByteArray packet;
-    def = m_requestCodes.value(fcReq_GetDeviceStatus);
-    if (!def) {
-        qDebug() << "Unknown request attempted";
-        return;
-    }
-
-    packet.append(0x02);      // length
-    packet.append(def->code);
-    packet.append(calcChecksum(packet, packet.length()));
-
-    qDebug() << "****** Sending Request: " << packet.toHex();
-    int byteswritten = m_io_device.sendData(packet);
-    qDebug() << "****** Bytes written: " << byteswritten;
-#endif
-}
-
-
 int FanController::rawToTemp(unsigned char byte) const
 {
     return byte;
@@ -346,4 +353,20 @@ unsigned FanController::rawToRPM(char highByte, char lowByte) const
     return highByte*256 + lowByte;
 }
 
+void FanController::requestDeviceStatus(void)
+{
+    FcData fcdata;
+    char reqBuff[9];
+
+    fcdata.command = commandDef(0x90);
+
+    fcdata.toRawData(reqBuff, sizeof(reqBuff));
+
+    QByteArray ba = QByteArray::fromRawData(reqBuff, 9);
+
+    qDebug() << "****** Sending Request: " << ba.toHex();
+    int byteswritten = m_io_device.sendData(reqBuff);
+    //qDebug() << "****** Bytes written: " << byteswritten;
+
+}
 

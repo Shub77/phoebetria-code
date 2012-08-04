@@ -53,10 +53,10 @@ public:
     FcData();
     FcData(const QByteArray& rawData);
 
-    unsigned char calcChecksum(void) const;
+    unsigned char calcChecksum(bool isRequest) const;
 
     bool setFromRawData(const QByteArray& rawdata);
-    bool toRawData(unsigned char* dest, int len);
+    bool toRawData(char *dest, int buffLen, bool pad = true);
 protected:
 
 private:
