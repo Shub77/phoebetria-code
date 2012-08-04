@@ -30,6 +30,13 @@ typedef enum fcReponseCodeCategory {
 } fcResponseCodeCategory;
 
 
+typedef enum fcRequestCodeCategory {
+    fcReq_GetChannelSettings,
+    fcReq_GetDeviceStatus,
+    fcReq_GetCurrentChannel,
+    fcReq_GetDeviceFlags
+} fcRequestCodeCategory;
+
 typedef struct fcResponseCodeDef
 {
     fcResponseCodeCategory category;
@@ -41,8 +48,10 @@ typedef struct fcResponseCodeDef
 
 typedef struct fcRequestCodeDef
 {
+    fcRequestCodeCategory category;
+    int channel;
     char code;
-    int expectedPacketLen;
+    const QString desc;
 } fcRequestCodeDef;
 
 
@@ -90,6 +99,7 @@ public slots:
 protected:
     void connectSignals(void);
     virtual void initResponseCodeMap(void);
+    virtual void initRequestCodeMap(void);
 
     virtual void parseRawData(QByteArray rawdata);
 
@@ -99,16 +109,21 @@ protected:
     virtual void parseDeviceStatus(const QByteArray& rawdata);
     virtual void parseHandshake(const QByteArray& rawdata);
 
+    virtual void requestDeviceStatus(void);
+
     virtual int rawToTemp(unsigned char byte) const;
     virtual unsigned rawToRPM(char highByte, char lowByte) const;
 
-    virtual char calcChecksum(QByteArray rawdata) const;
+    virtual char calcChecksum(QByteArray rawdata, int length) const;
 
 private:
     bool m_deviceIsReady;
     DeviceIO m_io_device;
 
     static QMap<char, const fcResponseCodeDef*> m_responseCodes;
+    static QMap<char, const fcRequestCodeDef*> m_requestCodes;
+
+    unsigned m_pollNumber;
 };
 
 

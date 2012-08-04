@@ -1,3 +1,5 @@
+#include <QByteArray>
+#include <QDebug>
 #include "device-io.h"
 
 #define PHOEBETRIA_HID_INPUT_BUFFSIZE 255
@@ -29,9 +31,29 @@ bool DeviceIO::isConnected(void) const
     return m_device != NULL;
 }
 
-void DeviceIO::sendData(const QByteArray& data)
+int DeviceIO::sendData(const QByteArray& data)
 {
-    hid_write(m_device, (const unsigned char*)data.constData(), data.length());
+    int r;
+    char toSend[9];
+
+    if (data.length() > 8) {
+        qDebug() << "DeviceIO packet size too large (len > 8)";
+        return false;
+    }
+    unsigned i;
+    toSend[0] = 0x00;
+    for (i = 0; i < data.length(); i++) {
+        toSend[i+1] = data.at(i);
+    }
+    for (; i < 9; i++) {    // Add padding
+        toSend[i+1] = 0x00;
+    };
+
+    r = hid_write(m_device, (const unsigned char*)toSend, 9);
+    const wchar_t* err = hid_error(m_device);
+    if (r == -1) qDebug() << "*** Send Error:" << QString::fromStdWString(err);
+    return r;
+
 }
 
 QString DeviceIO::lastErrorString(void) const
