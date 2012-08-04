@@ -24,29 +24,26 @@ static const unsigned bitfenix_flag_auto    = 1 << 0;
 static const unsigned bitfenix_flag_celcius = 1 << 1;
 static const unsigned bitfenix_flag_alarm   = 1 << 2;
 
-static const fcResponseCodeDef bfxReconResponseCodes[] = {
-    { fcResp_TempAndSpeed, 0, 0x40, 7, QString("Channel 1 Temp & Speed") },
-    { fcResp_TempAndSpeed, 1, 0x41, 7, QString("Channel 2 Temp & Speed") },
-    { fcResp_TempAndSpeed, 2, 0x42, 7, QString("Channel 3 Temp & Speed") },
-    { fcResp_TempAndSpeed, 3, 0x43, 7, QString("Channel 4 Temp & Speed") },
-    { fcResp_TempAndSpeed, 4, 0x44, 7, QString("Channel 5 Temp & Speed") },
+static const fcCommandDef bfxReconCommandDefs[] = {
+    { fcResp_TempAndSpeed, 0, 0x40,  QString("Channel 1 Temp & Speed") },
+    { fcResp_TempAndSpeed, 1, 0x41,  QString("Channel 2 Temp & Speed") },
+    { fcResp_TempAndSpeed, 2, 0x42,  QString("Channel 3 Temp & Speed") },
+    { fcResp_TempAndSpeed, 3, 0x43,  QString("Channel 4 Temp & Speed") },
+    { fcResp_TempAndSpeed, 4, 0x44,  QString("Channel 5 Temp & Speed") },
 
-    { fcResp_DeviceFlags, -1, 0x60, 2, QString("Device Flags (Common)") },
+    { fcResp_DeviceFlags, -1, 0x60,  QString("Device Flags (Common)") },
 
-    { fcResp_AlarmAndSpeed, 0, 0x80, -1, QString ("Channel 1 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 1, 0x81, -1, QString ("Channel 2 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 2, 0x82, -1, QString ("Channel 3 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 3, 0x83, -1, QString ("Channel 4 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 4, 0x84, -1, QString ("Channel 5 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 0, 0x80, QString ("Channel 1 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 1, 0x81, QString ("Channel 2 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 2, 0x82, QString ("Channel 3 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 3, 0x83, QString ("Channel 4 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 4, 0x84, QString ("Channel 5 Alarm Temp & Current Speed") },
 
-    { fcResp_DeviceStatus, -1, 0xA0, 2, QString("Device Status") },
+    { fcResp_DeviceStatus, -1, 0xA0, QString("Device Status") },
 
-    { fcResp_Handshake, -1, 0xF0, -1, QString ("ACK") },
-    { fcResp_Handshake, -1, 0xFA, -1, QString ("NAK") }
-};
-#define RESPONSECODE_COUNT (sizeof(bfxReconResponseCodes) / sizeof(bfxReconResponseCodes[0]))
+    { fcResp_Handshake, -1, 0xF0,    QString ("ACK") },
+    { fcResp_Handshake, -1, 0xFA,    QString ("NAK") },
 
-static const fcRequestCodeDef bfxReconRequestCodes[] = {
     { fcReq_GetChannelSettings, 0,  0x30, "Request Channel 1 Temp & Speed" },
     { fcReq_GetChannelSettings, 1,  0x31, "Request Channel 2 Temp & Speed" },
     { fcReq_GetChannelSettings, 2,  0x32, "Request Channel 3 Temp & Speed" },
@@ -56,35 +53,93 @@ static const fcRequestCodeDef bfxReconRequestCodes[] = {
     { fcReq_GetCurrentChannel,  -1, 0x10, "Request current channel" },
     { fcReq_GetDeviceFlags,     -1, 0x50, "Request device flags" }
 };
-#define REQUESTCODE_COUNT (sizeof(bfxReconRequestCodes) / sizeof(bfxReconRequestCodes[0]))
+#define COMMAND_DEF_COUNT (sizeof(bfxReconCommandDefs) / sizeof(bfxReconCommandDefs[0]))
 
 
-QMap<char, const fcResponseCodeDef*> FanController::m_responseCodes;
-QMap<char, const fcRequestCodeDef*> FanController::m_requestCodes;
+/****************************************************************************
+ class fcData
+ ***************************************************************************/
+
+FcData::FcData()
+{
+
+}
+
+FcData::FcData(const QByteArray &rawData)
+{
+    setFromRawData(rawData);
+}
+
+#if 0
+char FcData::calcChecksum(QByteArray rawdata, int length) const
+{
+    unsigned checksum = length + 1;
+
+    for (int i = 1; i < length; ++i) {
+        checksum += rawdata[i];
+    }
+    checksum ^= 0xff;
+    checksum = (checksum + 2) & 0xff;
+
+    return checksum;
+}
+#endif
+
+
+bool FcData::setFromRawData(const QByteArray& rawdata)
+{
+    const fcCommandDef* responseDef;
+
+    if (rawdata.length() < 2) {
+        qDebug ("FanController::parseRawData() not enough data");
+        return false;
+    }
+    responseDef = FanController::commandDef(rawdata[1]);
+    if (responseDef == NULL) {
+        qDebug("============== Unknown response code from device");
+        return false;
+    }
+#ifdef QT_DEBUG
+    QString debugOut;
+    debugOut = "Got " + responseDef->desc;
+    qDebug() << debugOut;
+#endif
+
+    // TODO: Add bounds checking
+
+    command = responseDef;
+    channel = responseDef->channel;
+    int len = rawdata.at(0);
+    data.clear();
+    for (int i = 1; i < len; i++) {   // copy data apart from checksum
+        data.append(rawdata.at(i));
+    }
+    checksum = rawdata.at(len);
+
+    return true;
+}
+
+/****************************************************************************
+ class FanController
+ ***************************************************************************/
+
+QMap<char, const fcCommandDef*> FanController::m_commandDefs;
 
 FanController::FanController(QObject *parent) :
     QObject(parent)
 {
     m_deviceIsReady = false;
     m_pollNumber = 0;
-    initResponseCodeMap();
-    initRequestCodeMap();
+
+    initCommandDefs();
     connectSignals();
 }
 
-void FanController::initResponseCodeMap(void)
+void FanController::initCommandDefs(void)
 {
-    for (unsigned i = 0; i < RESPONSECODE_COUNT; i++) {
-        m_responseCodes.insert(bfxReconResponseCodes[i].code,
-                               &bfxReconResponseCodes[i]);
-    }
-}
-
-void FanController::initRequestCodeMap(void)
-{
-    for (unsigned i = 0; i < REQUESTCODE_COUNT; i++) {
-        m_requestCodes.insert(bfxReconRequestCodes[i].category,
-                               &bfxReconRequestCodes[i]);
+    for (unsigned i = 0; i < COMMAND_DEF_COUNT; i++) {
+        m_commandDefs.insert(bfxReconCommandDefs[i].commandByte,
+                               &bfxReconCommandDefs[i]);
     }
 }
 
@@ -94,10 +149,12 @@ int FanController::HID_vendorId(void)
     return bitfenixrecon_vendorId;
 }
 
+
 int FanController::HID_productId(void)
 {
     return bitfenixrecon_productId;
 }
+
 
 bool FanController::connect(void)
 {
@@ -151,28 +208,15 @@ void FanController::onRawData(QByteArray rawdata)
     qDebug("Got raw data");
     qDebug(rawdata.toHex());
 #endif
-    parseRawData(rawdata);
+    FcData parsedData;
+    parseRawData(rawdata, &parsedData);
 }
 
-void FanController::parseRawData(QByteArray rawdata)
+bool FanController::parseRawData(QByteArray rawdata, FcData *parsedData)
 {
-    const fcResponseCodeDef* responseDef;
+    parsedData->setFromRawData(rawdata);
 
-    if (rawdata.length() < 2) {
-        qDebug ("FanController::parseRawData() given empty array");
-        return;
-    }
-    responseDef = m_responseCodes.value(rawdata[1]);
-    if (responseDef == NULL) {
-        qDebug("============== Unknown response code from device");
-        return;
-    }
-#ifdef QT_DEBUG
-    QString debugOut;
-    debugOut = "Got " + responseDef->desc;
-    qDebug() << debugOut;
-#endif
-
+#if 0
     switch (responseDef->category)
     {
     case fcResp_TempAndSpeed:
@@ -193,6 +237,9 @@ void FanController::parseRawData(QByteArray rawdata)
         qDebug() << "Unhandled response category";
         break;
     }
+
+    return true;
+#endif
 }
 
 void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
@@ -236,8 +283,8 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 5:  checksum
 
 
-    char csum = calcChecksum(rawdata, 5);
-    qDebug() << "Calculated checksum: " << (unsigned int)csum;
+    // char csum = calcChecksum(rawdata, 5);
+    // qDebug() << "Calculated checksum: " << (unsigned int)csum;
 #ifdef QT_DEBUG
 
     // TODO: Not sure if the fan speed repoted is the speed to set the fan when
@@ -263,7 +310,7 @@ void FanController::parseHandshake(const QByteArray& rawdata)
 
 void FanController::requestDeviceStatus(void)
 {
-
+#if 0
     const fcRequestCodeDef* def;
     QByteArray packet;
     def = m_requestCodes.value(fcReq_GetDeviceStatus);
@@ -279,7 +326,7 @@ void FanController::requestDeviceStatus(void)
     qDebug() << "****** Sending Request: " << packet.toHex();
     int byteswritten = m_io_device.sendData(packet);
     qDebug() << "****** Bytes written: " << byteswritten;
-
+#endif
 }
 
 
@@ -293,15 +340,4 @@ unsigned FanController::rawToRPM(char highByte, char lowByte) const
     return highByte*256 + lowByte;
 }
 
-char FanController::calcChecksum(QByteArray rawdata, int length) const
-{
-    unsigned checksum = length + 1;
 
-    for (int i = 1; i < length; ++i) {
-        checksum += rawdata[i];
-    }
-    checksum ^= 0xff;
-    checksum = (checksum + 2) & 0xff;
-
-    return checksum;
-}

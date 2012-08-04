@@ -26,44 +26,43 @@ typedef enum fcReponseCodeCategory {
     fcResp_DeviceFlags,
     fcResp_AlarmAndSpeed,
     fcResp_DeviceStatus,
-    fcResp_Handshake
-} fcResponseCodeCategory;
+    fcResp_Handshake,
 
-
-typedef enum fcRequestCodeCategory {
     fcReq_GetChannelSettings,
     fcReq_GetDeviceStatus,
     fcReq_GetCurrentChannel,
     fcReq_GetDeviceFlags
-} fcRequestCodeCategory;
 
-typedef struct fcResponseCodeDef
+} fcCommandCategory;
+
+
+typedef struct fcCommandDef
 {
-    fcResponseCodeCategory category;
-    int channel;
-    char code;
-    int expectedPacketLen;
-    const QString desc;
-} fcResponseCodeDef;
-
-typedef struct fcRequestCodeDef
-{
-    fcRequestCodeCategory category;
-    int channel;
-    char code;
-    const QString desc;
-} fcRequestCodeDef;
+    fcCommandCategory category;
+    int channel;            // if applicable
+    char commandByte;       // byte
+    const QString desc;     // natural language description
+} fcCommandDef;
 
 
-class fcData {
+class FcData {
+
+    friend class FanController;
 
 public:
-    fcData();
-    fcData(QByteArray rawData);
+    FcData();
+    FcData(const QByteArray& rawData);
+
+    unsigned char calcChecksum(void) const;
+
+    bool setFromRawData(const QByteArray& rawdata);
+    bool toRawData(unsigned char* dest, int len);
+protected:
+
 private:
-    unsigned len;
-    int channel;
-    char checksum;
+    int channel;                // if applicable
+    unsigned char checksum;
+    const fcCommandDef* command;
     QByteArray data;
 };
 
@@ -88,6 +87,7 @@ public:
 
     bool isConnected(void) const;
 
+    static const fcCommandDef* commandDef(char cmd) { return m_commandDefs.value(cmd); }
 signals:
     void deviceConnected(void);
     void deviceDisconnected(void);
@@ -98,10 +98,9 @@ public slots:
 
 protected:
     void connectSignals(void);
-    virtual void initResponseCodeMap(void);
-    virtual void initRequestCodeMap(void);
+    virtual void initCommandDefs(void);
 
-    virtual void parseRawData(QByteArray rawdata);
+    virtual bool parseRawData(QByteArray rawdata, FcData* parsedData);
 
     virtual void parseTempAndSpeed(int channel, const QByteArray& rawdata);
     virtual void parseDeviceFlags(const QByteArray& rawdata);
@@ -114,14 +113,11 @@ protected:
     virtual int rawToTemp(unsigned char byte) const;
     virtual unsigned rawToRPM(char highByte, char lowByte) const;
 
-    virtual char calcChecksum(QByteArray rawdata, int length) const;
-
 private:
     bool m_deviceIsReady;
     DeviceIO m_io_device;
 
-    static QMap<char, const fcResponseCodeDef*> m_responseCodes;
-    static QMap<char, const fcRequestCodeDef*> m_requestCodes;
+    static QMap<char, const fcCommandDef*> m_commandDefs;
 
     unsigned m_pollNumber;
 };
