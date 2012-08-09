@@ -49,9 +49,11 @@ int DeviceIO::sendData(const QByteArray& data)
         toSend[i+1] = 0x00;
     };
 
+    setBlocking(true);
     r = hid_write(m_device, (const unsigned char*)toSend, 9);
     const wchar_t* err = hid_error(m_device);
     if (r == -1) qDebug() << "*** Send Error:" << QString::fromStdWString(err);
+    setBlocking(false);
     return r;
 
 }
@@ -63,6 +65,11 @@ QString DeviceIO::lastErrorString(void) const
     err.fromWCharArray(hid_error(m_device));
 
     return err;
+}
+
+void DeviceIO::setBlocking(bool block)
+{
+    hid_set_nonblocking(m_device, block ? 0 : 1);
 }
 
 void DeviceIO::pollForData(void)

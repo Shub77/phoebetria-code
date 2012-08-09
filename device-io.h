@@ -20,6 +20,8 @@ public:
 
     QString lastErrorString(void) const;
 
+    void setBlocking(bool block);
+
 signals:
     void dataRX(QByteArray data);
 

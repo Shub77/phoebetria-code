@@ -28,10 +28,7 @@ typedef enum fcReponseCodeCategory {
     fcResp_DeviceStatus,
     fcResp_Handshake,
 
-    fcReq_GetChannelSettings,
-    fcReq_GetDeviceStatus,
-    fcReq_GetCurrentChannel,
-    fcReq_GetDeviceFlags
+    fcRequest
 
 } fcCommandCategory;
 
@@ -108,9 +105,13 @@ protected:
     virtual void parseHandshake(const QByteArray& rawdata);
 
     virtual void requestDeviceStatus(void);
+    virtual void requestTempAndSpeed(int channel);
+    virtual void requestAlarmAndSpeed(int channel);
 
     virtual int rawToTemp(unsigned char byte) const;
     virtual unsigned rawToRPM(char highByte, char lowByte) const;
+
+    // Request "commands"
 
 private:
     bool m_deviceIsReady;
@@ -119,6 +120,7 @@ private:
     static QMap<char, const fcCommandDef*> m_commandDefs;
 
     unsigned m_pollNumber;
+    unsigned m_channelCycle;
 };
 
 
