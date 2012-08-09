@@ -37,7 +37,7 @@ win32 {
     LIBS += -lsetupapi
 }
 
-linux-g++ {
+unix {
     CONFIG += link_pkgconfig
     PKGCONFIG += libusb-1.0
     SOURCES += hidapi-0.7.0/linux/hid-libusb.c
