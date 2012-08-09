@@ -40,7 +40,7 @@ int DeviceIO::sendData(const QByteArray& data)
         qDebug() << "DeviceIO packet size too large (len > 8)";
         return false;
     }
-    unsigned i;
+    int i;
     toSend[0] = 0x00;
     for (i = 0; i < data.length(); i++) {
         toSend[i+1] = data.at(i);

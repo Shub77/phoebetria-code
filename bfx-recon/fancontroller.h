@@ -87,7 +87,7 @@ public:
 
     bool isInterfaceConnected(void) const;
 
-    static const fcCommandDef* commandDef(unsigned char cmd);
+    static const fcCommandDef* commandDef_fromByteCode(unsigned char cmd);
 signals:
     void deviceConnected(void);
     void deviceDisconnected(void);

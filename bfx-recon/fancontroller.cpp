@@ -96,7 +96,7 @@ bool FcData::setFromRawData(const QByteArray& rawdata)
         qDebug ("FanController::parseRawData() not enough data");
         return false;
     }
-    responseDef = FanController::commandDef(rawdata[1]);
+    responseDef = FanController::commandDef_fromByteCode(rawdata[1]);
     if (responseDef == NULL) {
         qDebug("============== Unknown response code from device");
         return false;
@@ -166,7 +166,7 @@ FanController::FanController(QObject *parent) :
     connectSignals();
 }
 
-const fcCommandDef* FanController::commandDef(unsigned char cmd)
+const fcCommandDef* FanController::commandDef_fromByteCode(unsigned char cmd)
 {
     const fcCommandDef* found = NULL;
     for (unsigned i = 0; i < COMMAND_DEF_COUNT; i++) {
@@ -277,19 +277,21 @@ bool FanController::parseRawData(QByteArray rawdata, FcData *parsedData)
 {
     parsedData->setFromRawData(rawdata);
 
+    if (!parsedData) {
+        return false;
+    }
+
     switch (parsedData->command->category)
     {
-#if 0
     case fcResp_TempAndSpeed:
-        parseTempAndSpeed(responseDef->channel, rawdata);
+        parseTempAndSpeed(parsedData->command->channel, rawdata);
         break;
     case fcResp_DeviceFlags:
         parseDeviceFlags(rawdata);
         break;
     case fcResp_AlarmAndSpeed:
-        parseAlarmAndSpeed(responseDef->channel, rawdata);
+        parseAlarmAndSpeed(parsedData->command->channel, rawdata);
         break;
-#endif
     case fcResp_DeviceStatus:
         parseDeviceStatus(rawdata);
         break;
@@ -374,7 +376,7 @@ void FanController::requestDeviceStatus(void)
     FcData fcdata;
     char reqBuff[9];
 
-    fcdata.command = commandDef(0x90);
+    fcdata.command = commandDef_fromByteCode(0x90);
     if (fcdata.command == NULL) {
         qDebug() << "Requested unknown command. File: " << __FILE__ << "Line: " << __LINE__;
     }
