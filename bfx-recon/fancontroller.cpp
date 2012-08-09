@@ -197,14 +197,9 @@ int FanController::HID_productId(void)
 
 bool FanController::connect(void)
 {
-    bool r = false;
+    m_deviceIsReady = m_io_device.connect(bitfenixrecon_vendorId, bitfenixrecon_productId);
 
-    r = m_io_device.connect(bitfenixrecon_vendorId, bitfenixrecon_productId);
-
-    // assume device is ready until it tell us otherwise
-    m_deviceIsReady = true;
-
-    if (r) emit deviceConnected();
+    if (m_deviceIsReady) emit deviceConnected();
 
     return r;
 }
@@ -218,7 +213,7 @@ void FanController::disconnect(void)
 
 bool FanController::isConnected(void) const
 {
-    return m_io_device.isConnected();
+    return m_io_device == NULL ? false : m_io_device.isConnected();
 }
 
 void FanController::connectSignals(void)
@@ -234,6 +229,8 @@ void FanController::onPollTimerTriggered(void)
 
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
+
+    if (!isReady()) return;     // Simply return if the fan controller or device are not ready
 
     // Check device status every 8th poll
     if (m_pollNumber & 0x01) requestDeviceStatus();
