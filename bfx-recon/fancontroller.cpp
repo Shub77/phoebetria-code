@@ -101,11 +101,6 @@ bool FcData::setFromRawData(const QByteArray& rawdata)
         qDebug("============== Unknown response code from device");
         return false;
     }
-#ifdef QT_DEBUG
-    QString debugOut;
-    debugOut = "Got " + responseDef->desc;
-    qDebug() << debugOut;
-#endif
 
     // TODO: Add bounds checking
 
@@ -124,6 +119,7 @@ bool FcData::setFromRawData(const QByteArray& rawdata)
                  << "expected" << checksum << ")";
     }
 #endif
+
     return true;
 }
 
@@ -201,7 +197,7 @@ bool FanController::connect(void)
 
     if (m_deviceIsReady) emit deviceConnected();
 
-    return r;
+    return m_deviceIsReady;
 }
 
 void FanController::disconnect(void)
@@ -213,7 +209,7 @@ void FanController::disconnect(void)
 
 bool FanController::isConnected(void) const
 {
-    return m_io_device == NULL ? false : m_io_device.isConnected();
+    return m_io_device.isConnected();
 }
 
 void FanController::connectSignals(void)
@@ -239,9 +235,6 @@ void FanController::onPollTimerTriggered(void)
 
 void FanController::onRawData(QByteArray rawdata)
 {
-#ifdef QT_DEBUG
-    qDebug() << "Got raw data:" << rawdata.toHex();
-#endif
     FcData parsedData;
     parseRawData(rawdata, &parsedData);
 }
@@ -286,13 +279,6 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 5:  maxRPM (lo)
     // Byte 6:  maxRPM (hi)
     // Byte 7:  checksum
-
-#ifdef QT_DEBUG
-    qDebug() << "Temp for channel " << channel + 1 << ":" << rawToTemp(rawdata[2]) << "F";
-    qDebug() << "Fan #" << channel + 1 << "@" << rawToRPM(rawdata[4], rawdata[3]) << "RPM";
-    qDebug() << "Fan # " << channel +1 << "max speed:" << rawToRPM(rawdata[6], rawdata[5]) << "RPM";
-#endif
-
 }
 
 void FanController::parseDeviceFlags(const QByteArray& rawdata)
@@ -316,12 +302,9 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 4:  rpm (hi byte)
     // Byte 5:  checksum
 
-
-    // char csum = calcChecksum(rawdata, 5);
-    // qDebug() << "Calculated checksum: " << (unsigned int)csum;
 #ifdef QT_DEBUG
 
-    // TODO: Not sure if the fan speed repoted is the speed to set the fan when
+    // TODO: Not sure if the fan speed reported is the speed to set the fan when
     //       the alarm is reached
 
     qDebug() << "Alarm temp for channel " << channel + 1 << ":" << rawToTemp(rawdata[2]) << "F";
@@ -358,7 +341,9 @@ void FanController::requestDeviceStatus(void)
     char reqBuff[9];
 
     fcdata.command = commandDef(0x90);
-    // TODO: Check we got the command def
+    if (fcdata.command == NULL) {
+        qDebug() << "Requested unknown command. File: " << __FILE__ << "Line: " << __LINE__;
+    }
 
     fcdata.toRawData(reqBuff, sizeof(reqBuff));  
 
