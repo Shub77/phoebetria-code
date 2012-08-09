@@ -160,7 +160,6 @@ bool FcData::toRawData(char *dest, int buffLen, bool pad)
  class FanController
  ***************************************************************************/
 
-QMap<char, const fcCommandDef*> FanController::m_commandDefs;
 
 FanController::FanController(QObject *parent) :
     QObject(parent)
@@ -168,16 +167,19 @@ FanController::FanController(QObject *parent) :
     m_deviceIsReady = false;
     m_pollNumber = 0;
 
-    initCommandDefs();
     connectSignals();
 }
 
-void FanController::initCommandDefs(void)
+const fcCommandDef* FanController::commandDef(unsigned char cmd)
 {
+    const fcCommandDef* found = NULL;
     for (unsigned i = 0; i < COMMAND_DEF_COUNT; i++) {
-        m_commandDefs.insert(bfxReconCommandDefs[i].commandByte,
-                               &bfxReconCommandDefs[i]);
+        if (bfxReconCommandDefs[i].commandByte) {
+            found = &bfxReconCommandDefs[i];
+            break;
+        }
     }
+    return found;
 }
 
 
@@ -359,14 +361,10 @@ void FanController::requestDeviceStatus(void)
     char reqBuff[9];
 
     fcdata.command = commandDef(0x90);
+    // TODO: Check we got the command def
 
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));
+    fcdata.toRawData(reqBuff, sizeof(reqBuff));  
 
-    QByteArray ba = QByteArray::fromRawData(reqBuff, 9);
-
-    qDebug() << "****** Sending Request: " << ba.toHex();
-    //int byteswritten = m_io_device.sendData(reqBuff);
-    //qDebug() << "****** Bytes written: " << byteswritten;
-
+    m_io_device.sendData(reqBuff);
 }
 

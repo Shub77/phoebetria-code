@@ -87,7 +87,7 @@ public:
 
     bool isConnected(void) const;
 
-    static const fcCommandDef* commandDef(char cmd) { return m_commandDefs.value(cmd); }
+    static const fcCommandDef* commandDef(unsigned char cmd);
 signals:
     void deviceConnected(void);
     void deviceDisconnected(void);
@@ -98,7 +98,6 @@ public slots:
 
 protected:
     void connectSignals(void);
-    virtual void initCommandDefs(void);
 
     virtual bool parseRawData(QByteArray rawdata, FcData* parsedData);
 
