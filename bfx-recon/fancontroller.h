@@ -39,9 +39,9 @@ typedef enum fcReponseCodeCategory {
 typedef struct fcCommandDef
 {
     fcCommandCategory category;
-    int channel;            // if applicable
-    char commandByte;       // byte
-    const QString desc;     // natural language description
+    int channel;                // if applicable
+    unsigned char commandByte;
+    const QString desc;         // natural language description
 } fcCommandDef;
 
 

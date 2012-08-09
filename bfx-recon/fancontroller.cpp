@@ -25,33 +25,33 @@ static const unsigned bitfenix_flag_celcius = 1 << 1;
 static const unsigned bitfenix_flag_alarm   = 1 << 2;
 
 static const fcCommandDef bfxReconCommandDefs[] = {
-    { fcResp_TempAndSpeed, 0, 0x40,  QString("Channel 1 Temp & Speed") },
-    { fcResp_TempAndSpeed, 1, 0x41,  QString("Channel 2 Temp & Speed") },
-    { fcResp_TempAndSpeed, 2, 0x42,  QString("Channel 3 Temp & Speed") },
-    { fcResp_TempAndSpeed, 3, 0x43,  QString("Channel 4 Temp & Speed") },
-    { fcResp_TempAndSpeed, 4, 0x44,  QString("Channel 5 Temp & Speed") },
+    { fcResp_TempAndSpeed, 0, (unsigned char)0x40,  QString("Channel 1 Temp & Speed") },
+    { fcResp_TempAndSpeed, 1, (unsigned char)0x41,  QString("Channel 2 Temp & Speed") },
+    { fcResp_TempAndSpeed, 2, (unsigned char)0x42,  QString("Channel 3 Temp & Speed") },
+    { fcResp_TempAndSpeed, 3, (unsigned char)0x43,  QString("Channel 4 Temp & Speed") },
+    { fcResp_TempAndSpeed, 4, (unsigned char)0x44,  QString("Channel 5 Temp & Speed") },
 
-    { fcResp_DeviceFlags, -1, 0x60,  QString("Device Flags (Common)") },
+    { fcResp_DeviceFlags, -1, (unsigned char)0x60,  QString("Device Flags (Common)") },
 
-    { fcResp_AlarmAndSpeed, 0, 0x80, QString ("Channel 1 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 1, 0x81, QString ("Channel 2 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 2, 0x82, QString ("Channel 3 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 3, 0x83, QString ("Channel 4 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 4, 0x84, QString ("Channel 5 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 0, (unsigned char)0x80, QString ("Channel 1 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 1, (unsigned char)0x81, QString ("Channel 2 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 2, (unsigned char)0x82, QString ("Channel 3 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 3, (unsigned char)0x83, QString ("Channel 4 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 4, (unsigned char)0x84, QString ("Channel 5 Alarm Temp & Current Speed") },
 
-    { fcResp_DeviceStatus, -1, 0xA0, QString("Device Status") },
+    { fcResp_DeviceStatus, -1, (unsigned char)0xA0, QString("Device Status") },
 
-    { fcResp_Handshake, -1, 0xF0,    QString ("ACK") },
-    { fcResp_Handshake, -1, 0xFA,    QString ("NAK") },
+    { fcResp_Handshake, -1, (unsigned char)0xF0,    QString ("ACK") },
+    { fcResp_Handshake, -1, (unsigned char)0xFA,    QString ("NAK") },
 
-    { fcReq_GetChannelSettings, 0,  0x30, "Request Channel 1 Temp & Speed" },
-    { fcReq_GetChannelSettings, 1,  0x31, "Request Channel 2 Temp & Speed" },
-    { fcReq_GetChannelSettings, 2,  0x32, "Request Channel 3 Temp & Speed" },
-    { fcReq_GetChannelSettings, 3,  0x33, "Request Channel 4 Temp & Speed" },
-    { fcReq_GetChannelSettings, 4,  0x34, "Request Channel 5 Temp & Speed" },
-    { fcReq_GetDeviceStatus,    -1, 0x90, "Request device status" },
-    { fcReq_GetCurrentChannel,  -1, 0x10, "Request current channel" },
-    { fcReq_GetDeviceFlags,     -1, 0x50, "Request device flags" }
+    { fcReq_GetChannelSettings, 0,  (unsigned char)0x30, "Request Channel 1 Temp & Speed" },
+    { fcReq_GetChannelSettings, 1,  (unsigned char)0x31, "Request Channel 2 Temp & Speed" },
+    { fcReq_GetChannelSettings, 2,  (unsigned char)0x32, "Request Channel 3 Temp & Speed" },
+    { fcReq_GetChannelSettings, 3,  (unsigned char)0x33, "Request Channel 4 Temp & Speed" },
+    { fcReq_GetChannelSettings, 4,  (unsigned char)0x34, "Request Channel 5 Temp & Speed" },
+    { fcReq_GetDeviceStatus,    -1, (unsigned char)0x90, "Request device status" },
+    { fcReq_GetCurrentChannel,  -1, (unsigned char)0x10, "Request current channel" },
+    { fcReq_GetDeviceFlags,     -1, (unsigned char)0x50, "Request device flags" }
 };
 #define COMMAND_DEF_COUNT (sizeof(bfxReconCommandDefs) / sizeof(bfxReconCommandDefs[0]))
 
@@ -365,7 +365,7 @@ void FanController::requestDeviceStatus(void)
     QByteArray ba = QByteArray::fromRawData(reqBuff, 9);
 
     qDebug() << "****** Sending Request: " << ba.toHex();
-    int byteswritten = m_io_device.sendData(reqBuff);
+    //int byteswritten = m_io_device.sendData(reqBuff);
     //qDebug() << "****** Bytes written: " << byteswritten;
 
 }
