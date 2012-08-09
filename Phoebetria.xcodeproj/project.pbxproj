@@ -16,8 +16,8 @@
 		6011E5E35F318E2AF032EF38 /* moc_temperaturemonitor.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 3EB29F80ED4C9A1CE27C849B /* moc_temperaturemonitor.cpp */; settings = {ATTRIBUTES = (); }; };
 		838B2351DBF9F8F97A50663D /* fandata.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 83B4293B49C8579C26F62EE5 /* fandata.cpp */; settings = {ATTRIBUTES = (); }; };
 		8F888AF23B6C00C9A4A6C6BF /* gui_mainwindow.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 4204F86AD82D4BDBB8043446 /* gui_mainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
-		9D19270715D186B700A4AC4B /* CoreFoundation.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 9D19270615D186B700A4AC4B /* CoreFoundation.framework */; };
-		9D19270915D186BF00A4AC4B /* IOKit.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 9D19270815D186BF00A4AC4B /* IOKit.framework */; };
+		9D595DCD15D4111300E45AB5 /* IOKit.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 9D595DCC15D4111300E45AB5 /* IOKit.framework */; };
+		9D595DCF15D4112100E45AB5 /* CoreFoundation.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 9D595DCE15D4112100E45AB5 /* CoreFoundation.framework */; };
 		CFC88B7F3472827A6D5355AC /* hid.c in Build Sources */ = {isa = PBXBuildFile; fileRef = 80FD37A030B58265779E5AC7 /* hid.c */; settings = {ATTRIBUTES = (); }; };
 		CFE1E08E157CD61AA16343E0 /* temperaturemonitor.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = AC2097EEBF560CB484B54624 /* temperaturemonitor.cpp */; settings = {ATTRIBUTES = (); }; };
 		D657ABD0A6ECF8A899970CD6 /* device-io.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = B9F31426E4E658F6AB4D7A1E /* device-io.cpp */; settings = {ATTRIBUTES = (); }; };
@@ -40,9 +40,9 @@
 		850A4334E1CBDB816DEC07E2 /* moc_fancontroller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_fancontroller.cpp; sourceTree = "<group>"; };
 		9B0776CB78D189977F9E4A04 /* fancontroller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fancontroller.cpp; path = "bfx-recon/fancontroller.cpp"; sourceTree = "<group>"; };
 		9B36DA7E32F0304E780E7972 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /Library/Frameworks/QtGui.framework; sourceTree = "<absolute>"; };
-		9D19270215D1868500A4AC4B /* Phoebetria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phoebetria.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D19270615D186B700A4AC4B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		9D19270815D186BF00A4AC4B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		9D595DC815D410D400E45AB5 /* Phoebetria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phoebetria.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D595DCC15D4111300E45AB5 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		9D595DCE15D4112100E45AB5 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		9E0627D8E750F6D9E47B4A47 /* Phoebetria.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = Phoebetria.pro; sourceTree = "<group>"; };
 		A0E9A4BF733460FAB6BBE23A /* ui_gui_mainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ui_gui_mainwindow.h; sourceTree = "<group>"; };
 		A2D7E1B7FD4361E7B40BA311 /* hidapi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = hidapi.h; path = "hidapi-0.7.0/hidapi/hidapi.h"; sourceTree = "<group>"; };
@@ -60,8 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D19270915D186BF00A4AC4B /* IOKit.framework in Frameworks & Libraries */,
-				9D19270715D186B700A4AC4B /* CoreFoundation.framework in Frameworks & Libraries */,
+				9D595DCF15D4112100E45AB5 /* CoreFoundation.framework in Frameworks & Libraries */,
+				9D595DCD15D4111300E45AB5 /* IOKit.framework in Frameworks & Libraries */,
 				501667F26B3C1FF6767A7C12 /* QtGui.framework in Frameworks & Libraries */,
 				069D05B0128AE5DC7EE31738 /* QtCore.framework in Frameworks & Libraries */,
 			);
@@ -74,15 +74,15 @@
 		05596AB53D8D521C69802C27 /* Phoebetria */ = {
 			isa = PBXGroup;
 			children = (
-				9D19270815D186BF00A4AC4B /* IOKit.framework */,
-				9D19270615D186B700A4AC4B /* CoreFoundation.framework */,
+				9D595DCE15D4112100E45AB5 /* CoreFoundation.framework */,
+				9D595DCC15D4111300E45AB5 /* IOKit.framework */,
 				FB61758D0F0FDA4BA867C3D5 /* Sources */,
 				46E892BBB6BB6952967E0561 /* Temporary Sources */,
 				883D7615C4D2DE3FA1218F12 /* Headers */,
 				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
 				EEC299C65D5017EB9DD513B0 /* Sources [UIC] */,
 				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				9D19270315D1868500A4AC4B /* Products */,
+				9D595DC915D410D400E45AB5 /* Products */,
 			);
 			name = Phoebetria;
 			sourceTree = "<group>";
@@ -153,10 +153,10 @@
 			name = Headers;
 			sourceTree = "<group>";
 		};
-		9D19270315D1868500A4AC4B /* Products */ = {
+		9D595DC915D410D400E45AB5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9D19270215D1868500A4AC4B /* Phoebetria.app */,
+				9D595DC815D410D400E45AB5 /* Phoebetria.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -228,7 +228,7 @@
 			);
 			name = Phoebetria;
 			productName = Phoebetria;
-			productReference = 9D19270215D1868500A4AC4B /* Phoebetria.app */;
+			productReference = 9D595DC815D410D400E45AB5 /* Phoebetria.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -247,7 +247,7 @@
 				en,
 			);
 			mainGroup = 05596AB53D8D521C69802C27 /* Phoebetria */;
-			productRefGroup = 9D19270315D1868500A4AC4B /* Products */;
+			productRefGroup = 9D595DC915D410D400E45AB5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
