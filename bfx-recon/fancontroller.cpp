@@ -317,10 +317,14 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 6:  maxRPM (hi)
     // Byte 7:  checksum
 
+#ifdef QT_DEBUG
     qDebug() << "Channel" << channel + 1 << "----probe temp------" << rawToTemp(rawdata[2]) << "F";
     qDebug() << "Channel" << channel + 1 << "----current RPM-----" << rawToRPM(rawdata[4], rawdata[3]) << "RPM";
     qDebug() << "Channel" << channel + 1 << "----max RPM---------" << rawToRPM(rawdata[6], rawdata[5]) << "RPM";
+#endif
 
+    emit currentTemp(channel, rawToTemp(rawdata[2]));
+    emit currentRPM(channel, rawToRPM(rawdata[4], rawdata[3]));
 }
 
 void FanController::parseDeviceFlags(const QByteArray& rawdata)
@@ -345,7 +349,6 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 5:  checksum
 
 #ifdef QT_DEBUG
-
     // TODO: Not sure if the fan speed reported is the speed to set the fan when
     //       the alarm is reached
 
@@ -353,6 +356,8 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
     qDebug() << "Channel" << channel + 1 << "----on alarm speed--" << rawToRPM(rawdata[4], rawdata[3]) << "RPM";
 #endif
 
+    emit currentAlarmTemp(channel, rawToTemp(rawdata[2]));
+    emit currentRpmOnAlarm(channel, rawToRPM(rawdata[4], rawdata[3]));
 }
 
 void FanController::parseDeviceStatus(const QByteArray& rawdata)

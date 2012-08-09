@@ -88,6 +88,10 @@ public:
 signals:
     void deviceConnected(void);
     void deviceDisconnected(void);
+    void currentTemp(int probe, int temp);
+    void currentRPM(int channel, unsigned RPM);
+    void currentAlarmTemp(int channel, int temp);
+    void currentRpmOnAlarm(int channel, unsigned RPM);
 
 public slots:
     void onPollTimerTriggered(void);
