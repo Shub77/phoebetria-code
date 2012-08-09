@@ -37,13 +37,13 @@ win32 {
     LIBS += -lsetupapi
 }
 
-unix {
+unix:!macx {
     CONFIG += link_pkgconfig
     PKGCONFIG += libusb-1.0
     SOURCES += hidapi-0.7.0/linux/hid-libusb.c
     LIBS += -lusb-1.0 -ludev -lrt
 }
-mac {
+macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     QMAKE_MAC_SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
     SOURCES += hidapi-0.7.0/mac/hid.c
