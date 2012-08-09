@@ -170,7 +170,7 @@ const fcCommandDef* FanController::commandDef(unsigned char cmd)
 {
     const fcCommandDef* found = NULL;
     for (unsigned i = 0; i < COMMAND_DEF_COUNT; i++) {
-        if (bfxReconCommandDefs[i].commandByte) {
+        if (bfxReconCommandDefs[i].commandByte == cmd) {
             found = &bfxReconCommandDefs[i];
             break;
         }
@@ -197,6 +197,7 @@ bool FanController::connect(void)
 
     if (r) emit deviceConnected();
 
+    m_deviceIsReady = true; // Assume device is ready until it tells us otherwise
     return r;
 }
 
@@ -224,12 +225,11 @@ void FanController::disconnect(void)
 bool FanController::isReady(void)
 {
     if (!isInterfaceConnected()) {
-        if (connect()) {
-            this->requestDeviceStatus();
+        if (!connect()) {
+            return false;
         }
-        return false;
     }
-
+    requestDeviceStatus();
     return m_deviceIsReady;
 }
 
@@ -277,9 +277,9 @@ bool FanController::parseRawData(QByteArray rawdata, FcData *parsedData)
 {
     parsedData->setFromRawData(rawdata);
 
-#if 0
-    switch (responseDef->category)
+    switch (parsedData->command->category)
     {
+#if 0
     case fcResp_TempAndSpeed:
         parseTempAndSpeed(responseDef->channel, rawdata);
         break;
@@ -289,6 +289,7 @@ bool FanController::parseRawData(QByteArray rawdata, FcData *parsedData)
     case fcResp_AlarmAndSpeed:
         parseAlarmAndSpeed(responseDef->channel, rawdata);
         break;
+#endif
     case fcResp_DeviceStatus:
         parseDeviceStatus(rawdata);
         break;
@@ -300,7 +301,6 @@ bool FanController::parseRawData(QByteArray rawdata, FcData *parsedData)
     }
 
     return true;
-#endif
 }
 
 void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
