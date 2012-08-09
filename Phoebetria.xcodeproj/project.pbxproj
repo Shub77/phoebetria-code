@@ -1,0 +1,471 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0360F96B875A18E6648125C4 /* fancontroller.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 9B0776CB78D189977F9E4A04 /* fancontroller.cpp */; settings = {ATTRIBUTES = (); }; };
+		047D17BF50621995D184A6D9 /* moc_gui_mainwindow.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 12CF3EFC1400EAD1BD1B9566 /* moc_gui_mainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
+		069D05B0128AE5DC7EE31738 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 7BC2E65A5E699A5E5D834CA2 /* QtCore.framework */; };
+		2B093CA6F071B023A473CED0 /* main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 118FCBAABA162BA17933C789 /* main.cpp */; settings = {ATTRIBUTES = (); }; };
+		501667F26B3C1FF6767A7C12 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 9B36DA7E32F0304E780E7972 /* QtGui.framework */; };
+		50339E8671CA3411456002E9 /* phoebetriaapp.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 20ADF1FDC00D42CE6A5D54E4 /* phoebetriaapp.cpp */; settings = {ATTRIBUTES = (); }; };
+		6011E5E35F318E2AF032EF38 /* moc_temperaturemonitor.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 3EB29F80ED4C9A1CE27C849B /* moc_temperaturemonitor.cpp */; settings = {ATTRIBUTES = (); }; };
+		838B2351DBF9F8F97A50663D /* fandata.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 83B4293B49C8579C26F62EE5 /* fandata.cpp */; settings = {ATTRIBUTES = (); }; };
+		8F888AF23B6C00C9A4A6C6BF /* gui_mainwindow.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 4204F86AD82D4BDBB8043446 /* gui_mainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
+		9D19270715D186B700A4AC4B /* CoreFoundation.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 9D19270615D186B700A4AC4B /* CoreFoundation.framework */; };
+		9D19270915D186BF00A4AC4B /* IOKit.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 9D19270815D186BF00A4AC4B /* IOKit.framework */; };
+		CFC88B7F3472827A6D5355AC /* hid.c in Build Sources */ = {isa = PBXBuildFile; fileRef = 80FD37A030B58265779E5AC7 /* hid.c */; settings = {ATTRIBUTES = (); }; };
+		CFE1E08E157CD61AA16343E0 /* temperaturemonitor.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = AC2097EEBF560CB484B54624 /* temperaturemonitor.cpp */; settings = {ATTRIBUTES = (); }; };
+		D657ABD0A6ECF8A899970CD6 /* device-io.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = B9F31426E4E658F6AB4D7A1E /* device-io.cpp */; settings = {ATTRIBUTES = (); }; };
+		DBB78B2B95AB8B0205BDB3B6 /* moc_device-io.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = B216C4BAB1B84FB88B1748F3 /* moc_device-io.cpp */; settings = {ATTRIBUTES = (); }; };
+		F6D53A8B3A0EABA449B8D94B /* moc_fancontroller.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 850A4334E1CBDB816DEC07E2 /* moc_fancontroller.cpp */; settings = {ATTRIBUTES = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		118FCBAABA162BA17933C789 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		12CF3EFC1400EAD1BD1B9566 /* moc_gui_mainwindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_gui_mainwindow.cpp; sourceTree = "<group>"; };
+		20ADF1FDC00D42CE6A5D54E4 /* phoebetriaapp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = phoebetriaapp.cpp; sourceTree = "<group>"; };
+		2CBD2C45B34E1998AF2AD28C /* temperaturemonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = temperaturemonitor.h; sourceTree = "<group>"; };
+		3EB29F80ED4C9A1CE27C849B /* moc_temperaturemonitor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_temperaturemonitor.cpp; sourceTree = "<group>"; };
+		4204F86AD82D4BDBB8043446 /* gui_mainwindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gui_mainwindow.cpp; sourceTree = "<group>"; };
+		668BA4F4D4C2A77C72BA32F8 /* device-io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "device-io.h"; sourceTree = "<group>"; };
+		7BC2E65A5E699A5E5D834CA2 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /Library/Frameworks/QtCore.framework; sourceTree = "<absolute>"; };
+		7DEFDD353F7B454D33090637 /* fandata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fandata.h; sourceTree = "<group>"; };
+		80FD37A030B58265779E5AC7 /* hid.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = hid.c; path = "hidapi-0.7.0/mac/hid.c"; sourceTree = "<group>"; };
+		83B4293B49C8579C26F62EE5 /* fandata.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = fandata.cpp; sourceTree = "<group>"; };
+		850A4334E1CBDB816DEC07E2 /* moc_fancontroller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_fancontroller.cpp; sourceTree = "<group>"; };
+		9B0776CB78D189977F9E4A04 /* fancontroller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fancontroller.cpp; path = "bfx-recon/fancontroller.cpp"; sourceTree = "<group>"; };
+		9B36DA7E32F0304E780E7972 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /Library/Frameworks/QtGui.framework; sourceTree = "<absolute>"; };
+		9D19270215D1868500A4AC4B /* Phoebetria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phoebetria.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D19270615D186B700A4AC4B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		9D19270815D186BF00A4AC4B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		9E0627D8E750F6D9E47B4A47 /* Phoebetria.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = Phoebetria.pro; sourceTree = "<group>"; };
+		A0E9A4BF733460FAB6BBE23A /* ui_gui_mainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ui_gui_mainwindow.h; sourceTree = "<group>"; };
+		A2D7E1B7FD4361E7B40BA311 /* hidapi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = hidapi.h; path = "hidapi-0.7.0/hidapi/hidapi.h"; sourceTree = "<group>"; };
+		AC2097EEBF560CB484B54624 /* temperaturemonitor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = temperaturemonitor.cpp; sourceTree = "<group>"; };
+		B216C4BAB1B84FB88B1748F3 /* moc_device-io.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "moc_device-io.cpp"; sourceTree = "<group>"; };
+		B9F31426E4E658F6AB4D7A1E /* device-io.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "device-io.cpp"; sourceTree = "<group>"; };
+		D57D170628162FD18C5490EA /* fancontroller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fancontroller.h; path = "bfx-recon/fancontroller.h"; sourceTree = "<group>"; };
+		E5699095D1653D44815545B2 /* phoebetriaapp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = phoebetriaapp.h; sourceTree = "<group>"; };
+		F54E686CFE8E12DCDD80AA69 /* gui_mainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gui_mainwindow.h; sourceTree = "<group>"; };
+		F758B5F95E229F7D0AAB9AEA /* gui_mainwindow.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = gui_mainwindow.ui; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A1043669E6E5A7426EA502A /* Frameworks & Libraries */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D19270915D186BF00A4AC4B /* IOKit.framework in Frameworks & Libraries */,
+				9D19270715D186B700A4AC4B /* CoreFoundation.framework in Frameworks & Libraries */,
+				501667F26B3C1FF6767A7C12 /* QtGui.framework in Frameworks & Libraries */,
+				069D05B0128AE5DC7EE31738 /* QtCore.framework in Frameworks & Libraries */,
+			);
+			name = "Frameworks & Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		05596AB53D8D521C69802C27 /* Phoebetria */ = {
+			isa = PBXGroup;
+			children = (
+				9D19270815D186BF00A4AC4B /* IOKit.framework */,
+				9D19270615D186B700A4AC4B /* CoreFoundation.framework */,
+				FB61758D0F0FDA4BA867C3D5 /* Sources */,
+				46E892BBB6BB6952967E0561 /* Temporary Sources */,
+				883D7615C4D2DE3FA1218F12 /* Headers */,
+				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
+				EEC299C65D5017EB9DD513B0 /* Sources [UIC] */,
+				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
+				9D19270315D1868500A4AC4B /* Products */,
+			);
+			name = Phoebetria;
+			sourceTree = "<group>";
+		};
+		0DDBAA6B5CF34FB52E3D8B7D /* hidapi */ = {
+			isa = PBXGroup;
+			children = (
+				A2D7E1B7FD4361E7B40BA311 /* hidapi.h */,
+			);
+			name = hidapi;
+			sourceTree = "<group>";
+		};
+		250370E91F09F2440AC1AAD6 /* hidapi-0.7.0 */ = {
+			isa = PBXGroup;
+			children = (
+				2C784D3CA63E8D3098D8436A /* mac */,
+			);
+			name = "hidapi-0.7.0";
+			sourceTree = "<group>";
+		};
+		2C784D3CA63E8D3098D8436A /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				80FD37A030B58265779E5AC7 /* hid.c */,
+			);
+			name = mac;
+			sourceTree = "<group>";
+		};
+		46E892BBB6BB6952967E0561 /* Temporary Sources */ = {
+			isa = PBXGroup;
+			children = (
+				12CF3EFC1400EAD1BD1B9566 /* moc_gui_mainwindow.cpp */,
+				850A4334E1CBDB816DEC07E2 /* moc_fancontroller.cpp */,
+				B216C4BAB1B84FB88B1748F3 /* moc_device-io.cpp */,
+				3EB29F80ED4C9A1CE27C849B /* moc_temperaturemonitor.cpp */,
+				A0E9A4BF733460FAB6BBE23A /* ui_gui_mainwindow.h */,
+			);
+			name = "Temporary Sources";
+			sourceTree = "<group>";
+		};
+		6DD826C7BF60C9578FCF6796 /* bfx-recon */ = {
+			isa = PBXGroup;
+			children = (
+				D57D170628162FD18C5490EA /* fancontroller.h */,
+			);
+			name = "bfx-recon";
+			sourceTree = "<group>";
+		};
+		7CABE3C80E79AD2B307756D2 /* Sources [qmake] */ = {
+			isa = PBXGroup;
+			children = (
+				9E0627D8E750F6D9E47B4A47 /* Phoebetria.pro */,
+			);
+			name = "Sources [qmake]";
+			sourceTree = "<group>";
+		};
+		883D7615C4D2DE3FA1218F12 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				F54E686CFE8E12DCDD80AA69 /* gui_mainwindow.h */,
+				E5699095D1653D44815545B2 /* phoebetriaapp.h */,
+				6DD826C7BF60C9578FCF6796 /* bfx-recon */,
+				7DEFDD353F7B454D33090637 /* fandata.h */,
+				668BA4F4D4C2A77C72BA32F8 /* device-io.h */,
+				2CBD2C45B34E1998AF2AD28C /* temperaturemonitor.h */,
+				C1A10843698DDBBE16D4DB82 /* hidapi-0.7.0 */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		9D19270315D1868500A4AC4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9D19270215D1868500A4AC4B /* Phoebetria.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C1A10843698DDBBE16D4DB82 /* hidapi-0.7.0 */ = {
+			isa = PBXGroup;
+			children = (
+				0DDBAA6B5CF34FB52E3D8B7D /* hidapi */,
+			);
+			name = "hidapi-0.7.0";
+			sourceTree = "<group>";
+		};
+		ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				9B36DA7E32F0304E780E7972 /* QtGui.framework */,
+				7BC2E65A5E699A5E5D834CA2 /* QtCore.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		EEC299C65D5017EB9DD513B0 /* Sources [UIC] */ = {
+			isa = PBXGroup;
+			children = (
+				F758B5F95E229F7D0AAB9AEA /* gui_mainwindow.ui */,
+			);
+			name = "Sources [UIC]";
+			sourceTree = "<group>";
+		};
+		F7329A56A1C5BFC62663120F /* bfx-recon */ = {
+			isa = PBXGroup;
+			children = (
+				9B0776CB78D189977F9E4A04 /* fancontroller.cpp */,
+			);
+			name = "bfx-recon";
+			sourceTree = "<group>";
+		};
+		FB61758D0F0FDA4BA867C3D5 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				118FCBAABA162BA17933C789 /* main.cpp */,
+				4204F86AD82D4BDBB8043446 /* gui_mainwindow.cpp */,
+				20ADF1FDC00D42CE6A5D54E4 /* phoebetriaapp.cpp */,
+				F7329A56A1C5BFC62663120F /* bfx-recon */,
+				83B4293B49C8579C26F62EE5 /* fandata.cpp */,
+				B9F31426E4E658F6AB4D7A1E /* device-io.cpp */,
+				AC2097EEBF560CB484B54624 /* temperaturemonitor.cpp */,
+				250370E91F09F2440AC1AAD6 /* hidapi-0.7.0 */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D85E74007D15103D341315DA /* Phoebetria */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17B3380A4D6A7D415E7F2E1E /* Build configuration list for PBXNativeTarget "Phoebetria" */;
+			buildPhases = (
+				D7BA7D76DAB5DD13389D6332 /* Qt Qmake */,
+				A0A52A2ADF7A1E2A99738674 /* Qt Preprocessors */,
+				C29B8785722055ED95EF7B57 /* Build Sources */,
+				2A1043669E6E5A7426EA502A /* Frameworks & Libraries */,
+				3787F99312C85FF0073FD7BA /* Bundle Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Phoebetria;
+			productName = Phoebetria;
+			productReference = 9D19270215D1868500A4AC4B /* Phoebetria.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		91B15E841AA80083484172DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+			};
+			buildConfigurationList = CC82A9286117DFED018F418F /* Build configuration list for PBXProject "Phoebetria" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 05596AB53D8D521C69802C27 /* Phoebetria */;
+			productRefGroup = 9D19270315D1868500A4AC4B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D85E74007D15103D341315DA /* Phoebetria */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3787F99312C85FF0073FD7BA /* Bundle Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "Bundle Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A0A52A2ADF7A1E2A99738674 /* Qt Preprocessors */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "Qt Preprocessors";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Users/christopher/Documents/Xcode/phoebetria-code -f 'Phoebetria.xcodeproj/qt_preprocess.mak'";
+		};
+		D7BA7D76DAB5DD13389D6332 /* Qt Qmake */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "Qt Qmake";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Users/christopher/Documents/Xcode/phoebetria-code -f 'Phoebetria.xcodeproj/qt_makeqmake.mak'";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C29B8785722055ED95EF7B57 /* Build Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B093CA6F071B023A473CED0 /* main.cpp in Build Sources */,
+				8F888AF23B6C00C9A4A6C6BF /* gui_mainwindow.cpp in Build Sources */,
+				50339E8671CA3411456002E9 /* phoebetriaapp.cpp in Build Sources */,
+				0360F96B875A18E6648125C4 /* fancontroller.cpp in Build Sources */,
+				838B2351DBF9F8F97A50663D /* fandata.cpp in Build Sources */,
+				D657ABD0A6ECF8A899970CD6 /* device-io.cpp in Build Sources */,
+				CFE1E08E157CD61AA16343E0 /* temperaturemonitor.cpp in Build Sources */,
+				CFC88B7F3472827A6D5355AC /* hid.c in Build Sources */,
+				047D17BF50621995D184A6D9 /* moc_gui_mainwindow.cpp in Build Sources */,
+				F6D53A8B3A0EABA449B8D94B /* moc_fancontroller.cpp in Build Sources */,
+				DBB78B2B95AB8B0205BDB3B6 /* moc_device-io.cpp in Build Sources */,
+				6011E5E35F318E2AF032EF38 /* moc_temperaturemonitor.cpp in Build Sources */,
+			);
+			name = "Build Sources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4B72B24813252891014BCF61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = x86_64;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					/Library/Frameworks,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					/Library/Frameworks/QtCore.framework/Versions/4/Headers,
+					/usr/include/QtCore,
+					/Library/Frameworks/QtGui.framework/Versions/4/Headers,
+					/usr/include/QtGui,
+					/usr/include,
+					"hidapi-0.7.0/hidapi",
+					.,
+					.,
+					/usr/local/include,
+					/System/Library/Frameworks/CarbonCore.framework/Headers,
+					"/usr/local/Qt4.8/mkspecs/macx-xcode",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = /Library/Frameworks;
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-W",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-W",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED",
+				);
+				OTHER_LDFLAGS = (
+					"-headerpad_max_install_names",
+					"-L/Library/Frameworks",
+					"-F/Library/Frameworks",
+				);
+				PRODUCT_NAME = Phoebetria;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk;
+			};
+			name = Debug;
+		};
+		8C7174830A1E4DCBA0332EC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = Phoebetria;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk;
+			};
+			name = Release;
+		};
+		BEC09A62E69C3553534FF35E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Phoebetria;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk;
+			};
+			name = Debug;
+		};
+		D70590BEB531B51029F711BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = x86_64;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					/Library/Frameworks,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				HEADER_SEARCH_PATHS = (
+					/Library/Frameworks/QtCore.framework/Versions/4/Headers,
+					/usr/include/QtCore,
+					/Library/Frameworks/QtGui.framework/Versions/4/Headers,
+					/usr/include/QtGui,
+					/usr/include,
+					"hidapi-0.7.0/hidapi",
+					.,
+					.,
+					/usr/local/include,
+					/System/Library/Frameworks/CarbonCore.framework/Headers,
+					"/usr/local/Qt4.8/mkspecs/macx-xcode",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = /Library/Frameworks;
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-W",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-W",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED",
+				);
+				OTHER_LDFLAGS = (
+					"-headerpad_max_install_names",
+					"-L/Library/Frameworks",
+					"-F/Library/Frameworks",
+				);
+				PRODUCT_NAME = Phoebetria;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		17B3380A4D6A7D415E7F2E1E /* Build configuration list for PBXNativeTarget "Phoebetria" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEC09A62E69C3553534FF35E /* Debug */,
+				8C7174830A1E4DCBA0332EC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC82A9286117DFED018F418F /* Build configuration list for PBXProject "Phoebetria" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B72B24813252891014BCF61 /* Debug */,
+				D70590BEB531B51029F711BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 91B15E841AA80083484172DE /* Project object */;
+}
