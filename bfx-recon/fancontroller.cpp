@@ -24,7 +24,7 @@ static const unsigned bitfenix_flag_auto    = 1 << 0;
 static const unsigned bitfenix_flag_celcius = 1 << 1;
 static const unsigned bitfenix_flag_alarm   = 1 << 2;
 
-static const fcCommandDef bfxReconCommandDefs[] = {
+static const fcCommandDef bfxReconResponseDefs[] = {
     { fcResp_TempAndSpeed, 0, (unsigned char)0x40,  QString("Channel 1 Temp & Speed") },
     { fcResp_TempAndSpeed, 1, (unsigned char)0x41,  QString("Channel 2 Temp & Speed") },
     { fcResp_TempAndSpeed, 2, (unsigned char)0x42,  QString("Channel 3 Temp & Speed") },
@@ -53,7 +53,7 @@ static const fcCommandDef bfxReconCommandDefs[] = {
     { fcReq_GetCurrentChannel,  -1, (unsigned char)0x10, "Request current channel" },
     { fcReq_GetDeviceFlags,     -1, (unsigned char)0x50, "Request device flags" }
 };
-#define COMMAND_DEF_COUNT (sizeof(bfxReconCommandDefs) / sizeof(bfxReconCommandDefs[0]))
+#define RESPONSE_DEF_COUNT (sizeof(bfxReconResponseDefs) / sizeof(bfxReconResponseDefs[0]))
 
 
 /****************************************************************************
@@ -96,7 +96,7 @@ bool FcData::setFromRawData(const QByteArray& rawdata)
         qDebug ("FanController::parseRawData() not enough data");
         return false;
     }
-    responseDef = FanController::commandDef_fromByteCode(rawdata[1]);
+    responseDef = FanController::getResponseDef(rawdata[1]);
     if (responseDef == NULL) {
         qDebug("============== Unknown response code from device");
         return false;
@@ -166,12 +166,12 @@ FanController::FanController(QObject *parent) :
     connectSignals();
 }
 
-const fcCommandDef* FanController::commandDef_fromByteCode(unsigned char cmd)
+const fcCommandDef* FanController::getResponseDef(unsigned char cmd)
 {
     const fcCommandDef* found = NULL;
-    for (unsigned i = 0; i < COMMAND_DEF_COUNT; i++) {
-        if (bfxReconCommandDefs[i].commandByte == cmd) {
-            found = &bfxReconCommandDefs[i];
+    for (unsigned i = 0; i < RESPONSE_DEF_COUNT; i++) {
+        if (bfxReconResponseDefs[i].commandByte == cmd) {
+            found = &bfxReconResponseDefs[i];
             break;
         }
     }
@@ -376,7 +376,7 @@ void FanController::requestDeviceStatus(void)
     FcData fcdata;
     char reqBuff[9];
 
-    fcdata.command = commandDef_fromByteCode(0x90);
+    fcdata.command = getResponseDef(0x90);
     if (fcdata.command == NULL) {
         qDebug() << "Requested unknown command. File: " << __FILE__ << "Line: " << __LINE__;
     }
