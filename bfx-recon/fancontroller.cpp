@@ -193,11 +193,11 @@ int FanController::HID_productId(void)
 
 bool FanController::connect(void)
 {
-    m_deviceIsReady = m_io_device.connect(bitfenixrecon_vendorId, bitfenixrecon_productId);
+    bool r = m_io_device.connect(bitfenixrecon_vendorId, bitfenixrecon_productId);
 
-    if (m_deviceIsReady) emit deviceConnected();
+    if (r) emit deviceConnected();
 
-    return m_deviceIsReady;
+    return r;
 }
 
 void FanController::disconnect(void)
@@ -207,7 +207,40 @@ void FanController::disconnect(void)
     emit deviceDisconnected();
 }
 
-bool FanController::isConnected(void) const
+/** This function is different to isInterfaceConnected() in several aspects. First,
+  * if the actual HID I/O device is not connected then this function
+  * will: (a) attempt to make a connection; and (b) if the connection is
+  * successful asks the device (rather than the interface) if it's ready.
+  * In contrast, isInterfaceConnected() is at a lower level to see if the device
+  * interface is connected (whether or not the device is "ready" is not
+  * tested for beyond the level of the interface).
+  *
+  * @internal m_deviceIsReady is set (not in this function) by sending a
+  *           request to the device to ask if it's ready (assuming the HID
+  *           connection is established). isInterfaceConnected() may be true and this
+  *           function still return false (i.e. if the interface is established
+  *           but for whatever the actual device reports that it's not ready).
+  */
+bool FanController::isReady(void)
+{
+    if (!isInterfaceConnected()) {
+        if (connect()) {
+            this->requestDeviceStatus();
+        }
+        return false;
+    }
+
+    return m_deviceIsReady;
+}
+
+/** Check if the I/O interface to the device is established. In most cases it's
+  * probably better to use isReady() which not only checks if the interface is
+  * established, but additionally whether or not the device has reported that
+  * it's ready.
+  *
+  * @returns true == the I/O interface is established, otherwise false.
+  */
+bool FanController::isInterfaceConnected(void) const
 {
     return m_io_device.isConnected();
 }
@@ -223,13 +256,14 @@ void FanController::onPollTimerTriggered(void)
     m_pollNumber++;
     m_pollNumber &= 0x07;       // 0 <= m_pollNumber <= 7
 
+    // isReady() will try to connect the device iface if not already connected
+    if (!isReady()) return;
+
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-    if (!isReady()) return;     // Simply return if the fan controller or device are not ready
-
     // Check device status every 8th poll
-    if (m_pollNumber & 0x01) requestDeviceStatus();
+    if (m_pollNumber % 8 == 0) requestDeviceStatus();
 
 }
 

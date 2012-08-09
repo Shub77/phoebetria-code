@@ -83,9 +83,9 @@ public:
 
     bool connect(void);
     void disconnect(void);
-    bool isReady(void) { return m_deviceIsReady; }
+    bool isReady(void);
 
-    bool isConnected(void) const;
+    bool isInterfaceConnected(void) const;
 
     static const fcCommandDef* commandDef(unsigned char cmd);
 signals:
