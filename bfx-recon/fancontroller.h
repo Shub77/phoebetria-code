@@ -91,8 +91,10 @@ signals:
     void deviceDisconnected(void);
     void currentTemp(int probe, int temp);
     void currentRPM(int channel, int RPM);
+    void maxRPM(int channel, int RPM);
     void currentAlarmTemp(int channel, int temp);
     void currentRpmOnAlarm(int channel, unsigned RPM);
+    void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
 
 public slots:
     void onPollTimerTriggered(void);
@@ -116,8 +118,6 @@ protected:
 
     virtual int rawToTemp(unsigned char byte) const;
     virtual int rawToRPM(char highByte, char lowByte) const;
-
-    // Request "commands"
 
 private:
     bool m_deviceIsReady;

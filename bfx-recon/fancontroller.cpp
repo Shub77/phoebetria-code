@@ -67,6 +67,7 @@ static const unsigned char fcReq_DeviceFlags = 0x50;
 static const unsigned char fcReq_CurentChannel = 0x10;
 
 /****************************************************************************
+ ****************************************************************************
  class fcData
  ***************************************************************************/
 
@@ -106,9 +107,10 @@ bool FcData::setFromRawData(const QByteArray& rawdata)
         qDebug ("FanController::parseRawData() not enough data");
         return false;
     }
-    responseDef = FanController::getResponseDef(rawdata[1]);
+    responseDef = FanController::getResponseDef(rawdata.at(1));
     if (responseDef == NULL) {
-        qDebug() << "============== Unknown response code from device:" << (qint8)rawdata[1];
+        qDebug() << "============== Unknown response code from device:"
+                 << (qint8)rawdata.at(1);
         return false;
     }
 
@@ -163,9 +165,9 @@ bool FcData::toRawData(char *dest, int buffLen, bool pad)
 
 
 /****************************************************************************
+ ****************************************************************************
  class FanController
  ***************************************************************************/
-
 
 FanController::FanController(QObject *parent) :
     QObject(parent)
@@ -177,18 +179,11 @@ FanController::FanController(QObject *parent) :
     connectSignals();
 }
 
-const fcCommandDef* FanController::getResponseDef(unsigned char cmd)
+void FanController::connectSignals(void)
 {
-    const fcCommandDef* found = NULL;
-    for (unsigned i = 0; i < RESPONSE_DEF_COUNT; i++) {
-        if (bfxReconResponseDefs[i].commandByte == cmd) {
-            found = &bfxReconResponseDefs[i];
-            break;
-        }
-    }
-    return found;
+    QObject::connect(&m_io_device, SIGNAL(dataRX(QByteArray)),
+                     this, SLOT(onRawData(QByteArray)));
 }
-
 
 int FanController::HID_vendorId(void)
 {
@@ -204,7 +199,8 @@ int FanController::HID_productId(void)
 
 bool FanController::connect(void)
 {
-    bool r = m_io_device.connect(bitfenixrecon_vendorId, bitfenixrecon_productId);
+    bool r = m_io_device.connect(bitfenixrecon_vendorId,
+                                 bitfenixrecon_productId);
 
     if (r) emit deviceConnected();
 
@@ -234,12 +230,26 @@ bool FanController::isInterfaceConnected(void) const
     return m_io_device.isConnected();
 }
 
-void FanController::connectSignals(void)
+const fcCommandDef* FanController::getResponseDef(unsigned char cmd)
 {
-    QObject::connect(&m_io_device, SIGNAL(dataRX(QByteArray)),
-                     this, SLOT(onRawData(QByteArray)));
+    const fcCommandDef* found = NULL;
+    for (unsigned i = 0; i < RESPONSE_DEF_COUNT; i++) {
+        if (bfxReconResponseDefs[i].commandByte == cmd) {
+            found = &bfxReconResponseDefs[i];
+            break;
+        }
+    }
+    return found;
 }
 
+
+/*--------------------------------------------------------------------------
+  Responses (INPUT from device)
+  -------------------------------------------------------------------------*/
+
+
+/*
+ */
 void FanController::onPollTimerTriggered(void)
 {
     if (!isInterfaceConnected()) return;
@@ -247,13 +257,12 @@ void FanController::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-
+    /* The device can't seem to handle multiple requests, so
+     * split them up so that only one request (max) per "interrupt" is sent
+     */
     if (m_pollNumber % 150 == 0) {  // 100ms*150 = 15s
-        // Get device flags (Celcius/F, Auto/Manual, Alarm Audible/NotAudible
-        requestDeviceFlags();
-    } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) { // 900ms
-        // The device can't seem to handle multiple requests, so
-        // split them up...
+        requestDeviceFlags(); // C/F, Auto/Manual, Alarm Audible/NotAudible
+    } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) {
         if (m_channelCycle < 5 ) {
             requestTempAndSpeed(m_channelCycle + 1);
         } else {
@@ -316,13 +325,19 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 7:  checksum
 
 #ifdef QT_DEBUG
-    qDebug() << "Channel" << channel + 1 << "----probe temp------" << rawToTemp(rawdata[2]) << "F";
-    qDebug() << "Channel" << channel + 1 << "----current RPM-----" << rawToRPM(rawdata[4], rawdata[3]) << "RPM";
-    qDebug() << "Channel" << channel + 1 << "----max RPM---------" << rawToRPM(rawdata[6], rawdata[5]) << "RPM";
+    qDebug() << "Channel" << channel + 1
+             << "----probe temp------" << rawToTemp(rawdata.at(2)) << "F";
+    qDebug() << "Channel" << channel + 1
+             << "----current RPM-----" << rawToRPM(rawdata.at(4), rawdata.at(3))
+             << "RPM";
+    qDebug() << "Channel" << channel + 1
+             << "----max RPM---------" << rawToRPM(rawdata.at(6), rawdata.at(5))
+             << "RPM";
 #endif
 
-    emit currentTemp(channel, rawToTemp(rawdata[2]));
+    emit currentTemp(channel, rawToTemp(rawdata.at(2)));
     emit currentRPM(channel, rawToRPM(rawdata.at(4), rawdata.at(3)));
+    emit maxRPM(channel, rawToRPM(rawdata.at(6), rawdata.at(5)));
 }
 
 void FanController::parseDeviceFlags(const QByteArray& rawdata)
@@ -335,6 +350,8 @@ void FanController::parseDeviceFlags(const QByteArray& rawdata)
 
     qDebug() << "##Auto: " << isAuto << "## is Celcius: " << isCelcius
              << "##Audible alarm:" << isAudibleAlarm;
+
+    emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
 }
 
 void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
@@ -350,8 +367,10 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
     // TODO: Not sure if the fan speed reported is the speed to set the fan when
     //       the alarm is reached
 
-    qDebug() << "Channel" << channel + 1 << "----alarm temp------" << rawToTemp(rawdata[2]) << "F";
-    qDebug() << "Channel" << channel + 1 << "----on alarm speed--" << rawToRPM(rawdata[4], rawdata[3]) << "RPM";
+    qDebug() << "Channel" << channel + 1 << "----alarm temp------"
+             << rawToTemp(rawdata[2]) << "F";
+    qDebug() << "Channel" << channel + 1 << "----on alarm speed--"
+             << rawToRPM(rawdata[4], rawdata[3]) << "RPM";
 #endif
 
     emit currentAlarmTemp(channel, rawToTemp(rawdata[2]));
@@ -369,7 +388,6 @@ void FanController::parseHandshake(const QByteArray& rawdata)
 
 }
 
-
 int FanController::rawToTemp(unsigned char byte) const
 {
     return (unsigned char)byte;
@@ -379,6 +397,10 @@ int FanController::rawToRPM(char highByte, char lowByte) const
 {
     return (unsigned char)highByte*256 + (unsigned char)lowByte;
 }
+
+/*--------------------------------------------------------------------------
+  Requests (OUTPUT to device)
+  -------------------------------------------------------------------------*/
 
 void FanController::requestDeviceStatus(void)
 {

@@ -76,6 +76,8 @@ void gui_MainWindow::connectCustomSignals(void)
             this, SLOT(onCurrentRPM(int,int)));
     connect(&app->fanController(), SIGNAL(currentTemp(int,int)),
             this, SLOT(onCurrentTemp(int,int)));
+    connect(&app->fanController(), SIGNAL(deviceSettings(bool,bool,bool)),
+            this, SLOT(onDeviceSettings(bool,bool,bool)));
 }
 
 
