@@ -47,6 +47,8 @@ private:
     void updateMinSpeedControl(int channel, int RPM);
     void updateMaxSpeedControl(int channel, int RPM);
 
+    void enableDisableSpeedControls(void);
+
     Ui::gui_MainWindow *ui;
 
     int m_maxTemps[FC_MAX_CHANNELS];
@@ -60,6 +62,7 @@ private:
     QLineEdit* m_channelTempCtrls[FC_MAX_CHANNELS];
     QLineEdit* m_minChannelTempCtrls[FC_MAX_CHANNELS];
     QLineEdit* m_maxChannelTempCtrls[FC_MAX_CHANNELS];
+    QLineEdit* m_channelSpeedCtrls[FC_MAX_CHANNELS];
 
     bool m_isCelcius;
     bool m_isAuto;

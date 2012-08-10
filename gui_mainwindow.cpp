@@ -65,6 +65,12 @@ void gui_MainWindow::initCtrlArrays(void)
     m_maxChannelTempCtrls[2] = ui->ctrl_channel3MaxSpeed;
     m_maxChannelTempCtrls[3] = ui->ctrl_channel4MaxSpeed;
     m_maxChannelTempCtrls[4] = ui->ctrl_channel5MaxSpeed;
+
+    m_channelSpeedCtrls[0] = ui->ctrl_channel1speed;
+    m_channelSpeedCtrls[1] = ui->ctrl_channel2speed;
+    m_channelSpeedCtrls[2] = ui->ctrl_channel3speed;
+    m_channelSpeedCtrls[3] = ui->ctrl_channel4speed;
+    m_channelSpeedCtrls[4] = ui->ctrl_channel5speed;
 }
 
 
@@ -103,6 +109,17 @@ void gui_MainWindow::updateMaxSpeedControl(int channel, int RPM)
     m_maxChannelTempCtrls[channel]->setText(QString::number(RPM));
 }
 
+void gui_MainWindow::enableDisableSpeedControls(void)
+{
+    bool enabled = ui->ctrl_isAuto->isChecked();
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        m_channelSpeedCtrls[i]->setEnabled(!enabled);
+        m_channelSpeedCtrls[i]->setReadOnly(enabled);
+    }
+}
+
+
 void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
     if (channel < 0 || channel > 4) {
@@ -111,6 +128,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
     }
 
     if (m_lastRPMs[channel] != RPM) {
+        m_lastRPMs[channel] = RPM;
         m_channelTempCtrls[channel]->setText(QString::number(RPM));
         updateMinMaxRPMs(channel, RPM);
     }
@@ -125,6 +143,7 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
         return;
     }
     if (m_lastTemps[channel] != tempInF) {
+        m_lastTemps[channel] = tempInF;
         m_probeTempCtrls[channel]->setText(QString::number(CELCIUS(tempInF)));
     }
 }
@@ -141,6 +160,7 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
     if (m_isAuto != isAuto) {
         m_isAuto = isAuto;
         ui->ctrl_isAuto->setChecked(isAuto);
+        enableDisableSpeedControls();
     }
     if (m_isAudibleAlarm != isAudibleAlarm) {
         m_isAudibleAlarm = isAudibleAlarm;
