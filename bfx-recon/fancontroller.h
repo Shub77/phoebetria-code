@@ -112,6 +112,7 @@ protected:
     virtual void requestDeviceStatus(void);
     virtual void requestTempAndSpeed(int channel);
     virtual void requestAlarmAndSpeed(int channel);
+    virtual void requestDeviceFlags(void);
 
     virtual int rawToTemp(unsigned char byte) const;
     virtual int rawToRPM(char highByte, char lowByte) const;

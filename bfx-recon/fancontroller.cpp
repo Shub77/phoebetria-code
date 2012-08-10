@@ -229,13 +229,6 @@ bool FanController::isReady(void)
     return m_deviceIsReady;
 }
 
-/** Check if the I/O interface to the device is established. In most cases it's
-  * probably better to use isReady() which not only checks if the interface is
-  * established, but additionally whether or not the device has reported that
-  * it's ready.
-  *
-  * @returns true == the I/O interface is established, otherwise false.
-  */
 bool FanController::isInterfaceConnected(void) const
 {
     return m_io_device.isConnected();
@@ -255,9 +248,9 @@ void FanController::onPollTimerTriggered(void)
     m_io_device.pollForData();
 
 
-    if (m_pollNumber % 50 == 0) {  // 100*50ms = 5s
-        // Get device settings (Celcius/F, Auto/Manual, Alarm Audible/NotAudible
-        // TODO
+    if (m_pollNumber % 150 == 0) {  // 100ms*150 = 15s
+        // Get device flags (Celcius/F, Auto/Manual, Alarm Audible/NotAudible
+        requestDeviceFlags();
     } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) { // 900ms
         // The device can't seem to handle multiple requests, so
         // split them up...
@@ -423,9 +416,21 @@ void FanController::requestAlarmAndSpeed(int channel)
 
     Q_ASSERT (channel > 0 && channel <= 5);
 
-    cmdDef.commandByte = fcReq_Channel1AlarmAndSpeed + (unsigned char)(channel - 1);
-    //qDebug() << "Requesting Alarm and Temp (" << cmdDef.commandByte;
+    cmdDef.commandByte = fcReq_Channel1AlarmAndSpeed + channel - 1;
     cmdDef.channel = channel;
+    fcdata.command = &cmdDef;
+
+    fcdata.toRawData(reqBuff, sizeof(reqBuff));
+    m_io_device.sendData(reqBuff);
+}
+
+void FanController::requestDeviceFlags(void)
+{
+    FcData fcdata;
+    fcCommandDef cmdDef;
+    char reqBuff[9];
+
+    cmdDef.commandByte = fcReq_DeviceFlags;
     fcdata.command = &cmdDef;
 
     fcdata.toRawData(reqBuff, sizeof(reqBuff));
