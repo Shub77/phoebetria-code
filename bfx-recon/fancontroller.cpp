@@ -260,7 +260,7 @@ void FanController::onPollTimerTriggered(void)
     /* The device can't seem to handle multiple requests, so
      * split them up so that only one request (max) per "interrupt" is sent
      */
-    if (m_pollNumber % 150 == 0) {  // 100ms*150 = 15s
+    if (m_pollNumber % 51 == 0) {  // 100ms*51 = 5.1s
         requestDeviceFlags(); // C/F, Auto/Manual, Alarm Audible/NotAudible
     } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) {
         if (m_channelCycle < 5 ) {
