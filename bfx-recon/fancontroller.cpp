@@ -249,8 +249,6 @@ void FanController::connectSignals(void)
 
 void FanController::onPollTimerTriggered(void)
 {
-
-
     if (!isInterfaceConnected()) return;
 
     // Check for pending data (from device) every time timer is triggered
@@ -260,7 +258,7 @@ void FanController::onPollTimerTriggered(void)
     if (m_pollNumber % 50 == 0) {  // 100*50ms = 5s
         // Get device settings (Celcius/F, Auto/Manual, Alarm Audible/NotAudible
         // TODO
-    } else if (m_pollNumber % 9 == 0 || m_pollNumber < 20) { // 900ms
+    } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) { // 900ms
         // The device can't seem to handle multiple requests, so
         // split them up...
         if (m_channelCycle < 5 ) {
@@ -331,7 +329,7 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
 #endif
 
     emit currentTemp(channel, rawToTemp(rawdata[2]));
-    emit currentRPM(channel, rawToRPM((unsigned)rawdata.at(4), (unsigned)rawdata.at(3)));
+    emit currentRPM(channel, rawToRPM(rawdata.at(4), rawdata.at(3)));
 }
 
 void FanController::parseDeviceFlags(const QByteArray& rawdata)
@@ -384,7 +382,7 @@ int FanController::rawToTemp(unsigned char byte) const
     return (unsigned char)byte;
 }
 
-unsigned FanController::rawToRPM(char highByte, char lowByte) const
+int FanController::rawToRPM(char highByte, char lowByte) const
 {
     return (unsigned char)highByte*256 + (unsigned char)lowByte;
 }

@@ -18,6 +18,9 @@
 #define GUI_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLineEdit>
+
+#define FC_MAX_CHANNELS 5
 
 namespace Ui {
 class gui_MainWindow;
@@ -32,13 +35,32 @@ public:
     ~gui_MainWindow();
 
 public slots:
-    void onCurrentRPM(int channel, uint RPM);
+    void onCurrentRPM(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
 
+
 private:
+    void initCtrlArrays(void);
     void connectCustomSignals(void);
 
+    void updateMinMaxRPMs(int channel, int RPM);
+    void updateMinSpeedControl(int channel, int RPM);
+    void updateMaxSpeedControl(int channel, int RPM);
+
     Ui::gui_MainWindow *ui;
+
+    int m_maxTemps[FC_MAX_CHANNELS];
+    int m_minTemps[FC_MAX_CHANNELS];
+    int m_lastTemps[FC_MAX_CHANNELS];
+    int m_minRPMs[FC_MAX_CHANNELS];
+    int m_maxRPMs[FC_MAX_CHANNELS];
+    int m_lastRPMs[FC_MAX_CHANNELS];
+
+    QLineEdit* m_probeTempCtrls[FC_MAX_CHANNELS];
+    QLineEdit* m_channelTempCtrls[FC_MAX_CHANNELS];
+    QLineEdit* m_minChannelTempCtrls[FC_MAX_CHANNELS];
+    QLineEdit* m_maxChannelTempCtrls[FC_MAX_CHANNELS];
+
 };
 
 #endif // GUI_MAINWINDOW_H

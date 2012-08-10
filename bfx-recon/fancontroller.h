@@ -85,11 +85,12 @@ public:
     bool isInterfaceConnected(void) const;
 
     static const fcCommandDef* getResponseDef(unsigned char cmd);
+
 signals:
     void deviceConnected(void);
     void deviceDisconnected(void);
     void currentTemp(int probe, int temp);
-    void currentRPM(int channel, unsigned RPM);
+    void currentRPM(int channel, int RPM);
     void currentAlarmTemp(int channel, int temp);
     void currentRpmOnAlarm(int channel, unsigned RPM);
 
@@ -113,7 +114,7 @@ protected:
     virtual void requestAlarmAndSpeed(int channel);
 
     virtual int rawToTemp(unsigned char byte) const;
-    virtual unsigned rawToRPM(char highByte, char lowByte) const;
+    virtual int rawToRPM(char highByte, char lowByte) const;
 
     // Request "commands"
 
