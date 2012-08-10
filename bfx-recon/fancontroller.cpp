@@ -249,23 +249,31 @@ void FanController::connectSignals(void)
 
 void FanController::onPollTimerTriggered(void)
 {
-    m_pollNumber++;
+
 
     if (!isInterfaceConnected()) return;
 
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-    // The device can't seem to handle multiple requests, so
-    // split them up...
-    if (m_channelCycle < 5 ) {
-        requestTempAndSpeed(m_channelCycle + 1);
-    } else {
-        requestAlarmAndSpeed(m_channelCycle % 5 + 1);
+
+    if (m_pollNumber % 50 == 0) {  // 100*50ms = 5s
+        // Get device settings (Celcius/F, Auto/Manual, Alarm Audible/NotAudible
+        // TODO
+    } else if (m_pollNumber % 2 == 0) { // 200ms
+        // The device can't seem to handle multiple requests, so
+        // split them up...
+        if (m_channelCycle < 5 ) {
+            requestTempAndSpeed(m_channelCycle + 1);
+        } else {
+            requestAlarmAndSpeed(m_channelCycle % 5 + 1);
+        }
+        m_channelCycle++;
+        m_channelCycle %= 10;
     }
 
-    m_channelCycle++;
-    m_channelCycle %= 10;
+    m_pollNumber++;
+
 }
 
 void FanController::onRawData(QByteArray rawdata)
