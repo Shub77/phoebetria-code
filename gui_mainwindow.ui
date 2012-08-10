@@ -21,6 +21,9 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="layoutWidget">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -32,6 +35,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QLineEdit" name="ctrl_probe2Temp">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -39,6 +45,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="ctrl_channel2speed">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -47,6 +56,9 @@
     </layout>
    </widget>
    <widget class="QWidget" name="layoutWidget_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -58,6 +70,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
       <widget class="QLineEdit" name="ctrl_probe3Temp">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -65,6 +80,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="ctrl_channel3speed">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -73,6 +91,9 @@
     </layout>
    </widget>
    <widget class="QWidget" name="layoutWidget_3">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -84,6 +105,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
       <widget class="QLineEdit" name="ctrl_probe4Temp">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -91,6 +115,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="ctrl_channel4speed">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -99,6 +126,9 @@
     </layout>
    </widget>
    <widget class="QWidget" name="layoutWidget_4">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -110,6 +140,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
       <widget class="QLineEdit" name="ctrl_probe5Temp">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -117,6 +150,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="ctrl_channel5speed">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -125,6 +161,9 @@
     </layout>
    </widget>
    <widget class="QWidget" name="layoutWidget">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -136,6 +175,9 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLineEdit" name="ctrl_probe1Temp">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -143,6 +185,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="ctrl_channel1speed">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
