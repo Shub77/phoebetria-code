@@ -33,6 +33,7 @@ public:
 
 public slots:
     void onCurrentRPM(int channel, uint RPM);
+    void onCurrentTemp(int channel, int tempInF);
 
 private:
     void connectCustomSignals(void);

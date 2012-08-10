@@ -38,7 +38,8 @@ void gui_MainWindow::connectCustomSignals(void)
 
     connect(&app->fanController(), SIGNAL(currentRPM(int,uint)),
             this, SLOT(onCurrentRPM(int,uint)));
-
+    connect(&app->fanController(), SIGNAL(currentTemp(int,int)),
+            this, SLOT(onCurrentTemp(int,int)));
 }
 
 
@@ -60,6 +61,31 @@ void gui_MainWindow::onCurrentRPM(int channel, uint RPM)
         break;
     case 4:
         this->ui->ctrl_channel5speed->setText(QString::number(RPM));
+        break;
+    default:
+        break;
+    }
+}
+
+
+void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
+{
+    switch (channel)
+    {
+    case 0:
+        this->ui->ctrl_probe1Temp->setText(QString::number(tempInF));
+        break;
+    case 1:
+        this->ui->ctrl_probe2Temp->setText(QString::number(tempInF));
+        break;
+    case 2:
+        this->ui->ctrl_probe3Temp->setText(QString::number(tempInF));
+        break;
+    case 3:
+        this->ui->ctrl_probe4Temp->setText(QString::number(tempInF));
+        break;
+    case 4:
+        this->ui->ctrl_probe5Temp->setText(QString::number(tempInF));
         break;
     default:
         break;
