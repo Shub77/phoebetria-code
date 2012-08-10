@@ -260,7 +260,7 @@ void FanController::onPollTimerTriggered(void)
     if (m_pollNumber % 50 == 0) {  // 100*50ms = 5s
         // Get device settings (Celcius/F, Auto/Manual, Alarm Audible/NotAudible
         // TODO
-    } else if (m_pollNumber % 2 == 0) { // 200ms
+    } else if (m_pollNumber % 9 == 0 || m_pollNumber < 20) { // 900ms
         // The device can't seem to handle multiple requests, so
         // split them up...
         if (m_channelCycle < 5 ) {
