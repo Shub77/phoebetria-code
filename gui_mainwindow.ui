@@ -20,7 +20,7 @@
    <string>Phoebetria - BitFenix Recon Fan Controller</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -31,28 +31,28 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_13">
      <item>
-      <widget class="QRadioButton" name="radioButton">
+      <widget class="QRadioButton" name="ctrl_isCelcius">
        <property name="text">
         <string>Celcius</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_2">
+      <widget class="QRadioButton" name="ctrl_isFahrenheit">
        <property name="text">
         <string>Fahrenheit</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_2">
+      <widget class="QCheckBox" name="ctrl_isAudibleAlarm">
        <property name="text">
         <string>Audible Alarm</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QCheckBox" name="ctrl_isAuto">
        <property name="text">
         <string>Auto</string>
        </property>
@@ -60,7 +60,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>9</x>

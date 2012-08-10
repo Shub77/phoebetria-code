@@ -80,6 +80,28 @@ void gui_MainWindow::connectCustomSignals(void)
             this, SLOT(onDeviceSettings(bool,bool,bool)));
 }
 
+void gui_MainWindow::updateMinMaxRPMs(int channel, int RPM)
+{
+    if (m_minRPMs[channel] > RPM || m_minRPMs[channel] == 0) {
+        m_minRPMs[channel] = RPM;
+        updateMinSpeedControl(channel, RPM);
+    }
+
+    if (m_maxRPMs[channel] < RPM) {
+        m_maxRPMs[channel] = RPM;
+        updateMaxSpeedControl(channel, RPM);
+    }
+}
+
+void gui_MainWindow::updateMinSpeedControl(int channel, int RPM)
+{
+    m_minChannelTempCtrls[channel]->setText(QString::number(RPM));
+}
+
+void gui_MainWindow::updateMaxSpeedControl(int channel, int RPM)
+{
+    m_maxChannelTempCtrls[channel]->setText(QString::number(RPM));
+}
 
 void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
@@ -107,25 +129,21 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
     }
 }
 
-void gui_MainWindow::updateMinMaxRPMs(int channel, int RPM)
+void gui_MainWindow::onDeviceSettings(bool isCelcius,
+                                      bool isAuto,
+                                      bool isAudibleAlarm)
 {
-    if (m_minRPMs[channel] > RPM || m_minRPMs[channel] == 0) {
-        m_minRPMs[channel] = RPM;
-        updateMinSpeedControl(channel, RPM);
+    if (m_isCelcius != isCelcius) {
+        m_isCelcius = isCelcius;
+        ui->ctrl_isCelcius->setChecked(isCelcius);
+        ui->ctrl_isFahrenheit->setChecked(!isCelcius);
     }
-
-    if (m_maxRPMs[channel] < RPM) {
-        m_maxRPMs[channel] = RPM;
-        updateMaxSpeedControl(channel, RPM);
+    if (m_isAuto != isAuto) {
+        m_isAuto = isAuto;
+        ui->ctrl_isAuto->setChecked(isAuto);
     }
-}
-
-void gui_MainWindow::updateMinSpeedControl(int channel, int RPM)
-{
-    m_minChannelTempCtrls[channel]->setText(QString::number(RPM));
-}
-
-void gui_MainWindow::updateMaxSpeedControl(int channel, int RPM)
-{
-    m_maxChannelTempCtrls[channel]->setText(QString::number(RPM));
+    if (m_isAudibleAlarm != isAudibleAlarm) {
+        m_isAudibleAlarm = isAudibleAlarm;
+        ui->ctrl_isAudibleAlarm->setChecked(isAudibleAlarm);
+    }
 }
