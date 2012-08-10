@@ -131,6 +131,11 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
         m_lastRPMs[channel] = RPM;
         m_channelTempCtrls[channel]->setText(QString::number(RPM));
         updateMinMaxRPMs(channel, RPM);
+
+        // TODO: USE ARRAY AS ABOVE; THIS IS TEST CODE ONLY
+        if (channel == 0) {
+            ui->ctrl_channel1speedSlider->setValue(RPM/1200.0*100);
+        }
     }
 }
 
@@ -166,4 +171,40 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
         m_isAudibleAlarm = isAudibleAlarm;
         ui->ctrl_isAudibleAlarm->setChecked(isAudibleAlarm);
     }
+}
+
+void gui_MainWindow::on_ctrl_isAuto_clicked()
+{
+    onDeviceSettings(m_isCelcius,
+                     ui->ctrl_isAuto->isChecked(),
+                     m_isAudibleAlarm
+                     );
+    // TODO: NEED TO LET THE DEVICE KNOW!
+}
+
+void gui_MainWindow::on_ctrl_isAudibleAlarm_clicked()
+{
+    onDeviceSettings(m_isCelcius,
+                     m_isAuto,
+                     ui->ctrl_isAudibleAlarm->isChecked()
+                     );
+    // TODO: NEED TO LET THE DEVICE KNOW!
+}
+
+void gui_MainWindow::on_ctrl_isFahrenheit_clicked()
+{
+    onDeviceSettings(!ui->ctrl_isFahrenheit->isChecked(),
+                     m_isAuto,
+                     m_isAudibleAlarm
+                     );
+    // TODO: NEED TO LET THE DEVICE KNOW!
+}
+
+void gui_MainWindow::on_ctrl_isCelcius_clicked()
+{
+    onDeviceSettings(ui->ctrl_isCelcius->isChecked(),
+                     m_isAuto,
+                     m_isAudibleAlarm
+                     );
+    // TODO: NEED TO LET THE DEVICE KNOW!
 }
