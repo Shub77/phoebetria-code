@@ -67,25 +67,26 @@ void gui_MainWindow::onCurrentRPM(int channel, uint RPM)
     }
 }
 
+#define CELCIUS(x) ((x-32)*5/9)
 
 void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
 {
     switch (channel)
     {
     case 0:
-        this->ui->ctrl_probe1Temp->setText(QString::number(tempInF));
+        this->ui->ctrl_probe1Temp->setText(QString::number(CELCIUS(tempInF)));
         break;
     case 1:
-        this->ui->ctrl_probe2Temp->setText(QString::number(tempInF));
+        this->ui->ctrl_probe2Temp->setText(QString::number(CELCIUS(tempInF)));
         break;
     case 2:
-        this->ui->ctrl_probe3Temp->setText(QString::number(tempInF));
+        this->ui->ctrl_probe3Temp->setText(QString::number(CELCIUS(tempInF)));
         break;
     case 3:
-        this->ui->ctrl_probe4Temp->setText(QString::number(tempInF));
+        this->ui->ctrl_probe4Temp->setText(QString::number(CELCIUS(tempInF)));
         break;
     case 4:
-        this->ui->ctrl_probe5Temp->setText(QString::number(tempInF));
+        this->ui->ctrl_probe5Temp->setText(QString::number(CELCIUS(tempInF)));
         break;
     default:
         break;
