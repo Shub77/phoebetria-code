@@ -16,15 +16,52 @@
 
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
+#include "phoebetriaapp.h"
+#include "bfx-recon/fancontroller.h"
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
 {
     ui->setupUi(this);
+    connectCustomSignals();
 }
 
 gui_MainWindow::~gui_MainWindow()
 {
     delete ui;
+}
+
+void gui_MainWindow::connectCustomSignals(void)
+{
+    PhoebetriaApp *app = (PhoebetriaApp*)qApp;
+
+    connect(&app->fanController(), SIGNAL(currentRPM(int,uint)),
+            this, SLOT(onCurrentRPM(int,uint)));
+
+}
+
+
+void gui_MainWindow::onCurrentRPM(int channel, uint RPM)
+{
+    switch (channel)
+    {
+    case 0:
+        this->ui->ctrl_channel1speed->setText(QString::number(RPM));
+        break;
+    case 1:
+        this->ui->ctrl_channel2speed->setText(QString::number(RPM));
+        break;
+    case 2:
+        this->ui->ctrl_channel3speed->setText(QString::number(RPM));
+        break;
+    case 3:
+        this->ui->ctrl_channel4speed->setText(QString::number(RPM));
+        break;
+    case 4:
+        this->ui->ctrl_channel5speed->setText(QString::number(RPM));
+        break;
+    default:
+        break;
+    }
 }

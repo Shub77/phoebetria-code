@@ -30,8 +30,13 @@ class gui_MainWindow : public QMainWindow
 public:
     explicit gui_MainWindow(QWidget *parent = 0);
     ~gui_MainWindow();
-    
+
+public slots:
+    void onCurrentRPM(int channel, uint RPM);
+
 private:
+    void connectCustomSignals(void);
+
     Ui::gui_MainWindow *ui;
 };
 

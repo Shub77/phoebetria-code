@@ -28,6 +28,8 @@ public:
 
     QTimer& fanController_pollTimer(void) { return m_fanController_pollTimer; }
 
+    FanController& fanController(void) { return m_fanController; }
+
 private:
     static QTimer m_fanController_pollTimer;
     static FanController m_fanController;
