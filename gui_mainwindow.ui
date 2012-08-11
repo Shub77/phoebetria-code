@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>446</height>
+    <width>454</width>
+    <height>530</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -97,6 +97,30 @@
          </spacer>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>RPM</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>60</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -109,30 +133,6 @@
             </item>
             <item>
              <spacer name="horizontalSpacer_14">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>60</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>RPM</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_13">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -201,6 +201,22 @@
            </layout>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_10">
+          <property name="font">
+           <font>
+            <family>Arial Black</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -271,7 +287,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_probe1Temp">
+         <widget class="QLineEdit" name="ctrl_channel1speed">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -281,7 +297,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_channel1speed">
+         <widget class="QLineEdit" name="ctrl_probe1Temp">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -307,6 +323,22 @@
           </property>
           <property name="readOnly">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_9">
+          <property name="font">
+           <font>
+            <family>Arial Black</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>1</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -379,7 +411,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_probe2Temp">
+         <widget class="QLineEdit" name="ctrl_channel2speed">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -389,7 +421,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_channel2speed">
+         <widget class="QLineEdit" name="ctrl_probe2Temp">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -418,6 +450,22 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="font">
+           <font>
+            <family>Arial Black</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>2</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -438,7 +486,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QSlider" name="ctrl_channel1speedSlider_3">
+           <widget class="QSlider" name="ctrl_channel3speedSlider">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -487,7 +535,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_probe3Temp">
+         <widget class="QLineEdit" name="ctrl_channel3speed">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -497,7 +545,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_channel3speed">
+         <widget class="QLineEdit" name="ctrl_probe3Temp">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -526,6 +574,22 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_7">
+          <property name="font">
+           <font>
+            <family>Arial Black</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>3</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -546,7 +610,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QSlider" name="ctrl_channel1speedSlider_4">
+           <widget class="QSlider" name="ctrl_channel4speedSlider">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -595,7 +659,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_probe4Temp">
+         <widget class="QLineEdit" name="ctrl_channel4speed">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -605,7 +669,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_channel4speed">
+         <widget class="QLineEdit" name="ctrl_probe4Temp">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -634,6 +698,22 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="font">
+           <font>
+            <family>Arial Black</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>4</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -654,7 +734,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QSlider" name="ctrl_channel1speedSlider_5">
+           <widget class="QSlider" name="ctrl_channel5speedSlider">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -703,7 +783,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_probe5Temp">
+         <widget class="QLineEdit" name="ctrl_channel5speed">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -713,7 +793,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="ctrl_channel5speed">
+         <widget class="QLineEdit" name="ctrl_probe5Temp">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -742,6 +822,22 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_8">
+          <property name="font">
+           <font>
+            <family>Arial Black</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>5</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
@@ -753,7 +849,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>439</width>
+     <width>454</width>
      <height>21</height>
     </rect>
    </property>

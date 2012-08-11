@@ -19,6 +19,7 @@
 
 #include <QMainWindow>
 #include <QLineEdit>
+#include <QSlider>
 
 #define FC_MAX_CHANNELS 5
 
@@ -71,7 +72,7 @@ private:
     QLineEdit* m_channelTempCtrls[FC_MAX_CHANNELS];
     QLineEdit* m_minChannelTempCtrls[FC_MAX_CHANNELS];
     QLineEdit* m_maxChannelTempCtrls[FC_MAX_CHANNELS];
-    QLineEdit* m_channelSpeedCtrls[FC_MAX_CHANNELS];
+    QSlider* m_channelSpeedSliders[FC_MAX_CHANNELS];
 
     bool m_isCelcius;
     bool m_isAuto;

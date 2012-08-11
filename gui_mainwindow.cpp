@@ -67,11 +67,11 @@ void gui_MainWindow::initCtrlArrays(void)
     m_maxChannelTempCtrls[3] = ui->ctrl_channel4MaxSpeed;
     m_maxChannelTempCtrls[4] = ui->ctrl_channel5MaxSpeed;
 
-    m_channelSpeedCtrls[0] = ui->ctrl_channel1speed;
-    m_channelSpeedCtrls[1] = ui->ctrl_channel2speed;
-    m_channelSpeedCtrls[2] = ui->ctrl_channel3speed;
-    m_channelSpeedCtrls[3] = ui->ctrl_channel4speed;
-    m_channelSpeedCtrls[4] = ui->ctrl_channel5speed;
+    m_channelSpeedSliders[0] = ui->ctrl_channel1speedSlider;
+    m_channelSpeedSliders[1] = ui->ctrl_channel2speedSlider;
+    m_channelSpeedSliders[2] = ui->ctrl_channel3speedSlider;
+    m_channelSpeedSliders[3] = ui->ctrl_channel4speedSlider;
+    m_channelSpeedSliders[4] = ui->ctrl_channel5speedSlider;
 }
 
 
@@ -115,8 +115,7 @@ void gui_MainWindow::enableDisableSpeedControls(void)
     bool enabled = ui->ctrl_isAuto->isChecked();
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        m_channelSpeedCtrls[i]->setEnabled(!enabled);
-        m_channelSpeedCtrls[i]->setReadOnly(enabled);
+        m_channelSpeedSliders[i]->setEnabled(!enabled);
     }
 }
 
@@ -133,10 +132,8 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
         m_channelTempCtrls[channel]->setText(QString::number(RPM));
         updateMinMaxRPMs(channel, RPM);
 
-        // TODO: USE ARRAY AS ABOVE; THIS IS TEST CODE ONLY
-        if (channel == 0) {
-            ui->ctrl_channel1speedSlider->setValue(RPM/1200.0*100);
-        }
+        // TODO: Get Max RPM From controller
+        m_channelSpeedSliders[channel]->setValue(RPM/1200.0*100);
     }
 }
 
