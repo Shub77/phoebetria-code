@@ -173,41 +173,39 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 
 }
 
-
-#if 0
-void gui_MainWindow::on_ctrl_isAuto_clicked()
+void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {
-    onDeviceSettings(m_isCelcius,
-                     ui->ctrl_isAuto->isChecked(),
-                     m_isAudibleAlarm
-                     );
+    bool isAuto = value == 0 ? true : false;
+    if (m_isAuto != isAuto) {
+        m_isAuto = isAuto;
+        ui->ctrl_isManual->setValue(m_isAuto ? 0 : 1);
+        enableDisableSpeedControls();
+    }
+    // TODO: NEED TO LET THE DEVICE KNOW, *IF* IT WASN'T THE
+    //       DEVICE CAUSED THE CHANGE (or does it matter what
+    //       the source of the change was? Need to carefully
+    //       check this once FanController is able to change
+    //       the settings.
+}
+
+
+void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
+{
+    bool isAudibleAlarm = value == 0 ? false : true;
+    if (m_isAudibleAlarm != isAudibleAlarm) {
+        m_isAudibleAlarm = isAudibleAlarm;
+        ui->ctrl_isAudibleAlarm->setValue(m_isAudibleAlarm ? 1 : 0);
+    }
     // TODO: NEED TO LET THE DEVICE KNOW!
 }
 
-void gui_MainWindow::on_ctrl_isAudibleAlarm_clicked()
+void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 {
-    onDeviceSettings(m_isCelcius,
-                     m_isAuto,
-                     ui->ctrl_isAudibleAlarm->isChecked()
-                     );
-    // TODO: NEED TO LET THE DEVICE KNOW!
-}
+    bool isCelcius = value == 0 ? true : false;
 
-void gui_MainWindow::on_ctrl_isFahrenheit_clicked()
-{
-    onDeviceSettings(!ui->ctrl_isFahrenheit->isChecked(),
-                     m_isAuto,
-                     m_isAudibleAlarm
-                     );
+    if (m_isCelcius != isCelcius) {
+        m_isCelcius = isCelcius;
+        ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 0 : 1);
+    }
     // TODO: NEED TO LET THE DEVICE KNOW!
 }
-
-void gui_MainWindow::on_ctrl_isCelcius_clicked()
-{
-    onDeviceSettings(ui->ctrl_isCelcius->isChecked(),
-                     m_isAuto,
-                     m_isAudibleAlarm
-                     );
-    // TODO: NEED TO LET THE DEVICE KNOW!
-}
-#endif
