@@ -157,7 +157,7 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 {
     if (m_isCelcius != isCelcius) {
         m_isCelcius = isCelcius;
-        ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 1 : 0);
+        ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 0 : 1);
     }
 
     if (m_isAuto != isAuto) {
