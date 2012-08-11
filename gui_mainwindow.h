@@ -41,13 +41,7 @@ public slots:
     void onDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
 
 private slots:
-    void on_ctrl_isAuto_clicked();
 
-    void on_ctrl_isAudibleAlarm_clicked();
-
-    void on_ctrl_isFahrenheit_clicked();
-
-    void on_ctrl_isCelcius_clicked();
 
 private:
     void initCtrlArrays(void);

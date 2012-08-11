@@ -112,7 +112,7 @@ void gui_MainWindow::updateMaxSpeedControl(int channel, int RPM)
 
 void gui_MainWindow::enableDisableSpeedControls(void)
 {
-    bool enabled = ui->ctrl_isAuto->isChecked();
+    bool enabled = ui->ctrl_isManual->value() == 1 ? true : false;
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
         m_channelSpeedSliders[i]->setEnabled(!enabled);
@@ -157,20 +157,24 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 {
     if (m_isCelcius != isCelcius) {
         m_isCelcius = isCelcius;
-        ui->ctrl_isCelcius->setChecked(isCelcius);
-        ui->ctrl_isFahrenheit->setChecked(!isCelcius);
+        ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 1 : 0);
     }
+
     if (m_isAuto != isAuto) {
         m_isAuto = isAuto;
-        ui->ctrl_isAuto->setChecked(isAuto);
+        ui->ctrl_isManual->setValue(m_isAuto ? 0 : 1);
         enableDisableSpeedControls();
     }
+
     if (m_isAudibleAlarm != isAudibleAlarm) {
         m_isAudibleAlarm = isAudibleAlarm;
-        ui->ctrl_isAudibleAlarm->setChecked(isAudibleAlarm);
+        ui->ctrl_isAudibleAlarm->setValue(m_isAudibleAlarm ? 1 : 0);
     }
+
 }
 
+
+#if 0
 void gui_MainWindow::on_ctrl_isAuto_clicked()
 {
     onDeviceSettings(m_isCelcius,
@@ -206,3 +210,4 @@ void gui_MainWindow::on_ctrl_isCelcius_clicked()
                      );
     // TODO: NEED TO LET THE DEVICE KNOW!
 }
+#endif

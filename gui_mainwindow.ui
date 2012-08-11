@@ -487,8 +487,12 @@ color: rgb(255, 255, 255);</string>
       <enum>QSlider::TicksAbove</enum>
      </property>
     </widget>
-    <zorder></zorder>
-    <zorder></zorder>
+    <zorder>ctrl_channel4MinSpeed</zorder>
+    <zorder>ctrl_channel4MaxSpeed</zorder>
+    <zorder>label_5</zorder>
+    <zorder>ctrl_channel4speedSlider</zorder>
+    <zorder>ctrl_channel4speed</zorder>
+    <zorder>ctrl_probe4Temp</zorder>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
@@ -889,7 +893,7 @@ color: rgb(255, 255, 255);</string>
       <string>Manual Control</string>
      </property>
     </widget>
-    <widget class="QSlider" name="horizontalSlider_2">
+    <widget class="QSlider" name="ctrl_isAudibleAlarm">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -980,7 +984,7 @@ QSlider::handle:horizontal:disabled {
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QSlider" name="horizontalSlider_3">
+    <widget class="QSlider" name="ctrl_isManual">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1071,7 +1075,7 @@ QSlider::handle:horizontal:disabled {
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QSlider" name="horizontalSlider">
+    <widget class="QSlider" name="ctrl_tempScaleToggle">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -1179,7 +1183,7 @@ color: rgb(255, 255, 255);</string>
     <property name="title">
      <string/>
     </property>
-    <widget class="QRadioButton" name="ctrl_isCelcius">
+    <widget class="QRadioButton" name="ctrl_isCelcius_old">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1192,7 +1196,7 @@ color: rgb(255, 255, 255);</string>
       <string>Celcius</string>
      </property>
     </widget>
-    <widget class="QRadioButton" name="ctrl_isFahrenheit">
+    <widget class="QRadioButton" name="ctrl_isFahrenheit_old">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1205,7 +1209,7 @@ color: rgb(255, 255, 255);</string>
       <string>Fahrenheit</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="ctrl_isAuto">
+    <widget class="QCheckBox" name="ctrl_isAuto_old">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1218,7 +1222,7 @@ color: rgb(255, 255, 255);</string>
       <string>Auto</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="ctrl_isAudibleAlarm">
+    <widget class="QCheckBox" name="ctrl_isAudibleAlarm_old">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1232,16 +1236,6 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </widget>
-   <zorder>groupBox_6</zorder>
-   <zorder>ctrl_channel1speedSlider_4</zorder>
-   <zorder>groupBox_3</zorder>
-   <zorder>groupBox_6</zorder>
-   <zorder>groupBox_3</zorder>
-   <zorder>groupBox_5</zorder>
-   <zorder>groupBox_4</zorder>
-   <zorder>groupBox_2</zorder>
-   <zorder>groupBox</zorder>
-   <zorder>groupBox_7</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
