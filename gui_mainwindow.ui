@@ -843,7 +843,7 @@ color: rgb(255, 255, 255);</string>
        <x>30</x>
        <y>10</y>
        <width>111</width>
-       <height>31</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="minimumSize">
@@ -858,7 +858,7 @@ color: rgb(255, 255, 255);</string>
       </font>
      </property>
      <property name="text">
-      <string>Temperature Scale</string>
+      <string>Temperature</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
@@ -867,7 +867,7 @@ color: rgb(255, 255, 255);</string>
        <x>30</x>
        <y>40</y>
        <width>111</width>
-       <height>31</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="minimumSize">
@@ -886,7 +886,7 @@ color: rgb(255, 255, 255);</string>
        <x>30</x>
        <y>70</y>
        <width>111</width>
-       <height>31</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -898,19 +898,19 @@ color: rgb(255, 255, 255);</string>
       <rect>
        <x>140</x>
        <y>40</y>
-       <width>80</width>
-       <height>27</height>
+       <width>71</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">QSlider {
- min-width:80px;
- min-height:27px;
- max-width:80px;
- max-height:27px;
+ min-width:71px;
+ min-height:21px;
+ max-width:71px;
+ max-height:21px;
  }
  QSlider::groove:horizontal {
- background-image: url(:/Images/slider_bg.png);
+ background-image: url(:/Images/slider_alarm_bg.png);
  background-repeat: no-repeat;
  background-position:center;
  margin:0px;
@@ -919,7 +919,7 @@ color: rgb(255, 255, 255);</string>
  }
  
 QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_on.png);
+ background-image: url(:/Images/slider_alarm_on.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -929,7 +929,7 @@ QSlider::sub-page:horizontal {
  }
  
 QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_off.png);
+ background-image: url(:/Images/slider_alarm_off.png);
  background-repeat: no-repeat;
  background-position:right;
  background-origin:content;
@@ -939,16 +939,16 @@ QSlider::add-page:horizontal {
  }
  
 QSlider::handle:horizontal {
- background-image: url(:/Images/slider_handle.png);
- width:39px;
- height:27px;
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
  margin:0px;
  border:0px;
  padding:0px;
  }
  
 QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_on_disabled.png);
+ background-image: url(:/Images/slider_alarm_on_disabled.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -958,9 +958,9 @@ QSlider::sub-page:horizontal:disabled {
  }
  
 QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_off_disabled.png);
+ background-image: url(:/Images/slider_alarm_on_disabled.png);
  background-repeat: no-repeat;
- background-position:right;
+ background-position:left;
  background-origin:content;
  margin:0px;
  border:0px;
@@ -968,9 +968,9 @@ QSlider::add-page:horizontal:disabled {
  }
  
 QSlider::handle:horizontal:disabled {
- background-image: url(:/Images/slider_handle.png);
- width:39px;
- height:27px;
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
  margin:0px;
  border:0px;
  padding:0px;
@@ -989,19 +989,19 @@ QSlider::handle:horizontal:disabled {
       <rect>
        <x>140</x>
        <y>70</y>
-       <width>80</width>
-       <height>27</height>
+       <width>71</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">QSlider {
- min-width:80px;
- min-height:27px;
- max-width:80px;
- max-height:27px;
+ min-width:71px;
+ min-height:21px;
+ max-width:71px;
+ max-height:21px;
  }
  QSlider::groove:horizontal {
- background-image: url(:/Images/slider_bg.png);
+ background-image: url(:/Images/slider_control_bg.png);
  background-repeat: no-repeat;
  background-position:center;
  margin:0px;
@@ -1010,7 +1010,7 @@ QSlider::handle:horizontal:disabled {
  }
  
 QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_on.png);
+ background-image: url(:/Images/slider_control_on.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1020,7 +1020,7 @@ QSlider::sub-page:horizontal {
  }
  
 QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_off.png);
+ background-image: url(:/Images/slider_control_off.png);
  background-repeat: no-repeat;
  background-position:right;
  background-origin:content;
@@ -1030,16 +1030,16 @@ QSlider::add-page:horizontal {
  }
  
 QSlider::handle:horizontal {
- background-image: url(:/Images/slider_handle.png);
- width:39px;
- height:27px;
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
  margin:0px;
  border:0px;
  padding:0px;
  }
  
 QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_on_disabled.png);
+ background-image: url(:/Images/slider_control_on_disabled.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1049,9 +1049,9 @@ QSlider::sub-page:horizontal:disabled {
  }
  
 QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_off_disabled.png);
+ background-image: url(:/Images/slider_control_on_disabled.png);
  background-repeat: no-repeat;
- background-position:right;
+ background-position:left;
  background-origin:content;
  margin:0px;
  border:0px;
@@ -1059,9 +1059,9 @@ QSlider::add-page:horizontal:disabled {
  }
  
 QSlider::handle:horizontal:disabled {
- background-image: url(:/Images/slider_handle.png);
- width:39px;
- height:27px;
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
  margin:0px;
  border:0px;
  padding:0px;
@@ -1080,19 +1080,19 @@ QSlider::handle:horizontal:disabled {
       <rect>
        <x>140</x>
        <y>10</y>
-       <width>80</width>
-       <height>27</height>
+       <width>71</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">QSlider {
- min-width:80px;
- min-height:27px;
- max-width:80px;
- max-height:27px;
+ min-width:71px;
+ min-height:21px;
+ max-width:71px;
+ max-height:21px;
  }
  QSlider::groove:horizontal {
- background-image: url(:/Images/slider_bg.png);
+ background-image: url(:/Images/slider_blue_bg.png);
  background-repeat: no-repeat;
  background-position:center;
  margin:0px;
@@ -1101,7 +1101,7 @@ QSlider::handle:horizontal:disabled {
  }
  
 QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_on.png);
+ background-image: url(:/Images/slider_blue_fah.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1111,7 +1111,7 @@ QSlider::sub-page:horizontal {
  }
  
 QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_off.png);
+ background-image: url(:/Images/slider_blue_cel.png);
  background-repeat: no-repeat;
  background-position:right;
  background-origin:content;
@@ -1121,16 +1121,16 @@ QSlider::add-page:horizontal {
  }
  
 QSlider::handle:horizontal {
- background-image: url(:/Images/slider_handle.png);
- width:39px;
- height:27px;
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
  margin:0px;
  border:0px;
  padding:0px;
  }
  
 QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_on_disabled.png);
+ background-image: url(:/Images/slider_blue_fah_disabled.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1140,9 +1140,9 @@ QSlider::sub-page:horizontal:disabled {
  }
  
 QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_off_disabled.png);
+ background-image: url(:/Images/slider_blue_cel_disabled.png);
  background-repeat: no-repeat;
- background-position:right;
+ background-position:left;
  background-origin:content;
  margin:0px;
  border:0px;
@@ -1150,9 +1150,9 @@ QSlider::add-page:horizontal:disabled {
  }
  
 QSlider::handle:horizontal:disabled {
- background-image: url(:/Images/slider_handle.png);
- width:39px;
- height:27px;
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
  margin:0px;
  border:0px;
  padding:0px;
@@ -1191,7 +1191,7 @@ color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>411</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

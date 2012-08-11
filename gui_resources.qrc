@@ -4,5 +4,15 @@
         <file>Images/slider_handle.png</file>
         <file>Images/slider_off.png</file>
         <file>Images/slider_on.png</file>
+        <file>Images/slider_toggle.png</file>
+        <file>Images/slider_blue_fcbg.png</file>
+        <file>Images/slider_blue_cel.png</file>
+        <file>Images/slider_blue_fah.png</file>
+        <file>Images/slider_alarm_bg.png</file>
+        <file>Images/slider_alarm_off.png</file>
+        <file>Images/slider_alarm_on.png</file>
+        <file>Images/slider_control_bg.png</file>
+        <file>Images/slider_control_off.png</file>
+        <file>Images/slider_control_on.png</file>
     </qresource>
 </RCC>
