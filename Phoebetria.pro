@@ -48,3 +48,6 @@ macx {
     QMAKE_MAC_SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
     SOURCES += hidapi-0.7.0/mac/hid.c
 }
+
+RESOURCES += \
+    gui_resources.qrc

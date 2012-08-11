@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/" lang="English">
+        <file>Images/slider_bg.png</file>
+        <file>Images/slider_handle.png</file>
+        <file>Images/slider_off.png</file>
+        <file>Images/slider_on.png</file>
+    </qresource>
+</RCC>
