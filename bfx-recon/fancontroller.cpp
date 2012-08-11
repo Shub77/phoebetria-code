@@ -205,7 +205,9 @@ bool FanController::connect(void)
     if (r) emit deviceConnected();
 
     m_deviceIsReady = false;
-    requestDeviceStatus();
+    if (m_deviceIsReady) {
+        requestDeviceStatus();
+    }
     return r;
 }
 
@@ -348,8 +350,10 @@ void FanController::parseDeviceFlags(const QByteArray& rawdata)
     isCelcius = rawdata[2] & bitfenix_flag_celcius ? false : true;
     isAudibleAlarm =   rawdata[2] & bitfenix_flag_alarm ? true : false;
 
+#ifdef QT_DEBUG
     qDebug() << "##Auto: " << isAuto << "## is Celcius: " << isCelcius
              << "##Audible alarm:" << isAudibleAlarm;
+#endif
 
     emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
 }
