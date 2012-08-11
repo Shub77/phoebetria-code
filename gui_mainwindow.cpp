@@ -15,6 +15,7 @@
 */
 
 #include <QDebug>
+#include <QStandardItemModel>
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
 #include "phoebetriaapp.h"
