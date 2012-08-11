@@ -1183,58 +1183,6 @@ color: rgb(255, 255, 255);</string>
     <property name="title">
      <string/>
     </property>
-    <widget class="QRadioButton" name="ctrl_isCelcius_old">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>56</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Celcius</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="ctrl_isFahrenheit_old">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>30</y>
-       <width>74</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Fahrenheit</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="ctrl_isAuto_old">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>50</y>
-       <width>46</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Auto</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="ctrl_isAudibleAlarm_old">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>70</y>
-       <width>88</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Audible Alarm</string>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
