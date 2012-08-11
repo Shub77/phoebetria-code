@@ -32,6 +32,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
                 = m_minRPMs[i] = m_maxRPMs[i] = m_lastRPMs[i] = 0;
     }
 
+    m_isCelcius = m_isAuto = m_isAudibleAlarm = false;
+
     initCtrlArrays();
     connectCustomSignals();
 }
@@ -175,37 +177,22 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {
-    bool isAuto = value == 0 ? true : false;
-    if (m_isAuto != isAuto) {
-        m_isAuto = isAuto;
-        ui->ctrl_isManual->setValue(m_isAuto ? 0 : 1);
-        enableDisableSpeedControls();
-    }
-    // TODO: NEED TO LET THE DEVICE KNOW, *IF* IT WASN'T THE
-    //       DEVICE CAUSED THE CHANGE (or does it matter what
-    //       the source of the change was? Need to carefully
-    //       check this once FanController is able to change
-    //       the settings.
+    m_isAuto = value == 0 ? true : false;
+
+    // TODO: NEED TO LET THE DEVICE KNOW
 }
 
 
 void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
 {
-    bool isAudibleAlarm = value == 0 ? false : true;
-    if (m_isAudibleAlarm != isAudibleAlarm) {
-        m_isAudibleAlarm = isAudibleAlarm;
-        ui->ctrl_isAudibleAlarm->setValue(m_isAudibleAlarm ? 1 : 0);
-    }
+    m_isAudibleAlarm = value == 0 ? false : true;
+
     // TODO: NEED TO LET THE DEVICE KNOW!
 }
 
 void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 {
-    bool isCelcius = value == 0 ? true : false;
+    m_isCelcius = value == 0 ? true : false;
 
-    if (m_isCelcius != isCelcius) {
-        m_isCelcius = isCelcius;
-        ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 0 : 1);
-    }
     // TODO: NEED TO LET THE DEVICE KNOW!
 }
