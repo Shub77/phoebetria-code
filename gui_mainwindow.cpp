@@ -32,7 +32,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
                 = m_minRPMs[i] = m_maxRPMs[i] = m_lastRPMs[i] = 0;
     }
 
-    m_isCelcius = m_isAuto = m_isAudibleAlarm = false;
+    m_isCelcius = ui->ctrl_tempScaleToggle->value() == 0 ? true : false;
+    m_isAuto = m_isAudibleAlarm = false;
 
     m_isAutoToggleByDevice = false;
 
@@ -123,6 +124,14 @@ void gui_MainWindow::enableDisableSpeedControls(void)
     }
 }
 
+QString gui_MainWindow::temperatureString(int t) const
+{
+    QString r;
+    int _t = m_isCelcius ? (t-32)*5/9 : t;
+    r = QString::number(_t);
+    r += (m_isCelcius ? " C" : " F");
+    return r;
+}
 
 void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
@@ -141,7 +150,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
     }
 }
 
-#define CELCIUS(x) ((x-32)*5/9)
+
 
 void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
 {
@@ -151,7 +160,7 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
     }
     if (m_lastTemps[channel] != tempInF) {
         m_lastTemps[channel] = tempInF;
-        m_probeTempCtrls[channel]->setText(QString::number(CELCIUS(tempInF)));
+        m_probeTempCtrls[channel]->setText(temperatureString(tempInF));
     }
 }
 
@@ -164,6 +173,10 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
     if (m_isCelcius != isCelcius) {
         m_isCelcius = isCelcius;
         ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 0 : 1);
+        // Force temp controls to be updated
+        for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+            m_lastTemps[i] = m_lastTemps[i] - 1;
+        }
     }
 
     if (m_isAuto != isAuto) {
