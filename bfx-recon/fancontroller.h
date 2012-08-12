@@ -19,6 +19,7 @@
 
 #include <QObject>
 #include <QMap>
+#include <QQueue>
 #include "device-io.h"
 
 typedef enum fcReponseCodeCategory {
@@ -49,6 +50,7 @@ class FcData {
 public:
     FcData();
     FcData(const QByteArray& rawData);
+    FcData(const FcData& ref);
 
     unsigned char calcChecksum(bool isRequest) const;
 
@@ -123,6 +125,9 @@ protected:
     virtual int rawToTemp(unsigned char byte) const;
     virtual int rawToRPM(char highByte, char lowByte) const;
 
+    void issueCommand(const FcData& cmd);
+    void processCommandQueue(void);
+
     void waitForAck(int count) { m_waitForACK = count; }
 
 private:
@@ -135,6 +140,8 @@ private:
     unsigned m_channelCycle;
 
     int m_waitForACK;
+
+    QQueue<FcData> m_cmdQueue;
 };
 
 

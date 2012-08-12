@@ -72,6 +72,8 @@ static const unsigned char fcReq_CurentChannel = 0x10;
 
 static const unsigned char fcSet_DeviceFlags = 0x60;
 
+static const int MAX_COMMANDQUEUE_LEN = 128;
+
 /****************************************************************************
  ****************************************************************************
  class fcData
@@ -86,6 +88,13 @@ FcData::FcData(const QByteArray &rawData)
     setFromRawData(rawData);
 }
 
+FcData::FcData(const FcData& ref)
+{
+    channel = ref.channel;
+    checksum = ref.checksum;
+    command = ref.command;
+    data = ref.data;
+}
 
 unsigned char FcData::calcChecksum(bool isRequest) const
 {
@@ -264,6 +273,8 @@ void FanController::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
+    processCommandQueue();
+
 #if 0
     if (waitingForAck()) return;
 #endif
@@ -427,6 +438,34 @@ int FanController::rawToRPM(char highByte, char lowByte) const
 }
 
 /*--------------------------------------------------------------------------
+  Handling of the command queue
+ -------------------------------------------------------------------------*/
+
+void FanController::issueCommand(const FcData& cmd)
+{
+    // Discard old commands
+    while (m_cmdQueue.length() > MAX_COMMANDQUEUE_LEN - 1) {
+        m_cmdQueue.removeFirst();
+    }
+    m_cmdQueue.append(cmd);
+}
+
+void  FanController::processCommandQueue(void)
+{
+    /* We don't want to process all the commands at once because the device
+     * only supports sending one command at a time; i.e. if more than one
+     * command is sent only the last command sent is processed by the device
+     */
+    if (m_cmdQueue.isEmpty()) return;
+
+    char reqBuff[9];    // Needs to be one more than max request size
+    FcData dataToSend = m_cmdQueue.takeFirst();
+
+    dataToSend.toRawData(reqBuff, sizeof(reqBuff));
+    m_io_device.sendData(reqBuff);
+}
+
+/*--------------------------------------------------------------------------
   Requests (OUTPUT to device)
   -------------------------------------------------------------------------*/
 
@@ -434,28 +473,32 @@ void FanController::requestDeviceStatus(void)
 {
     FcData fcdata;
     fcCommandDef cmdDef;
-    char reqBuff[9];
 
     cmdDef.commandByte = fcReq_DeviceStatus;
     fcdata.command = &cmdDef;
 
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));  
-    m_io_device.sendData(reqBuff);
+    //issueCommand(fcdata);
+    //fcdata.toRawData(reqBuff, sizeof(reqBuff));
+    //m_io_device.sendData(reqBuff);
 }
 
 void FanController::requestTempAndSpeed(int channel)
 {
     FcData fcdata;
     fcCommandDef cmdDef;
-    char reqBuff[9];
 
     Q_ASSERT (channel > 0 && channel <= 5);
     cmdDef.commandByte = fcReq_Channel1TempAndSpeed + channel - 1;
     cmdDef.channel = channel;
     fcdata.command = &cmdDef;
 
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));
-    m_io_device.sendData(reqBuff);
+    // TODO: This is no good. Why the hell have I got cmdDef
+    //       as a local? :-(
+
+    issueCommand(fcdata);
+//    fcdata.toRawData(reqBuff, sizeof(reqBuff));
+//    m_io_device.sendData(reqBuff);
+    qDebug() << "Command:" << QString::number((int)fcdata.command);
 }
 
 void FanController::requestAlarmAndSpeed(int channel)
