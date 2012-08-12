@@ -84,7 +84,11 @@ public:
 
     bool isInterfaceConnected(void) const;
 
+    bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+
     static const fcCommandDef* getResponseDef(unsigned char cmd);
+
+    bool waitingForAck(void) const { return m_waitForACK > 0; }
 
 signals:
     void deviceConnected(void);
@@ -119,6 +123,8 @@ protected:
     virtual int rawToTemp(unsigned char byte) const;
     virtual int rawToRPM(char highByte, char lowByte) const;
 
+    void waitForAck(int count) { m_waitForACK = count; }
+
 private:
     bool m_deviceIsReady;
     DeviceIO m_io_device;
@@ -127,6 +133,8 @@ private:
 
     unsigned m_pollNumber;
     unsigned m_channelCycle;
+
+    int m_waitForACK;
 };
 
 
