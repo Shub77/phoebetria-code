@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>411</width>
-    <height>524</height>
+    <width>412</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -27,7 +27,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>130</y>
+      <y>140</y>
       <width>71</width>
       <height>341</height>
      </rect>
@@ -170,12 +170,12 @@ color: #fff;</string>
  }
 
  QSlider::handle:vertical {
-     background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #eee, stop:1 #ccc);
-	 width: 10px;
-	 margin-top: -6px;
-     margin-bottom: -6px;
-     border 1px solid #777;
-     border-radius: 4px;
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:17px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
  }
 
  QSlider::add-page:vertical {
@@ -213,7 +213,7 @@ color: #fff;</string>
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>130</y>
+      <y>140</y>
       <width>71</width>
       <height>341</height>
      </rect>
@@ -356,12 +356,12 @@ color: #fff;</string>
  }
 
  QSlider::handle:vertical {
-     background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #eee, stop:1 #ccc);
-	 width: 10px;
-	 margin-top: -6px;
-     margin-bottom: -6px;
-     border 1px solid #777;
-     border-radius: 4px;
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:17px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
  }
 
  QSlider::add-page:vertical {
@@ -399,7 +399,7 @@ color: #fff;</string>
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>130</y>
+      <y>140</y>
       <width>71</width>
       <height>341</height>
      </rect>
@@ -542,12 +542,12 @@ color: #fff;</string>
  }
 
  QSlider::handle:vertical {
-     background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #eee, stop:1 #ccc);
-	 width: 10px;
-	 margin-top: -6px;
-     margin-bottom: -6px;
-     border 1px solid #777;
-     border-radius: 4px;
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:17px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
  }
 
  QSlider::add-page:vertical {
@@ -591,7 +591,7 @@ color: #fff;</string>
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>130</y>
+      <y>140</y>
       <width>71</width>
       <height>341</height>
      </rect>
@@ -734,12 +734,12 @@ color: #fff;</string>
  }
 
  QSlider::handle:vertical {
-     background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #eee, stop:1 #ccc);
-	 width: 10px;
-	 margin-top: -6px;
-     margin-bottom: -6px;
-     border 1px solid #777;
-     border-radius: 4px;
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:17px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
  }
 
  QSlider::add-page:vertical {
@@ -777,7 +777,7 @@ color: #fff;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
+      <y>140</y>
       <width>71</width>
       <height>341</height>
      </rect>
@@ -943,12 +943,12 @@ color: #fff;</string>
  }
 
  QSlider::handle:vertical {
-     background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #eee, stop:1 #ccc);
-	 width: 10px;
-	 margin-top: -6px;
-     margin-bottom: -6px;
-     border 1px solid #777;
-     border-radius: 4px;
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:17px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
  }
 
  QSlider::add-page:vertical {
@@ -982,95 +982,77 @@ color: #fff;</string>
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>151</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>151</width>
+      <height>111</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>151</width>
+      <height>111</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/Images/phoebetria_fan.gif);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
       <x>170</x>
       <y>10</y>
       <width>231</width>
-      <height>111</height>
+      <height>121</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true"/>
+    <property name="currentIndex">
+     <number>0</number>
     </property>
-    <property name="title">
-     <string/>
-    </property>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>10</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>21</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <kerning>true</kerning>
-      </font>
-     </property>
-     <property name="text">
-      <string>Temperature</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>40</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>21</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Audible Alarm</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>70</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Manual Control</string>
-     </property>
-    </widget>
-    <widget class="QSlider" name="ctrl_isAudibleAlarm">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>40</y>
-       <width>71</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QSlider {
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Control</string>
+     </attribute>
+     <widget class="QSlider" name="ctrl_isAudibleAlarm">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>30</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider {
  min-width:71px;
  min-height:21px;
  max-width:71px;
  max-height:21px;
  }
  QSlider::groove:horizontal {
- background-image: url(:/Images/slider_alarm_bg.png);
+ background-image: url(:/Images/slider_onoff_bg.png);
  background-repeat: no-repeat;
  background-position:center;
  margin:0px;
@@ -1079,7 +1061,7 @@ color: #fff;</string>
  }
  
 QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_alarm_on.png);
+ background-image: url(:/Images/slider_onoff_on.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1089,7 +1071,7 @@ QSlider::sub-page:horizontal {
  }
  
 QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_alarm_off.png);
+ background-image: url(:/Images/slider_onoff_off.png);
  background-repeat: no-repeat;
  background-position:right;
  background-origin:content;
@@ -1108,7 +1090,7 @@ QSlider::handle:horizontal {
  }
  
 QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_alarm_on_disabled.png);
+ background-image: url(:/Images/slider_onoff_on_disabled.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1118,7 +1100,7 @@ QSlider::sub-page:horizontal:disabled {
  }
  
 QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_alarm_on_disabled.png);
+ background-image: url(:/Images/slider_onoff_on_disabled.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1136,32 +1118,45 @@ QSlider::handle:horizontal:disabled {
  padding:0px;
  }
 </string>
-     </property>
-     <property name="maximum">
-      <number>1</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="ctrl_isManual">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>70</y>
-       <width>71</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QSlider {
+      </property>
+      <property name="maximum">
+       <number>1</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Manual Control</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="ctrl_isManual">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>60</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider {
  min-width:71px;
  min-height:21px;
  max-width:71px;
  max-height:21px;
  }
  QSlider::groove:horizontal {
- background-image: url(:/Images/slider_alarm_bg.png);
+ background-image: url(:/Images/slider_onoff_bg.png);
  background-repeat: no-repeat;
  background-position:center;
  margin:0px;
@@ -1170,7 +1165,7 @@ QSlider::handle:horizontal:disabled {
  }
  
 QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_alarm_on.png);
+ background-image: url(:/Images/slider_onoff_on.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1180,7 +1175,7 @@ QSlider::sub-page:horizontal {
  }
  
 QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_alarm_off.png);
+ background-image: url(:/Images/slider_onoff_off.png);
  background-repeat: no-repeat;
  background-position:right;
  background-origin:content;
@@ -1199,7 +1194,7 @@ QSlider::handle:horizontal {
  }
  
 QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_alarm_on_disabled.png);
+ background-image: url(:/Images/slider_onoff_on_disabled.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1209,7 +1204,7 @@ QSlider::sub-page:horizontal:disabled {
  }
  
 QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_alarm_on_disabled.png);
+ background-image: url(:/Images/slider_onoff_on_disabled.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1227,25 +1222,68 @@ QSlider::handle:horizontal:disabled {
  padding:0px;
  }
 </string>
-     </property>
-     <property name="maximum">
-      <number>1</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="ctrl_tempScaleToggle">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>10</y>
-       <width>71</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QSlider {
+      </property>
+      <property name="maximum">
+       <number>1</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>21</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Audible Alarm</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>21</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="text">
+       <string>Temperature Scale</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="ctrl_tempScaleToggle">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>0</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider {
  min-width:71px;
  min-height:21px;
  max-width:71px;
@@ -1261,7 +1299,7 @@ QSlider::handle:horizontal:disabled {
  }
  
 QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_temp_fah.png);
+ background-image: url(:/Images/slider_temp_cel.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1271,7 +1309,7 @@ QSlider::sub-page:horizontal {
  }
  
 QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_temp_cel.png);
+ background-image: url(:/Images/slider_temp_fah.png);
  background-repeat: no-repeat;
  background-position:right;
  background-origin:content;
@@ -1290,7 +1328,7 @@ QSlider::handle:horizontal {
  }
  
 QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_temp_fah_disabled.png);
+ background-image: url(:/Images/slider_temp_cel_disabled.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1300,7 +1338,7 @@ QSlider::sub-page:horizontal:disabled {
  }
  
 QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_temp_cel_disabled.png);
+ background-image: url(:/Images/slider_temp_fah_disabled.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -1318,31 +1356,344 @@ QSlider::handle:horizontal:disabled {
  padding:0px;
  }
 </string>
-     </property>
-     <property name="maximum">
-      <number>1</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
+      </property>
+      <property name="maximum">
+       <number>1</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_7">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>151</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: #026;
-color: #fff;</string>
-    </property>
-    <property name="title">
-     <string/>
-    </property>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Profiles</string>
+     </attribute>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>71</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Preset 1</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>71</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Preset 2</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>71</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Preset 3</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>0</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Load Preset</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>0</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Set Preset</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_set.png</normaloff>:/Images/profile_set.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>0</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Reset Preset</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_reset.png</normaloff>:/Images/profile_reset.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>0</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Save Preset</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_5">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>30</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Set Preset</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_set.png</normaloff>:/Images/profile_set.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_6">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>30</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Load Preset</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_7">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>30</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Reset Preset</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_reset.png</normaloff>:/Images/profile_reset.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_8">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>30</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Save Preset</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_9">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>60</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Set Preset</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_set.png</normaloff>:/Images/profile_set.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_10">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>60</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Load Preset</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_11">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>60</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Reset Preset</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_reset.png</normaloff>:/Images/profile_reset.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_12">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>60</y>
+        <width>22</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Save Preset</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -1350,7 +1701,7 @@ color: #fff;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>411</width>
+     <width>412</width>
      <height>22</height>
     </rect>
    </property>
@@ -1366,6 +1717,8 @@ color: #fff;</string>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="gui_resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
