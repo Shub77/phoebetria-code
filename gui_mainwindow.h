@@ -77,6 +77,8 @@ private:
     bool m_isAuto;
     bool m_isAudibleAlarm;
 
+    bool m_isAutoToggleByDevice;
+
 };
 
 #endif // GUI_MAINWINDOW_H

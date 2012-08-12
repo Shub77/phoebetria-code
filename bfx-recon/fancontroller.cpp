@@ -17,6 +17,9 @@
 #include <QDebug>
 #include "fancontroller.h"
 
+// Uncomment for verbose debugging output
+//#define PHO_FC_VERBOSE_DEBUG 1
+
 static const int bitfenixrecon_vendorId = 3141;
 static const int bitfenixrecon_productId = 28928;
 
@@ -47,6 +50,7 @@ static const fcCommandDef bfxReconResponseDefs[] = {
 #define RESPONSE_DEF_COUNT (sizeof(bfxReconResponseDefs) / sizeof(bfxReconResponseDefs[0]))
 
 static const unsigned char fcReq_ACK = 0xF0;
+static const unsigned char fcResp_ACK = 0xF0;
 static const unsigned char fcReq_NAK = 0xFA;
 
 static const unsigned char fcReq_Channel1TempAndSpeed = 0x30;
@@ -66,6 +70,8 @@ static const unsigned char fcReq_DeviceStatus = 0x90;
 static const unsigned char fcReq_DeviceFlags = 0x50;
 static const unsigned char fcReq_CurentChannel = 0x10;
 
+static const unsigned char fcSet_DeviceFlags = 0x60;
+
 /****************************************************************************
  ****************************************************************************
  class fcData
@@ -73,7 +79,6 @@ static const unsigned char fcReq_CurentChannel = 0x10;
 
 FcData::FcData()
 {
-
 }
 
 FcData::FcData(const QByteArray &rawData)
@@ -125,7 +130,7 @@ bool FcData::setFromRawData(const QByteArray& rawdata)
     }
     checksum = rawdata.at(len);
 
-#ifdef QT_DEBUG
+#if defined QT_DEBUG
     if (checksum != calcChecksum(false)) {
         qDebug() << "Checksum failed (calculated" << calcChecksum(false)
                  << "expected" << checksum << ")";
@@ -175,7 +180,7 @@ FanController::FanController(QObject *parent) :
     m_deviceIsReady = false;
     m_pollNumber = 0;
     m_channelCycle = 0;
-
+    m_waitForACK = 0;
     connectSignals();
 }
 
@@ -259,6 +264,10 @@ void FanController::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
+#if 0
+    if (waitingForAck()) return;
+#endif
+
     /* The device can't seem to handle multiple requests, so
      * split them up so that only one request (max) per "interrupt" is sent
      */
@@ -291,6 +300,18 @@ bool FanController::parseRawData(QByteArray rawdata, FcData *parsedData)
         return false;
     }
 
+#if 0
+    if (m_waitForACK > 0) {
+        if (parsedData->command->category == fcResp_Handshake
+            && parsedData->command->commandByte == fcResp_ACK) {
+            m_waitForACK = 0;
+        } else {
+            m_waitForACK--;
+        }
+        return false;
+    }
+#endif
+
     switch (parsedData->command->category)
     {
     case fcResp_TempAndSpeed:
@@ -306,6 +327,9 @@ bool FanController::parseRawData(QByteArray rawdata, FcData *parsedData)
         parseDeviceStatus(rawdata);
         break;
     case fcResp_Handshake:
+#ifdef QT_DEBUG
+        qDebug() << parsedData->command->desc;
+#endif
         break;
     default:
         qDebug() << "Unhandled response category";
@@ -326,7 +350,7 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 6:  maxRPM (hi)
     // Byte 7:  checksum
 
-#ifdef QT_DEBUG
+#if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "Channel" << channel + 1
              << "----probe temp------" << rawToTemp(rawdata.at(2)) << "F";
     qDebug() << "Channel" << channel + 1
@@ -350,7 +374,7 @@ void FanController::parseDeviceFlags(const QByteArray& rawdata)
     isCelcius = rawdata[2] & bitfenix_flag_celcius ? false : true;
     isAudibleAlarm =   rawdata[2] & bitfenix_flag_alarm ? true : false;
 
-#ifdef QT_DEBUG
+#if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "##Auto: " << isAuto << "## is Celcius: " << isCelcius
              << "##Audible alarm:" << isAudibleAlarm;
 #endif
@@ -367,7 +391,7 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 4:  rpm (hi byte)
     // Byte 5:  checksum
 
-#ifdef QT_DEBUG
+#if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     // TODO: Not sure if the fan speed reported is the speed to set the fan when
     //       the alarm is reached
 
@@ -461,4 +485,34 @@ void FanController::requestDeviceFlags(void)
 
     fcdata.toRawData(reqBuff, sizeof(reqBuff));
     m_io_device.sendData(reqBuff);
+}
+
+bool FanController::setDeviceFlags(bool isCelcius,
+                                   bool isAuto,
+                                   bool isAudibleAlarm)
+{
+    return false;
+#if 0
+    FcData fcdata;
+    fcCommandDef cmdDef;
+    char reqBuff[9];
+
+    cmdDef.commandByte = fcSet_DeviceFlags;
+    fcdata.command = &cmdDef;
+
+    unsigned char bits;
+
+    bits = isCelcius ? bitfenix_flag_celcius : 0;
+    bits |= isAuto ? bitfenix_flag_auto : 0;
+    bits |= isAudibleAlarm ? bitfenix_flag_alarm : 0;
+
+    fcdata.data[0] = bits;
+
+    fcdata.toRawData(reqBuff, sizeof(reqBuff));
+    int bytesSent = m_io_device.sendData(reqBuff);
+    if (bytesSent > 0) {
+        waitForAck(500);
+    }
+    return bytesSent > 0;
+#endif
 }
