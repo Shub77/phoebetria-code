@@ -32,6 +32,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
                 = m_minRPMs[i] = m_maxRPMs[i] = m_lastRPMs[i] = 0;
     }
 
+    m_isCelcius = m_isAuto = m_isAudibleAlarm = false;
+
     initCtrlArrays();
     connectCustomSignals();
 }
@@ -157,7 +159,7 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 {
     if (m_isCelcius != isCelcius) {
         m_isCelcius = isCelcius;
-        ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 1 : 0);
+        ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 0 : 1);
     }
 
     if (m_isAuto != isAuto) {
@@ -173,41 +175,24 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 
 }
 
-
-#if 0
-void gui_MainWindow::on_ctrl_isAuto_clicked()
+void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {
-    onDeviceSettings(m_isCelcius,
-                     ui->ctrl_isAuto->isChecked(),
-                     m_isAudibleAlarm
-                     );
+    m_isAuto = value == 0 ? true : false;
+
+    // TODO: NEED TO LET THE DEVICE KNOW
+}
+
+
+void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
+{
+    m_isAudibleAlarm = value == 0 ? false : true;
+
     // TODO: NEED TO LET THE DEVICE KNOW!
 }
 
-void gui_MainWindow::on_ctrl_isAudibleAlarm_clicked()
+void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 {
-    onDeviceSettings(m_isCelcius,
-                     m_isAuto,
-                     ui->ctrl_isAudibleAlarm->isChecked()
-                     );
-    // TODO: NEED TO LET THE DEVICE KNOW!
-}
+    m_isCelcius = value == 0 ? true : false;
 
-void gui_MainWindow::on_ctrl_isFahrenheit_clicked()
-{
-    onDeviceSettings(!ui->ctrl_isFahrenheit->isChecked(),
-                     m_isAuto,
-                     m_isAudibleAlarm
-                     );
     // TODO: NEED TO LET THE DEVICE KNOW!
 }
-
-void gui_MainWindow::on_ctrl_isCelcius_clicked()
-{
-    onDeviceSettings(ui->ctrl_isCelcius->isChecked(),
-                     m_isAuto,
-                     m_isAudibleAlarm
-                     );
-    // TODO: NEED TO LET THE DEVICE KNOW!
-}
-#endif

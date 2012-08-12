@@ -42,6 +42,11 @@ public slots:
 
 private slots:
 
+    void on_ctrl_isManual_valueChanged(int value);
+
+    void on_ctrl_isAudibleAlarm_valueChanged(int value);
+
+    void on_ctrl_tempScaleToggle_valueChanged(int value);
 
 private:
     void initCtrlArrays(void);
