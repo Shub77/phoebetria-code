@@ -70,27 +70,6 @@ static const fcCommandDef bfxReconCmdDefs[] = {
 #define RESPONSE_DEF_COUNT (sizeof(bfxReconCmdDefs) / sizeof(bfxReconCmdDefs[0]))
 
 #if 0
-static const unsigned char fcReq_ACK = 0xF0;
-static const unsigned char fcResp_ACK = 0xF0;
-static const unsigned char fcReq_NAK = 0xFA;
-
-static const unsigned char fcReq_Channel1TempAndSpeed = 0x30;
-static const unsigned char fcReq_Channel2TempAndSpeed = 0x31;
-static const unsigned char fcReq_Channel3TempAndSpeed = 0x32;
-static const unsigned char fcReq_Channel4TempAndSpeed = 0x33;
-static const unsigned char fcReq_Channel5TempAndSpeed = 0x34;
-
-static const unsigned char fcReq_Channel1AlarmAndSpeed = 0x70;
-static const unsigned char fcReq_Channel2AlarmAndSpeed = 0x71;
-static const unsigned char fcReq_Channel3AlarmAndSpeed = 0x72;
-static const unsigned char fcReq_Channel4AlarmAndSpeed = 0x73;
-static const unsigned char fcReq_Channel5AlarmAndSpeed = 0x74;
-
-
-static const unsigned char fcReq_DeviceStatus = 0x90;
-static const unsigned char fcReq_DeviceFlags = 0x50;
-static const unsigned char fcReq_CurentChannel = 0x10;
-
 static const unsigned char fcSet_DeviceFlags = 0x60;
 #endif
 
