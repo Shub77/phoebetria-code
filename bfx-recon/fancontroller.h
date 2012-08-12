@@ -54,7 +54,6 @@ class FcData {
 public:
     FcData();
     FcData(const QByteArray& rawData);
-    FcData(const FcData& ref);
 
     unsigned char calcChecksum(bool isRequest) const;
 

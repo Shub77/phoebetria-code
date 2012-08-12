@@ -92,14 +92,6 @@ FcData::FcData(const QByteArray &rawData)
     setFromRawData(rawData);
 }
 
-FcData::FcData(const FcData& ref)
-{
-    channel = ref.channel;
-    checksum = ref.checksum;
-    command = ref.command;
-    data = ref.data;
-}
-
 unsigned char FcData::calcChecksum(bool isRequest) const
 {
     int len = data.length();
