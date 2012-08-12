@@ -14,5 +14,9 @@
         <file>Images/slider_control_bg.png</file>
         <file>Images/slider_control_off.png</file>
         <file>Images/slider_control_on.png</file>
+        <file>mesh.png</file>
+        <file>Images/slider_temp_bg.png</file>
+        <file>Images/slider_temp_cel.png</file>
+        <file>Images/slider_temp_fah.png</file>
     </qresource>
 </RCC>
