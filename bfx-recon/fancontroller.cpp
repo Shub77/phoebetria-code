@@ -27,7 +27,7 @@ static const unsigned bitfenix_flag_auto    = 1 << 0;
 static const unsigned bitfenix_flag_celcius = 1 << 1;
 static const unsigned bitfenix_flag_alarm   = 1 << 2;
 
-static const fcCommandDef bfxReconResponseDefs[] = {
+static const fcCommandDef bfxReconCmdDefs[] = {
     { fcResp_TempAndSpeed, 0, (unsigned char)0x40,  QString("Channel 1 Temp & Speed") },
     { fcResp_TempAndSpeed, 1, (unsigned char)0x41,  QString("Channel 2 Temp & Speed") },
     { fcResp_TempAndSpeed, 2, (unsigned char)0x42,  QString("Channel 3 Temp & Speed") },
@@ -36,41 +36,45 @@ static const fcCommandDef bfxReconResponseDefs[] = {
 
     { fcResp_DeviceFlags, -1, (unsigned char)0x60,  QString("Device Flags (Common)") },
 
-    { fcResp_AlarmAndSpeed, 0, (unsigned char)0x80, QString ("Channel 1 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 1, (unsigned char)0x81, QString ("Channel 2 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 2, (unsigned char)0x82, QString ("Channel 3 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 3, (unsigned char)0x83, QString ("Channel 4 Alarm Temp & Current Speed") },
-    { fcResp_AlarmAndSpeed, 4, (unsigned char)0x84, QString ("Channel 5 Alarm Temp & Current Speed") },
+    { fcResp_AlarmAndSpeed, 0, (unsigned char)0x80, QString ("Channel 1 Alarm Temp & Speed") },
+    { fcResp_AlarmAndSpeed, 1, (unsigned char)0x81, QString ("Channel 2 Alarm Temp & Speed") },
+    { fcResp_AlarmAndSpeed, 2, (unsigned char)0x82, QString ("Channel 3 Alarm Temp & Speed") },
+    { fcResp_AlarmAndSpeed, 3, (unsigned char)0x83, QString ("Channel 4 Alarm Temp & Speed") },
+    { fcResp_AlarmAndSpeed, 4, (unsigned char)0x84, QString ("Channel 5 Alarm Temp & Speed") },
 
     { fcResp_DeviceStatus, -1, (unsigned char)0xA0, QString("Device Status") },
 
     { fcResp_Handshake, -1, (unsigned char)0xF0,    QString ("ACK") },
     { fcResp_Handshake, -1, (unsigned char)0xFA,    QString ("NAK") },
+
+
+    { fcReq_TempAndSpeed, 0, (unsigned char)0x30,   QString ("Req. channel 1 Temp & Speed") },
+    { fcReq_TempAndSpeed, 1, (unsigned char)0x31,   QString ("Req. channel 2 Temp & Speed") },
+    { fcReq_TempAndSpeed, 2, (unsigned char)0x32,   QString ("Req. channel 3 Temp & Speed") },
+    { fcReq_TempAndSpeed, 3, (unsigned char)0x33,   QString ("Req. channel 4 Temp & Speed") },
+    { fcReq_TempAndSpeed, 4, (unsigned char)0x34,   QString ("Req. channel 5 Temp & Speed") },
+
+    { fcReq_DeviceFlags, -1, (unsigned char)0x50,   QString ("Req. device flags") },
+    { fcReq_DeviceStatus, -1, (unsigned char)0x90,  QString ("Req. device status") },
+    { fcReq_CurrentChannel, -1, (unsigned char)0x10, QString ("Req. current channgel") },
+
+    { fcReq_AlarmAndSpeed, 0, (unsigned char)0x70,  QString ("Req. channel 1 Alarm Temp & Speed") },
+    { fcReq_AlarmAndSpeed, 1, (unsigned char)0x71,  QString ("Req. channel 2 Alarm Temp & Speed") },
+    { fcReq_AlarmAndSpeed, 2, (unsigned char)0x72,  QString ("Req. channel 3 Alarm Temp & Speed") },
+    { fcReq_AlarmAndSpeed, 3, (unsigned char)0x73,  QString ("Req. channel 4 Alarm Temp & Speed") },
+    { fcReq_AlarmAndSpeed, 4, (unsigned char)0x74,  QString ("Req. channel 5 Alarm Temp & Speed") },
+
+
+    { fcSet_DeviceFlags, -1, (unsigned char)0x60, QString ("Set device flags") }
+
+
 };
-#define RESPONSE_DEF_COUNT (sizeof(bfxReconResponseDefs) / sizeof(bfxReconResponseDefs[0]))
-
-static const unsigned char fcReq_ACK = 0xF0;
-static const unsigned char fcResp_ACK = 0xF0;
-static const unsigned char fcReq_NAK = 0xFA;
-
-static const unsigned char fcReq_Channel1TempAndSpeed = 0x30;
-static const unsigned char fcReq_Channel2TempAndSpeed = 0x31;
-static const unsigned char fcReq_Channel3TempAndSpeed = 0x32;
-static const unsigned char fcReq_Channel4TempAndSpeed = 0x33;
-static const unsigned char fcReq_Channel5TempAndSpeed = 0x34;
-
-static const unsigned char fcReq_Channel1AlarmAndSpeed = 0x70;
-static const unsigned char fcReq_Channel2AlarmAndSpeed = 0x71;
-static const unsigned char fcReq_Channel3AlarmAndSpeed = 0x72;
-static const unsigned char fcReq_Channel4AlarmAndSpeed = 0x73;
-static const unsigned char fcReq_Channel5AlarmAndSpeed = 0x74;
+#define RESPONSE_DEF_COUNT (sizeof(bfxReconCmdDefs) / sizeof(bfxReconCmdDefs[0]))
 
 
-static const unsigned char fcReq_DeviceStatus = 0x90;
-static const unsigned char fcReq_DeviceFlags = 0x50;
-static const unsigned char fcReq_CurentChannel = 0x10;
+static const int MAX_COMMANDQUEUE_LEN = 128;
 
-static const unsigned char fcSet_DeviceFlags = 0x60;
+
 
 /****************************************************************************
  ****************************************************************************
@@ -85,7 +89,6 @@ FcData::FcData(const QByteArray &rawData)
 {
     setFromRawData(rawData);
 }
-
 
 unsigned char FcData::calcChecksum(bool isRequest) const
 {
@@ -241,14 +244,28 @@ const fcCommandDef* FanController::getResponseDef(unsigned char cmd)
 {
     const fcCommandDef* found = NULL;
     for (unsigned i = 0; i < RESPONSE_DEF_COUNT; i++) {
-        if (bfxReconResponseDefs[i].commandByte == cmd) {
-            found = &bfxReconResponseDefs[i];
+        if (bfxReconCmdDefs[i].commandByte == cmd) {
+            found = &bfxReconCmdDefs[i];
             break;
         }
     }
     return found;
 }
 
+const fcCommandDef* FanController::getCommandDef(
+        fcCommandCategory category,
+        int channel)
+{
+    const fcCommandDef* found = NULL;
+    for (unsigned i = 0; i < RESPONSE_DEF_COUNT; i++) {
+        if (bfxReconCmdDefs[i].category == category
+                && bfxReconCmdDefs[i].channel == channel) {
+            found = &bfxReconCmdDefs[i];
+            break;
+        }
+    }
+    return found;
+}
 
 /*--------------------------------------------------------------------------
   Responses (INPUT from device)
@@ -264,27 +281,23 @@ void FanController::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
+    processCommandQueue();
+
 #if 0
     if (waitingForAck()) return;
 #endif
 
-    /* The device can't seem to handle multiple requests, so
-     * split them up so that only one request (max) per "interrupt" is sent
-     */
-    if (m_pollNumber % 51 == 0) {  // 100ms*51 = 5.1s
+#if 1
+    if (m_pollNumber % 26 == 0) {  // 100ms*26 = 2.6s
         requestDeviceFlags(); // C/F, Auto/Manual, Alarm Audible/NotAudible
     } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) {
-        if (m_channelCycle < 5 ) {
-            requestTempAndSpeed(m_channelCycle + 1);
-        } else {
-            requestAlarmAndSpeed(m_channelCycle % 5 + 1);
-        }
+        requestAlarmAndSpeed(m_channelCycle + 1);
+        requestTempAndSpeed(m_channelCycle + 1);
         m_channelCycle++;
-        m_channelCycle %= 10;
+        m_channelCycle %= 5;
     }
-
+#endif
     m_pollNumber++;
-
 }
 
 void FanController::onRawData(QByteArray rawdata)
@@ -408,7 +421,9 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
 void FanController::parseDeviceStatus(const QByteArray& rawdata)
 {
     m_deviceIsReady = rawdata[2] == 1 ? true : false;
+#if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "Device is: " << (m_deviceIsReady ? "Ready" : "Not Ready");
+#endif
 }
 
 void FanController::parseHandshake(const QByteArray& rawdata)
@@ -427,71 +442,122 @@ int FanController::rawToRPM(char highByte, char lowByte) const
 }
 
 /*--------------------------------------------------------------------------
+  Handling of the command queue
+ -------------------------------------------------------------------------*/
+
+void FanController::issueCommand(const FcData& cmd)
+{
+    // Discard old commands
+    while (m_cmdQueue.length() > MAX_COMMANDQUEUE_LEN - 1) {
+        m_cmdQueue.removeFirst();
+    }
+    m_cmdQueue.append(cmd);
+}
+
+void  FanController::processCommandQueue(void)
+{
+    /* We don't want to process all the commands at once because the device
+     * only supports sending one command at a time; i.e. if more than one
+     * command is sent only the last command sent is processed by the device
+     */
+    if (m_cmdQueue.isEmpty()) return;
+
+    char reqBuff[9];    // Needs to be one more than max request size
+    FcData dataToSend = m_cmdQueue.takeFirst();
+
+    dataToSend.toRawData(reqBuff, sizeof(reqBuff));
+    m_io_device.sendData(reqBuff);
+}
+
+/*--------------------------------------------------------------------------
   Requests (OUTPUT to device)
   -------------------------------------------------------------------------*/
 
 void FanController::requestDeviceStatus(void)
 {
     FcData fcdata;
-    fcCommandDef cmdDef;
-    char reqBuff[9];
+    const fcCommandDef* cmdDef;
 
-    cmdDef.commandByte = fcReq_DeviceStatus;
-    fcdata.command = &cmdDef;
+    cmdDef = getCommandDef(fcReq_DeviceStatus, -1);
+    fcdata.command = cmdDef;
 
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));  
-    m_io_device.sendData(reqBuff);
+    issueCommand(fcdata);
 }
 
 void FanController::requestTempAndSpeed(int channel)
 {
     FcData fcdata;
-    fcCommandDef cmdDef;
-    char reqBuff[9];
+    const fcCommandDef* cmdDef;
 
     Q_ASSERT (channel > 0 && channel <= 5);
-    cmdDef.commandByte = fcReq_Channel1TempAndSpeed + channel - 1;
-    cmdDef.channel = channel;
-    fcdata.command = &cmdDef;
 
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));
-    m_io_device.sendData(reqBuff);
+    cmdDef = getCommandDef(fcReq_TempAndSpeed, channel-1);
+
+    if (!cmdDef) {
+#       ifdef QT_DEBUG
+        qDebug() << "Requested Invalid Command. Temp and Speed, channel"
+                 << QString::number(channel)
+                 << "File: " << __FILE__ << "Line:" << __LINE__;
+#       endif
+        return;
+    }
+
+    fcdata.command = cmdDef;
+    issueCommand(fcdata);
 }
 
 void FanController::requestAlarmAndSpeed(int channel)
 {
     FcData fcdata;
-    fcCommandDef cmdDef;
-    char reqBuff[9];
+    const fcCommandDef* cmdDef;
 
     Q_ASSERT (channel > 0 && channel <= 5);
 
-    cmdDef.commandByte = fcReq_Channel1AlarmAndSpeed + channel - 1;
-    cmdDef.channel = channel;
-    fcdata.command = &cmdDef;
+    cmdDef = getCommandDef(fcReq_AlarmAndSpeed, channel-1);
 
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));
-    m_io_device.sendData(reqBuff);
+    fcdata.command = cmdDef;
+    issueCommand(fcdata);
 }
 
 void FanController::requestDeviceFlags(void)
 {
     FcData fcdata;
-    fcCommandDef cmdDef;
-    char reqBuff[9];
+    const fcCommandDef* cmdDef;
 
-    cmdDef.commandByte = fcReq_DeviceFlags;
-    fcdata.command = &cmdDef;
+    cmdDef = getCommandDef(fcReq_DeviceFlags, -1);
 
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));
-    m_io_device.sendData(reqBuff);
+    fcdata.command = cmdDef;
+    issueCommand(fcdata);
 }
 
 bool FanController::setDeviceFlags(bool isCelcius,
                                    bool isAuto,
                                    bool isAudibleAlarm)
 {
-    return false;
+
+    FcData fcdata;
+    const fcCommandDef* cmdDef;
+
+    cmdDef = getCommandDef(fcSet_DeviceFlags, -1);
+
+    fcdata.command = cmdDef;
+
+    unsigned char bits;
+
+    qDebug() << "Bits celcius:" << QString::number(bitfenix_flag_celcius);
+    qDebug() << "Bits auto:" << QString::number(bitfenix_flag_auto);
+    qDebug() << "Bits audible alarm:" << QString::number(bitfenix_flag_alarm);
+
+    bits = !isCelcius ? bitfenix_flag_celcius : 0;
+    bits |= isAuto ? bitfenix_flag_auto : 0;
+    bits |= isAudibleAlarm ? bitfenix_flag_alarm : 0;
+
+    fcdata.data[0] = bits;
+    qDebug() << "Bits sending:" << QString::number(fcdata.data[0]);
+
+    issueCommand(fcdata);
+
+    return true;
 #if 0
     FcData fcdata;
     fcCommandDef cmdDef;

@@ -19,6 +19,7 @@
 
 #include <QObject>
 #include <QMap>
+#include <QQueue>
 #include "device-io.h"
 
 typedef enum fcReponseCodeCategory {
@@ -28,8 +29,14 @@ typedef enum fcReponseCodeCategory {
     fcResp_DeviceStatus,
     fcResp_Handshake,
 
-    fcRequest
+    fcReq_TempAndSpeed,
+    fcReq_AlarmAndSpeed,
+    fcReq_DeviceFlags,
+    fcReq_DeviceStatus,
 
+    fcReq_CurrentChannel,
+
+    fcSet_DeviceFlags
 } fcCommandCategory;
 
 
@@ -87,6 +94,8 @@ public:
     bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
 
     static const fcCommandDef* getResponseDef(unsigned char cmd);
+    static const fcCommandDef* getCommandDef(fcCommandCategory category,
+                                             int channel);
 
     bool waitingForAck(void) const { return m_waitForACK > 0; }
 
@@ -123,6 +132,9 @@ protected:
     virtual int rawToTemp(unsigned char byte) const;
     virtual int rawToRPM(char highByte, char lowByte) const;
 
+    void issueCommand(const FcData& cmd);
+    void processCommandQueue(void);
+
     void waitForAck(int count) { m_waitForACK = count; }
 
 private:
@@ -135,6 +147,8 @@ private:
     unsigned m_channelCycle;
 
     int m_waitForACK;
+
+    QQueue<FcData> m_cmdQueue;
 };
 
 
