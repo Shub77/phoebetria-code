@@ -174,8 +174,9 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
     if (m_isCelcius != isCelcius) {
         m_isCelcius = isCelcius;
         ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 1 : 0);
-        qDebug() << "isCelcius ==" << m_isCelcius << "Toggle value ==" << QString::number(ui->ctrl_tempScaleToggle->value());
-        // Force temp controls to be updated
+
+        // Force temp controls to be updated.
+        // TODO: there is a better way to do this
         for (int i = 0; i < FC_MAX_CHANNELS; i++) {
             m_lastTemps[i] = m_lastTemps[i] - 1;
         }
