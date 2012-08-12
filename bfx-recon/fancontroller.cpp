@@ -297,23 +297,16 @@ void FanController::onPollTimerTriggered(void)
     if (waitingForAck()) return;
 #endif
 
-    /* The device can't seem to handle multiple requests, so
-     * split them up so that only one request (max) per "interrupt" is sent
-     */
-    if (m_pollNumber % 51 == 0) {  // 100ms*51 = 5.1s
+    if (m_pollNumber % 26 == 0) {  // 100ms*26 = 2.6s
         requestDeviceFlags(); // C/F, Auto/Manual, Alarm Audible/NotAudible
     } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) {
-        if (m_channelCycle < 5 ) {
-            requestTempAndSpeed(m_channelCycle + 1);
-        } else {
-            requestAlarmAndSpeed(m_channelCycle % 5 + 1);
-        }
+        requestAlarmAndSpeed(m_channelCycle + 1);
+        requestTempAndSpeed(m_channelCycle + 1);
         m_channelCycle++;
-        m_channelCycle %= 10;
+        m_channelCycle %= 5;
     }
 
     m_pollNumber++;
-
 }
 
 void FanController::onRawData(QByteArray rawdata)
