@@ -437,7 +437,9 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
 void FanController::parseDeviceStatus(const QByteArray& rawdata)
 {
     m_deviceIsReady = rawdata[2] == 1 ? true : false;
+#if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "Device is: " << (m_deviceIsReady ? "Ready" : "Not Ready");
+#endif
 }
 
 void FanController::parseHandshake(const QByteArray& rawdata)
@@ -490,14 +492,12 @@ void  FanController::processCommandQueue(void)
 void FanController::requestDeviceStatus(void)
 {
     FcData fcdata;
-    fcCommandDef cmdDef;
+    const fcCommandDef* cmdDef;
 
-    cmdDef.commandByte = fcReq_DeviceStatus;
-    fcdata.command = &cmdDef;
+    cmdDef = getCommandDef(fcReq_DeviceStatus, -1);
+    fcdata.command = cmdDef;
 
-    //issueCommand(fcdata);
-    //fcdata.toRawData(reqBuff, sizeof(reqBuff));
-    //m_io_device.sendData(reqBuff);
+    issueCommand(fcdata);
 }
 
 void FanController::requestTempAndSpeed(int channel)
@@ -529,51 +529,21 @@ void FanController::requestAlarmAndSpeed(int channel)
 
     Q_ASSERT (channel > 0 && channel <= 5);
 
-    cmdDef = getCommandDef(fcReq_DeviceFlags, -1);
-
-    if (!cmdDef) {
-#       ifdef QT_DEBUG
-        qDebug() << "Requested Invalid Command. Temp and Speed, channel"
-                 << QString::number(channel)
-                 << "File: " << __FILE__ << "Line:" << __LINE__;
-#       endif
-        return;
-    }
+    cmdDef = getCommandDef(fcReq_AlarmAndSpeed, channel-1);
 
     fcdata.command = cmdDef;
     issueCommand(fcdata);
-
-
-
-#if 0
-    FcData fcdata;
-    fcCommandDef cmdDef;
-    char reqBuff[9];
-
-    Q_ASSERT (channel > 0 && channel <= 5);
-
-    cmdDef.commandByte = fcReq_Channel1AlarmAndSpeed + channel - 1;
-    cmdDef.channel = channel;
-    fcdata.command = &cmdDef;
-
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));
-    m_io_device.sendData(reqBuff);
-#endif
 }
 
 void FanController::requestDeviceFlags(void)
 {
-#if 0
     FcData fcdata;
-    fcCommandDef cmdDef;
-    char reqBuff[9];
+    const fcCommandDef* cmdDef;
 
-    cmdDef.commandByte = fcReq_DeviceFlags;
-    fcdata.command = &cmdDef;
+    cmdDef = getCommandDef(fcReq_DeviceFlags, -1);
 
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));
-    m_io_device.sendData(reqBuff);
-#endif
+    fcdata.command = cmdDef;
+    issueCommand(fcdata);
 }
 
 bool FanController::setDeviceFlags(bool isCelcius,
