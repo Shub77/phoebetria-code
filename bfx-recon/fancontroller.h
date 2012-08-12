@@ -29,8 +29,12 @@ typedef enum fcReponseCodeCategory {
     fcResp_DeviceStatus,
     fcResp_Handshake,
 
-    fcRequest
+    fcReq_TempAndSpeed,
+    fcReq_AlarmAndSpeed,
+    fcReq_DeviceFlags,
+    fcReq_DeviceStatus,
 
+    fcReq_CurrentChannel
 } fcCommandCategory;
 
 
@@ -89,6 +93,8 @@ public:
     bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
 
     static const fcCommandDef* getResponseDef(unsigned char cmd);
+    static const fcCommandDef* getCommandDef(fcCommandCategory category,
+                                             int channel);
 
     bool waitingForAck(void) const { return m_waitForACK > 0; }
 
