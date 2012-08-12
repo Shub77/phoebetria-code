@@ -200,23 +200,9 @@ void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {
     m_isAuto = value == 0 ? true : false;
 
-#if 0
-    if (m_isAutoToggleByDevice) {
-        m_isAutoToggleByDevice = false;
-        return;
-    }
+    // TODO: NEED TO LET THE DEVICE KNOW!
 
-
-
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
-    if (fc->isInterfaceConnected()) {
-        fc->setDeviceFlags(m_isCelcius, m_isAuto, m_isAudibleAlarm);
-    }
-
-    // TODO: NEED TO LET THE DEVICE KNOW
-#endif
 }
-
 
 void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
 {
