@@ -121,8 +121,8 @@
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(65, 65, 65);
-color: rgb(255, 255, 255);</string>
+      <string notr="true">background-color: #026;
+color: #fff;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -307,8 +307,8 @@ color: rgb(255, 255, 255);</string>
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(65, 65, 65);
-color: rgb(255, 255, 255);</string>
+      <string notr="true">background-color: #026;
+color: #fff;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -493,8 +493,8 @@ color: rgb(255, 255, 255);</string>
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(65, 65, 65);
-color: rgb(255, 255, 255);</string>
+      <string notr="true">background-color: #026;
+color: #fff;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -685,8 +685,8 @@ color: rgb(255, 255, 255);</string>
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(65, 65, 65);
-color: rgb(255, 255, 255);</string>
+      <string notr="true">background-color: #026;
+color: #fff;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -894,8 +894,8 @@ color: rgb(255, 255, 255);</string>
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(65, 65, 65);
-color: rgb(255, 255, 255);</string>
+      <string notr="true">background-color: #026;
+color: #fff;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -1281,7 +1281,7 @@ QSlider::add-page:horizontal {
  }
  
 QSlider::handle:horizontal {
- background-image: url(:/Images/slider_temp.png);
+ background-image: url(:/Images/slider_toggle.png);
  width:35px;
  height:17px;
  margin:0px;
@@ -1310,7 +1310,7 @@ QSlider::add-page:horizontal:disabled {
  }
  
 QSlider::handle:horizontal:disabled {
- background-image: url(:/Images/slider_temp.png);
+ background-image: url(:/Images/slider_toggle.png);
  width:35px;
  height:17px;
  margin:0px;
@@ -1337,8 +1337,8 @@ QSlider::handle:horizontal:disabled {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(65, 65, 65);
-color: rgb(255, 255, 255);</string>
+     <string notr="true">background-color: #026;
+color: #fff;</string>
     </property>
     <property name="title">
      <string/>
