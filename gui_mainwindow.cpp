@@ -119,7 +119,7 @@ void gui_MainWindow::enableDisableSpeedControls(void)
     bool enabled = ui->ctrl_isManual->value() == 1 ? true : false;
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        m_channelSpeedSliders[i]->setEnabled(!enabled);
+        m_channelSpeedSliders[i]->setEnabled(enabled);
     }
 }
 
