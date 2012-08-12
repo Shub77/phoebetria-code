@@ -34,7 +34,9 @@ typedef enum fcReponseCodeCategory {
     fcReq_DeviceFlags,
     fcReq_DeviceStatus,
 
-    fcReq_CurrentChannel
+    fcReq_CurrentChannel,
+
+    fcSet_DeviceFlags
 } fcCommandCategory;
 
 

@@ -65,13 +65,11 @@ static const fcCommandDef bfxReconCmdDefs[] = {
     { fcReq_AlarmAndSpeed, 4, (unsigned char)0x74,  QString ("Req. channel 5 Alarm Temp & Speed") },
 
 
+    { fcSet_DeviceFlags, -1, (unsigned char)0x60, QString ("Set device flags") }
+
 
 };
 #define RESPONSE_DEF_COUNT (sizeof(bfxReconCmdDefs) / sizeof(bfxReconCmdDefs[0]))
-
-#if 0
-static const unsigned char fcSet_DeviceFlags = 0x60;
-#endif
 
 
 static const int MAX_COMMANDQUEUE_LEN = 128;
@@ -289,6 +287,7 @@ void FanController::onPollTimerTriggered(void)
     if (waitingForAck()) return;
 #endif
 
+#if 1
     if (m_pollNumber % 26 == 0) {  // 100ms*26 = 2.6s
         requestDeviceFlags(); // C/F, Auto/Manual, Alarm Audible/NotAudible
     } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) {
@@ -297,7 +296,7 @@ void FanController::onPollTimerTriggered(void)
         m_channelCycle++;
         m_channelCycle %= 5;
     }
-
+#endif
     m_pollNumber++;
 }
 
@@ -535,7 +534,30 @@ bool FanController::setDeviceFlags(bool isCelcius,
                                    bool isAuto,
                                    bool isAudibleAlarm)
 {
-    return false;
+
+    FcData fcdata;
+    const fcCommandDef* cmdDef;
+
+    cmdDef = getCommandDef(fcSet_DeviceFlags, -1);
+
+    fcdata.command = cmdDef;
+
+    unsigned char bits;
+
+    qDebug() << "Bits celcius:" << QString::number(bitfenix_flag_celcius);
+    qDebug() << "Bits auto:" << QString::number(bitfenix_flag_auto);
+    qDebug() << "Bits audible alarm:" << QString::number(bitfenix_flag_alarm);
+
+    bits = !isCelcius ? bitfenix_flag_celcius : 0;
+    bits |= isAuto ? bitfenix_flag_auto : 0;
+    bits |= isAudibleAlarm ? bitfenix_flag_alarm : 0;
+
+    fcdata.data[0] = bits;
+    qDebug() << "Bits sending:" << QString::number(fcdata.data[0]);
+
+    issueCommand(fcdata);
+
+    return true;
 #if 0
     FcData fcdata;
     fcCommandDef cmdDef;

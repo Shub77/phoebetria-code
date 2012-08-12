@@ -198,7 +198,16 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {
-    m_isAuto = value == 0 ? true : false;
+//    if (m_isAutoToggleByDevice) {
+//        m_isAutoToggleByDevice = false;
+//        return;
+//    }
+
+    m_isAuto = value == 0 ? false : true;
+
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+
+    fc->setDeviceFlags(m_isCelcius, m_isAuto, m_isAudibleAlarm);
 
     // TODO: NEED TO LET THE DEVICE KNOW!
 
@@ -208,13 +217,25 @@ void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
 {
     m_isAudibleAlarm = value == 0 ? false : true;
 
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+
+    fc->setDeviceFlags(m_isCelcius, m_isAuto, m_isAudibleAlarm);
     // TODO: NEED TO LET THE DEVICE KNOW!
 }
 
 void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 {
     m_isCelcius = value == 0 ? false : true;
-    qDebug() << "toggled temp scale";
+
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+
+    fc->setDeviceFlags(m_isCelcius, m_isAuto, m_isAudibleAlarm);
+
+    // Force temp controls to be updated.
+    // TODO: there is a better way to do this
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        m_lastTemps[i] = m_lastTemps[i] - 1;
+    }
 
     // TODO: NEED TO LET THE DEVICE KNOW!
 }
