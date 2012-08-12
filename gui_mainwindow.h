@@ -58,6 +58,8 @@ private:
 
     void enableDisableSpeedControls(void);
 
+    QString temperatureString(int t) const;
+
     Ui::gui_MainWindow *ui;
 
     int m_maxTemps[FC_MAX_CHANNELS];
