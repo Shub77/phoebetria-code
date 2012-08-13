@@ -92,9 +92,22 @@ FcData::FcData(const QByteArray &rawData)
     setFromRawData(rawData);
 }
 
+int FcData::dataLen(void) const
+{
+    /* It is possible for the array to hold just one
+     * 0x00 character. QByteArray::size() returns 0 for
+     * the data length in this case, which is not what
+     * is required.
+     */
+    qDebug() << "Data len: " << QString::number(data.length());
+    if (data.length() > 0) return data.length();
+
+    return data.isNull() ? 0 : 1;
+}
+
 unsigned char FcData::calcChecksum(bool isRequest) const
 {
-    int len = data.length();
+    int len = dataLen();
     unsigned checksum = len + 1;
 
     if (isRequest) checksum += command->commandByte;
@@ -154,7 +167,7 @@ bool FcData::toRawData(char *dest, int buffLen, bool pad)
     //      3) the checksum at the end
     Q_ASSERT (buffLen >= data.length() + 3);
 
-    int dataLen = data.length();
+    int dataLen = this->dataLen();
 
     *(dest) = dataLen + 2;
     *(dest + 1) = command->commandByte;
@@ -464,14 +477,14 @@ void  FanController::processCommandQueue(void)
      */
     if (m_cmdQueue.isEmpty()) return;
 
-    char reqBuff[9];    // Needs to be one more than max request size
+    char reqBuff[8];    // Needs to be one more than max request size
     FcData dataToSend = m_cmdQueue.takeFirst();
 
     dataToSend.toRawData(reqBuff, sizeof(reqBuff));
 
     QByteArray ba(reqBuff);
     qDebug() << "To Device: " << ba.toHex();
-    m_io_device.sendData(reqBuff);
+    m_io_device.sendData(reqBuff, 8);
 }
 
 /*--------------------------------------------------------------------------

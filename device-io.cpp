@@ -31,9 +31,11 @@ bool DeviceIO::isConnected(void) const
     return m_device != NULL;
 }
 
-int DeviceIO::sendData(const QByteArray& data)
+int DeviceIO::sendData(char* data, int len)
 {
     int r;
+
+#if 0
     char toSend[9];
 
     if (data.length() > 8) {
@@ -48,12 +50,22 @@ int DeviceIO::sendData(const QByteArray& data)
     for (; i < 9; i++) {    // Add padding
         toSend[i+1] = 0x00;
     };
+#endif
+
+    // Need to prepend an 0x00 before sending (the report id)
+    unsigned char* toSend = new unsigned char[len+1];
+    toSend[0] = 0x00;
+    for (int i = 0; i < len; i++) {
+        toSend[i+1] = data[i];
+    }
 
     setBlocking(true);
-    r = hid_write(m_device, (const unsigned char*)toSend, 9);
+    r = hid_write(m_device, toSend, len+1);
     const wchar_t* err = hid_error(m_device);
     if (r == -1) qDebug() << "*** Send Error:" << QString::fromStdWString(err);
     setBlocking(false);
+
+    delete toSend;
     return r;
 
 }
