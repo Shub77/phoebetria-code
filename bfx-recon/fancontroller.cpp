@@ -27,7 +27,7 @@ static const unsigned bitfenix_flag_auto    = 1 << 0;
 static const unsigned bitfenix_flag_celcius = 1 << 1;
 static const unsigned bitfenix_flag_alarm   = 1 << 2;
 
-static const int blockRequestsDefaultTimeout = 150;
+static const int blockRequestsDefaultTimeout = 70;
 
 static const fcCommandDef bfxReconCmdDefs[] = {
     { fcResp_TempAndSpeed, 0, (unsigned char)0x40,  QString("Channel 1 Temp & Speed") },
