@@ -13,5 +13,14 @@
         <file>Images/profile_reset.png</file>
         <file>Images/profile_save.png</file>
         <file>Images/profile_set.png</file>
+        <file>Images/channel_1.png</file>
+        <file>Images/channel_2.png</file>
+        <file>Images/channel_3.png</file>
+        <file>Images/channel_4.png</file>
+        <file>Images/channel_5.png</file>
+        <file>Images/phoebetria_icon_32.png</file>
+        <file>Images/phoebetria_icon_64.png</file>
+        <file>Images/phoebetria_icon_128.png</file>
+        <file>Images/phoebetria_icon_256.png</file>
     </qresource>
 </RCC>

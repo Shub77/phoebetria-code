@@ -121,8 +121,8 @@
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #026;
-color: #fff;</string>
+      <string notr="true">background-image: url(:/Images/channel_5.png);
+margin:-2px;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -131,7 +131,7 @@ color: #fff;</string>
       <enum>QFrame::Raised</enum>
      </property>
      <property name="text">
-      <string>5</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -307,8 +307,8 @@ color: #fff;</string>
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #026;
-color: #fff;</string>
+      <string notr="true">background-image: url(:/Images/channel_2.png);
+margin:-2px;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -317,7 +317,7 @@ color: #fff;</string>
       <enum>QFrame::Raised</enum>
      </property>
      <property name="text">
-      <string>2</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -493,8 +493,8 @@ color: #fff;</string>
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #026;
-color: #fff;</string>
+      <string notr="true">background-image: url(:/Images/channel_4.png);
+margin:-2px;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -503,7 +503,7 @@ color: #fff;</string>
       <enum>QFrame::Raised</enum>
      </property>
      <property name="text">
-      <string>4</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -685,8 +685,8 @@ color: #fff;</string>
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #026;
-color: #fff;</string>
+      <string notr="true">background-image: url(:/Images/channel_3.png);
+margin:-2px;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -695,7 +695,7 @@ color: #fff;</string>
       <enum>QFrame::Raised</enum>
      </property>
      <property name="text">
-      <string>3</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -894,8 +894,8 @@ color: #fff;</string>
       <string>Channel</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #026;
-color: #fff;</string>
+      <string notr="true">background-image: url(:/Images/channel_1.png);
+margin:-2px;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -904,7 +904,7 @@ color: #fff;</string>
       <enum>QFrame::Raised</enum>
      </property>
      <property name="text">
-      <string>1</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
