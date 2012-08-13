@@ -1,22 +1,26 @@
 <RCC>
     <qresource prefix="/" lang="English">
-        <file>Images/slider_bg.png</file>
-        <file>Images/slider_handle.png</file>
-        <file>Images/slider_off.png</file>
-        <file>Images/slider_on.png</file>
+        <file>Images/animated_fan.gif</file>
+        <file>Images/phoebetria_fan.gif</file>
+        <file>Images/slider_onoff_bg.png</file>
+        <file>Images/slider_onoff_off.png</file>
+        <file>Images/slider_onoff_on.png</file>
         <file>Images/slider_toggle.png</file>
-        <file>Images/slider_blue_fcbg.png</file>
-        <file>Images/slider_blue_cel.png</file>
-        <file>Images/slider_blue_fah.png</file>
-        <file>Images/slider_alarm_bg.png</file>
-        <file>Images/slider_alarm_off.png</file>
-        <file>Images/slider_alarm_on.png</file>
-        <file>Images/slider_control_bg.png</file>
-        <file>Images/slider_control_off.png</file>
-        <file>Images/slider_control_on.png</file>
-        <file>mesh.png</file>
         <file>Images/slider_temp_bg.png</file>
         <file>Images/slider_temp_cel.png</file>
         <file>Images/slider_temp_fah.png</file>
+        <file>Images/profile_load.png</file>
+        <file>Images/profile_reset.png</file>
+        <file>Images/profile_save.png</file>
+        <file>Images/profile_set.png</file>
+        <file>Images/channel_1.png</file>
+        <file>Images/channel_2.png</file>
+        <file>Images/channel_3.png</file>
+        <file>Images/channel_4.png</file>
+        <file>Images/channel_5.png</file>
+        <file>Images/phoebetria_icon_32.png</file>
+        <file>Images/phoebetria_icon_64.png</file>
+        <file>Images/phoebetria_icon_128.png</file>
+        <file>Images/phoebetria_icon_256.png</file>
     </qresource>
 </RCC>
