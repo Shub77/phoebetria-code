@@ -307,8 +307,6 @@ void FanController::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-
-#if 1
     if (m_pollNumber % 26 == 0) {  // 100ms*26 = 2.6s
         requestDeviceFlags(); // C/F, Auto/Manual, Alarm Audible/NotAudible
     } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) {
@@ -317,7 +315,7 @@ void FanController::onPollTimerTriggered(void)
         m_channelCycle++;
         m_channelCycle %= 5;
     }
-#endif
+
     m_pollNumber++;
 }
 
@@ -372,6 +370,10 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 6:  maxRPM (hi)
     // Byte 7:  checksum
 
+    emit currentTemp(channel, rawToTemp(rawdata.at(2)));
+    emit currentRPM(channel, rawToRPM(rawdata.at(4), rawdata.at(3)));
+    emit maxRPM(channel, rawToRPM(rawdata.at(6), rawdata.at(5)));
+
 #if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "Channel" << channel + 1
              << "----probe temp------" << rawToTemp(rawdata.at(2)) << "F";
@@ -383,9 +385,6 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
              << "RPM";
 #endif
 
-    emit currentTemp(channel, rawToTemp(rawdata.at(2)));
-    emit currentRPM(channel, rawToRPM(rawdata.at(4), rawdata.at(3)));
-    emit maxRPM(channel, rawToRPM(rawdata.at(6), rawdata.at(5)));
 }
 
 void FanController::parseDeviceFlags(const QByteArray& rawdata)
@@ -396,12 +395,12 @@ void FanController::parseDeviceFlags(const QByteArray& rawdata)
     isCelcius = rawdata[2] & bitfenix_flag_celcius ? false : true;
     isAudibleAlarm =   rawdata[2] & bitfenix_flag_alarm ? true : false;
 
+    emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
+
 #if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "##Auto: " << isAuto << "## is Celcius: " << isCelcius
              << "##Audible alarm:" << isAudibleAlarm;
 #endif
-
-    emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
 }
 
 void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
@@ -409,27 +408,25 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 0:  data/packet length
     // Byte 1:  response code
     // Byte 2:  alarm temp
-    // Byte 3:  rpm (lo byte)
-    // Byte 4:  rpm (hi byte)
+    // Byte 3:  alarm rpm (lo byte)
+    // Byte 4:  alarm rpm (hi byte)
     // Byte 5:  checksum
 
-#if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
-    // TODO: Not sure if the fan speed reported is the speed to set the fan when
-    //       the alarm is reached
+    emit currentAlarmTemp(channel, rawToTemp(rawdata[2]));
+    emit currentRpmOnAlarm(channel, rawToRPM(rawdata[4], rawdata[3]));
 
+#if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "Channel" << channel + 1 << "----alarm temp------"
              << rawToTemp(rawdata[2]) << "F";
     qDebug() << "Channel" << channel + 1 << "----on alarm speed--"
              << rawToRPM(rawdata[4], rawdata[3]) << "RPM";
 #endif
-
-    emit currentAlarmTemp(channel, rawToTemp(rawdata[2]));
-    emit currentRpmOnAlarm(channel, rawToRPM(rawdata[4], rawdata[3]));
 }
 
 void FanController::parseDeviceStatus(const QByteArray& rawdata)
 {
     m_deviceIsReady = rawdata[2] == 1 ? true : false;
+
 #if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "Device is: " << (m_deviceIsReady ? "Ready" : "Not Ready");
 #endif
@@ -565,16 +562,11 @@ bool FanController::setDeviceFlags(bool isCelcius,
 
     unsigned char bits;
 
-    qDebug() << "Bits celcius:" << QString::number(bitfenix_flag_celcius);
-    qDebug() << "Bits auto:" << QString::number(bitfenix_flag_auto);
-    qDebug() << "Bits audible alarm:" << QString::number(bitfenix_flag_alarm);
-
     bits = !isCelcius ? bitfenix_flag_celcius : 0;
     bits |= !isAuto ? bitfenix_flag_auto : 0;
     bits |= isAudibleAlarm ? bitfenix_flag_alarm : 0;
 
     fcdata.data[0] = bits;
-    qDebug() << "Bits sending:" << QString::number(fcdata.data[0]);
 
     fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
     issueCommand(fcdata);
