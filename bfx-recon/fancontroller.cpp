@@ -27,6 +27,8 @@ static const unsigned bitfenix_flag_auto    = 1 << 0;
 static const unsigned bitfenix_flag_celcius = 1 << 1;
 static const unsigned bitfenix_flag_alarm   = 1 << 2;
 
+static const int blockRequestsDefaultTimeout = 150;
+
 static const fcCommandDef bfxReconCmdDefs[] = {
     { fcResp_TempAndSpeed, 0, (unsigned char)0x40,  QString("Channel 1 Temp & Speed") },
     { fcResp_TempAndSpeed, 1, (unsigned char)0x41,  QString("Channel 2 Temp & Speed") },
@@ -84,11 +86,13 @@ static const int MAX_COMMANDQUEUE_LEN = 128;
 FcData::FcData()
 {
     m_dataLen = -1;
+    m_blockCommandsAfterExecuting_timeout = 0;
 }
 
 FcData::FcData(const QByteArray &rawData)
 {
     m_dataLen = -1;
+    m_blockCommandsAfterExecuting_timeout = 0;
     setFromRawData(rawData);
 }
 
@@ -198,7 +202,7 @@ FanController::FanController(QObject *parent) :
     m_deviceIsReady = false;
     m_pollNumber = 0;
     m_channelCycle = 0;
-    m_waitForACK = 0;
+    m_blockRequestsTimeout = 0;
     connectSignals();
 }
 
@@ -293,10 +297,16 @@ void FanController::onPollTimerTriggered(void)
 {
     if (!isInterfaceConnected()) return;
 
+    processCommandQueue();
+
+    if (m_blockRequestsTimeout > 0) {
+        m_blockRequestsTimeout--;
+        return;
+    }
+
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-    processCommandQueue();
 
 #if 1
     if (m_pollNumber % 26 == 0) {  // 100ms*26 = 2.6s
@@ -461,14 +471,23 @@ void  FanController::processCommandQueue(void)
      */
     if (m_cmdQueue.isEmpty()) return;
 
+    blockSignals(true);
+
     char reqBuff[8];    // Needs to be one more than max request size
     FcData dataToSend = m_cmdQueue.takeFirst();
 
     dataToSend.toRawData(reqBuff, sizeof(reqBuff));
 
+    if (dataToSend.m_blockCommandsAfterExecuting_timeout > 0) {
+        blockRequests(dataToSend.m_blockCommandsAfterExecuting_timeout);
+    }
+
     QByteArray ba(reqBuff);
     qDebug() << "To Device: " << ba.toHex();
     m_io_device.sendData(reqBuff, 8);
+
+    blockSignals(false);
+
 }
 
 /*--------------------------------------------------------------------------
@@ -557,6 +576,7 @@ bool FanController::setDeviceFlags(bool isCelcius,
     fcdata.data[0] = bits;
     qDebug() << "Bits sending:" << QString::number(fcdata.data[0]);
 
+    fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
     issueCommand(fcdata);
 
     return true;

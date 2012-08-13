@@ -71,6 +71,7 @@ private:
     const fcCommandDef* command;
     QByteArray data;
     int m_dataLen;
+    int m_blockCommandsAfterExecuting_timeout;
 };
 
 
@@ -100,7 +101,7 @@ public:
     static const fcCommandDef* getCommandDef(fcCommandCategory category,
                                              int channel);
 
-    bool waitingForAck(void) const { return m_waitForACK > 0; }
+    bool waitingForAck(void) const { return m_blockRequestsTimeout > 0; }
 
 signals:
     void deviceConnected(void);
@@ -138,7 +139,7 @@ protected:
     void issueCommand(const FcData &cmd);
     void processCommandQueue(void);
 
-    void waitForAck(int count) { m_waitForACK = count; }
+    void blockRequests(int count) { m_blockRequestsTimeout = count; }
 
 private:
     bool m_deviceIsReady;
@@ -149,7 +150,7 @@ private:
     unsigned m_pollNumber;
     unsigned m_channelCycle;
 
-    int m_waitForACK;
+    int m_blockRequestsTimeout;
 
     QQueue<FcData> m_cmdQueue;
 };
