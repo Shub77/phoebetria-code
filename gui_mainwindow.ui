@@ -172,7 +172,7 @@ margin:-2px;</string>
  QSlider::handle:vertical {
 	 background-image: url(:/Images/slider_toggle.png);
  	width:35px;
- 	height:17px;
+ 	height:20px;
  	margin:-7px;
  	border:0px;
  	padding:0px;
@@ -358,7 +358,7 @@ margin:-2px;</string>
  QSlider::handle:vertical {
 	 background-image: url(:/Images/slider_toggle.png);
  	width:35px;
- 	height:17px;
+ 	height:20px;
  	margin:-7px;
  	border:0px;
  	padding:0px;
@@ -544,7 +544,7 @@ margin:-2px;</string>
  QSlider::handle:vertical {
 	 background-image: url(:/Images/slider_toggle.png);
  	width:35px;
- 	height:17px;
+ 	height:20px;
  	margin:-7px;
  	border:0px;
  	padding:0px;
@@ -736,7 +736,7 @@ margin:-2px;</string>
  QSlider::handle:vertical {
 	 background-image: url(:/Images/slider_toggle.png);
  	width:35px;
- 	height:17px;
+ 	height:20px;
  	margin:-7px;
  	border:0px;
  	padding:0px;
@@ -945,7 +945,7 @@ margin:-2px;</string>
  QSlider::handle:vertical {
 	 background-image: url(:/Images/slider_toggle.png);
  	width:35px;
- 	height:17px;
+ 	height:20px;
  	margin:-7px;
  	border:0px;
  	padding:0px;
