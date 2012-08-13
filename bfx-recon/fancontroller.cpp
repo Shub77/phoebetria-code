@@ -298,10 +298,6 @@ void FanController::onPollTimerTriggered(void)
 
     processCommandQueue();
 
-#if 0
-    if (waitingForAck()) return;
-#endif
-
 #if 1
     if (m_pollNumber % 26 == 0) {  // 100ms*26 = 2.6s
         requestDeviceFlags(); // C/F, Auto/Manual, Alarm Audible/NotAudible
@@ -327,18 +323,6 @@ bool FanController::parseRawData(QByteArray rawdata, FcData *parsedData)
         // Unknown response from device
         return false;
     }
-
-#if 0
-    if (m_waitForACK > 0) {
-        if (parsedData->command->category == fcResp_Handshake
-            && parsedData->command->commandByte == fcResp_ACK) {
-            m_waitForACK = 0;
-        } else {
-            m_waitForACK--;
-        }
-        return false;
-    }
-#endif
 
     switch (parsedData->command->category)
     {
@@ -576,27 +560,4 @@ bool FanController::setDeviceFlags(bool isCelcius,
     issueCommand(fcdata);
 
     return true;
-#if 0
-    FcData fcdata;
-    fcCommandDef cmdDef;
-    char reqBuff[9];
-
-    cmdDef.commandByte = fcSet_DeviceFlags;
-    fcdata.command = &cmdDef;
-
-    unsigned char bits;
-
-    bits = isCelcius ? bitfenix_flag_celcius : 0;
-    bits |= isAuto ? bitfenix_flag_auto : 0;
-    bits |= isAudibleAlarm ? bitfenix_flag_alarm : 0;
-
-    fcdata.data[0] = bits;
-
-    fcdata.toRawData(reqBuff, sizeof(reqBuff));
-    int bytesSent = m_io_device.sendData(reqBuff);
-    if (bytesSent > 0) {
-        waitForAck(500);
-    }
-    return bytesSent > 0;
-#endif
 }
