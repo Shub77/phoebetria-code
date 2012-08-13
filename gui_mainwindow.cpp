@@ -28,8 +28,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        m_maxTemps[i] = m_minTemps[i] = m_lastTemps[i]
-                = m_minRPMs[i] = m_maxRPMs[i] = m_lastRPMs[i] = 0;
+        m_maxTemps[i] = m_minRPMs[i] = m_maxRPMs[i] = m_lastRPMs[i] = 0;
+        m_lastTemps[i] = -1;
+        m_minTemps[i] = 9999;
 
         /* Init to 1400 for now -- will be updated the first time we get real
          * values from the device
@@ -134,6 +135,26 @@ void gui_MainWindow::enableDisableSpeedControls(void)
     }
 }
 
+void gui_MainWindow::updateSpeedControlTooltips(void)
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        QString tooltip;
+        tooltip += tr("Min Temp: ");
+        tooltip += temperatureString(m_minTemps[i]);
+        tooltip += "\n";
+        tooltip += tr("Max Temp: ");
+        tooltip += temperatureString(m_maxTemps[i]);
+        tooltip += "\n";
+        tooltip += tr("Min logged RPM: ");
+        tooltip += QString::number(m_minRPMs[i]);
+        tooltip += "\n";
+        tooltip += tr("Max logged RPM: ");
+        tooltip += QString::number(m_maxRPMs[i]);
+        m_channelSpeedSliders[i]->setToolTip(tooltip);
+    }
+}
+
+
 QString gui_MainWindow::temperatureString(int t) const
 {
     QString r;
@@ -180,9 +201,25 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
         qDebug() << "Channel out of range ::onCurrentTemp" << channel;
         return;
     }
+    if (tempInF == -1) return;
+
     if (m_lastTemps[channel] != tempInF) {
         m_lastTemps[channel] = tempInF;
         m_probeTempCtrls[channel]->setText(temperatureString(tempInF));
+
+        /* Sometimes -'ve temperatures are sent from the device (that are
+         * incorrect). The specs page for the recon show 0-100C as the probes'
+         * range, so ignore these -'ve values.
+         */
+        if (m_minTemps[channel] > tempInF && tempInF > -1) {
+            m_minTemps[channel] = tempInF;
+        }
+
+        if (m_maxTemps[channel] < tempInF) {
+            m_maxTemps[channel] = tempInF;
+        }
+
+        updateSpeedControlTooltips();
     }
 }
 

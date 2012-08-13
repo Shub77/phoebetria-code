@@ -57,6 +57,7 @@ private:
     void updateMaxSpeedControl(int channel, int RPM);
 
     void enableDisableSpeedControls(void);
+    void updateSpeedControlTooltips(void);
 
     QString temperatureString(int t) const;
 
