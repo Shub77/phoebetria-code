@@ -136,6 +136,17 @@ QString gui_MainWindow::temperatureString(int t) const
     return r;
 }
 
+void gui_MainWindow::forceTempCtrlsToUpdate(void)
+{
+    // Force temp controls to be updated.
+    // TODO: there is a better way to do this
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        // The -1 is just to make sure the temp is different;
+        // it will updated next refresh from the device
+        onCurrentTemp(i, m_lastTemps[i] - 1);
+    }
+}
+
 void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
     if (channel < 0 || channel > 4) {
@@ -178,11 +189,7 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
         m_isCelciusToggleByDevice = true;
         ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 1 : 0);
 
-        // Force temp controls to be updated.
-        // TODO: there is a better way to do this
-        for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-            m_lastTemps[i] = m_lastTemps[i] - 1;
-        }
+        forceTempCtrlsToUpdate();
     }
 
     if (m_isAuto != isAuto) {
@@ -242,12 +249,6 @@ void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 
     fc->setDeviceFlags(m_isCelcius, m_isAuto, m_isAudibleAlarm);
 
-    // Force temp controls to be updated.
-    // TODO: there is a better way to do this
-    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        m_lastTemps[i] = m_lastTemps[i] - 1;
-    }
-
-    // TODO: NEED TO LET THE DEVICE KNOW!
+    forceTempCtrlsToUpdate();
 }
 

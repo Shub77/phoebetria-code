@@ -60,6 +60,8 @@ private:
 
     QString temperatureString(int t) const;
 
+    void forceTempCtrlsToUpdate(void);
+
     Ui::gui_MainWindow *ui;
 
     int m_maxTemps[FC_MAX_CHANNELS];
