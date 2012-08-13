@@ -80,6 +80,8 @@ private:
     bool m_isAudibleAlarm;
 
     bool m_isAutoToggleByDevice;
+    bool m_isCelciusToggleByDevice;
+    bool m_isAudibleAlarmByDevice;
 
 };
 

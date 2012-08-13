@@ -32,11 +32,13 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
                 = m_minRPMs[i] = m_maxRPMs[i] = m_lastRPMs[i] = 0;
     }
 
-    m_isCelcius = ui->ctrl_tempScaleToggle->value() == 0 ? false : true;
+    m_isCelcius = ui->ctrl_tempScaleToggle->value() == 1 ? true : false;
     m_isAuto = ui->ctrl_isManual->value() == 0 ? true : false;
-    m_isAudibleAlarm = ui->ctrl_isAudibleAlarm->value() == 0 ? false : true;
+    m_isAudibleAlarm = ui->ctrl_isAudibleAlarm->value() == 1 ? true : false;
 
     m_isAutoToggleByDevice = false;
+    m_isAutoToggleByDevice = false;
+    m_isAudibleAlarmByDevice = false;
 
     initCtrlArrays();
     connectCustomSignals();
@@ -173,6 +175,7 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 
     if (m_isCelcius != isCelcius) {
         m_isCelcius = isCelcius;
+        m_isCelciusToggleByDevice = true;
         ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 1 : 0);
 
         // Force temp controls to be updated.
@@ -183,14 +186,15 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
     }
 
     if (m_isAuto != isAuto) {
-        m_isAutoToggleByDevice = true;
         m_isAuto = isAuto;
+        m_isAutoToggleByDevice = true;
         ui->ctrl_isManual->setValue(m_isAuto ? 0 : 1);
         enableDisableSpeedControls();
     }
 
     if (m_isAudibleAlarm != isAudibleAlarm) {
         m_isAudibleAlarm = isAudibleAlarm;
+        m_isAudibleAlarmByDevice = true;
         ui->ctrl_isAudibleAlarm->setValue(m_isAudibleAlarm ? 1 : 0);
     }
 
@@ -198,34 +202,41 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {
-//    if (m_isAutoToggleByDevice) {
-//        m_isAutoToggleByDevice = false;
-//        return;
-//    }
+   if (m_isAutoToggleByDevice) {
+        m_isAutoToggleByDevice = false;
+        return;
+   }
 
-    m_isAuto = value == 0 ? false : true;
+    m_isAuto = value == 0 ? true : false;
 
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
     fc->setDeviceFlags(m_isCelcius, m_isAuto, m_isAudibleAlarm);
-
-    // TODO: NEED TO LET THE DEVICE KNOW!
 
 }
 
 void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
 {
-    m_isAudibleAlarm = value == 0 ? false : true;
+    if (m_isAudibleAlarmByDevice) {
+        m_isAudibleAlarmByDevice = false;
+        return;
+    }
+
+    m_isAudibleAlarm = value == 1 ? true : false;
 
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
     fc->setDeviceFlags(m_isCelcius, m_isAuto, m_isAudibleAlarm);
-    // TODO: NEED TO LET THE DEVICE KNOW!
 }
 
 void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 {
-    m_isCelcius = value == 0 ? false : true;
+    if (m_isCelciusToggleByDevice) {
+        m_isCelciusToggleByDevice = false;
+        return;
+    }
+
+    m_isCelcius = value == 1 ? true : false;
 
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
