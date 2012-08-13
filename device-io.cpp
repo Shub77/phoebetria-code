@@ -35,23 +35,6 @@ int DeviceIO::sendData(char* data, int len)
 {
     int r;
 
-#if 0
-    char toSend[9];
-
-    if (data.length() > 8) {
-        qDebug() << "DeviceIO packet size too large (len > 8)";
-        return false;
-    }
-    int i;
-    toSend[0] = 0x00;
-    for (i = 0; i < data.length(); i++) {
-        toSend[i+1] = data.at(i);
-    }
-    for (; i < 9; i++) {    // Add padding
-        toSend[i+1] = 0x00;
-    };
-#endif
-
     // Need to prepend an 0x00 before sending (the report id)
     unsigned char* toSend = new unsigned char[len+1];
     toSend[0] = 0x00;
