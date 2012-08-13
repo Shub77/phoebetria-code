@@ -22,5 +22,7 @@
         <file>Images/phoebetria_icon_64.png</file>
         <file>Images/phoebetria_icon_128.png</file>
         <file>Images/phoebetria_icon_256.png</file>
+        <file>Images/phoebetria_icon_16.png</file>
+        <file>Images/phoebetria_icon_22.png</file>
     </qresource>
 </RCC>
