@@ -103,7 +103,7 @@ int FcData::dataLen(void) const
      * the data length in this case, which is not what
      * is required.
      */
-    qDebug() << "Data len: " << QString::number(data.length());
+    //qDebug() << "Data len: " << QString::number(data.length());
     if (data.length() > 0) return data.length();
 
     return data.isNull() ? 0 : 1;
@@ -479,12 +479,14 @@ void  FanController::processCommandQueue(void)
         blockRequests(dataToSend.m_blockCommandsAfterExecuting_timeout);
     }
 
-    QByteArray ba(reqBuff);
-    qDebug() << "To Device: " << ba.toHex();
     m_io_device.sendData(reqBuff, 8);
 
     blockSignals(false);
 
+#if 0
+    QByteArray ba(reqBuff);
+    qDebug() << "To Device: " << ba.toHex();
+#endif
 }
 
 /*--------------------------------------------------------------------------
