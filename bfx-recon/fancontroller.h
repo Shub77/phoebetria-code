@@ -61,6 +61,8 @@ public:
 
     bool setFromRawData(const QByteArray& rawdata);
     bool toRawData(char *dest, int buffLen, bool pad = true);
+
+    int dataLen(void) const;
 protected:
 
 private:
@@ -68,6 +70,7 @@ private:
     unsigned char checksum;
     const fcCommandDef* command;
     QByteArray data;
+    int m_dataLen;
 };
 
 
@@ -132,7 +135,7 @@ protected:
     virtual int rawToTemp(unsigned char byte) const;
     virtual int rawToRPM(char highByte, char lowByte) const;
 
-    void issueCommand(const FcData& cmd);
+    void issueCommand(const FcData &cmd);
     void processCommandQueue(void);
 
     void waitForAck(int count) { m_waitForACK = count; }

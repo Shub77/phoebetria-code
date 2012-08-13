@@ -83,10 +83,12 @@ static const int MAX_COMMANDQUEUE_LEN = 128;
 
 FcData::FcData()
 {
+    m_dataLen = -1;
 }
 
 FcData::FcData(const QByteArray &rawData)
 {
+    m_dataLen = -1;
     setFromRawData(rawData);
 }
 
@@ -287,7 +289,7 @@ void FanController::onPollTimerTriggered(void)
     if (waitingForAck()) return;
 #endif
 
-#if 1
+#if 0
     if (m_pollNumber % 26 == 0) {  // 100ms*26 = 2.6s
         requestDeviceFlags(); // C/F, Auto/Manual, Alarm Audible/NotAudible
     } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) {
@@ -466,6 +468,9 @@ void  FanController::processCommandQueue(void)
     FcData dataToSend = m_cmdQueue.takeFirst();
 
     dataToSend.toRawData(reqBuff, sizeof(reqBuff));
+
+    QByteArray ba(reqBuff);
+    qDebug() << "To Device: " << ba.toHex();
     m_io_device.sendData(reqBuff);
 }
 
