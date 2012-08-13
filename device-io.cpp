@@ -42,13 +42,13 @@ int DeviceIO::sendData(char* data, int len)
         toSend[i+1] = data[i];
     }
 
-    setBlocking(true);
+    //if (!m_device) return 0;  // TODO: ************** TEMP LINE *********************setBlocking(true);
+
     r = hid_write(m_device, toSend, len+1);
     const wchar_t* err = hid_error(m_device);
     if (r == -1) qDebug() << "*** Send Error:" << QString::fromStdWString(err);
-    setBlocking(false);
 
-    delete toSend;
+    delete [] toSend;
     return r;
 
 }
@@ -64,6 +64,7 @@ QString DeviceIO::lastErrorString(void) const
 
 void DeviceIO::setBlocking(bool block)
 {
+    //if (!m_device) return;  // TODO: ************** TEMP LINE *********************
     hid_set_nonblocking(m_device, block ? 0 : 1);
 }
 
