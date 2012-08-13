@@ -237,6 +237,7 @@ void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 
     fc->setDeviceFlags(m_isCelcius, m_isAuto, m_isAudibleAlarm);
 
+    enableDisableSpeedControls();
 }
 
 void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
