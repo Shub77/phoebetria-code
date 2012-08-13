@@ -39,7 +39,7 @@ public slots:
     void onCurrentRPM(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
     void onDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
-
+    void onCurrentRpmOnAlarm(int channel, int RPM);
 private slots:
 
     void on_ctrl_isManual_valueChanged(int value);
@@ -70,6 +70,8 @@ private:
     int m_minRPMs[FC_MAX_CHANNELS];
     int m_maxRPMs[FC_MAX_CHANNELS];
     int m_lastRPMs[FC_MAX_CHANNELS];
+    int m_alarmTemps[FC_MAX_CHANNELS];
+
 
     QLineEdit* m_probeTempCtrls[FC_MAX_CHANNELS];
     QLineEdit* m_channelTempCtrls[FC_MAX_CHANNELS];

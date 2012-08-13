@@ -30,6 +30,11 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
         m_maxTemps[i] = m_minTemps[i] = m_lastTemps[i]
                 = m_minRPMs[i] = m_maxRPMs[i] = m_lastRPMs[i] = 0;
+
+        /* Init to 1400 for now -- will be updated the first time we get real
+         * values from the device
+         */
+        m_alarmTemps[i] = 1400;
     }
 
     m_isCelcius = ui->ctrl_tempScaleToggle->value() == 1 ? true : false;
@@ -93,6 +98,8 @@ void gui_MainWindow::connectCustomSignals(void)
             this, SLOT(onCurrentTemp(int,int)));
     connect(&app->fanController(), SIGNAL(deviceSettings(bool,bool,bool)),
             this, SLOT(onDeviceSettings(bool,bool,bool)));
+    connect(&app->fanController(), SIGNAL(currentRpmOnAlarm(int, int)),
+            this, SLOT(onCurrentRpmOnAlarm(int, int)));
 }
 
 void gui_MainWindow::updateMinMaxRPMs(int channel, int RPM)
@@ -150,7 +157,7 @@ void gui_MainWindow::forceTempCtrlsToUpdate(void)
 void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
     if (channel < 0 || channel > 4) {
-        qDebug() << "Channel out of range" << channel;
+        qDebug() << "Channel out of range ::onCurrentRPM" << channel;
         return;
     }
 
@@ -160,7 +167,8 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
         updateMinMaxRPMs(channel, RPM);
 
         // TODO: Get Max RPM From controller
-        m_channelSpeedSliders[channel]->setValue(RPM/1200.0*100);
+        int alarmTemp = m_alarmTemps[channel];
+        m_channelSpeedSliders[channel]->setValue(RPM*100.0/alarmTemp);
     }
 }
 
@@ -169,7 +177,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
 {
     if (channel < 0 || channel > 4) {
-        qDebug() << "Channel out of range" << channel;
+        qDebug() << "Channel out of range ::onCurrentTemp" << channel;
         return;
     }
     if (m_lastTemps[channel] != tempInF) {
@@ -205,6 +213,15 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
         ui->ctrl_isAudibleAlarm->setValue(m_isAudibleAlarm ? 1 : 0);
     }
 
+}
+
+void gui_MainWindow::onCurrentRpmOnAlarm(int channel, int RPM)
+{
+    if (channel < 0 || channel > 4) {
+        qDebug() << "Channel out of range ::onCurrentRpmOnAlarm" << channel;
+        return;
+    }
+    m_alarmTemps[channel] = RPM;
 }
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)

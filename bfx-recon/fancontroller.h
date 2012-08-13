@@ -110,7 +110,7 @@ signals:
     void currentRPM(int channel, int RPM);
     void maxRPM(int channel, int RPM);
     void currentAlarmTemp(int channel, int temp);
-    void currentRpmOnAlarm(int channel, unsigned RPM);
+    void currentRpmOnAlarm(int channel, int RPM);
     void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
 
 public slots:
@@ -153,6 +153,7 @@ private:
     int m_blockRequestsTimeout;
 
     QQueue<FcData> m_cmdQueue;
+
 };
 
 
