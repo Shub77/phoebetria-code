@@ -44,11 +44,15 @@ unix:!macx {
     LIBS += -lusb-1.0 -ludev -lrt
 }
 macx {
+    QMAKE_INFO_PLIST = Info.plist
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     QMAKE_MAC_SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
     LIBS += -framework CoreFoundation -framework IOKit
     SOURCES += hidapi-0.7.0/mac/hid.c
+    ICON = Phoebetria.icns
 }
 
 RESOURCES += \
     gui_resources.qrc
+
+OTHER_FILES +=

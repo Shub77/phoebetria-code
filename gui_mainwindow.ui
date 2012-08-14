@@ -851,7 +851,7 @@ margin:-2px;</string>
      <string notr="true">background-image: url(:/Images/phoebetria_icon_128.png);</string>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Panel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Sunken</enum>
@@ -1546,7 +1546,7 @@ QSlider::handle:horizontal:disabled {
      <x>0</x>
      <y>0</y>
      <width>409</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
