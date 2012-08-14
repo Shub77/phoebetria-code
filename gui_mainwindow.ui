@@ -6,15 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>412</width>
-    <height>490</height>
+    <width>409</width>
+    <height>487</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>409</width>
+    <height>487</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Phoebetria - BitFenix Recon Fan Controller</string>
@@ -27,7 +33,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>140</y>
+      <y>150</y>
       <width>71</width>
       <height>281</height>
      </rect>
@@ -181,7 +187,7 @@ margin:-2px;</string>
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>140</y>
+      <y>150</y>
       <width>71</width>
       <height>281</height>
      </rect>
@@ -335,7 +341,7 @@ margin:-2px;</string>
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>140</y>
+      <y>150</y>
       <width>71</width>
       <height>281</height>
      </rect>
@@ -493,7 +499,7 @@ margin:-2px;</string>
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>140</y>
+      <y>150</y>
       <width>71</width>
       <height>281</height>
      </rect>
@@ -647,7 +653,7 @@ margin:-2px;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>140</y>
+      <y>150</y>
       <width>71</width>
       <height>281</height>
      </rect>
@@ -818,25 +824,31 @@ margin:-2px;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
-      <width>151</width>
-      <height>111</height>
+      <y>10</y>
+      <width>128</width>
+      <height>128</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="minimumSize">
      <size>
-      <width>151</width>
-      <height>111</height>
+      <width>128</width>
+      <height>128</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>151</width>
-      <height>111</height>
+      <width>128</width>
+      <height>128</height>
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/Images/phoebetria_fan.gif);</string>
+     <string notr="true">background-image: url(:/Images/phoebetria_icon_128.png);</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Panel</enum>
@@ -854,10 +866,10 @@ margin:-2px;</string>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>150</x>
       <y>10</y>
-      <width>231</width>
-      <height>121</height>
+      <width>251</width>
+      <height>128</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -870,8 +882,8 @@ margin:-2px;</string>
      <widget class="QSlider" name="ctrl_isAudibleAlarm">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>30</y>
+        <x>160</x>
+        <y>40</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -962,7 +974,7 @@ QSlider::handle:horizontal:disabled {
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>60</y>
+        <y>70</y>
         <width>121</width>
         <height>21</height>
        </rect>
@@ -974,8 +986,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QSlider" name="ctrl_isManual">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>60</y>
+        <x>160</x>
+        <y>70</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -1066,7 +1078,7 @@ QSlider::handle:horizontal:disabled {
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>30</y>
+        <y>40</y>
         <width>121</width>
         <height>21</height>
        </rect>
@@ -1085,7 +1097,7 @@ QSlider::handle:horizontal:disabled {
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>0</y>
+        <y>10</y>
         <width>121</width>
         <height>21</height>
        </rect>
@@ -1108,8 +1120,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QSlider" name="ctrl_tempScaleToggle">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>0</y>
+        <x>160</x>
+        <y>10</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -1205,8 +1217,8 @@ QSlider::handle:horizontal:disabled {
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>0</y>
-        <width>71</width>
+        <y>10</y>
+        <width>101</width>
         <height>22</height>
        </rect>
       </property>
@@ -1218,8 +1230,8 @@ QSlider::handle:horizontal:disabled {
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>30</y>
-        <width>71</width>
+        <y>40</y>
+        <width>101</width>
         <height>22</height>
        </rect>
       </property>
@@ -1231,8 +1243,8 @@ QSlider::handle:horizontal:disabled {
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>60</y>
-        <width>71</width>
+        <y>70</y>
+        <width>101</width>
         <height>22</height>
        </rect>
       </property>
@@ -1243,8 +1255,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>0</y>
+        <x>120</x>
+        <y>10</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1272,8 +1284,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_2">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>0</y>
+        <x>150</x>
+        <y>10</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1292,8 +1304,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_3">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>0</y>
+        <x>180</x>
+        <y>10</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1312,8 +1324,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_4">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>0</y>
+        <x>210</x>
+        <y>10</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1338,8 +1350,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_5">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>30</y>
+        <x>150</x>
+        <y>40</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1358,8 +1370,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_6">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>30</y>
+        <x>120</x>
+        <y>40</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1387,8 +1399,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_7">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>30</y>
+        <x>180</x>
+        <y>40</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1407,8 +1419,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_8">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>30</y>
+        <x>210</x>
+        <y>40</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1433,8 +1445,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_9">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>60</y>
+        <x>150</x>
+        <y>70</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1453,8 +1465,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_10">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>60</y>
+        <x>120</x>
+        <y>70</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1482,8 +1494,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_11">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>60</y>
+        <x>180</x>
+        <y>70</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1502,8 +1514,8 @@ QSlider::handle:horizontal:disabled {
      <widget class="QPushButton" name="pushButton_12">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>60</y>
+        <x>210</x>
+        <y>70</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1533,7 +1545,7 @@ QSlider::handle:horizontal:disabled {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>412</width>
+     <width>409</width>
      <height>21</height>
     </rect>
    </property>
