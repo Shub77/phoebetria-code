@@ -52,10 +52,6 @@ private:
     void initCtrlArrays(void);
     void connectCustomSignals(void);
 
-    void updateMinMaxRPMs(int channel, int RPM);
-    void updateMinSpeedControl(int channel, int RPM);
-    void updateMaxSpeedControl(int channel, int RPM);
-
     void enableDisableSpeedControls(void);
     void updateSpeedControlTooltips(void);
 
@@ -76,8 +72,6 @@ private:
 
     QLineEdit* m_probeTempCtrls[FC_MAX_CHANNELS];
     QLineEdit* m_channelTempCtrls[FC_MAX_CHANNELS];
-    QLineEdit* m_minChannelTempCtrls[FC_MAX_CHANNELS];
-    QLineEdit* m_maxChannelTempCtrls[FC_MAX_CHANNELS];
     QSlider* m_channelSpeedSliders[FC_MAX_CHANNELS];
 
     bool m_isCelcius;

@@ -69,18 +69,6 @@ void gui_MainWindow::initCtrlArrays(void)
     m_channelTempCtrls[3] = ui->ctrl_channel4speed;
     m_channelTempCtrls[4] = ui->ctrl_channel5speed;
 
-    m_minChannelTempCtrls[0] = ui->ctrl_channel1MinSpeed;
-    m_minChannelTempCtrls[1] = ui->ctrl_channel2MinSpeed;
-    m_minChannelTempCtrls[2] = ui->ctrl_channel3MinSpeed;
-    m_minChannelTempCtrls[3] = ui->ctrl_channel4MinSpeed;
-    m_minChannelTempCtrls[4] = ui->ctrl_channel5MinSpeed;
-
-    m_maxChannelTempCtrls[0] = ui->ctrl_channel1MaxSpeed;
-    m_maxChannelTempCtrls[1] = ui->ctrl_channel2MaxSpeed;
-    m_maxChannelTempCtrls[2] = ui->ctrl_channel3MaxSpeed;
-    m_maxChannelTempCtrls[3] = ui->ctrl_channel4MaxSpeed;
-    m_maxChannelTempCtrls[4] = ui->ctrl_channel5MaxSpeed;
-
     m_channelSpeedSliders[0] = ui->ctrl_channel1speedSlider;
     m_channelSpeedSliders[1] = ui->ctrl_channel2speedSlider;
     m_channelSpeedSliders[2] = ui->ctrl_channel3speedSlider;
@@ -101,29 +89,6 @@ void gui_MainWindow::connectCustomSignals(void)
             this, SLOT(onDeviceSettings(bool,bool,bool)));
     connect(&app->fanController(), SIGNAL(currentRpmOnAlarm(int, int)),
             this, SLOT(onCurrentRpmOnAlarm(int, int)));
-}
-
-void gui_MainWindow::updateMinMaxRPMs(int channel, int RPM)
-{
-    if (m_minRPMs[channel] > RPM || m_minRPMs[channel] == 0) {
-        m_minRPMs[channel] = RPM;
-        updateMinSpeedControl(channel, RPM);
-    }
-
-    if (m_maxRPMs[channel] < RPM) {
-        m_maxRPMs[channel] = RPM;
-        updateMaxSpeedControl(channel, RPM);
-    }
-}
-
-void gui_MainWindow::updateMinSpeedControl(int channel, int RPM)
-{
-    m_minChannelTempCtrls[channel]->setText(QString::number(RPM));
-}
-
-void gui_MainWindow::updateMaxSpeedControl(int channel, int RPM)
-{
-    m_maxChannelTempCtrls[channel]->setText(QString::number(RPM));
 }
 
 void gui_MainWindow::enableDisableSpeedControls(void)
@@ -185,9 +150,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
     if (m_lastRPMs[channel] != RPM) {
         m_lastRPMs[channel] = RPM;
         m_channelTempCtrls[channel]->setText(QString::number(RPM));
-        updateMinMaxRPMs(channel, RPM);
 
-        // TODO: Get Max RPM From controller
         int alarmTemp = m_alarmTemps[channel];
         m_channelSpeedSliders[channel]->setValue(RPM*100.0/alarmTemp);
     }
