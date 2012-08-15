@@ -145,8 +145,6 @@ private:
     bool m_deviceIsReady;
     DeviceIO m_io_device;
 
-    static QMap<char, const fcCommandDef*> m_commandDefs;
-
     unsigned m_pollNumber;
     unsigned m_channelCycle;
 
