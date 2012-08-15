@@ -213,19 +213,6 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
         m_isAudibleAlarmByDevice = true;
         ui->ctrl_isAudibleAlarm->setValue(m_isAudibleAlarm ? 1 : 0);
     }
-
-
-
-    // ************* TEST
-    //FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
-
-    if (0)//!m_isAuto) {
-        unsigned alarmTemp = this->m_alarmTemps[0];
-        fc->setChannelSettings(0, alarmTemp, 1000);
-    }
-
-    // ************ END TEST
-
 }
 
 void gui_MainWindow::onMaxRPM(int channel, int RPM)
