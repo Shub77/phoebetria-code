@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Phoebetria - BitFenix Recon Fan Controller</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="gui_resources.qrc">
+    <normaloff>:/Images/phoebetria_icon_16.png</normaloff>:/Images/phoebetria_icon_16.png</iconset>
+  </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>
   </property>
@@ -1546,7 +1550,7 @@ QSlider::handle:horizontal:disabled {
      <x>0</x>
      <y>0</y>
      <width>409</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
