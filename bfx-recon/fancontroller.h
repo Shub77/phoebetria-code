@@ -36,7 +36,9 @@ typedef enum fcReponseCodeCategory {
 
     fcReq_CurrentChannel,
 
-    fcSet_DeviceFlags
+    fcSet_DeviceFlags,
+
+    fcSet_SetRPM
 } fcCommandCategory;
 
 
@@ -96,6 +98,8 @@ public:
     bool isInterfaceConnected(void) const;
 
     bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+    bool setChannelSettings(int channel, unsigned thresholdF, unsigned speed);
+
 
     static const fcCommandDef* getResponseDef(unsigned char cmd);
     static const fcCommandDef* getCommandDef(fcCommandCategory category,

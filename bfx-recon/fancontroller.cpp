@@ -67,7 +67,9 @@ static const fcCommandDef bfxReconCmdDefs[] = {
     { fcReq_AlarmAndSpeed, 4, (unsigned char)0x74,  QString ("Req. channel 5 Alarm Temp & Speed") },
 
 
-    { fcSet_DeviceFlags, -1, (unsigned char)0x60, QString ("Set device flags") }
+    { fcSet_DeviceFlags, -1, (unsigned char)0x60, QString ("Set device flags") },
+
+    { fcSet_SetRPM, 0, (unsigned char)0x80, QString("Set channel 0 speed") }
 
 
 };
@@ -374,7 +376,7 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
     emit currentRPM(channel, rawToRPM(rawdata.at(4), rawdata.at(3)));
     emit maxRPM(channel, rawToRPM(rawdata.at(6), rawdata.at(5)));
 
-#if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
+#if defined QT_DEBUG// && PHO_FC_VERBOSE_DEBUG
     qDebug() << "Channel" << channel + 1
              << "----probe temp------" << rawToTemp(rawdata.at(2)) << "F";
     qDebug() << "Channel" << channel + 1
@@ -408,12 +410,12 @@ void FanController::parseAlarmAndSpeed(int channel, const QByteArray &rawdata)
     // Byte 0:  data/packet length
     // Byte 1:  response code
     // Byte 2:  alarm temp
-    // Byte 3:  alarm rpm (lo byte)
-    // Byte 4:  alarm rpm (hi byte)
+    // Byte 3:  alarm rpm (lo byte)       ??? TODO: Current Manual Speed ????
+    // Byte 4:  alarm rpm (hi byte)       ??? TODO: Current Manual Speed ????
     // Byte 5:  checksum
 
     emit currentAlarmTemp(channel, rawToTemp(rawdata[2]));
-    emit currentRpmOnAlarm(channel, rawToRPM(rawdata[4], rawdata[3]));
+    // TODO ??? emit currentRpmOnAlarm(channel, rawToRPM(rawdata[4], rawdata[3]));
 
 #if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "Channel" << channel + 1 << "----alarm temp------"
@@ -468,21 +470,21 @@ void  FanController::processCommandQueue(void)
      */
     if (m_cmdQueue.isEmpty()) return;
 
-    blockSignals(true);
-
     char reqBuff[8];    // Needs to be one more than max request size
     FcData dataToSend = m_cmdQueue.takeFirst();
 
-    dataToSend.toRawData(reqBuff, sizeof(reqBuff));
+    if (dataToSend.command) {
+        blockSignals(true);
+        dataToSend.toRawData(reqBuff, sizeof(reqBuff));
 
-    if (dataToSend.m_blockCommandsAfterExecuting_timeout > 0) {
-        blockRequests(dataToSend.m_blockCommandsAfterExecuting_timeout);
+        if (dataToSend.m_blockCommandsAfterExecuting_timeout > 0) {
+            blockRequests(dataToSend.m_blockCommandsAfterExecuting_timeout);
+        }
+
+        m_io_device.sendData(reqBuff, 8);
+
+        blockSignals(false);
     }
-
-    m_io_device.sendData(reqBuff, 8);
-
-    blockSignals(false);
-
 #if 0
     QByteArray ba(reqBuff);
     qDebug() << "To Device: " << ba.toHex();
@@ -569,6 +571,27 @@ bool FanController::setDeviceFlags(bool isCelcius,
     bits |= isAudibleAlarm ? bitfenix_flag_alarm : 0;
 
     fcdata.data[0] = bits;
+
+    fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
+    issueCommand(fcdata);
+
+    return true;
+}
+
+bool FanController::setChannelSettings(int channel,
+                                         unsigned thresholdF,
+                                         unsigned speed)
+{
+    FcData fcdata;
+    const fcCommandDef* cmdDef;
+
+    cmdDef = getCommandDef(fcSet_SetRPM, channel);
+
+    fcdata.command = cmdDef;
+
+    fcdata.data[0] = 90;
+    fcdata.data[1] = speed % 256;
+    fcdata.data[2] = speed / 256;
 
     fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
     issueCommand(fcdata);

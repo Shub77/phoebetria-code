@@ -28,14 +28,12 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        m_maxTemps[i] = m_minRPMs[i] = m_maxRPMs[i] = m_lastRPMs[i] = 0;
+        m_maxTemps[i] = m_minLoggedRPMs[i] = m_maxLoggedRPMs[i] = m_lastRPMs[i] = 0;
         m_lastTemps[i] = -1;
         m_minTemps[i] = 9999;
 
-        /* Init to 1400 for now -- will be updated the first time we get real
-         * values from the device
-         */
-        m_alarmTemps[i] = 1400;
+        m_alarmTemps[i] = -1;
+        m_channelMaxRPM[i] = 1400;
     }
 
     m_isCelcius = ui->ctrl_tempScaleToggle->value() == 1 ? true : false;
@@ -48,6 +46,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     initCtrlArrays();
     connectCustomSignals();
+
 }
 
 gui_MainWindow::~gui_MainWindow()
@@ -87,8 +86,8 @@ void gui_MainWindow::connectCustomSignals(void)
             this, SLOT(onCurrentTemp(int,int)));
     connect(&app->fanController(), SIGNAL(deviceSettings(bool,bool,bool)),
             this, SLOT(onDeviceSettings(bool,bool,bool)));
-    connect(&app->fanController(), SIGNAL(currentRpmOnAlarm(int, int)),
-            this, SLOT(onCurrentRpmOnAlarm(int, int)));
+    connect(&app->fanController(), SIGNAL(maxRPM(int, int)),
+            this, SLOT(onMaxRPM(int, int)));
 }
 
 void gui_MainWindow::enableDisableSpeedControls(void)
@@ -111,10 +110,10 @@ void gui_MainWindow::updateSpeedControlTooltips(void)
         tooltip += temperatureString(m_maxTemps[i]);
         tooltip += "\n";
         tooltip += tr("Min logged RPM: ");
-        tooltip += QString::number(m_minRPMs[i]);
+        tooltip += QString::number(m_minLoggedRPMs[i]);
         tooltip += "\n";
         tooltip += tr("Max logged RPM: ");
-        tooltip += QString::number(m_maxRPMs[i]);
+        tooltip += QString::number(m_maxLoggedRPMs[i]);
         m_channelSpeedSliders[i]->setToolTip(tooltip);
     }
 }
@@ -151,8 +150,10 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
         m_lastRPMs[channel] = RPM;
         m_channelTempCtrls[channel]->setText(QString::number(RPM));
 
-        int alarmTemp = m_alarmTemps[channel];
-        m_channelSpeedSliders[channel]->setValue(RPM*100.0/alarmTemp);
+        int maxRPM = m_channelMaxRPM[channel];
+        //TODO: Check that alarmTemp != 0
+        if (maxRPM < 1) maxRPM = 1;
+        m_channelSpeedSliders[channel]->setValue(RPM*100.0/maxRPM);
     }
 }
 
@@ -213,15 +214,28 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
         ui->ctrl_isAudibleAlarm->setValue(m_isAudibleAlarm ? 1 : 0);
     }
 
+
+
+    // ************* TEST
+    //FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+
+    if (0)//!m_isAuto) {
+        unsigned alarmTemp = this->m_alarmTemps[0];
+        fc->setChannelSettings(0, alarmTemp, 1000);
+    }
+
+    // ************ END TEST
+
 }
 
-void gui_MainWindow::onCurrentRpmOnAlarm(int channel, int RPM)
+void gui_MainWindow::onMaxRPM(int channel, int RPM)
 {
     if (channel < 0 || channel > 4) {
         qDebug() << "Channel out of range ::onCurrentRpmOnAlarm" << channel;
         return;
     }
-    m_alarmTemps[channel] = RPM;
+    m_channelMaxRPM[channel] = RPM;
+    forceTempCtrlsToUpdate();
 }
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
