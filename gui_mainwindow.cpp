@@ -154,7 +154,9 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
     int maxRPM = m_channelMaxRPM[channel];
     if (maxRPM < 1) maxRPM = 1;
 
-    m_ctrls_RpmSliders[channel]->setValue(RPM*100.0/maxRPM);
+    m_ctrls_RpmSliders[channel]->setValue((int)(ceil(RPM*100.0/maxRPM)));
+    qDebug() << "==== Setting slider value to" << (int)(ceil(RPM*100.0/maxRPM));
+    qDebug() << "====   Actual slide value is" <<  m_ctrls_RpmSliders[channel]->value();
     m_ctrls_currentRPM[channel]->setText(QString::number(RPM));
 }
 
@@ -378,8 +380,13 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 
     if (speed < m_channelMaxRPM[channel-1] * 0.4 && speed != 0) {
         qDebug() << "Speed is less than 40%, but not OFF. Setting to 40%";
-        speed = m_channelMaxRPM[channel-1] * 0.4;
+        speed = ceil(m_channelMaxRPM[channel-1] * 0.4);
     }
+
+    // Speeds must be in multiples of 100 RPM
+    //double _speed = m_channelMaxRPM[channel-1] * 0.4;
+    double _speed = ((int)(speed / 100.0))*100;
+    speed = _speed;
 
     qDebug() << "reported max speed for channel"
                 << channel
