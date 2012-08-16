@@ -154,8 +154,8 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
     int maxRPM = m_channelMaxRPM[channel];
     if (maxRPM < 1) maxRPM = 1;
 
-    m_ctrls_RpmSliders[channel]->setValue((int)(ceil(RPM*100.0/maxRPM)));
-    qDebug() << "============ Setting slider value to" << (int)(ceil(RPM*100.0/maxRPM));
+    m_ctrls_RpmSliders[channel]->setValue(ceil(RPM*100.0/maxRPM));
+    qDebug() << "============ Setting slider value to" << ceil(RPM*100.0/maxRPM);
     qDebug() << "============  Actual slider value is" <<  m_ctrls_RpmSliders[channel]->value();
     qDebug() << "==== Expected max RPM for channel is" << m_channelMaxRPM[channel];
 
@@ -206,8 +206,6 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
     if (m_lastRPMs[channel] != RPM) {
         m_lastRPMs[channel] = RPM;
 
-        updateSpeedControl(channel, RPM);
-
         if (m_maxLoggedRPMs[channel] < RPM) {
             m_maxLoggedRPMs[channel] = RPM;
             updateSpeedControlTooltips();
@@ -217,6 +215,8 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
             m_minLoggedRPMs[channel] = RPM;
             updateSpeedControlTooltips();
         }
+
+        updateSpeedControl(channel, RPM);
     }
 }
 
@@ -303,6 +303,7 @@ void gui_MainWindow::onMaxRPM(int channel, int RPM)
     }
     m_channelMaxRPM[channel] = RPM;
 
+    updateSpeedControl(channel, m_lastRPMs[channel]);
 }
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
