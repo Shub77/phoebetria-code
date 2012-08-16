@@ -51,6 +51,17 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     initCtrlArrays();
     connectCustomSignals();
 
+    /* **** DEBUGGING MENU ***/
+#ifdef QT_DEBUG
+
+    m_debugMenu = ui->menuBar->addMenu("Debug");
+    m_debug_setChannelSpeed = m_debugMenu->addAction("Set channel speed");
+
+    connect(m_debug_setChannelSpeed, SIGNAL(triggered()),
+            this, SLOT(onDebugMenu_setChannelSpeed()));
+
+#endif
+    /* **** END DEBUGGING MENU ***/
 }
 
 gui_MainWindow::~gui_MainWindow()
@@ -330,3 +341,14 @@ void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
     updateAllSpeedCtrls();
 }
 
+/**************************************************************************
+  Debugging menu
+ *************************************************************************/
+#ifdef QT_DEBUG
+
+void gui_MainWindow::onDebugMenu_setChannelSpeed()
+{
+
+}
+
+#endif

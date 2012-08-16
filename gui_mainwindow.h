@@ -41,6 +41,7 @@ public slots:
     void onCurrentAlarmTemp(int channel, int tempInF);
     void onDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
     void onMaxRPM(int channel, int RPM);
+
 private slots:
 
     void on_ctrl_isManual_valueChanged(int value);
@@ -88,6 +89,20 @@ private:
     bool m_isAutoToggleByDevice;
     bool m_isCelciusToggleByDevice;
     bool m_isAudibleAlarmByDevice;
+
+
+    /* **** DEBUGGING MENU ***/
+#ifdef QT_DEBUG
+
+    QMenu* m_debugMenu;
+    QAction* m_debug_setChannelSpeed;
+
+private slots:
+
+    void onDebugMenu_setChannelSpeed();
+
+#endif
+    /* **** END DEBUGGING MENU ***/
 
 };
 
