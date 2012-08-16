@@ -69,7 +69,12 @@ static const fcCommandDef bfxReconCmdDefs[] = {
 
     { fcSet_DeviceFlags, -1, (unsigned char)0x60, QString ("Set device flags") },
 
-    { fcSet_SetRPM, 0, (unsigned char)0x80, QString("Set channel 0 speed") }
+    { fcSet_SetChannelSettings, 0, (unsigned char)0x80, QString("Set channel 1 settings") },
+    { fcSet_SetChannelSettings, 1, (unsigned char)0x81, QString("Set channel 2 settings") },
+    { fcSet_SetChannelSettings, 2, (unsigned char)0x82, QString("Set channel 3 settings") },
+    { fcSet_SetChannelSettings, 3, (unsigned char)0x83, QString("Set channel 4 settings") },
+    { fcSet_SetChannelSettings, 4, (unsigned char)0x84, QString("Set channel 5 settings") }
+
 
 
 };
@@ -585,11 +590,17 @@ bool FanController::setChannelSettings(int channel,
     FcData fcdata;
     const fcCommandDef* cmdDef;
 
-    cmdDef = getCommandDef(fcSet_SetRPM, channel);
+    cmdDef = getCommandDef(fcSet_SetChannelSettings, channel);
+
+    if (!cmdDef) {
+        qDebug() << "FanController::setChannelSettings()"
+                 << ": Invalid command";
+        return false;
+    }
 
     fcdata.command = cmdDef;
 
-    fcdata.data[0] = 90;
+    fcdata.data[0] = thresholdF;
     fcdata.data[1] = speed % 256;
     fcdata.data[2] = speed / 256;
 

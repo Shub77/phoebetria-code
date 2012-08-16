@@ -22,6 +22,11 @@
 #include "phoebetriaapp.h"
 #include "bfx-recon/fancontroller.h"
 
+#ifdef QT_DEBUG
+#   include <QMessageBox>
+#   include <QInputDialog>
+#endif //QT_DEBUG
+
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
@@ -348,6 +353,43 @@ void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 
 void gui_MainWindow::onDebugMenu_setChannelSpeed()
 {
+    if (m_isAuto) {
+        QMessageBox mbox;
+        mbox.setText("Recon must be in manual mode to set channel speed");
+        mbox.exec();
+        return;
+    }
+
+    bool ok;
+    int channel;
+    channel = QInputDialog::getInt(this, tr("Channel (1-5)"), tr("Channel"), 0, 1, 5, 1, &ok);
+    if (!ok) {
+        qDebug() << "onDebugMenu_setChannelSpeed: Channel invalid, or cancelled";
+        return;
+    }
+    int speed;
+
+    speed = QInputDialog::getInt(this, tr("Speed"), tr("RPM"), 0, 0, 50000, 1, &ok);
+    if (!ok) {
+        qDebug() << "onDebugMenu_setChannelSpeed: Invalid speed, or cancelled";
+        return;
+    }
+
+    if (speed < m_channelMaxRPM[channel-1] * 0.4 && speed != 0) {
+        qDebug() << "Speed is less than 40%, but not OFF. Setting to 40%";
+        speed = m_channelMaxRPM[channel-1] * 0.4;
+    }
+
+    qDebug() << "attempting to set channel "
+                << QString::number(channel)
+                << "to speed "
+                << QString::number(speed)
+                << "RPM"
+                   ;
+
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+
+    fc->setChannelSettings(channel-1, m_alarmTemps[channel-1], speed);
 
 }
 

@@ -38,7 +38,7 @@ typedef enum fcReponseCodeCategory {
 
     fcSet_DeviceFlags,
 
-    fcSet_SetRPM
+    fcSet_SetChannelSettings
 } fcCommandCategory;
 
 
