@@ -14,13 +14,15 @@ SOURCES += main.cpp\
     phoebetriaapp.cpp \
     bfx-recon/fancontroller.cpp \
     device-io.cpp \
-    temperaturemonitor.cpp
+    temperaturemonitor.cpp \
+    profiles.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
     bfx-recon/fancontroller.h \
     device-io.h \
-    temperaturemonitor.h
+    temperaturemonitor.h \
+    profiles.h
 
 FORMS    += gui_mainwindow.ui
 
