@@ -28,7 +28,10 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        m_maxTemps[i] = m_minLoggedRPMs[i] = m_maxLoggedRPMs[i] = m_lastRPMs[i] = 0;
+        m_maxTemps[i] = 0;
+        m_maxLoggedRPMs[i] = 0;
+        m_lastRPMs[i] = -1;
+        m_minLoggedRPMs[i] = -1;
         m_lastTemps[i] = -1;
         m_minTemps[i] = 9999;
 
@@ -151,9 +154,19 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
         m_channelTempCtrls[channel]->setText(QString::number(RPM));
 
         int maxRPM = m_channelMaxRPM[channel];
-        //TODO: Check that alarmTemp != 0
         if (maxRPM < 1) maxRPM = 1;
         m_channelSpeedSliders[channel]->setValue(RPM*100.0/maxRPM);
+
+
+        if (m_maxLoggedRPMs[channel] < RPM) {
+            m_maxLoggedRPMs[channel] = RPM;
+            updateSpeedControlTooltips();
+        }
+        if (m_minLoggedRPMs[channel] > RPM
+                 || m_minLoggedRPMs[channel] == -1) {
+            m_minLoggedRPMs[channel] = RPM;
+            updateSpeedControlTooltips();
+        }
     }
 }
 
