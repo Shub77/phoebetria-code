@@ -185,7 +185,9 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
 
     bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
     m_ctrls_RpmSliders[channel]->setValue(ceil(RPM*100.0/maxRPM));
-    m_ctrls_currentRPM[channel]->setText(QString::number(RPM));
+    QString RpmText;
+    RpmText = RPM == 0 ? "OFF" : QString::number(RPM);
+    m_ctrls_currentRPM[channel]->setText(RpmText);
     m_ctrls_RpmSliders[channel]->blockSignals(sb);
 
 #if 0
@@ -485,7 +487,7 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
 int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
 {
     int channelMaxRPM = m_channelData[channel].maxRPM();
-    int channelMinRPM = (int)(channelMaxRPM * 0.40 / 100) * 100;
+    int channelMinRPM = (int)(channelMaxRPM * 0.40 / 100) * 100 + 100;
 
     double val = value / 100.0 * channelMaxRPM;
     val = int(val / 100) * 100;
