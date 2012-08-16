@@ -32,6 +32,8 @@ public:
     int maxRPM(void) const { return m_maxRPM; }
     int alarmTemp(void) const { return m_alarmTemp; }
 
+    int manualRPM(void) const { return m_manualRPM; }
+
     int lastTemp(void) const { return m_lastTemp; }
     int maxTemp(void) const { return m_maxTemp; }
     int minTemp(void) const { return m_minTemp; }
@@ -43,6 +45,8 @@ public:
     //
     void setMaxRPM(int to) { m_maxRPM = to; }
     void setAlarmTemp(int to) { m_alarmTemp = to; }
+
+    void setManualRPM(int to) { m_manualRPM = to; }
 
     void setLastTemp(int to) { m_lastTemp = to; }
     void setMinTemp(int to) { m_minTemp = to; }
@@ -68,6 +72,8 @@ private:
     int m_lastRPM;
     int m_minLoggedRPM;
     int m_maxLoggedRPM;
+
+    int m_manualRPM;
 };
 
 

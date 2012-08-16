@@ -39,6 +39,8 @@ ChannelData::ChannelData()
 
     m_alarmTemp = -1;
     m_maxRPM = 1400;
+
+    m_manualRPM = -1;
 }
 
 QString ChannelData::temperatureString( int temperature,
@@ -437,6 +439,8 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 
 #endif
 
+
+// TODO: Move this into class ChannelData
 void gui_MainWindow::setFcChannelSpeed(int channel, int RPM)
 {
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
@@ -445,6 +449,7 @@ void gui_MainWindow::setFcChannelSpeed(int channel, int RPM)
 
     if (fc->setChannelSettings(channel, channelAlarmTemp, RPM)) {
         updateSpeedControl(channel, RPM);
+        m_channelData[channel].setManualRPM(RPM);
     }
 }
 
