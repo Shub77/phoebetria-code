@@ -16,6 +16,7 @@
 
 #include <QDebug>
 #include <QStandardItemModel>
+#include <cmath>
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
 #include "phoebetriaapp.h"
@@ -125,7 +126,7 @@ void gui_MainWindow::updateSpeedControlTooltips(void)
 QString gui_MainWindow::temperatureString(int t) const
 {
     QString r;
-    int _t = m_isCelcius ? (t-32)*5/9 : t;
+    int _t = m_isCelcius ? ceil((t-32)*5.0/9) : t;
     r = QString::number(_t);
     r += (m_isCelcius ? " C" : " F");
     return r;
@@ -178,17 +179,18 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
         qDebug() << "Channel out of range ::onCurrentTemp" << channel;
         return;
     }
-    if (tempInF == -1) return;
+
+    /* Sometimes -'ve temperatures are sent from the device (that are
+     * incorrect). The specs page for the recon show 0-100C as the probes'
+     * range, so ignore these -'ve values.
+     */
+    if (tempInF < 0) return;
 
     if (m_lastTemps[channel] != tempInF) {
         m_lastTemps[channel] = tempInF;
         m_probeTempCtrls[channel]->setText(temperatureString(tempInF));
 
-        /* Sometimes -'ve temperatures are sent from the device (that are
-         * incorrect). The specs page for the recon show 0-100C as the probes'
-         * range, so ignore these -'ve values.
-         */
-        if (m_minTemps[channel] > tempInF && tempInF > -1) {
+        if (m_minTemps[channel] > tempInF) {
             m_minTemps[channel] = tempInF;
         }
 
@@ -235,7 +237,7 @@ void gui_MainWindow::onMaxRPM(int channel, int RPM)
         return;
     }
     m_channelMaxRPM[channel] = RPM;
-    forceTempCtrlsToUpdate();
+
 }
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)

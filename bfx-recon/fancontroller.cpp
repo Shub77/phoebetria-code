@@ -376,7 +376,7 @@ void FanController::parseTempAndSpeed(int channel, const QByteArray &rawdata)
     emit currentRPM(channel, rawToRPM(rawdata.at(4), rawdata.at(3)));
     emit maxRPM(channel, rawToRPM(rawdata.at(6), rawdata.at(5)));
 
-#if defined QT_DEBUG// && PHO_FC_VERBOSE_DEBUG
+#if defined QT_DEBUG && PHO_FC_VERBOSE_DEBUG
     qDebug() << "Channel" << channel + 1
              << "----probe temp------" << rawToTemp(rawdata.at(2)) << "F";
     qDebug() << "Channel" << channel + 1
