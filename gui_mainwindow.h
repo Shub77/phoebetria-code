@@ -99,6 +99,14 @@ private slots:
 
     void on_ctrl_tempScaleToggle_valueChanged(int value);
 
+    void on_ctrl_channel1speedSlider_sliderMoved(int position);
+
+    void on_ctrl_channel1speedSlider_sliderReleased();
+
+    void on_ctrl_channel1speedSlider_valueChanged(int value);
+
+    void on_ctrl_channel1speedSlider_sliderPressed();
+
 private:
     void initCtrlArrays(void);
     void connectCustomSignals(void);
@@ -134,6 +142,7 @@ private:
     bool m_isCelciusToggleByDevice;
     bool m_isAudibleAlarmByDevice;
 
+    bool m_speedSliderMovedByDevice[FC_MAX_CHANNELS];
 
     /* **** DEBUGGING MENU ***/
 #ifdef QT_DEBUG

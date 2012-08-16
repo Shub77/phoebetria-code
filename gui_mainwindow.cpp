@@ -59,7 +59,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-
+        m_speedSliderMovedByDevice[i] = false;
     }
 
     m_isCelcius = ui->ctrl_tempScaleToggle->value() == 1 ? true : false;
@@ -235,7 +235,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
             ch->setMinLoggedRPM(RPM);
             updateSpeedControlTooltip(channel);
         }
-
+        m_speedSliderMovedByDevice[channel] = true;
         updateSpeedControl(channel, RPM);
     }
 }
@@ -431,3 +431,38 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 }
 
 #endif
+
+void gui_MainWindow::on_ctrl_channel1speedSlider_sliderPressed()
+{
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    fc->blockSignals(true);
+}
+
+void gui_MainWindow::on_ctrl_channel1speedSlider_sliderMoved(int position)
+{
+
+}
+
+void gui_MainWindow::on_ctrl_channel1speedSlider_sliderReleased()
+{
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    fc->blockSignals(false);
+}
+
+void gui_MainWindow::on_ctrl_channel1speedSlider_valueChanged(int value)
+{
+    if (m_speedSliderMovedByDevice[0]) {
+        m_speedSliderMovedByDevice[0] = false;
+        return;
+    }
+    double val = value / 100.0 * m_channelData[0].maxRPM();
+    val = int(val / 100) * 100;
+
+    updateSpeedControl(0, val);
+
+    if (!m_ctrls_RpmSliders[0]->isSliderDown()) {
+        qDebug() << "New slider value" << QString::number((int)value);
+    }
+}
+
+

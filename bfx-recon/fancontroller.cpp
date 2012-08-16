@@ -304,6 +304,8 @@ void FanController::onPollTimerTriggered(void)
 {
     if (!isInterfaceConnected()) return;
 
+    if (signalsBlocked()) return;
+
     processCommandQueue();
 
     if (m_blockRequestsTimeout > 0) {
