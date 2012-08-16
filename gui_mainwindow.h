@@ -121,6 +121,8 @@ private:
     void updateAlarmTempControl(int channel);
     void updateAllAlarmCtrls(void);
 
+    int rpmSliderValueToRPM(int channel, int value) const;
+
     Ui::gui_MainWindow *ui;
 
     // Convenience pointers to controls
@@ -143,6 +145,7 @@ private:
     bool m_isAudibleAlarmByDevice;
 
     bool m_speedSliderMovedByDevice[FC_MAX_CHANNELS];
+
 
     /* **** DEBUGGING MENU ***/
 #ifdef QT_DEBUG
