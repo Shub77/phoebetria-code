@@ -134,6 +134,8 @@ private:
 
     int rpmSliderValueToRPM(int channel, int value) const;
 
+    void setFcChannelSpeed(int channel, int RPM);
+
     void userPressedChannelRpmSlider(int channel);
     void userReleasedChannelRpmSlider(int channel);
     void userChangedChannelRpmSlider(int channel, int value);

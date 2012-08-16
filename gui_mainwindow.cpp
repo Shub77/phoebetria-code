@@ -435,6 +435,17 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 
 #endif
 
+void gui_MainWindow::setFcChannelSpeed(int channel, int RPM)
+{
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+
+    int channelAlarmTemp = m_channelData[channel].alarmTemp();
+
+    if (fc->setChannelSettings(channel, channelAlarmTemp, RPM)) {
+        updateSpeedControl(channel, RPM);
+    }
+}
+
 void gui_MainWindow::userPressedChannelRpmSlider(int channel)
 {
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
@@ -447,6 +458,7 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
     fc->blockSignals(false);
     int val = rpmSliderValueToRPM(channel, m_ctrls_RpmSliders[channel]->value());
     if (val != m_channelData[channel].lastRPM()) {
+        setFcChannelSpeed(channel, val);
         qDebug() << "New slider value for channel"
                     << QString::number(channel+1)
                     << "is"
@@ -462,6 +474,7 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
     m_ctrls_currentRPM[channel]->setText(QString::number((int)val));
     if (!m_ctrls_RpmSliders[channel]->isSliderDown()
             && val != m_channelData[channel].lastRPM()) {
+        setFcChannelSpeed(channel, val);
         qDebug() << "New slider value for channel"
                     << QString::number(channel+1)
                     << "is"
