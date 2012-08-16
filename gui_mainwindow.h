@@ -23,6 +23,55 @@
 
 #define FC_MAX_CHANNELS 5
 
+class ChannelData
+{
+public:
+    ChannelData();
+
+    //
+    int maxRPM(void) const { return m_maxRPM; }
+    int alarmTemp(void) const { return m_alarmTemp; }
+
+    int lastTemp(void) const { return m_lastTemp; }
+    int maxTemp(void) const { return m_maxTemp; }
+    int minTemp(void) const { return m_minTemp; }
+
+    int lastRPM(void) const { return m_lastRPM; }
+    int minLoggedRPM(void) const { return m_minLoggedRPM; }
+    int maxLoggedRPM(void) const { return m_maxLoggedRPM; }
+
+    //
+    void setMaxRPM(int to) { m_maxRPM = to; }
+    void setAlarmTemp(int to) { m_alarmTemp = to; }
+
+    void setLastTemp(int to) { m_lastTemp = to; }
+    void setMinTemp(int to) { m_minTemp = to; }
+    void setMaxTemp(int to) { m_maxTemp = to; }
+
+    void setLastRPM(int to) { m_lastRPM = to; }
+    void setMinLoggedRPM(int to) { m_minLoggedRPM = to; }
+    void setMaxLoggedRPM(int to) { m_maxLoggedRPM = to; }
+
+    //
+    static QString temperatureString(int temperature,
+                                     bool asCelcius,
+                                     bool addScaleSymbol);
+
+private:
+    int m_maxRPM;
+    int m_alarmTemp;
+
+    int m_lastTemp;
+    int m_maxTemp;
+    int m_minTemp;
+
+    int m_lastRPM;
+    int m_minLoggedRPM;
+    int m_maxLoggedRPM;
+};
+
+
+
 namespace Ui {
 class gui_MainWindow;
 }
@@ -30,7 +79,7 @@ class gui_MainWindow;
 class gui_MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
 public:
     explicit gui_MainWindow(QWidget *parent = 0);
     ~gui_MainWindow();
@@ -55,37 +104,32 @@ private:
     void connectCustomSignals(void);
 
     void enableDisableSpeedControls(void);
+
+    void updateSpeedControlTooltip(int channel);
     void updateSpeedControlTooltips(void);
 
     void updateSpeedControl(int channel, int RPM);
-    void updateAlarmTempControl(int channel);
-
-    QString temperatureString(int t) const;
-
     void updateAllSpeedCtrls(void);
+    void updateAlarmTempControl(int channel);
     void updateAllAlarmCtrls(void);
 
     Ui::gui_MainWindow *ui;
 
-    int m_maxTemps[FC_MAX_CHANNELS];
-    int m_minTemps[FC_MAX_CHANNELS];
-    int m_lastTemps[FC_MAX_CHANNELS];
-    int m_minLoggedRPMs[FC_MAX_CHANNELS];
-    int m_maxLoggedRPMs[FC_MAX_CHANNELS];
-    int m_lastRPMs[FC_MAX_CHANNELS];
-    int m_alarmTemps[FC_MAX_CHANNELS];
-    int m_channelMaxRPM[FC_MAX_CHANNELS];
-
-
+    // Convenience pointers to controls
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
     QLineEdit* m_ctrls_currentRPM[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
     QLineEdit* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
+    // Common data
     bool m_isCelcius;
     bool m_isAuto;
     bool m_isAudibleAlarm;
 
+    // Channel sepecific data
+    ChannelData m_channelData[FC_MAX_CHANNELS];
+
+    // Blocking flags
     bool m_isAutoToggleByDevice;
     bool m_isCelciusToggleByDevice;
     bool m_isAudibleAlarmByDevice;

@@ -27,6 +27,31 @@
 #   include <QInputDialog>
 #endif //QT_DEBUG
 
+
+ChannelData::ChannelData()
+{
+    m_maxTemp = 0;
+    m_maxLoggedRPM = 0;
+    m_lastRPM = -1;
+    m_minLoggedRPM = -1;
+    m_lastTemp = -1;
+    m_minTemp = 9999;
+
+    m_alarmTemp = -1;
+    m_maxRPM = 1400;
+}
+
+QString ChannelData::temperatureString( int temperature,
+                                        bool asCelcius,
+                                        bool addScaleSymbol)
+{
+    QString r;
+    int t = asCelcius ? ceil((temperature-32)*5.0/9) : temperature;
+    r = QString::number(t);
+    if (addScaleSymbol) r += (asCelcius ? " C" : " F");
+    return r;
+}
+
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
@@ -34,15 +59,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        m_maxTemps[i] = 0;
-        m_maxLoggedRPMs[i] = 0;
-        m_lastRPMs[i] = -1;
-        m_minLoggedRPMs[i] = -1;
-        m_lastTemps[i] = -1;
-        m_minTemps[i] = 9999;
 
-        m_alarmTemps[i] = -1;
-        m_channelMaxRPM[i] = 1400;
     }
 
     m_isCelcius = ui->ctrl_tempScaleToggle->value() == 1 ? true : false;
@@ -128,22 +145,34 @@ void gui_MainWindow::enableDisableSpeedControls(void)
     }
 }
 
+void gui_MainWindow::updateSpeedControlTooltip(int channel)
+{
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
+
+    QString tooltip;
+    tooltip += tr("Min Temp: ");
+    tooltip += ChannelData::temperatureString(m_channelData[channel].minTemp(),
+                                              m_isCelcius,
+                                              true);
+    tooltip += "\n";
+    tooltip += tr("Max Temp: ");
+    tooltip += ChannelData::temperatureString(m_channelData[channel].maxTemp(),
+                                              m_isCelcius,
+                                              true);
+    tooltip += "\n";
+    tooltip += tr("Min logged RPM: ");
+    tooltip += QString::number(m_channelData[channel].minLoggedRPM());
+    tooltip += "\n";
+    tooltip += tr("Max logged RPM: ");
+    tooltip += QString::number(m_channelData[channel].maxLoggedRPM());
+
+    m_ctrls_RpmSliders[channel]->setToolTip(tooltip);
+}
+
 void gui_MainWindow::updateSpeedControlTooltips(void)
 {
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        QString tooltip;
-        tooltip += tr("Min Temp: ");
-        tooltip += temperatureString(m_minTemps[i]);
-        tooltip += "\n";
-        tooltip += tr("Max Temp: ");
-        tooltip += temperatureString(m_maxTemps[i]);
-        tooltip += "\n";
-        tooltip += tr("Min logged RPM: ");
-        tooltip += QString::number(m_minLoggedRPMs[i]);
-        tooltip += "\n";
-        tooltip += tr("Max logged RPM: ");
-        tooltip += QString::number(m_maxLoggedRPMs[i]);
-        m_ctrls_RpmSliders[i]->setToolTip(tooltip);
+        updateSpeedControlTooltip(i);
     }
 }
 
@@ -151,15 +180,17 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    int maxRPM = m_channelMaxRPM[channel];
+    int maxRPM = m_channelData[channel].maxRPM();
     if (maxRPM < 1) maxRPM = 1;
 
     m_ctrls_RpmSliders[channel]->setValue(ceil(RPM*100.0/maxRPM));
+    m_ctrls_currentRPM[channel]->setText(QString::number(RPM));
+
+#if 0
     qDebug() << "============ Setting slider value to" << ceil(RPM*100.0/maxRPM);
     qDebug() << "============  Actual slider value is" <<  m_ctrls_RpmSliders[channel]->value();
     qDebug() << "==== Expected max RPM for channel is" << m_channelMaxRPM[channel];
-
-    m_ctrls_currentRPM[channel]->setText(QString::number(RPM));
+#endif
 }
 
 
@@ -168,26 +199,10 @@ void gui_MainWindow::updateAlarmTempControl(int channel)
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     m_ctrls_alarmTemps[channel]->setText(
-                temperatureString(m_alarmTemps[channel]) );
+        ChannelData::temperatureString(m_channelData[channel].alarmTemp(),
+                                       m_isCelcius,
+                                       false) );
 }
-
-
-QString gui_MainWindow::temperatureString(int t) const
-{
-    QString r;
-    int _t = m_isCelcius ? ceil((t-32)*5.0/9) : t;
-    r = QString::number(_t);
-    r += (m_isCelcius ? " C" : " F");
-    return r;
-}
-
-void gui_MainWindow::updateAllSpeedCtrls(void)
-{
-    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        updateSpeedControl(i, m_lastRPMs[i]);
-    }
-}
-
 
 void gui_MainWindow::updateAllAlarmCtrls(void)
 {
@@ -196,24 +211,29 @@ void gui_MainWindow::updateAllAlarmCtrls(void)
     }
 }
 
+void gui_MainWindow::updateAllSpeedCtrls(void)
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        updateSpeedControl(i, m_channelData[i].lastRPM());
+    }
+}
+
 void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
-    if (channel < 0 || channel > 4) {
-        qDebug() << "Channel out of range ::onCurrentRPM" << channel;
-        return;
-    }
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    if (m_lastRPMs[channel] != RPM) {
-        m_lastRPMs[channel] = RPM;
+    ChannelData* ch = &m_channelData[channel];
 
-        if (m_maxLoggedRPMs[channel] < RPM) {
-            m_maxLoggedRPMs[channel] = RPM;
-            updateSpeedControlTooltips();
+    if (ch->lastRPM() != RPM) {
+        ch->setLastRPM(RPM);
+
+        if (ch->maxLoggedRPM() < RPM) {
+            ch->setMaxLoggedRPM(RPM);
+            updateSpeedControlTooltip(channel);
         }
-        if (m_minLoggedRPMs[channel] > RPM
-                 || m_minLoggedRPMs[channel] == -1) {
-            m_minLoggedRPMs[channel] = RPM;
-            updateSpeedControlTooltips();
+        if (ch->minLoggedRPM() > RPM || ch->minLoggedRPM() == -1) {
+            ch->setMinLoggedRPM(RPM);
+            updateSpeedControlTooltip(channel);
         }
 
         updateSpeedControl(channel, RPM);
@@ -224,10 +244,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 
 void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
 {
-    if (channel < 0 || channel > 4) {
-        qDebug() << "Channel out of range ::onCurrentTemp" << channel;
-        return;
-    }
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     /* Sometimes -'ve temperatures are sent from the device (that are
      * incorrect). The specs page for the recon show 0-100C as the probes'
@@ -235,32 +252,33 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
      */
     if (tempInF < 0) return;
 
-    if (m_lastTemps[channel] != tempInF) {
-        m_lastTemps[channel] = tempInF;
+    ChannelData* ch = &m_channelData[channel];
 
-        m_ctrls_probeTemps[channel]->setText(temperatureString(tempInF));
+    if (ch->lastTemp() != tempInF) {
+        ch->setLastTemp(tempInF);
 
-        if (m_minTemps[channel] > tempInF) {
-            m_minTemps[channel] = tempInF;
+        m_ctrls_probeTemps[channel]->setText(
+                    ChannelData::temperatureString(tempInF, m_isCelcius, true));
+
+        if (ch->maxTemp() < tempInF) {
+            ch->setMaxTemp(tempInF);
+        }
+        if (ch->minTemp() > tempInF) {
+            ch->setMinTemp(tempInF);
         }
 
-        if (m_maxTemps[channel] < tempInF) {
-            m_maxTemps[channel] = tempInF;
-        }
-
-        updateSpeedControlTooltips();
+        updateSpeedControlTooltip(channel);
     }
 }
 
 void gui_MainWindow::onCurrentAlarmTemp(int channel, int tempInF)
 {
-    if (channel < 0 || channel > 4) {
-        qDebug() << "Channel out of range ::onCurrentTemp" << channel;
-        return;
-    }
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    if (m_alarmTemps[channel] != tempInF) {
-        m_alarmTemps[channel] = tempInF;
+    ChannelData* ch = &m_channelData[channel];
+
+    if (ch->alarmTemp() != tempInF) {
+        ch->setAlarmTemp(tempInF);
         updateAlarmTempControl(channel);
     }
 }
@@ -297,13 +315,10 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 
 void gui_MainWindow::onMaxRPM(int channel, int RPM)
 {
-    if (channel < 0 || channel > 4) {
-        qDebug() << "Channel out of range ::onCurrentRpmOnAlarm" << channel;
-        return;
-    }
-    m_channelMaxRPM[channel] = RPM;
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    updateSpeedControl(channel, m_lastRPMs[channel]);
+    m_channelData[channel].setMaxRPM(RPM);
+    updateSpeedControl(channel, m_channelData[channel].lastRPM());
 }
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
@@ -373,6 +388,7 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
         qDebug() << "onDebugMenu_setChannelSpeed: Channel invalid, or cancelled";
         return;
     }
+    --channel;
     int speed;
 
     speed = QInputDialog::getInt(this, tr("Speed"), tr("RPM"), 0, 0, 50000, 1, &ok);
@@ -381,23 +397,25 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
         return;
     }
 
-    if (speed < m_channelMaxRPM[channel-1] * 0.4 && speed != 0) {
+    int channelMaxRPM = m_channelData[channel].maxRPM();
+
+    if (speed < channelMaxRPM * 0.4 && speed != 0) {
         qDebug() << "Speed is less than 40%, but not OFF. Setting to 40%";
-        speed = ceil(m_channelMaxRPM[channel-1] * 0.4);
+        speed = ceil(channelMaxRPM * 0.4);
     }
 
     // Speeds must be in multiples of 100 RPM
-    //double _speed = m_channelMaxRPM[channel-1] * 0.4;
+
     double _speed = ((int)(speed / 100.0))*100;
     speed = _speed;
 
     qDebug() << "reported max speed for channel"
-                << channel
+                << channel+1
                 << "is"
-                << m_channelMaxRPM[channel-1]
+                << channelMaxRPM
                    ;
     qDebug() << "attempting to set channel "
-                << QString::number(channel)
+                << channel+1
                 << "to speed "
                 << QString::number(speed)
                 << "RPM"
@@ -405,11 +423,11 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
-    if (fc->setChannelSettings(channel-1, m_alarmTemps[channel-1], speed)) {
-        updateSpeedControl(channel-1, speed);
+    int channelAlarmTemp = m_channelData[channel].alarmTemp();
+
+    if (fc->setChannelSettings(channel, channelAlarmTemp, speed)) {
+        updateSpeedControl(channel, speed);
     }
-
-
 }
 
 #endif
