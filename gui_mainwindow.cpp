@@ -60,23 +60,23 @@ gui_MainWindow::~gui_MainWindow()
 
 void gui_MainWindow::initCtrlArrays(void)
 {
-    m_probeTempCtrls[0] = ui->ctrl_probe1Temp;
-    m_probeTempCtrls[1] = ui->ctrl_probe2Temp;
-    m_probeTempCtrls[2] = ui->ctrl_probe3Temp;
-    m_probeTempCtrls[3] = ui->ctrl_probe4Temp;
-    m_probeTempCtrls[4] = ui->ctrl_probe5Temp;
+    m_ctrls_probeTemps[0] = ui->ctrl_probe1Temp;
+    m_ctrls_probeTemps[1] = ui->ctrl_probe2Temp;
+    m_ctrls_probeTemps[2] = ui->ctrl_probe3Temp;
+    m_ctrls_probeTemps[3] = ui->ctrl_probe4Temp;
+    m_ctrls_probeTemps[4] = ui->ctrl_probe5Temp;
 
-    m_channelTempCtrls[0] = ui->ctrl_channel1speed;
-    m_channelTempCtrls[1] = ui->ctrl_channel2speed;
-    m_channelTempCtrls[2] = ui->ctrl_channel3speed;
-    m_channelTempCtrls[3] = ui->ctrl_channel4speed;
-    m_channelTempCtrls[4] = ui->ctrl_channel5speed;
+    m_ctrls_currentTemps[0] = ui->ctrl_channel1speed;
+    m_ctrls_currentTemps[1] = ui->ctrl_channel2speed;
+    m_ctrls_currentTemps[2] = ui->ctrl_channel3speed;
+    m_ctrls_currentTemps[3] = ui->ctrl_channel4speed;
+    m_ctrls_currentTemps[4] = ui->ctrl_channel5speed;
 
-    m_channelSpeedSliders[0] = ui->ctrl_channel1speedSlider;
-    m_channelSpeedSliders[1] = ui->ctrl_channel2speedSlider;
-    m_channelSpeedSliders[2] = ui->ctrl_channel3speedSlider;
-    m_channelSpeedSliders[3] = ui->ctrl_channel4speedSlider;
-    m_channelSpeedSliders[4] = ui->ctrl_channel5speedSlider;
+    m_ctrls_RpmSliders[0] = ui->ctrl_channel1speedSlider;
+    m_ctrls_RpmSliders[1] = ui->ctrl_channel2speedSlider;
+    m_ctrls_RpmSliders[2] = ui->ctrl_channel3speedSlider;
+    m_ctrls_RpmSliders[3] = ui->ctrl_channel4speedSlider;
+    m_ctrls_RpmSliders[4] = ui->ctrl_channel5speedSlider;
 }
 
 
@@ -99,7 +99,7 @@ void gui_MainWindow::enableDisableSpeedControls(void)
     bool enabled = ui->ctrl_isManual->value() == 1 ? true : false;
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        m_channelSpeedSliders[i]->setEnabled(enabled);
+        m_ctrls_RpmSliders[i]->setEnabled(enabled);
     }
 }
 
@@ -118,7 +118,7 @@ void gui_MainWindow::updateSpeedControlTooltips(void)
         tooltip += "\n";
         tooltip += tr("Max logged RPM: ");
         tooltip += QString::number(m_maxLoggedRPMs[i]);
-        m_channelSpeedSliders[i]->setToolTip(tooltip);
+        m_ctrls_RpmSliders[i]->setToolTip(tooltip);
     }
 }
 
@@ -152,11 +152,11 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 
     if (m_lastRPMs[channel] != RPM) {
         m_lastRPMs[channel] = RPM;
-        m_channelTempCtrls[channel]->setText(QString::number(RPM));
+        m_ctrls_currentTemps[channel]->setText(QString::number(RPM));
 
         int maxRPM = m_channelMaxRPM[channel];
         if (maxRPM < 1) maxRPM = 1;
-        m_channelSpeedSliders[channel]->setValue(RPM*100.0/maxRPM);
+        m_ctrls_RpmSliders[channel]->setValue(RPM*100.0/maxRPM);
 
 
         if (m_maxLoggedRPMs[channel] < RPM) {
@@ -188,7 +188,7 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
 
     if (m_lastTemps[channel] != tempInF) {
         m_lastTemps[channel] = tempInF;
-        m_probeTempCtrls[channel]->setText(temperatureString(tempInF));
+        m_ctrls_probeTemps[channel]->setText(temperatureString(tempInF));
 
         if (m_minTemps[channel] > tempInF) {
             m_minTemps[channel] = tempInF;

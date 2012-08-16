@@ -71,9 +71,9 @@ private:
     int m_channelMaxRPM[FC_MAX_CHANNELS];
 
 
-    QLineEdit* m_probeTempCtrls[FC_MAX_CHANNELS];
-    QLineEdit* m_channelTempCtrls[FC_MAX_CHANNELS];
-    QSlider* m_channelSpeedSliders[FC_MAX_CHANNELS];
+    QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
+    QLineEdit* m_ctrls_currentTemps[FC_MAX_CHANNELS];
+    QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
 
     bool m_isCelcius;
     bool m_isAuto;
