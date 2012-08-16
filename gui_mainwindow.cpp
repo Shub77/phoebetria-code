@@ -155,8 +155,10 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
     if (maxRPM < 1) maxRPM = 1;
 
     m_ctrls_RpmSliders[channel]->setValue((int)(ceil(RPM*100.0/maxRPM)));
-    qDebug() << "==== Setting slider value to" << (int)(ceil(RPM*100.0/maxRPM));
-    qDebug() << "====   Actual slide value is" <<  m_ctrls_RpmSliders[channel]->value();
+    qDebug() << "============ Setting slider value to" << (int)(ceil(RPM*100.0/maxRPM));
+    qDebug() << "============  Actual slider value is" <<  m_ctrls_RpmSliders[channel]->value();
+    qDebug() << "==== Expected max RPM for channel is" << m_channelMaxRPM[channel];
+
     m_ctrls_currentRPM[channel]->setText(QString::number(RPM));
 }
 
