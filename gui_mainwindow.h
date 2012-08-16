@@ -99,12 +99,25 @@ private slots:
 
     void on_ctrl_tempScaleToggle_valueChanged(int value);
 
+    void on_ctrl_channel1speedSlider_sliderPressed();
     void on_ctrl_channel1speedSlider_sliderReleased();
-
     void on_ctrl_channel1speedSlider_valueChanged(int value);
 
-    void on_ctrl_channel1speedSlider_sliderPressed();
+    void on_ctrl_channel2speedSlider_sliderPressed();
+    void on_ctrl_channel2speedSlider_sliderReleased();
+    void on_ctrl_channel2speedSlider_valueChanged(int value);
 
+    void on_ctrl_channel3speedSlider_sliderPressed();
+    void on_ctrl_channel3speedSlider_sliderReleased();
+    void on_ctrl_channel3speedSlider_valueChanged(int value);
+
+    void on_ctrl_channel4speedSlider_sliderPressed();
+    void on_ctrl_channel4speedSlider_sliderReleased();
+    void on_ctrl_channel4speedSlider_valueChanged(int value);
+
+    void on_ctrl_channel5speedSlider_sliderPressed();
+    void on_ctrl_channel5speedSlider_sliderReleased();
+    void on_ctrl_channel5speedSlider_valueChanged(int value);
 private:
     void initCtrlArrays(void);
     void connectCustomSignals(void);

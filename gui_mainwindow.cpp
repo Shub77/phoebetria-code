@@ -448,7 +448,7 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
     int val = rpmSliderValueToRPM(channel, m_ctrls_RpmSliders[channel]->value());
     if (val != m_channelData[channel].lastRPM()) {
         qDebug() << "New slider value for channel"
-                    << QString::number(channel)
+                    << QString::number(channel+1)
                     << "is"
                     << QString::number((int)val);
     }
@@ -463,7 +463,7 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
     if (!m_ctrls_RpmSliders[channel]->isSliderDown()
             && val != m_channelData[channel].lastRPM()) {
         qDebug() << "New slider value for channel"
-                    << QString::number(channel)
+                    << QString::number(channel+1)
                     << "is"
                     << QString::number((int)val);
     }
@@ -484,15 +484,67 @@ void gui_MainWindow::on_ctrl_channel1speedSlider_sliderPressed()
 {
     userPressedChannelRpmSlider(0);
 }
-
 void gui_MainWindow::on_ctrl_channel1speedSlider_sliderReleased()
 {
     userReleasedChannelRpmSlider(0);
 }
-
 void gui_MainWindow::on_ctrl_channel1speedSlider_valueChanged(int value)
 {
     userChangedChannelRpmSlider(0, value);
 }
 
 
+void gui_MainWindow::on_ctrl_channel2speedSlider_sliderPressed()
+{
+    userPressedChannelRpmSlider(1);
+}
+void gui_MainWindow::on_ctrl_channel2speedSlider_sliderReleased()
+{
+    userReleasedChannelRpmSlider(1);
+}
+void gui_MainWindow::on_ctrl_channel2speedSlider_valueChanged(int value)
+{
+    userChangedChannelRpmSlider(1, value);
+}
+
+
+void gui_MainWindow::on_ctrl_channel3speedSlider_sliderPressed()
+{
+    userPressedChannelRpmSlider(2);
+}
+void gui_MainWindow::on_ctrl_channel3speedSlider_sliderReleased()
+{
+    userReleasedChannelRpmSlider(2);
+}
+void gui_MainWindow::on_ctrl_channel3speedSlider_valueChanged(int value)
+{
+    userChangedChannelRpmSlider(2, value);
+}
+
+
+void gui_MainWindow::on_ctrl_channel4speedSlider_sliderPressed()
+{
+    userPressedChannelRpmSlider(3);
+}
+void gui_MainWindow::on_ctrl_channel4speedSlider_sliderReleased()
+{
+    userReleasedChannelRpmSlider(3);
+}
+void gui_MainWindow::on_ctrl_channel4speedSlider_valueChanged(int value)
+{
+    userChangedChannelRpmSlider(3, value);
+}
+
+
+void gui_MainWindow::on_ctrl_channel5speedSlider_sliderPressed()
+{
+    userPressedChannelRpmSlider(4);
+}
+void gui_MainWindow::on_ctrl_channel5speedSlider_sliderReleased()
+{
+    userReleasedChannelRpmSlider(4);
+}
+void gui_MainWindow::on_ctrl_channel5speedSlider_valueChanged(int value)
+{
+    userChangedChannelRpmSlider(4, value);
+}
