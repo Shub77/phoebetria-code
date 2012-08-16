@@ -199,7 +199,7 @@ margin:-2px;</string>
       </rect>
      </property>
      <property name="toolTip">
-      <string>Current RPM</string>
+      <string>Alarm Temperature</string>
      </property>
      <property name="text">
       <string/>
@@ -375,7 +375,7 @@ margin:-2px;</string>
       </rect>
      </property>
      <property name="toolTip">
-      <string>Current RPM</string>
+      <string>Alarm Temperature</string>
      </property>
      <property name="text">
       <string/>
@@ -551,7 +551,7 @@ margin:-2px;</string>
       </rect>
      </property>
      <property name="toolTip">
-      <string>Current RPM</string>
+      <string>Alarm Temperature</string>
      </property>
      <property name="text">
       <string/>
@@ -732,7 +732,7 @@ margin:-2px;</string>
       </rect>
      </property>
      <property name="toolTip">
-      <string>Current RPM</string>
+      <string>Alarm Temperature</string>
      </property>
      <property name="text">
       <string/>
@@ -925,7 +925,7 @@ margin:-2px;</string>
       </rect>
      </property>
      <property name="toolTip">
-      <string>Current RPM</string>
+      <string>Alarm Temperature</string>
      </property>
      <property name="text">
       <string/>
