@@ -99,8 +99,6 @@ private slots:
 
     void on_ctrl_tempScaleToggle_valueChanged(int value);
 
-    void on_ctrl_channel1speedSlider_sliderMoved(int position);
-
     void on_ctrl_channel1speedSlider_sliderReleased();
 
     void on_ctrl_channel1speedSlider_valueChanged(int value);
@@ -122,6 +120,10 @@ private:
     void updateAllAlarmCtrls(void);
 
     int rpmSliderValueToRPM(int channel, int value) const;
+
+    void userPressedChannelRpmSlider(int channel);
+    void userReleasedChannelRpmSlider(int channel);
+    void userChangedChannelRpmSlider(int channel, int value);
 
     Ui::gui_MainWindow *ui;
 

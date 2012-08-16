@@ -435,6 +435,40 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 
 #endif
 
+void gui_MainWindow::userPressedChannelRpmSlider(int channel)
+{
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    fc->blockSignals(true);
+}
+
+void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
+{
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    fc->blockSignals(false);
+    int val = rpmSliderValueToRPM(channel, m_ctrls_RpmSliders[channel]->value());
+    if (val != m_channelData[channel].lastRPM()) {
+        qDebug() << "New slider value for channel"
+                    << QString::number(channel)
+                    << "is"
+                    << QString::number((int)val);
+    }
+}
+
+void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
+{
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+
+    int val = rpmSliderValueToRPM(channel, value);
+    m_ctrls_currentRPM[channel]->setText(QString::number((int)val));
+    if (!m_ctrls_RpmSliders[channel]->isSliderDown()
+            && val != m_channelData[channel].lastRPM()) {
+        qDebug() << "New slider value for channel"
+                    << QString::number(channel)
+                    << "is"
+                    << QString::number((int)val);
+    }
+}
+
 int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
 {
     int channelMaxRPM = m_channelData[channel].maxRPM();
@@ -448,33 +482,17 @@ int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
 
 void gui_MainWindow::on_ctrl_channel1speedSlider_sliderPressed()
 {
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
-    fc->blockSignals(true);
-}
-
-void gui_MainWindow::on_ctrl_channel1speedSlider_sliderMoved(int position)
-{
-
+    userPressedChannelRpmSlider(0);
 }
 
 void gui_MainWindow::on_ctrl_channel1speedSlider_sliderReleased()
 {
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
-    fc->blockSignals(false);
-    int val = rpmSliderValueToRPM(0, m_ctrls_RpmSliders[0]->value());
-    if (val != m_channelData[0].lastRPM()) {
-        qDebug() << "New slider value" << QString::number((int)val);
-    }
+    userReleasedChannelRpmSlider(0);
 }
 
 void gui_MainWindow::on_ctrl_channel1speedSlider_valueChanged(int value)
 {
-    int val = rpmSliderValueToRPM(0, value);
-    updateSpeedControl(0, val);
-
-    if (!m_ctrls_RpmSliders[0]->isSliderDown()) {
-        qDebug() << "New slider value" << QString::number((int)val);
-    }
+    userChangedChannelRpmSlider(0, value);
 }
 
 
