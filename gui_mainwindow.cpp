@@ -82,11 +82,11 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_probeTemps[3] = ui->ctrl_probe4Temp;
     m_ctrls_probeTemps[4] = ui->ctrl_probe5Temp;
 
-    m_ctrls_currentTemps[0] = ui->ctrl_channel1speed;
-    m_ctrls_currentTemps[1] = ui->ctrl_channel2speed;
-    m_ctrls_currentTemps[2] = ui->ctrl_channel3speed;
-    m_ctrls_currentTemps[3] = ui->ctrl_channel4speed;
-    m_ctrls_currentTemps[4] = ui->ctrl_channel5speed;
+    m_ctrls_currentRPM[0] = ui->ctrl_channel1speed;
+    m_ctrls_currentRPM[1] = ui->ctrl_channel2speed;
+    m_ctrls_currentRPM[2] = ui->ctrl_channel3speed;
+    m_ctrls_currentRPM[3] = ui->ctrl_channel4speed;
+    m_ctrls_currentRPM[4] = ui->ctrl_channel5speed;
 
     m_ctrls_RpmSliders[0] = ui->ctrl_channel1speedSlider;
     m_ctrls_RpmSliders[1] = ui->ctrl_channel2speedSlider;
@@ -155,6 +155,7 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
     if (maxRPM < 1) maxRPM = 1;
 
     m_ctrls_RpmSliders[channel]->setValue(RPM*100.0/maxRPM);
+    m_ctrls_currentRPM[channel]->setText(QString::number(RPM));
 }
 
 
@@ -200,7 +201,6 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 
     if (m_lastRPMs[channel] != RPM) {
         m_lastRPMs[channel] = RPM;
-        m_ctrls_currentTemps[channel]->setText(QString::number(RPM));
 
         updateSpeedControl(channel, RPM);
 
@@ -233,6 +233,7 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
 
     if (m_lastTemps[channel] != tempInF) {
         m_lastTemps[channel] = tempInF;
+
         m_ctrls_probeTemps[channel]->setText(temperatureString(tempInF));
 
         if (m_minTemps[channel] > tempInF) {
@@ -380,6 +381,11 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
         speed = m_channelMaxRPM[channel-1] * 0.4;
     }
 
+    qDebug() << "reported max speed for channel"
+                << channel
+                << "is"
+                << m_channelMaxRPM[channel-1]
+                   ;
     qDebug() << "attempting to set channel "
                 << QString::number(channel)
                 << "to speed "
@@ -389,7 +395,10 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
-    fc->setChannelSettings(channel-1, m_alarmTemps[channel-1], speed);
+    if (fc->setChannelSettings(channel-1, m_alarmTemps[channel-1], speed)) {
+        updateSpeedControl(channel-1, speed);
+    }
+
 
 }
 

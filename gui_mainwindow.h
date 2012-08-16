@@ -78,7 +78,7 @@ private:
 
 
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
-    QLineEdit* m_ctrls_currentTemps[FC_MAX_CHANNELS];
+    QLineEdit* m_ctrls_currentRPM[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
     QLineEdit* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
