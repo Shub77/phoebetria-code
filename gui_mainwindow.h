@@ -55,11 +55,13 @@ private:
 
     void enableDisableSpeedControls(void);
     void updateSpeedControlTooltips(void);
+
+    void updateSpeedControl(int channel, int RPM);
     void updateAlarmTempControl(int channel);
 
     QString temperatureString(int t) const;
 
-    void forceTempCtrlsToUpdate(void);
+    void updateAllSpeedCtrls(void);
     void updateAllAlarmCtrls(void);
 
     Ui::gui_MainWindow *ui;

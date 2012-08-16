@@ -131,6 +131,17 @@ void gui_MainWindow::updateSpeedControlTooltips(void)
     }
 }
 
+void gui_MainWindow::updateSpeedControl(int channel, int RPM)
+{
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
+
+    int maxRPM = m_channelMaxRPM[channel];
+    if (maxRPM < 1) maxRPM = 1;
+
+    m_ctrls_RpmSliders[channel]->setValue(RPM*100.0/maxRPM);
+}
+
+
 void gui_MainWindow::updateAlarmTempControl(int channel)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
@@ -149,16 +160,13 @@ QString gui_MainWindow::temperatureString(int t) const
     return r;
 }
 
-void gui_MainWindow::forceTempCtrlsToUpdate(void)
+void gui_MainWindow::updateAllSpeedCtrls(void)
 {
-    // Force temp controls to be updated.
-    // TODO: there is a better way to do this
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        // The -1 is just to make sure the temp is different;
-        // it will updated next refresh from the device
-        onCurrentTemp(i, m_lastTemps[i] - 1);
+        updateSpeedControl(i, m_lastRPMs[i]);
     }
 }
+
 
 void gui_MainWindow::updateAllAlarmCtrls(void)
 {
@@ -178,10 +186,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
         m_lastRPMs[channel] = RPM;
         m_ctrls_currentTemps[channel]->setText(QString::number(RPM));
 
-        int maxRPM = m_channelMaxRPM[channel];
-        if (maxRPM < 1) maxRPM = 1;
-        m_ctrls_RpmSliders[channel]->setValue(RPM*100.0/maxRPM);
-
+        updateSpeedControl(channel, RPM);
 
         if (m_maxLoggedRPMs[channel] < RPM) {
             m_maxLoggedRPMs[channel] = RPM;
@@ -251,7 +256,7 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
         m_isCelciusToggleByDevice = true;
         ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 1 : 0);
 
-        forceTempCtrlsToUpdate();
+        updateAllSpeedCtrls();
         updateAllAlarmCtrls();
     }
 
@@ -322,6 +327,6 @@ void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 
     fc->setDeviceFlags(m_isCelcius, m_isAuto, m_isAudibleAlarm);
 
-    forceTempCtrlsToUpdate();
+    updateAllSpeedCtrls();
 }
 
