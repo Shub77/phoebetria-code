@@ -77,6 +77,13 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_RpmSliders[2] = ui->ctrl_channel3speedSlider;
     m_ctrls_RpmSliders[3] = ui->ctrl_channel4speedSlider;
     m_ctrls_RpmSliders[4] = ui->ctrl_channel5speedSlider;
+
+    m_ctrls_alarmTemps[0] = ui->ctrl_channel1alarmTemp;
+    m_ctrls_alarmTemps[1] = ui->ctrl_channel2alarmTemp;
+    m_ctrls_alarmTemps[2] = ui->ctrl_channel3alarmTemp;
+    m_ctrls_alarmTemps[3] = ui->ctrl_channel4alarmTemp;
+    m_ctrls_alarmTemps[4] = ui->ctrl_channel5alarmTemp;
+
 }
 
 
@@ -92,6 +99,8 @@ void gui_MainWindow::connectCustomSignals(void)
             this, SLOT(onDeviceSettings(bool,bool,bool)));
     connect(&app->fanController(), SIGNAL(maxRPM(int, int)),
             this, SLOT(onMaxRPM(int, int)));
+    connect(&app->fanController(), SIGNAL(currentAlarmTemp(int,int)),
+            this, SLOT(onCurrentAlarmTemp(int,int)));
 }
 
 void gui_MainWindow::enableDisableSpeedControls(void)
@@ -122,6 +131,14 @@ void gui_MainWindow::updateSpeedControlTooltips(void)
     }
 }
 
+void gui_MainWindow::updateAlarmTempControl(int channel)
+{
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
+
+    m_ctrls_alarmTemps[channel]->setText(
+                temperatureString(m_alarmTemps[channel]) );
+}
+
 
 QString gui_MainWindow::temperatureString(int t) const
 {
@@ -140,6 +157,13 @@ void gui_MainWindow::forceTempCtrlsToUpdate(void)
         // The -1 is just to make sure the temp is different;
         // it will updated next refresh from the device
         onCurrentTemp(i, m_lastTemps[i] - 1);
+    }
+}
+
+void gui_MainWindow::updateAllAlarmCtrls(void)
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        updateAlarmTempControl(i);
     }
 }
 
@@ -202,6 +226,20 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
     }
 }
 
+void gui_MainWindow::onCurrentAlarmTemp(int channel, int tempInF)
+{
+    if (channel < 0 || channel > 4) {
+        qDebug() << "Channel out of range ::onCurrentTemp" << channel;
+        return;
+    }
+
+    if (m_alarmTemps[channel] != tempInF) {
+        m_alarmTemps[channel] = tempInF;
+        updateAlarmTempControl(channel);
+    }
+}
+
+
 void gui_MainWindow::onDeviceSettings(bool isCelcius,
                                       bool isAuto,
                                       bool isAudibleAlarm)
@@ -214,6 +252,7 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
         ui->ctrl_tempScaleToggle->setValue(m_isCelcius ? 1 : 0);
 
         forceTempCtrlsToUpdate();
+        updateAllAlarmCtrls();
     }
 
     if (m_isAuto != isAuto) {

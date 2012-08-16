@@ -38,6 +38,7 @@ public:
 public slots:
     void onCurrentRPM(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
+    void onCurrentAlarmTemp(int channel, int tempInF);
     void onDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
     void onMaxRPM(int channel, int RPM);
 private slots:
@@ -54,10 +55,12 @@ private:
 
     void enableDisableSpeedControls(void);
     void updateSpeedControlTooltips(void);
+    void updateAlarmTempControl(int channel);
 
     QString temperatureString(int t) const;
 
     void forceTempCtrlsToUpdate(void);
+    void updateAllAlarmCtrls(void);
 
     Ui::gui_MainWindow *ui;
 
@@ -74,6 +77,7 @@ private:
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
     QLineEdit* m_ctrls_currentTemps[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
+    QLineEdit* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
     bool m_isCelcius;
     bool m_isAuto;
