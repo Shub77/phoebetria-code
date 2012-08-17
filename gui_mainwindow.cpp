@@ -492,7 +492,7 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
 int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
 {
     int channelMaxRPM = m_channelData[channel].maxRPM();
-    int channelMinRPM = (int)(channelMaxRPM * 0.40 / 100) * 100 + 100;
+    int channelMinRPM = (int)(channelMaxRPM * 0.50 / 100) * 100;
 
     double val = value / 100.0 * channelMaxRPM;
     val = int(val / 100) * 100;
