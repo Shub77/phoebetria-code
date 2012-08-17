@@ -20,9 +20,8 @@
 #include <QMainWindow>
 #include <QLineEdit>
 #include <QSlider>
+#include "profiles.h"
 #include "fanchanneldata.h"
-
-#define FC_MAX_CHANNELS 5
 
 namespace Ui {
 class gui_MainWindow;

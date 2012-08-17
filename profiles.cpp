@@ -19,3 +19,101 @@
 FanControllerProfile::FanControllerProfile()
 {
 }
+
+
+// ------------------------------------------------------------------------
+//  Access functions to channel settings
+// ------------------------------------------------------------------------
+int FanControllerProfile::maxRPM(int channel) const
+{
+    return m_channelSettings[channel].maxRPM();
+}
+
+int FanControllerProfile::alarmTemp(int channel) const
+{
+    return m_channelSettings[channel].alarmTemp();
+}
+
+int FanControllerProfile::manualRPM(int channel) const
+{
+    return m_channelSettings[channel].manualRPM();
+}
+
+int FanControllerProfile::lastTemp(int channel) const
+{
+    return m_channelSettings[channel].lastTemp();
+}
+
+int FanControllerProfile::maxTemp(int channel) const
+{
+    return m_channelSettings[channel].maxTemp();
+}
+
+int FanControllerProfile::minTemp(int channel) const
+{
+    return m_channelSettings[channel].minTemp();
+}
+
+int FanControllerProfile::lastRPM(int channel) const
+{
+    return m_channelSettings[channel].lastRPM();
+}
+
+int FanControllerProfile::minLoggedRPM(int channel) const
+{
+    return m_channelSettings[channel].minLoggedRPM();
+}
+
+int FanControllerProfile::maxLoggedRPM(int channel) const
+{
+    return m_channelSettings[channel].maxLoggedRPM();
+}
+
+// ------------------------------------------------------------------------
+// Set channel settings
+// ------------------------------------------------------------------------
+
+void FanControllerProfile::setMaxRPM(int channel, int to)
+{
+    m_channelSettings[channel].setMaxRPM(to);
+}
+
+void FanControllerProfile::setAlarmTemp(int channel, int to)
+{
+    m_channelSettings[channel].setAlarmTemp(to);
+}
+
+void FanControllerProfile::setManualRPM(int channel, int to)
+{
+    m_channelSettings[channel].setManualRPM(to);
+}
+
+void FanControllerProfile::setLastTemp(int channel, int to)
+{
+    m_channelSettings[channel].setLastTemp(to);
+}
+
+void FanControllerProfile::setMinTemp(int channel, int to)
+{
+    m_channelSettings[channel].setMinTemp(to);
+}
+
+void FanControllerProfile::setMaxTemp(int channel, int to)
+{
+    m_channelSettings[channel].setMaxTemp(to);
+}
+
+void FanControllerProfile::setLastRPM(int channel, int to)
+{
+    m_channelSettings[channel].setLastRPM(to);
+}
+
+void FanControllerProfile::setMinLoggedRPM(int channel, int to)
+{
+    m_channelSettings[channel].setMinLoggedRPM(to);
+}
+
+void FanControllerProfile::setMaxLoggedRPM(int channel, int to)
+{
+    m_channelSettings[channel].setMaxLoggedRPM(to);
+}

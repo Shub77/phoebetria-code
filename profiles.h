@@ -18,6 +18,9 @@
 #define PROFILES_H
 
 #include <QString>
+#include "fanchanneldata.h"
+
+#define FC_MAX_CHANNELS 5
 
 class FanControllerProfile
 {
@@ -29,7 +32,42 @@ public:
     bool load();
     bool save(const char* filename);
 
+    // Access functions to channel settings
+    int maxRPM(int channel) const;
+    int alarmTemp(int channel) const;
+
+    int manualRPM(int channel) const;
+
+    int lastTemp(int channel) const;
+    int maxTemp(int channel) const;
+    int minTemp(int channel) const;
+
+    int lastRPM(int channel) const;
+    int minLoggedRPM(int channel) const;
+    int maxLoggedRPM(int channel) const;
+
+    // Set channel settings
+    void setMaxRPM(int channel, int to);
+    void setAlarmTemp(int channel, int to);
+
+    void setManualRPM(int channel, int to);
+
+    void setLastTemp(int channel, int to);
+    void setMinTemp(int channel, int to);
+    void setMaxTemp(int channel, int to);
+
+    void setLastRPM(int channel, int to);
+    void setMinLoggedRPM(int channel, int to);
+    void setMaxLoggedRPM(int channel, int to);
+
 private:
+
+    // Common data
+    bool m_isCelcius;
+    bool m_isAuto;
+    bool m_isAudibleAlarm;
+
+    FanChannelData m_channelSettings[FC_MAX_CHANNELS];
 
 };
 

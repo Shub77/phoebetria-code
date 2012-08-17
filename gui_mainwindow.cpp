@@ -28,7 +28,6 @@
 #endif //QT_DEBUG
 
 
-
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
