@@ -21,8 +21,7 @@
 #include <QLineEdit>
 #include <QSlider>
 #include <QPushButton>
-#include "profiles.h"
-#include "fanchanneldata.h"
+#include "fancontrollerdata.h"
 
 namespace Ui {
 class gui_MainWindow;
@@ -112,7 +111,7 @@ private:
     FanChannelData m_channelData[FC_MAX_CHANNELS];
 #endif
 
-    FanControllerProfile m_fcp;  // fcp == fan controller profile
+    FanControllerData m_fcd;  // fcd == fan controller data
 
     // Blocking flags
     bool m_isAutoToggleByDevice;

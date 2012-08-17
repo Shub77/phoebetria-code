@@ -16,7 +16,8 @@ SOURCES += main.cpp\
     device-io.cpp \
     temperaturemonitor.cpp \
     profiles.cpp \
-    fanchanneldata.cpp
+    fanchanneldata.cpp \
+    fancontrollerdata.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -24,7 +25,8 @@ HEADERS  += gui_mainwindow.h \
     device-io.h \
     temperaturemonitor.h \
     profiles.h \
-    fanchanneldata.h
+    fanchanneldata.h \
+    fancontrollerdata.h
 
 FORMS    += gui_mainwindow.ui
 

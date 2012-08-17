@@ -38,9 +38,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
         m_speedSliderMovedByDevice[i] = false;
     }
 
-    m_fcp.setIsCelcius((ui->ctrl_tempScaleToggle->value() == 1 ? true : false));
-    m_fcp.setIsAuto((ui->ctrl_isManual->value() == 0 ? true : false));
-    m_fcp.setIsAudibleAlarm((ui->ctrl_isAudibleAlarm->value() == 1 ? true : false));
+    m_fcd.setIsCelcius((ui->ctrl_tempScaleToggle->value() == 1 ? true : false));
+    m_fcd.setIsAuto((ui->ctrl_isManual->value() == 0 ? true : false));
+    m_fcd.setIsAudibleAlarm((ui->ctrl_isAudibleAlarm->value() == 1 ? true : false));
 
     m_isAutoToggleByDevice = false;
     m_isAutoToggleByDevice = false;
@@ -127,23 +127,23 @@ void gui_MainWindow::updateSpeedControlTooltip(int channel)
 
     QString tooltip;
     tooltip += tr("Min Temp: ");
-    tooltip += FanControllerProfile::temperatureString(
-                m_fcp.minTemp(channel),
-                m_fcp.isCelcius(),
+    tooltip += FanControllerData::temperatureString(
+                m_fcd.minTemp(channel),
+                m_fcd.isCelcius(),
                 true);
     tooltip += "\n";
     tooltip += tr("Max Temp: ");
-    tooltip += FanControllerProfile::temperatureString(
-                m_fcp.maxTemp(channel),
-                m_fcp.isCelcius(),
+    tooltip += FanControllerData::temperatureString(
+                m_fcd.maxTemp(channel),
+                m_fcd.isCelcius(),
                 true);
     tooltip += "\n";
     tooltip += tr("Min logged RPM: ");
-    tooltip += QString::number(m_fcp.minLoggedRPM(channel));
+    tooltip += QString::number(m_fcd.minLoggedRPM(channel));
 
     tooltip += "\n";
     tooltip += tr("Max logged RPM: ");
-    tooltip += QString::number(m_fcp.maxLoggedRPM(channel));
+    tooltip += QString::number(m_fcd.maxLoggedRPM(channel));
 
     m_ctrls_RpmSliders[channel]->setToolTip(tooltip);
 }
@@ -159,7 +159,7 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    int maxRPM = m_fcp.maxRPM(channel);
+    int maxRPM = m_fcd.maxRPM(channel);
     if (maxRPM < 1) maxRPM = 1;
 
     bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
@@ -179,9 +179,9 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
 void gui_MainWindow::updateCurrentTempControl(int channel)
 {
     m_ctrls_probeTemps[channel]->setText(
-                FanControllerProfile::temperatureString(
-                    m_fcp.lastTemp(channel),
-                    m_fcp.isCelcius(),
+                FanControllerData::temperatureString(
+                    m_fcd.lastTemp(channel),
+                    m_fcd.isCelcius(),
                     true) );
 }
 
@@ -198,9 +198,9 @@ void gui_MainWindow::updateAlarmTempControl(int channel)
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     m_ctrls_alarmTemps[channel]->setText(
-        FanControllerProfile::temperatureString(
-                    m_fcp.alarmTemp(channel),
-                    m_fcp.isCelcius(),
+        FanControllerData::temperatureString(
+                    m_fcd.alarmTemp(channel),
+                    m_fcd.isCelcius(),
                     true) );
 
 }
@@ -215,7 +215,7 @@ void gui_MainWindow::updateAllAlarmCtrls(void)
 void gui_MainWindow::updateAllSpeedCtrls(void)
 {
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        updateSpeedControl(i, m_fcp.lastRPM(i));
+        updateSpeedControl(i, m_fcd.lastRPM(i));
     }
 }
 
@@ -223,16 +223,16 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    if (m_fcp.lastRPM(channel) != RPM) {
-        m_fcp.setLastRPM(channel, RPM);
+    if (m_fcd.lastRPM(channel) != RPM) {
+        m_fcd.setLastRPM(channel, RPM);
 
-        if (m_fcp.maxLoggedRPM(channel) < RPM) {
-            m_fcp.setMaxLoggedRPM(channel, RPM);
+        if (m_fcd.maxLoggedRPM(channel) < RPM) {
+            m_fcd.setMaxLoggedRPM(channel, RPM);
             updateSpeedControlTooltip(channel);
         }
-        if (m_fcp.minLoggedRPM(channel) > RPM
-                || m_fcp.minLoggedRPM(channel) == -1) {
-            m_fcp.setMinLoggedRPM(channel, RPM);
+        if (m_fcd.minLoggedRPM(channel) > RPM
+                || m_fcd.minLoggedRPM(channel) == -1) {
+            m_fcd.setMinLoggedRPM(channel, RPM);
             updateSpeedControlTooltip(channel);
         }
         m_speedSliderMovedByDevice[channel] = true;
@@ -253,16 +253,16 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
      */
     if (tempInF < 0) return;
 
-    if (m_fcp.lastTemp(channel) != tempInF) {
-        m_fcp.setLastTemp(channel, tempInF);
+    if (m_fcd.lastTemp(channel) != tempInF) {
+        m_fcd.setLastTemp(channel, tempInF);
 
         updateCurrentTempControl(channel);
 
-        if (m_fcp.maxTemp(channel) < tempInF) {
-            m_fcp.setMaxTemp(channel, tempInF);
+        if (m_fcd.maxTemp(channel) < tempInF) {
+            m_fcd.setMaxTemp(channel, tempInF);
         }
-        if (m_fcp.minTemp(channel) > tempInF) {
-            m_fcp.setMinTemp(channel, tempInF);
+        if (m_fcd.minTemp(channel) > tempInF) {
+            m_fcd.setMinTemp(channel, tempInF);
         }
 
         updateSpeedControlTooltip(channel);
@@ -273,8 +273,8 @@ void gui_MainWindow::onCurrentAlarmTemp(int channel, int tempInF)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    if (m_fcp.alarmTemp(channel) != tempInF) {
-        m_fcp.setAlarmTemp(channel, tempInF);
+    if (m_fcd.alarmTemp(channel) != tempInF) {
+        m_fcd.setAlarmTemp(channel, tempInF);
         updateAlarmTempControl(channel);
     }
 }
@@ -286,23 +286,23 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 {
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
-    if (m_fcp.isCelcius() != isCelcius) {
-        m_fcp.setIsCelcius(isCelcius);
+    if (m_fcd.isCelcius() != isCelcius) {
+        m_fcd.setIsCelcius(isCelcius);
         m_isCelciusToggleByDevice = true;
         ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
 
         updateAllAlarmCtrls();
     }
 
-    if (m_fcp.isAuto()!= isAuto) {
-        m_fcp.setIsAuto(isAuto);
+    if (m_fcd.isAuto()!= isAuto) {
+        m_fcd.setIsAuto(isAuto);
         m_isAutoToggleByDevice = true;
         ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
         enableDisableSpeedControls();
     }
 
-    if (m_fcp.isAudibleAlarm() != isAudibleAlarm) {
-        m_fcp.setIsAudibleAlarm(isAudibleAlarm);
+    if (m_fcd.isAudibleAlarm() != isAudibleAlarm) {
+        m_fcd.setIsAudibleAlarm(isAudibleAlarm);
         m_isAudibleAlarmByDevice = true;
         ui->ctrl_isAudibleAlarm->setValue(isAudibleAlarm ? 1 : 0);
     }
@@ -312,9 +312,9 @@ void gui_MainWindow::onMaxRPM(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    m_fcp.setMaxRPM(channel, RPM);
+    m_fcd.setMaxRPM(channel, RPM);
 
-    updateSpeedControl(channel, m_fcp.lastRPM(channel));
+    updateSpeedControl(channel, m_fcd.lastRPM(channel));
 }
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
@@ -324,13 +324,13 @@ void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
         return;
    }
 
-    m_fcp.setIsAuto((value == 0 ? true : false));
+    m_fcd.setIsAuto((value == 0 ? true : false));
 
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
-    fc->setDeviceFlags(m_fcp.isCelcius(),
-                       m_fcp.isAuto(),
-                       m_fcp.isAudibleAlarm()
+    fc->setDeviceFlags(m_fcd.isCelcius(),
+                       m_fcd.isAuto(),
+                       m_fcd.isAudibleAlarm()
                        );
 
     enableDisableSpeedControls();
@@ -343,13 +343,13 @@ void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
         return;
     }
 
-    m_fcp.setIsAudibleAlarm((value == 1 ? true : false));
+    m_fcd.setIsAudibleAlarm((value == 1 ? true : false));
 
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
-    fc->setDeviceFlags(m_fcp.isCelcius(),
-                       m_fcp.isAuto(),
-                       m_fcp.isAudibleAlarm()
+    fc->setDeviceFlags(m_fcd.isCelcius(),
+                       m_fcd.isAuto(),
+                       m_fcd.isAudibleAlarm()
                        );
 }
 
@@ -360,13 +360,13 @@ void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
         return;
     }
 
-    m_fcp.setIsCelcius((value == 1 ? true : false));
+    m_fcd.setIsCelcius((value == 1 ? true : false));
 
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
-    fc->setDeviceFlags(m_fcp.isCelcius(),
-                       m_fcp.isAuto(),
-                       m_fcp.isAudibleAlarm()
+    fc->setDeviceFlags(m_fcd.isCelcius(),
+                       m_fcd.isAuto(),
+                       m_fcd.isAudibleAlarm()
                        );
 
     updateAllAlarmCtrls();
@@ -380,7 +380,7 @@ void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 
 void gui_MainWindow::onDebugMenu_setChannelSpeed()
 {
-    if (m_fcp.isAuto()) {
+    if (m_fcd.isAuto()) {
         QMessageBox mbox;
         mbox.setText("Recon must be in manual mode to set channel speed");
         mbox.exec();
@@ -403,7 +403,7 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
         return;
     }
 
-    int channelMaxRPM = m_fcp.maxRPM(channel);
+    int channelMaxRPM = m_fcd.maxRPM(channel);
 
     if (speed < channelMaxRPM * 0.4 && speed != 0) {
         qDebug() << "Speed is less than 40%, but not OFF. Setting to 40%";
@@ -429,7 +429,7 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
-    int channelAlarmTemp = m_fcp.alarmTemp(channel);
+    int channelAlarmTemp = m_fcd.alarmTemp(channel);
 
     if (fc->setChannelSettings(channel, channelAlarmTemp, speed)) {
         updateSpeedControl(channel, speed);
@@ -444,11 +444,11 @@ void gui_MainWindow::setFcChannelSpeed(int channel, int RPM)
 {
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
-    int channelAlarmTemp = m_fcp.alarmTemp(channel);
+    int channelAlarmTemp = m_fcd.alarmTemp(channel);
 
     if (fc->setChannelSettings(channel, channelAlarmTemp, RPM)) {
         updateSpeedControl(channel, RPM);
-        m_fcp.setManualRPM(channel, RPM);
+        m_fcd.setManualRPM(channel, RPM);
     }
 }
 
@@ -463,7 +463,7 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
     FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
     fc->blockSignals(false);
     int val = rpmSliderValueToRPM(channel, m_ctrls_RpmSliders[channel]->value());
-    if (val != m_fcp.lastRPM(channel)) {
+    if (val != m_fcd.lastRPM(channel)) {
         setFcChannelSpeed(channel, val);
         qDebug() << "New slider value for channel"
                     << QString::number(channel+1)
@@ -479,7 +479,7 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
     int val = rpmSliderValueToRPM(channel, value);
     m_ctrls_currentRPM[channel]->setText(QString::number((int)val));
     if (!m_ctrls_RpmSliders[channel]->isSliderDown()
-            && val != m_fcp.lastRPM(channel)) {
+            && val != m_fcd.lastRPM(channel)) {
         setFcChannelSpeed(channel, val);
         qDebug() << "New slider value for channel"
                     << QString::number(channel+1)
@@ -490,7 +490,7 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
 
 int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
 {
-    int channelMaxRPM = m_fcp.maxRPM(channel);
+    int channelMaxRPM = m_fcd.maxRPM(channel);
     int channelMinRPM = (int)(channelMaxRPM * 0.50 / 100) * 100;
 
     double val = value / 100.0 * channelMaxRPM;
