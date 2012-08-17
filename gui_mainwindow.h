@@ -87,10 +87,10 @@ private:
 
     void updateSpeedControl(int channel, int RPM);
     void updateAllSpeedCtrls(void);
-    void updateCurrentTempControl(int channel);
+    void updateCurrentTempControl(int channel, int temp);
     void updateAllCurrentTempControls(void);
-    void updateAlarmTempControl(int channel);
-    void updateAllAlarmCtrls(void);
+    void updateAlarmTempControl(int channel, int temp, bool isCelcius);
+    void updateAllAlarmCtrls(bool isCelcius);
 
     int rpmSliderValueToRPM(int channel, int value) const;
 

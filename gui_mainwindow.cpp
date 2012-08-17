@@ -177,11 +177,11 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
 #endif
 }
 
-void gui_MainWindow::updateCurrentTempControl(int channel)
+void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
 {
     m_ctrls_probeTemps[channel]->setText(
                 FanControllerData::temperatureString(
-                    m_fcd.lastTemp(channel),
+                    temp,
                     m_fcd.isCelcius(),
                     true) );
 }
@@ -189,27 +189,27 @@ void gui_MainWindow::updateCurrentTempControl(int channel)
 void gui_MainWindow::updateAllCurrentTempControls(void)
 {
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        updateCurrentTempControl(i);
+        updateCurrentTempControl(i, m_fcd.lastTemp(i));
     }
 }
 
 
-void gui_MainWindow::updateAlarmTempControl(int channel)
+void gui_MainWindow::updateAlarmTempControl(int channel, int temp, bool isCelcius)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     m_ctrls_alarmTemps[channel]->setText(
         FanControllerData::temperatureString(
-                    m_fcd.alarmTemp(channel),
+                    temp,
                     m_fcd.isCelcius(),
                     true) );
 
 }
 
-void gui_MainWindow::updateAllAlarmCtrls(void)
+void gui_MainWindow::updateAllAlarmCtrls(bool isCelcius)
 {
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        updateAlarmTempControl(i);
+        updateAlarmTempControl(i, m_fcd.alarmTemp(i), isCelcius);
     }
 }
 
@@ -257,7 +257,7 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
     if (m_fcd.lastTemp(channel) != tempInF) {
         m_fcd.setLastTemp(channel, tempInF);
 
-        updateCurrentTempControl(channel);
+        updateCurrentTempControl(channel, tempInF);
 
         if (m_fcd.maxTemp(channel) < tempInF) {
             m_fcd.setMaxTemp(channel, tempInF);
@@ -276,7 +276,7 @@ void gui_MainWindow::onCurrentAlarmTemp(int channel, int tempInF)
 
     if (m_fcd.alarmTemp(channel) != tempInF) {
         m_fcd.setAlarmTemp(channel, tempInF);
-        updateAlarmTempControl(channel);
+        updateAlarmTempControl(channel, tempInF, m_fcd.isCelcius());
     }
 }
 
@@ -292,7 +292,7 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
         m_isCelciusToggleByDevice = true;
         ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
 
-        updateAllAlarmCtrls();
+        updateAllAlarmCtrls(m_fcd.isCelcius());
     }
 
     if (m_fcd.isAuto()!= isAuto) {
@@ -370,7 +370,7 @@ void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
                        m_fcd.isAudibleAlarm()
                        );
 
-    updateAllAlarmCtrls();
+    updateAllAlarmCtrls(m_fcd.isCelcius());
     updateAllCurrentTempControls();
 }
 
@@ -535,6 +535,7 @@ void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
 
     if (userTemperature != currentAlarmTemp) {
         fc->setChannelSettings(channel, userTemperature, m_fcd.maxRPM(channel));
+        updateAlarmTempControl(channel, userTemperature, m_fcd.isCelcius());
     }
 }
 
