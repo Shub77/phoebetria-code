@@ -21,6 +21,7 @@
 #include <QMap>
 #include <QQueue>
 #include "device-io.h"
+#include "fancontrollerdata.h"
 
 typedef enum fcReponseCodeCategory {
     fcResp_TempAndSpeed,
@@ -106,6 +107,11 @@ public:
                                              int channel);
 
     bool waitingForAck(void) const { return m_blockRequestsTimeout > 0; }
+
+    int minProbeTemp(bool inCelcius) const
+        { return inCelcius ? FanControllerData::toCelcius(0) : 0; }
+    int maxProbeTemp(bool inCelcius) const
+        { return inCelcius ? FanControllerData::toCelcius(255) : 255; }
 
 signals:
     void deviceConnected(void);
