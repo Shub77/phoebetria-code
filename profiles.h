@@ -17,4 +17,40 @@
 #ifndef PROFILES_H
 #define PROFILES_H
 
+#include <QString>
+#include "fancontrollerdata.h"
+#include "fanchanneldata.h"
+
+typedef struct {
+    int alarmTemp;
+    int speed;
+} BasicChannelData;
+
+class FanControllerProfile
+{
+public:
+
+    FanControllerProfile();
+
+    void setProfileName(const QString& name);
+    void setFilenameAndPath(const QString& filenameAndPath);
+
+    void setFromCurrentData(const FanControllerData& data);
+
+    bool save(const QString& filenameAndPath);
+    bool load(const QString& filenameAndPath);
+    void reset(void);
+
+private:
+
+    QString m_name;
+    QString m_fileNameAndPath;
+
+    bool m_isCelcius;
+    bool m_isAuto;
+    bool m_isAudibleAlarm;
+
+    BasicChannelData m_channelSettings[FC_MAX_CHANNELS];
+};
+
 #endif // PROFILES_H

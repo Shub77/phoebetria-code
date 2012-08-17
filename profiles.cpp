@@ -14,3 +14,25 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "profiles.h"
+
+FanControllerProfile::FanControllerProfile()
+{
+
+}
+
+/* Set from the current controller settings
+ */
+void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
+{
+    m_isCelcius = data.isCelcius();
+    m_isAuto = data.isAuto();
+    m_isAudibleAlarm = data.isAudibleAlarm();
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        m_channelSettings[i].alarmTemp = data.alarmTemp(i);
+        if (!m_isAuto) {
+            m_channelSettings[i].speed = data.manualRPM(i);
+        }
+    }
+}
