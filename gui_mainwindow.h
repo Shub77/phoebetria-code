@@ -20,63 +20,9 @@
 #include <QMainWindow>
 #include <QLineEdit>
 #include <QSlider>
+#include "fanchanneldata.h"
 
 #define FC_MAX_CHANNELS 5
-
-class ChannelData
-{
-public:
-    ChannelData();
-
-    //
-    int maxRPM(void) const { return m_maxRPM; }
-    int alarmTemp(void) const { return m_alarmTemp; }
-
-    int manualRPM(void) const { return m_manualRPM; }
-
-    int lastTemp(void) const { return m_lastTemp; }
-    int maxTemp(void) const { return m_maxTemp; }
-    int minTemp(void) const { return m_minTemp; }
-
-    int lastRPM(void) const { return m_lastRPM; }
-    int minLoggedRPM(void) const { return m_minLoggedRPM; }
-    int maxLoggedRPM(void) const { return m_maxLoggedRPM; }
-
-    //
-    void setMaxRPM(int to) { m_maxRPM = to; }
-    void setAlarmTemp(int to) { m_alarmTemp = to; }
-
-    void setManualRPM(int to) { m_manualRPM = to; }
-
-    void setLastTemp(int to) { m_lastTemp = to; }
-    void setMinTemp(int to) { m_minTemp = to; }
-    void setMaxTemp(int to) { m_maxTemp = to; }
-
-    void setLastRPM(int to) { m_lastRPM = to; }
-    void setMinLoggedRPM(int to) { m_minLoggedRPM = to; }
-    void setMaxLoggedRPM(int to) { m_maxLoggedRPM = to; }
-
-    //
-    static QString temperatureString(int temperature,
-                                     bool asCelcius,
-                                     bool addScaleSymbol);
-
-private:
-    int m_maxRPM;
-    int m_alarmTemp;
-
-    int m_lastTemp;
-    int m_maxTemp;
-    int m_minTemp;
-
-    int m_lastRPM;
-    int m_minLoggedRPM;
-    int m_maxLoggedRPM;
-
-    int m_manualRPM;
-};
-
-
 
 namespace Ui {
 class gui_MainWindow;
@@ -160,7 +106,7 @@ private:
     bool m_isAudibleAlarm;
 
     // Channel sepecific data
-    ChannelData m_channelData[FC_MAX_CHANNELS];
+    FanChannelData m_channelData[FC_MAX_CHANNELS];
 
     // Blocking flags
     bool m_isAutoToggleByDevice;

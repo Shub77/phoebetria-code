@@ -28,31 +28,6 @@
 #endif //QT_DEBUG
 
 
-ChannelData::ChannelData()
-{
-    m_maxTemp = 0;
-    m_maxLoggedRPM = 0;
-    m_lastRPM = -1;
-    m_minLoggedRPM = -1;
-    m_lastTemp = -1;
-    m_minTemp = 9999;
-
-    m_alarmTemp = -1;
-    m_maxRPM = 1400;
-
-    m_manualRPM = -1;
-}
-
-QString ChannelData::temperatureString( int temperature,
-                                        bool asCelcius,
-                                        bool addScaleSymbol)
-{
-    QString r;
-    int t = asCelcius ? ceil((temperature-32)*5.0/9) : temperature;
-    r = QString::number(t);
-    if (addScaleSymbol) r += (asCelcius ? " C" : " F");
-    return r;
-}
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -153,12 +128,12 @@ void gui_MainWindow::updateSpeedControlTooltip(int channel)
 
     QString tooltip;
     tooltip += tr("Min Temp: ");
-    tooltip += ChannelData::temperatureString(m_channelData[channel].minTemp(),
+    tooltip += FanChannelData::temperatureString(m_channelData[channel].minTemp(),
                                               m_isCelcius,
                                               true);
     tooltip += "\n";
     tooltip += tr("Max Temp: ");
-    tooltip += ChannelData::temperatureString(m_channelData[channel].maxTemp(),
+    tooltip += FanChannelData::temperatureString(m_channelData[channel].maxTemp(),
                                               m_isCelcius,
                                               true);
     tooltip += "\n";
@@ -205,7 +180,7 @@ void gui_MainWindow::updateAlarmTempControl(int channel)
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     m_ctrls_alarmTemps[channel]->setText(
-        ChannelData::temperatureString(m_channelData[channel].alarmTemp(),
+        FanChannelData::temperatureString(m_channelData[channel].alarmTemp(),
                                        m_isCelcius,
                                        false) );
 }
@@ -228,7 +203,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    ChannelData* ch = &m_channelData[channel];
+    FanChannelData* ch = &m_channelData[channel];
 
     if (ch->lastRPM() != RPM) {
         ch->setLastRPM(RPM);
@@ -259,13 +234,13 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
      */
     if (tempInF < 0) return;
 
-    ChannelData* ch = &m_channelData[channel];
+    FanChannelData* ch = &m_channelData[channel];
 
     if (ch->lastTemp() != tempInF) {
         ch->setLastTemp(tempInF);
 
         m_ctrls_probeTemps[channel]->setText(
-                    ChannelData::temperatureString(tempInF, m_isCelcius, true));
+                    FanChannelData::temperatureString(tempInF, m_isCelcius, true));
 
         if (ch->maxTemp() < tempInF) {
             ch->setMaxTemp(tempInF);
@@ -282,7 +257,7 @@ void gui_MainWindow::onCurrentAlarmTemp(int channel, int tempInF)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    ChannelData* ch = &m_channelData[channel];
+    FanChannelData* ch = &m_channelData[channel];
 
     if (ch->alarmTemp() != tempInF) {
         ch->setAlarmTemp(tempInF);
