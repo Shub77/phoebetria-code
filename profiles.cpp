@@ -14,12 +14,33 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QFileInfo>
+#include <QDir>
 #include "profiles.h"
 
 FanControllerProfile::FanControllerProfile()
 {
-
+    initCommon();
 }
+
+
+void FanControllerProfile::initCommon(void)
+{
+    QSettings settings(QSettings::IniFormat,
+                       QSettings::UserScope,
+                       "Phoebetria",
+                       "Phoebetria");
+
+    m_defaultProfileLocation = QFileInfo(settings.fileName()).path()
+                                    + QDir::separator();
+}
+
+
+QString FanControllerProfile::defualtProfileLocation(void) const
+{
+    return m_defaultProfileLocation;
+}
+
 
 /* Set from the current controller settings
  */

@@ -18,6 +18,7 @@
 #define PROFILES_H
 
 #include <QString>
+#include <QSettings>
 #include "fancontrollerdata.h"
 #include "fanchanneldata.h"
 
@@ -31,6 +32,9 @@ class FanControllerProfile
 public:
 
     FanControllerProfile();
+    ~FanControllerProfile();
+
+    QString defualtProfileLocation(void) const;
 
     void setProfileName(const QString& name);
     void setFilenameAndPath(const QString& filenameAndPath);
@@ -41,7 +45,14 @@ public:
     bool load(const QString& filenameAndPath);
     void reset(void);
 
+
+protected:
+
+    void initCommon(void);
+
 private:
+
+    QString m_defaultProfileLocation;
 
     QString m_name;
     QString m_fileNameAndPath;
