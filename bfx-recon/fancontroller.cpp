@@ -178,6 +178,8 @@ bool FcData::toRawData(char *dest, int buffLen, bool pad)
     //      3) the checksum at the end
     Q_ASSERT (buffLen >= data.length() + 3);
 
+    // TODO:    CHECK THIS FUNCTION; POTENTIAL BUFFER OVERRUN
+
     int dataLen = this->dataLen();
 
     *(dest) = dataLen + 2;
@@ -477,11 +479,11 @@ void  FanController::processCommandQueue(void)
      */
     if (m_cmdQueue.isEmpty()) return;
 
-    char reqBuff[8];    // Needs to be one more than max request size
+    char reqBuff[9];
     FcData dataToSend = m_cmdQueue.takeFirst();
 
     if (dataToSend.command) {
-        blockSignals(true);
+        bool bs = blockSignals(true);
         dataToSend.toRawData(reqBuff, sizeof(reqBuff));
 
         if (dataToSend.m_blockCommandsAfterExecuting_timeout > 0) {
@@ -490,7 +492,7 @@ void  FanController::processCommandQueue(void)
 
         m_io_device.sendData(reqBuff, 8);
 
-        blockSignals(false);
+        blockSignals(bs);
     }
 #if 0
     QByteArray ba(reqBuff);
