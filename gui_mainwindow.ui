@@ -60,6 +60,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -75,6 +78,9 @@
        <width>51</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -236,6 +242,9 @@ margin:-2px;</string>
        <height>21</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -251,6 +260,9 @@ margin:-2px;</string>
        <width>51</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -412,6 +424,9 @@ margin:-2px;</string>
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -427,6 +442,9 @@ margin:-2px;</string>
        <width>51</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -593,6 +611,9 @@ margin:-2px;</string>
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -608,6 +629,9 @@ margin:-2px;</string>
        <width>51</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -988,7 +1012,7 @@ margin:-2px;</string>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
