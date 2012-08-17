@@ -207,6 +207,9 @@ margin:-2px;</string>
        <height>21</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
+     </property>
      <property name="text">
       <string>PushButton</string>
      </property>
@@ -386,6 +389,9 @@ margin:-2px;</string>
        <height>21</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
+     </property>
      <property name="text">
       <string>PushButton</string>
      </property>
@@ -564,6 +570,9 @@ margin:-2px;</string>
        <width>51</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
      </property>
      <property name="text">
       <string>PushButton</string>
@@ -748,6 +757,9 @@ margin:-2px;</string>
        <width>51</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
      </property>
      <property name="text">
       <string>PushButton</string>
@@ -938,6 +950,9 @@ margin:-2px;</string>
        <width>51</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
      </property>
      <property name="text">
       <string>PushButton</string>
