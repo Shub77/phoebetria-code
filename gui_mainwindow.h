@@ -99,6 +99,7 @@ private:
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
     QLineEdit* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
+#if 0
     // Common data
     bool m_isCelcius;
     bool m_isAuto;
@@ -106,6 +107,9 @@ private:
 
     // Channel sepecific data
     FanChannelData m_channelData[FC_MAX_CHANNELS];
+#endif
+
+    FanControllerProfile m_fp;  // fp == fan profile
 
     // Blocking flags
     bool m_isAutoToggleByDevice;
