@@ -69,6 +69,13 @@ private slots:
     void on_ctrl_channel5speedSlider_sliderPressed();
     void on_ctrl_channel5speedSlider_sliderReleased();
     void on_ctrl_channel5speedSlider_valueChanged(int value);
+
+    void on_ctrl_channel1AlarmTemp_clicked();
+    void on_ctrl_channel2AlarmTemp_clicked();
+    void on_ctrl_channel3AlarmTemp_clicked();
+    void on_ctrl_channel4AlarmTemp_clicked();
+    void on_ctrl_channel5AlarmTemp_clicked();
+
 private:
     void initCtrlArrays(void);
     void connectCustomSignals(void);
@@ -92,6 +99,8 @@ private:
     void userPressedChannelRpmSlider(int channel);
     void userReleasedChannelRpmSlider(int channel);
     void userChangedChannelRpmSlider(int channel, int value);
+
+    void userClickedAlarmTempCtrl(int channel);
 
     Ui::gui_MainWindow *ui;
 

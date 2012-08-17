@@ -21,10 +21,11 @@
 #include "ui_gui_mainwindow.h"
 #include "phoebetriaapp.h"
 #include "bfx-recon/fancontroller.h"
+#include <QInputDialog>
 
 #ifdef QT_DEBUG
 #   include <QMessageBox>
-#   include <QInputDialog>
+
 #endif //QT_DEBUG
 
 
@@ -499,6 +500,44 @@ int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
     return val;
 }
 
+void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
+{
+    int currentAlarmTemp;
+    int userTemperature;
+    bool ok;
+
+    currentAlarmTemp = m_fcd.alarmTemp(channel);
+    if (m_fcd.isCelcius()) {
+        currentAlarmTemp = m_fcd.toCelcius(currentAlarmTemp);
+    }
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    int minProbeTemp = fc->minProbeTemp(m_fcd.isCelcius());
+    int maxProbTemp = fc->maxProbeTemp(m_fcd.isCelcius());
+
+    QString prompt = QString(tr("Enter new alarm temperature %1"
+                                " for channel %2.\nRange is %3 to %4"))
+                             .arg(m_fcd.isCelcius() ? "C" : "F")
+                             .arg(channel)
+                             .arg(minProbeTemp)
+                             .arg(maxProbTemp);
+
+    userTemperature = QInputDialog::getInt(this,
+                                           tr("Enter alarm temperature"),
+                                           prompt,
+                                           currentAlarmTemp,
+                                           minProbeTemp,
+                                           maxProbTemp,
+                                           1,
+                                           &ok);
+    if (m_fcd.isCelcius()) {
+        userTemperature = m_fcd.toFahrenheit(userTemperature);
+    }
+
+    if (userTemperature != currentAlarmTemp) {
+        fc->setChannelSettings(channel, userTemperature, m_fcd.maxRPM(channel));
+    }
+}
+
 void gui_MainWindow::on_ctrl_channel1speedSlider_sliderPressed()
 {
     userPressedChannelRpmSlider(0);
@@ -566,4 +605,26 @@ void gui_MainWindow::on_ctrl_channel5speedSlider_sliderReleased()
 void gui_MainWindow::on_ctrl_channel5speedSlider_valueChanged(int value)
 {
     userChangedChannelRpmSlider(4, value);
+}
+
+
+void gui_MainWindow::on_ctrl_channel1AlarmTemp_clicked()
+{
+    userClickedAlarmTempCtrl(0);
+}
+void gui_MainWindow::on_ctrl_channel2AlarmTemp_clicked()
+{
+    userClickedAlarmTempCtrl(1);
+}
+void gui_MainWindow::on_ctrl_channel3AlarmTemp_clicked()
+{
+    userClickedAlarmTempCtrl(2);
+}
+void gui_MainWindow::on_ctrl_channel4AlarmTemp_clicked()
+{
+    userClickedAlarmTempCtrl(3);
+}
+void gui_MainWindow::on_ctrl_channel5AlarmTemp_clicked()
+{
+    userClickedAlarmTempCtrl(4);
 }
