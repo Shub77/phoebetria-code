@@ -20,6 +20,7 @@
 #include <QMainWindow>
 #include <QLineEdit>
 #include <QSlider>
+#include <QPushButton>
 #include "profiles.h"
 #include "fanchanneldata.h"
 
@@ -99,7 +100,7 @@ private:
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
     QLineEdit* m_ctrls_currentRPM[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
-    QLineEdit* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
+    QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
 #if 0
     // Common data

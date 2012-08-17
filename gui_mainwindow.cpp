@@ -87,11 +87,11 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_RpmSliders[3] = ui->ctrl_channel4speedSlider;
     m_ctrls_RpmSliders[4] = ui->ctrl_channel5speedSlider;
 
-    m_ctrls_alarmTemps[0] = ui->ctrl_channel1alarmTemp;
-    m_ctrls_alarmTemps[1] = ui->ctrl_channel2alarmTemp;
-    m_ctrls_alarmTemps[2] = ui->ctrl_channel3alarmTemp;
-    m_ctrls_alarmTemps[3] = ui->ctrl_channel4alarmTemp;
-    m_ctrls_alarmTemps[4] = ui->ctrl_channel5alarmTemp;
+    m_ctrls_alarmTemps[0] = ui->ctrl_channel1AlarmTemp;
+    m_ctrls_alarmTemps[1] = ui->ctrl_channel2AlarmTemp;
+    m_ctrls_alarmTemps[2] = ui->ctrl_channel3AlarmTemp;
+    m_ctrls_alarmTemps[3] = ui->ctrl_channel4AlarmTemp;
+    m_ctrls_alarmTemps[4] = ui->ctrl_channel5AlarmTemp;
 
 }
 
@@ -202,6 +202,7 @@ void gui_MainWindow::updateAlarmTempControl(int channel)
                     m_fcp.alarmTemp(channel),
                     m_fcp.isCelcius(),
                     true) );
+
 }
 
 void gui_MainWindow::updateAllAlarmCtrls(void)
