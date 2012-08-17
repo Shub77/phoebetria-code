@@ -52,11 +52,6 @@ public:
     void setMinLoggedRPM(int to) { m_minLoggedRPM = to; }
     void setMaxLoggedRPM(int to) { m_maxLoggedRPM = to; }
 
-    //
-    static QString temperatureString(int temperature,
-                                     bool asCelcius,
-                                     bool addScaleSymbol);
-
 private:
     int m_maxRPM;
     int m_alarmTemp;

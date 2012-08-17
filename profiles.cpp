@@ -117,3 +117,14 @@ void FanControllerProfile::setMaxLoggedRPM(int channel, int to)
 {
     m_channelSettings[channel].setMaxLoggedRPM(to);
 }
+
+QString FanControllerProfile::temperatureString(int temperature,
+                                                bool asCelcius,
+                                                bool addScaleSymbol)
+{
+    QString r;
+    int t = asCelcius ? ceil((temperature-32)*5.0/9) : temperature;
+    r = QString::number(t);
+    if (addScaleSymbol) r += (asCelcius ? " C" : " F");
+    return r;
+}

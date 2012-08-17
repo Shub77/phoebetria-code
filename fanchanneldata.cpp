@@ -32,13 +32,3 @@ FanChannelData::FanChannelData()
     m_manualRPM = -1;
 }
 
-QString FanChannelData::temperatureString( int temperature,
-                                        bool asCelcius,
-                                        bool addScaleSymbol)
-{
-    QString r;
-    int t = asCelcius ? ceil((temperature-32)*5.0/9) : temperature;
-    r = QString::number(t);
-    if (addScaleSymbol) r += (asCelcius ? " C" : " F");
-    return r;
-}

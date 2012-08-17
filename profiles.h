@@ -73,6 +73,9 @@ public:
     void setMinLoggedRPM(int channel, int to);
     void setMaxLoggedRPM(int channel, int to);
 
+    static QString temperatureString(int temperature,
+                                     bool asCelcius,
+                                     bool addScaleSymbol);
 private:
 
     // Common data
