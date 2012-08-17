@@ -178,8 +178,6 @@ bool FcData::toRawData(char *dest, int buffLen, bool pad)
     //      3) the checksum at the end
     Q_ASSERT (buffLen >= data.length() + 3);
 
-    // TODO:    CHECK THIS FUNCTION; POTENTIAL BUFFER OVERRUN
-
     int dataLen = this->dataLen();
 
     *(dest) = dataLen + 2;
@@ -191,7 +189,7 @@ bool FcData::toRawData(char *dest, int buffLen, bool pad)
     *(dest + i + 2) = calcChecksum(true) - 1;
     i++;
     if (pad) {
-        for (; i < buffLen; i++) {
+        for (; i < buffLen - 2 ; i++) {
             *(dest + i + 2) = (char)0x00;
         }
     }
@@ -479,7 +477,7 @@ void  FanController::processCommandQueue(void)
      */
     if (m_cmdQueue.isEmpty()) return;
 
-    char reqBuff[9];
+    char reqBuff[8];
     FcData dataToSend = m_cmdQueue.takeFirst();
 
     if (dataToSend.command) {
