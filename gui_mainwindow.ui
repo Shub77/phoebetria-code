@@ -378,12 +378,6 @@ margin:-2px;</string>
       <string>PushButton</string>
      </property>
     </widget>
-    <zorder>ctrl_channel2speed</zorder>
-    <zorder>ctrl_probe2Temp</zorder>
-    <zorder>label_6</zorder>
-    <zorder>ctrl_channel2speedSlider</zorder>
-    <zorder>btn_channel2AlarmTemp</zorder>
-    <zorder>btn_channel2AlarmTemp</zorder>
    </widget>
    <widget class="QGroupBox" name="groupBox_5">
     <property name="geometry">
@@ -561,7 +555,6 @@ margin:-2px;</string>
     <zorder>ctrl_channel4speedSlider</zorder>
     <zorder>ctrl_channel4speed</zorder>
     <zorder>ctrl_probe4Temp</zorder>
-    <zorder>btn_channel4AlarmTemp</zorder>
     <zorder>btn_channel4AlarmTemp</zorder>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
@@ -974,7 +967,7 @@ margin:-2px;</string>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1757,7 +1750,7 @@ QSlider::handle:horizontal:disabled {
      <x>0</x>
      <y>0</y>
      <width>422</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
