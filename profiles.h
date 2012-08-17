@@ -32,7 +32,6 @@ class FanControllerProfile
 public:
 
     FanControllerProfile();
-    ~FanControllerProfile();
 
     QString defualtProfileLocation(void) const;
 
