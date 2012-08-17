@@ -137,10 +137,12 @@ private:
 
     QMenu* m_debugMenu;
     QAction* m_debug_setChannelSpeed;
+    QAction* m_debug_profiles;
 
 private slots:
 
     void onDebugMenu_setChannelSpeed();
+    void onDebugMenu_profiles();
 
 #endif
     /* **** END DEBUGGING MENU ***/
