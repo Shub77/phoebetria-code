@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>409</width>
-    <height>519</height>
+    <width>422</width>
+    <height>601</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -60,6 +60,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -75,6 +78,9 @@
        <width>51</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -186,26 +192,17 @@ margin:-2px;</string>
       <enum>QSlider::TicksAbove</enum>
      </property>
     </widget>
-    <widget class="QLineEdit" name="ctrl_channel5alarmTemp">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+    <widget class="QPushButton" name="btn_channel5AlarmTemp">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>280</y>
-       <width>51</width>
-       <height>20</height>
+       <x>0</x>
+       <y>275</y>
+       <width>71</width>
+       <height>30</height>
       </rect>
      </property>
-     <property name="toolTip">
-      <string>Alarm Temperature</string>
-     </property>
      <property name="text">
-      <string/>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
+      <string>PushButton</string>
      </property>
     </widget>
    </widget>
@@ -236,6 +233,9 @@ margin:-2px;</string>
        <height>21</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -251,6 +251,9 @@ margin:-2px;</string>
        <width>51</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -362,28 +365,25 @@ margin:-2px;</string>
       <enum>QSlider::TicksAbove</enum>
      </property>
     </widget>
-    <widget class="QLineEdit" name="ctrl_channel2alarmTemp">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+    <widget class="QPushButton" name="btn_channel2AlarmTemp">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>280</y>
-       <width>51</width>
-       <height>20</height>
+       <x>0</x>
+       <y>275</y>
+       <width>71</width>
+       <height>30</height>
       </rect>
      </property>
-     <property name="toolTip">
-      <string>Alarm Temperature</string>
-     </property>
      <property name="text">
-      <string/>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
+      <string>PushButton</string>
      </property>
     </widget>
+    <zorder>ctrl_channel2speed</zorder>
+    <zorder>ctrl_probe2Temp</zorder>
+    <zorder>label_6</zorder>
+    <zorder>ctrl_channel2speedSlider</zorder>
+    <zorder>btn_channel2AlarmTemp</zorder>
+    <zorder>btn_channel2AlarmTemp</zorder>
    </widget>
    <widget class="QGroupBox" name="groupBox_5">
     <property name="geometry">
@@ -412,6 +412,9 @@ margin:-2px;</string>
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -427,6 +430,9 @@ margin:-2px;</string>
        <width>51</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -538,33 +544,25 @@ margin:-2px;</string>
       <enum>QSlider::TicksAbove</enum>
      </property>
     </widget>
-    <widget class="QLineEdit" name="ctrl_channel4alarmTemp">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+    <widget class="QPushButton" name="btn_channel4AlarmTemp">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>280</y>
-       <width>51</width>
-       <height>20</height>
+       <x>0</x>
+       <y>275</y>
+       <width>71</width>
+       <height>30</height>
       </rect>
      </property>
-     <property name="toolTip">
-      <string>Alarm Temperature</string>
-     </property>
      <property name="text">
-      <string/>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
+      <string>PushButton</string>
      </property>
     </widget>
     <zorder>label_5</zorder>
     <zorder>ctrl_channel4speedSlider</zorder>
     <zorder>ctrl_channel4speed</zorder>
     <zorder>ctrl_probe4Temp</zorder>
-    <zorder>ctrl_channel4alarmTemp</zorder>
+    <zorder>btn_channel4AlarmTemp</zorder>
+    <zorder>btn_channel4AlarmTemp</zorder>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
@@ -593,6 +591,9 @@ margin:-2px;</string>
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -608,6 +609,9 @@ margin:-2px;</string>
        <width>51</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
      </property>
      <property name="readOnly">
       <bool>true</bool>
@@ -719,26 +723,17 @@ margin:-2px;</string>
       <enum>QSlider::TicksAbove</enum>
      </property>
     </widget>
-    <widget class="QLineEdit" name="ctrl_channel3alarmTemp">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+    <widget class="QPushButton" name="btn_channel3AlarmTemp">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>280</y>
-       <width>51</width>
-       <height>20</height>
+       <x>0</x>
+       <y>275</y>
+       <width>71</width>
+       <height>30</height>
       </rect>
      </property>
-     <property name="toolTip">
-      <string>Alarm Temperature</string>
-     </property>
      <property name="text">
-      <string/>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
+      <string>PushButton</string>
      </property>
     </widget>
    </widget>
@@ -912,26 +907,17 @@ margin:-2px;</string>
       <enum>QSlider::TicksAbove</enum>
      </property>
     </widget>
-    <widget class="QLineEdit" name="ctrl_channel1alarmTemp">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+    <widget class="QPushButton" name="btn_channel1AlarmTemp">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>280</y>
-       <width>51</width>
-       <height>20</height>
+       <x>0</x>
+       <y>275</y>
+       <width>71</width>
+       <height>30</height>
       </rect>
      </property>
-     <property name="toolTip">
-      <string>Alarm Temperature</string>
-     </property>
      <property name="text">
-      <string/>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
+      <string>PushButton</string>
      </property>
     </widget>
    </widget>
@@ -988,7 +974,7 @@ margin:-2px;</string>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1367,7 +1353,7 @@ QSlider::handle:horizontal:disabled {
        <string>Preset 3</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="btn_Preset1Play">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -1396,7 +1382,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="btn_Preset1Set">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -1416,7 +1402,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_set.png</normaloff>:/Images/profile_set.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="btn_Preset1Reset">
       <property name="geometry">
        <rect>
         <x>180</x>
@@ -1436,7 +1422,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_reset.png</normaloff>:/Images/profile_reset.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="btn_Preset1Save">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -1462,7 +1448,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="QPushButton" name="btn_Preset2Set">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -1482,7 +1468,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_set.png</normaloff>:/Images/profile_set.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="btn_Preset2Play">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -1511,7 +1497,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_7">
+     <widget class="QPushButton" name="btn_Preset2Reset">
       <property name="geometry">
        <rect>
         <x>180</x>
@@ -1531,7 +1517,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_reset.png</normaloff>:/Images/profile_reset.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_8">
+     <widget class="QPushButton" name="btn_Preset2Save">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -1557,7 +1543,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_9">
+     <widget class="QPushButton" name="btn_Preset3Set">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -1577,7 +1563,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_set.png</normaloff>:/Images/profile_set.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_10">
+     <widget class="QPushButton" name="btn_Preset3Play">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -1606,7 +1592,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_11">
+     <widget class="QPushButton" name="btn_Preset3Reset">
       <property name="geometry">
        <rect>
         <x>180</x>
@@ -1626,7 +1612,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_reset.png</normaloff>:/Images/profile_reset.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_12">
+     <widget class="QPushButton" name="btn_Preset3Save">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -1654,14 +1640,124 @@ QSlider::handle:horizontal:disabled {
      </widget>
     </widget>
    </widget>
+   <widget class="QLineEdit" name="ctrl_channel1alarmTemp">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>470</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Alarm Temperature</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ctrl_channel2alarmTemp">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>470</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Alarm Temperature</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ctrl_channel3alarmTemp">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>470</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Alarm Temperature</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ctrl_channel4alarmTemp">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>470</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Alarm Temperature</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ctrl_channel5alarmTemp">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>470</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Alarm Temperature</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>409</width>
-     <height>21</height>
+     <width>422</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
