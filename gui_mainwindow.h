@@ -76,6 +76,8 @@ private slots:
     void on_ctrl_channel4AlarmTemp_clicked();
     void on_ctrl_channel5AlarmTemp_clicked();
 
+    void on_actionAbout_triggered();
+
 private:
     void initCtrlArrays(void);
     void connectCustomSignals(void);

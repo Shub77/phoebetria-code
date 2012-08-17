@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     temperaturemonitor.cpp \
     profiles.cpp \
     fanchanneldata.cpp \
-    fancontrollerdata.cpp
+    fancontrollerdata.cpp \
+    gui_about.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -26,9 +27,11 @@ HEADERS  += gui_mainwindow.h \
     temperaturemonitor.h \
     profiles.h \
     fanchanneldata.h \
-    fancontrollerdata.h
+    fancontrollerdata.h \
+    gui_about.h
 
-FORMS    += gui_mainwindow.ui
+FORMS    += gui_mainwindow.ui \
+    gui_about.ui
 
 #-------------------------------------------------
 # Config for the HID API library

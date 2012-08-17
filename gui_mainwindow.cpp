@@ -16,12 +16,13 @@
 
 #include <QDebug>
 #include <QStandardItemModel>
+#include <QInputDialog>
 #include <cmath>
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
 #include "phoebetriaapp.h"
 #include "bfx-recon/fancontroller.h"
-#include <QInputDialog>
+#include "gui_about.h"
 
 #ifdef QT_DEBUG
 #   include <QMessageBox>
@@ -628,4 +629,10 @@ void gui_MainWindow::on_ctrl_channel4AlarmTemp_clicked()
 void gui_MainWindow::on_ctrl_channel5AlarmTemp_clicked()
 {
     userClickedAlarmTempCtrl(4);
+}
+
+void gui_MainWindow::on_actionAbout_triggered()
+{
+    gui_About* aboutDlg = new gui_About(this);
+    aboutDlg->exec();
 }
