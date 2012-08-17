@@ -29,6 +29,8 @@ public:
 
     const QString& name(void) const;
 
+    bool init(void);
+
     bool load();
     bool save(const char* filename);
 
@@ -42,8 +44,8 @@ public:
         { m_isCelcius = isC; }
     void setIsAuto(bool isAuto)
         { m_isAuto = isAuto; }
-    void setIsAudibleAlarm(bool isAudibleAlarm)
-        { m_isAudibleAlarm = isAudibleAlarm; }
+    void setIsAudibleAlarm(bool isAudible)
+        { m_isAudibleAlarm = isAudible; }
 
     // Access functions to channel settings
     int maxRPM(int channel) const;

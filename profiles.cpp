@@ -14,12 +14,20 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <cmath>
 #include "profiles.h"
 
 FanControllerProfile::FanControllerProfile()
 {
+    init();
 }
 
+bool FanControllerProfile::init(void)
+{
+    m_isCelcius = false;
+    m_isAuto = false;
+    m_isAudibleAlarm = false;
+}
 
 // ------------------------------------------------------------------------
 //  Access functions to channel settings

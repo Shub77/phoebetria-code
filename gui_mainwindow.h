@@ -80,6 +80,8 @@ private:
 
     void updateSpeedControl(int channel, int RPM);
     void updateAllSpeedCtrls(void);
+    void updateCurrentTempControl(int channel);
+    void updateAllCurrentTempControls(void);
     void updateAlarmTempControl(int channel);
     void updateAllAlarmCtrls(void);
 
@@ -109,7 +111,7 @@ private:
     FanChannelData m_channelData[FC_MAX_CHANNELS];
 #endif
 
-    FanControllerProfile m_fp;  // fp == fan profile
+    FanControllerProfile m_fcp;  // fcp == fan controller profile
 
     // Blocking flags
     bool m_isAutoToggleByDevice;
