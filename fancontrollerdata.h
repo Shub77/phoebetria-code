@@ -29,7 +29,7 @@ public:
 
     const QString& name(void) const;
 
-    bool init(void);
+    void init(void);
 
     bool load();
     bool save(const char* filename);
@@ -78,6 +78,10 @@ public:
     static QString temperatureString(int temperature,
                                      bool asCelcius,
                                      bool addScaleSymbol);
+
+    static int toCelcius(int tempInF);
+    static int toFahrenheit(int tempInC);
+
 private:
 
     // Common data

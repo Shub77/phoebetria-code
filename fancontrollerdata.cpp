@@ -23,7 +23,7 @@ FanControllerData::FanControllerData()
     init();
 }
 
-bool FanControllerData::init(void)
+void FanControllerData::init(void)
 {
     m_isCelcius = false;
     m_isAuto = false;
@@ -138,3 +138,22 @@ QString FanControllerData::temperatureString(int temperature,
     return r;
 }
 
+/* Note:    Due to the conversion being somewhat specific for the fan controller
+ *          device this should not be made a general (global) function; i.e.
+ *          the rounding (or potential rounding) etc. make the function
+ *          unsuitable for general purpose use.
+ */
+int FanControllerData::toCelcius(int tempInF)
+{
+    return ceil((tempInF-32)*5.0/9);
+}
+
+/* Note:    Due to the conversion being somewhat specific for the fan controller
+ *          device this should not be made a general (global) function; i.e.
+ *          the rounding (or potential rounding) etc. make the function
+ *          unsuitable for general purpose use.
+ */
+int FanControllerData::toFahrenheit(int tempInC)
+{
+    return tempInC * 9/5.0 + 32;
+}
