@@ -641,8 +641,13 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
     if (filename.isEmpty()) return;
 
     if (fcp.load(filename)) {
-        qDebug() << "profile loaded";
+        //qDebug() << "profile loaded";
+
         FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+
+        bool sb1 = this->blockSignals(true);
+        bool sb2 = fc->blockSignals(true);
+
         if (fc->setFromProfile(fcp)) {
             for (int i = 0; i < FC_MAX_CHANNELS; i++) {
                 BasicChannelData bcd = fcp.getChannelSettings(i);
@@ -655,6 +660,9 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
         updateSpeedControlTooltips();
         updateAllSpeedCtrls();
         updateAllAlarmCtrls(m_fcd.isCelcius());
+
+        this->blockSignals(sb1);
+        fc->blockSignals(sb2);
     }
 }
 
