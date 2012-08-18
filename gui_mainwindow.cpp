@@ -17,6 +17,8 @@
 #include <QDebug>
 #include <QStandardItemModel>
 #include <QInputDialog>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <cmath>
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
@@ -24,11 +26,6 @@
 #include "bfx-recon/fancontroller.h"
 #include "gui_about.h"
 #include "profiles.h"
-
-#ifdef QT_DEBUG
-#   include <QMessageBox>
-
-#endif //QT_DEBUG
 
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
@@ -581,6 +578,62 @@ void gui_MainWindow::on_actionAbout_triggered()
     aboutDlg->exec();
 }
 
+void gui_MainWindow::on_ctrl_SavePreset_clicked()
+{
+    FanControllerProfile fcp;
+    QString profilesLocation = fcp.defualtProfileLocation();
+
+    /* QFileDialog::getSaveFileName expects the directory to
+     * exist, therefore create it now if it doesn't exist
+     */
+    QDir dir;
+    dir.setPath(profilesLocation);
+    if (!dir.exists()) {
+        if (!dir.mkpath(profilesLocation)) {
+            QMessageBox msg;
+            QString msgText = QString(tr("Could not create default profiles location: %1")
+                                      .arg(profilesLocation));
+            msg.setText(msgText);
+            msg.setInformativeText(tr("You can save in a different location if you choose."));
+            msg.setStandardButtons(QMessageBox::Close);
+            msg.setIcon(QMessageBox::Warning);
+            msg.exec();
+        }
+    }
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save profile"),
+                                profilesLocation,
+                                tr("Profiles (*.ini)"));
+
+    if (filename.isEmpty()) return;
+
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+
+    bool sb1 = this->blockSignals(true);
+    bool sb2 = fc->blockSignals(true);
+
+    fcp.setFromCurrentData(m_fcd);
+
+    this->blockSignals(sb1);
+    this->blockSignals(sb2);
+
+    if (!fcp.save(filename)) {
+        QMessageBox msg;
+        QString msgText = QString(tr("Could not save profile!"));
+        msg.setText(msgText);
+        msg.setInformativeText(filename);
+        msg.setStandardButtons(QMessageBox::Close);
+        msg.setIcon(QMessageBox::Warning);
+        msg.exec();
+    }
+
+
+}
+
+void gui_MainWindow::on_ctrl_LoadPreset_clicked()
+{
+
+}
+
 
 
 /**************************************************************************
@@ -672,7 +725,6 @@ void gui_MainWindow::onDebugMenu_profiles()
                  << "\n--- Alarm temp:" << QString::number(ch_settings.alarmTemp)
                  << "\n--- Fan speed:" << QString::number(ch_settings.speed);
     }
-    fcp.save(1);
 }
 
 #endif

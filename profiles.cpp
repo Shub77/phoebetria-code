@@ -33,8 +33,7 @@ void FanControllerProfile::initCommon(void)
                        "Phoebetria");
 
     m_defaultProfileLocation = QFileInfo(settings.fileName()).path()
-                                    + "/";
-                                    //+ QDir::separator();
+                                    + "/Presets/";
 }
 
 
@@ -60,21 +59,9 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
 }
 
 
-bool FanControllerProfile::save(int profileNumber)
+bool FanControllerProfile::save(const QString& filenameAndPath)
 {
-    QString filename;
-
-    filename = "P" + QString::number(profileNumber);
-    return save (filename);
-}
-
-
-bool FanControllerProfile::save(const QString& filename)
-{
-    QString fileAndPath = m_defaultProfileLocation
-            + "/Presets/" + filename + ".ini";
-
-    QSettings settings (fileAndPath, QSettings::IniFormat);
+    QSettings settings (filenameAndPath, QSettings::IniFormat);
 
     settings.setValue("common/auto", m_isAuto ? 1 : 0);
     settings.setValue("common/celcius", m_isCelcius ? 1 : 0);
