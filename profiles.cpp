@@ -114,7 +114,7 @@ bool FanControllerProfile::load(const QString& filenameAndPath)
         }
         else r = false;
 
-        value = settings.value("speed",
+        value = settings.value("rpm",
                                m_channelSettings[i].speed).toInt(&ok);
         if (ok) {
             m_channelSettings[i].speed = value;
