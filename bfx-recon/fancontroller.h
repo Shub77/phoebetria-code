@@ -22,6 +22,7 @@
 #include <QQueue>
 #include "device-io.h"
 #include "fancontrollerdata.h"
+#include "profiles.h"
 
 typedef enum fcReponseCodeCategory {
     fcResp_TempAndSpeed,
@@ -100,13 +101,11 @@ public:
 
     bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
     bool setChannelSettings(int channel, unsigned thresholdF, unsigned speed);
-
+    bool setFromProfile(const FanControllerProfile& profile);
 
     static const fcCommandDef* getResponseDef(unsigned char cmd);
     static const fcCommandDef* getCommandDef(fcCommandCategory category,
                                              int channel);
-
-    bool waitingForAck(void) const { return m_blockRequestsTimeout > 0; }
 
     int minProbeTemp(bool inCelcius) const
         { return inCelcius ? FanControllerData::toCelcius(0) : 0; }

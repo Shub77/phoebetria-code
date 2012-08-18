@@ -611,3 +611,14 @@ bool FanController::setChannelSettings(int channel,
 
     return true;
 }
+
+bool FanController::setFromProfile(const FanControllerProfile& profile)
+{
+    setDeviceFlags(profile.isCelcius(), profile.isAuto(), profile.isAudibleAlarm());
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        BasicChannelData chd = profile.getChannelSettings(i);
+        int speed = chd.speed == -1 ? 65535 : chd.speed;
+        setChannelSettings(i, chd.alarmTemp, speed);
+    }
+}

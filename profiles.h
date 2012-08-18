@@ -48,7 +48,7 @@ public:
     bool isAuto(void) const { return m_isAuto; }
     bool isAudibleAlarm(void) const { return m_isAudibleAlarm; }
 
-    const BasicChannelData& getChannelSettings(int channel)
+    const BasicChannelData& getChannelSettings(int channel) const
         { return m_channelSettings[channel]; }
 
 protected:

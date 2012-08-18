@@ -642,6 +642,8 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
 
     if (fcp.load(filename)) {
         qDebug() << "profile loaded";
+        FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+        fc->setFromProfile(fcp);
     }
 
 }
