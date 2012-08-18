@@ -49,6 +49,11 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     m_isAutoToggleByDevice = false;
     m_isAudibleAlarmByDevice = false;
 
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    if (fc->isInterfaceConnected() == false) {
+        ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
+    }
+
     initCtrlArrays();
     connectCustomSignals();
 
