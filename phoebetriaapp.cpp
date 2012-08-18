@@ -22,7 +22,7 @@ FanController PhoebetriaApp::m_fanController;
 PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-    m_fanController_pollTimer.start(100);
+    m_fanController_pollTimer.start(200);
 
     m_fanController.connect();
 

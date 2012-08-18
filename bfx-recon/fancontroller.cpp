@@ -316,7 +316,7 @@ void FanController::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-    if (m_pollNumber % 26 == 0) {  // 100ms*26 = 2.6s
+    if (m_pollNumber % 26 == 0 || (m_pollNumber < 50 && !(m_pollNumber % 2))) {  // 100ms*26 = 2.6s
         requestDeviceFlags(); // C/F, Auto/Manual, Alarm Audible/NotAudible
     } else if (m_pollNumber % 2 == 0 || m_pollNumber < 20) {
         requestAlarmAndSpeed(m_channelCycle + 1);
@@ -582,6 +582,8 @@ bool FanController::setDeviceFlags(bool isCelcius,
     fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
     issueCommand(fcdata);
 
+    m_pollNumber  = 0;
+
     return true;
 }
 
@@ -609,6 +611,8 @@ bool FanController::setChannelSettings(int channel,
     fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
     issueCommand(fcdata);
 
+    m_pollNumber  = 0;
+
     return true;
 }
 
@@ -622,5 +626,6 @@ bool FanController::setFromProfile(const FanControllerProfile& profile)
         setChannelSettings(i, chd.alarmTemp, speed);
     }
 
+    m_pollNumber  = 0;
     return true;
 }

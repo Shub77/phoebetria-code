@@ -6,7 +6,7 @@
 #define PHOEBETRIA_VERSION  1
 #define PHOEBETRIA_MAJOR_REVISION   0
 #define PHOEBETRIA_MINOR_REVISION   0
-#define PHOEBETRIA_STATUS_STR       "Alpha"
+#define PHOEBETRIA_STATUS_STR       "Beta"
 
 class BuildDetails
 {
