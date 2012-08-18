@@ -27,6 +27,7 @@ typedef struct {
     int speed;
 } BasicChannelData;
 
+
 class FanControllerProfile
 {
 public:
@@ -44,6 +45,12 @@ public:
     bool load(const QString& filenameAndPath);
     void reset(void);
 
+    bool isCelcius(void) const { return m_isCelcius; }
+    bool isAuto(void) const { return m_isAuto; }
+    bool isAudibleAlarm(void) const { return m_isAudibleAlarm; }
+
+    const BasicChannelData& getChannelSettings(int channel)
+        { return m_channelSettings[channel]; }
 
 protected:
 
