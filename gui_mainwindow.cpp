@@ -631,6 +631,18 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
 
 void gui_MainWindow::on_ctrl_LoadPreset_clicked()
 {
+    FanControllerProfile fcp;
+    QString profilesLocation = fcp.defualtProfileLocation();
+
+    QString filename = QFileDialog::getOpenFileName(this, tr("Save profile"),
+                                profilesLocation,
+                                tr("Profiles (*.ini)"));
+
+    if (filename.isEmpty()) return;
+
+    if (fcp.load(filename)) {
+        qDebug() << "profile loaded";
+    }
 
 }
 
