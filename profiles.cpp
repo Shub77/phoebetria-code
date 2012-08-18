@@ -88,8 +88,11 @@ bool FanControllerProfile::load(const QString& filenameAndPath)
 {
     bool r = true;
 
-    // TODO: Check if the profile even exists before trying to use
-    //       QSettings
+    QFile file;
+    file.setFileName(filenameAndPath);
+    if (!file.exists()) {
+        return false;
+    }
 
     QSettings settings (filenameAndPath, QSettings::IniFormat);
 
