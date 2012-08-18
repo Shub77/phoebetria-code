@@ -644,8 +644,30 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 void gui_MainWindow::onDebugMenu_profiles()
 {
     FanControllerProfile fcp;
+    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
 
     qDebug() << fcp.defualtProfileLocation();
+
+    bool sb1 = this->blockSignals(true);
+    bool sb2 = fc->blockSignals(true);
+
+    fcp.setFromCurrentData(m_fcd);
+
+    this->blockSignals(sb1);
+    this->blockSignals(sb2);
+
+
+    qDebug() << "Is Celcius:" << fcp.isCelcius();
+    qDebug() << "Auto:" << fcp.isAuto();
+    qDebug() << "Audible Alarm:" << fcp.isAudibleAlarm();
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        const BasicChannelData& ch_settings = fcp.getChannelSettings(i);
+        qDebug() << "Channel" << QString::number(i)
+                 << "\n--- Alarm temp:" << QString::number(ch_settings.alarmTemp)
+                 << "\n--- Fan speed:" << QString::number(ch_settings.speed);
+
+    }
 }
 
 #endif
