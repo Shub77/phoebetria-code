@@ -1352,7 +1352,7 @@ QSlider::handle:horizontal:disabled {
      <attribute name="title">
       <string>Profiles</string>
      </attribute>
-     <widget class="QPushButton" name="ctrl_LoadPreset_2">
+     <widget class="QPushButton" name="ctrl_LoadPreset">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1374,7 +1374,7 @@ QSlider::handle:horizontal:disabled {
        <string notr="true"/>
       </property>
       <property name="text">
-       <string>Play</string>
+       <string>Load</string>
       </property>
       <property name="icon">
        <iconset resource="gui_resources.qrc">
