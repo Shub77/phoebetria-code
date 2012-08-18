@@ -43,7 +43,6 @@ public:
 
     bool save(const QString& filenameAndPath);
     bool load(const QString& filenameAndPath);
-    void reset(void);
 
     bool isCelcius(void) const { return m_isCelcius; }
     bool isAuto(void) const { return m_isAuto; }

@@ -34,6 +34,10 @@ void FanControllerProfile::initCommon(void)
 
     m_defaultProfileLocation = QFileInfo(settings.fileName()).path()
                                     + "/Presets/";
+
+    m_isCelcius = false;
+    m_isAuto = true;
+    m_isAudibleAlarm = true;
 }
 
 
@@ -77,4 +81,45 @@ bool FanControllerProfile::save(const QString& filenameAndPath)
     settings.sync();
     qDebug() << settings.status();
     return settings.status() == QSettings::NoError;
+}
+
+
+bool FanControllerProfile::load(const QString& filenameAndPath)
+{
+    bool r = true;
+
+    // TODO: Check if the profile even exists before trying to use
+    //       QSettings
+
+    QSettings settings (filenameAndPath, QSettings::IniFormat);
+
+    m_isAuto = settings.value("common/auto", m_isAuto).toBool();
+    m_isCelcius = settings.value("common/celcius", m_isCelcius).toBool();
+    m_isAudibleAlarm = settings.value("common/alarm", m_isAudibleAlarm).toBool();
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        QString group = "fan_" + QString::number(i);
+        settings.beginGroup(group);
+
+        int value;
+        bool ok;
+
+        value = settings.value("alarm_temperature_F",
+                               m_channelSettings[i].alarmTemp).toInt(&ok);
+        if (ok) {
+            m_channelSettings[i].alarmTemp = value;
+        }
+        else r = false;
+
+        value = settings.value("speed",
+                               m_channelSettings[i].speed).toInt(&ok);
+        if (ok) {
+            m_channelSettings[i].speed = value;
+        }
+        else r = false;
+
+        settings.endGroup();
+    }
+
+    return r && (settings.status() == QSettings::NoError);
 }
