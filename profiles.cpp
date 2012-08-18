@@ -71,9 +71,11 @@ bool FanControllerProfile::save(int profileNumber)
 
 bool FanControllerProfile::save(const QString& filename)
 {
-    QString fileAndPath = m_defaultProfileLocation + filename + ".ini";
+    QString fileAndPath = m_defaultProfileLocation
+            + "/Presets/" + filename + ".ini";
 
     QSettings settings (fileAndPath, QSettings::IniFormat);
+
     settings.setValue("common/auto", m_isAuto ? 1 : 0);
     settings.setValue("common/celcius", m_isCelcius ? 1 : 0);
     settings.setValue("common/alarm", m_isAudibleAlarm ? 1 : 0);
