@@ -9,6 +9,46 @@ QT       += core gui
 TARGET = Phoebetria
 TEMPLATE = app
 
+PREFIX = /usr
+BINDIR = $$PREFIX/bin
+DATADIR = $$PREFIX/share
+ICONDIR = $$DATADIR/icons/hicolor
+
+INSTALLS += target desktop udev icon16 icon22 icon32 icon48 icon64 icon128 icon256 pixmap
+
+target.path = $${BINDIR}
+
+desktop.path = $${DATADIR}/applications
+desktop.files += $${TARGET}.desktop
+
+udev.path = /etc/udev/rules.d
+udev.files += 99-fancontroller.rules
+
+icon16.path = $${ICONDIR}/16x16/apps
+icon16.files += Images/icons/16x16/phoebetria.png
+
+icon22.path = $${ICONDIR}/22x22/apps
+icon22.files += Images/icons/22x22/phoebetria.png
+
+icon32.path = $${ICONDIR}/32x32/apps
+icon32.files += Images/icons/32x32/phoebetria.png
+
+icon48.path = $${ICONDIR}/48x48/apps
+icon48.files += Images/icons/48x48/phoebetria.png
+
+icon64.path = $${ICONDIR}/64x64/apps
+icon64.files += Images/icons/64x64/phoebetria.png
+
+icon128.path = $${ICONDIR}/128x128/apps
+icon128.files += Images/icons/128x128/phoebetria.png
+
+icon256.path = $${ICONDIR}/256x256/apps
+icon256.files += Images/icons/256x256/phoebetria.png
+
+pixmap.path = $${DATADIR}/pixmaps
+pixmap.files += Images/icons/48x48/phoebetria.png
+
+
 SOURCES += main.cpp\
         gui_mainwindow.cpp \
     phoebetriaapp.cpp \
