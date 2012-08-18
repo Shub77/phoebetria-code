@@ -1352,23 +1352,7 @@ QSlider::handle:horizontal:disabled {
      <attribute name="title">
       <string>Profiles</string>
      </attribute>
-     <widget class="QLineEdit" name="ctrl_presetName">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>221</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Preset 1</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="ctrl_SavePreset">
+     <widget class="QPushButton" name="ctrl_LoadPreset_2">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1397,7 +1381,7 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="ctrl_LoadPreset">
+     <widget class="QPushButton" name="ctrl_SavePreset">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -1421,6 +1405,16 @@ QSlider::handle:horizontal:disabled {
       <property name="icon">
        <iconset resource="gui_resources.qrc">
         <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="ctrl_presetName">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>221</width>
+        <height>20</height>
+       </rect>
       </property>
      </widget>
     </widget>
