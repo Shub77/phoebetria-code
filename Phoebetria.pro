@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     profiles.cpp \
     fanchanneldata.cpp \
     fancontrollerdata.cpp \
-    gui_about.cpp
+    gui_about.cpp \
+    builddetails.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -28,7 +29,8 @@ HEADERS  += gui_mainwindow.h \
     profiles.h \
     fanchanneldata.h \
     fancontrollerdata.h \
-    gui_about.h
+    gui_about.h \
+    builddetails.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui
