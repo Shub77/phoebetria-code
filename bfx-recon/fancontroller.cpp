@@ -621,4 +621,6 @@ bool FanController::setFromProfile(const FanControllerProfile& profile)
         int speed = chd.speed == -1 ? 65535 : chd.speed;
         setChannelSettings(i, chd.alarmTemp, speed);
     }
+
+    return true;
 }

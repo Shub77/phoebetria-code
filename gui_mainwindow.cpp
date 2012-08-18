@@ -643,9 +643,19 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
     if (fcp.load(filename)) {
         qDebug() << "profile loaded";
         FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
-        fc->setFromProfile(fcp);
+        if (fc->setFromProfile(fcp)) {
+            for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+                BasicChannelData bcd = fcp.getChannelSettings(i);
+                m_fcd.setManualRPM(i, bcd.speed);
+            }
+        }
+        m_fcd.setIsAuto(fcp.isAuto());
+        m_fcd.setIsCelcius(fcp.isCelcius());
+        m_fcd.setIsAudibleAlarm(fcp.isAudibleAlarm());
+        updateSpeedControlTooltips();
+        updateAllSpeedCtrls();
+        updateAllAlarmCtrls(m_fcd.isCelcius());
     }
-
 }
 
 
