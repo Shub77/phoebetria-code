@@ -1012,7 +1012,7 @@ margin:-2px;</string>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1357,14 +1357,14 @@ QSlider::handle:horizontal:disabled {
        <rect>
         <x>10</x>
         <y>40</y>
-        <width>22</width>
-        <height>22</height>
+        <width>65</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="maximumSize">
        <size>
-        <width>25</width>
-        <height>25</height>
+        <width>65</width>
+        <height>21</height>
        </size>
       </property>
       <property name="toolTip">
@@ -1374,33 +1374,33 @@ QSlider::handle:horizontal:disabled {
        <string notr="true"/>
       </property>
       <property name="text">
-       <string/>
+       <string>Play</string>
       </property>
       <property name="icon">
        <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
+        <normaloff>:/Images/profile_play.png</normaloff>:/Images/profile_play.png</iconset>
       </property>
      </widget>
      <widget class="QPushButton" name="ctrl_SavePreset">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>80</x>
         <y>40</y>
-        <width>22</width>
-        <height>22</height>
+        <width>65</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="maximumSize">
        <size>
-        <width>16777200</width>
-        <height>16777215</height>
+        <width>65</width>
+        <height>21</height>
        </size>
       </property>
       <property name="toolTip">
        <string>Save Preset</string>
       </property>
       <property name="text">
-       <string/>
+       <string>Save</string>
       </property>
       <property name="icon">
        <iconset resource="gui_resources.qrc">
@@ -1426,7 +1426,7 @@ QSlider::handle:horizontal:disabled {
      <x>0</x>
      <y>0</y>
      <width>422</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">

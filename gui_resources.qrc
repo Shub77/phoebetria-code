@@ -9,10 +9,6 @@
         <file>Images/slider_temp_bg.png</file>
         <file>Images/slider_temp_cel.png</file>
         <file>Images/slider_temp_fah.png</file>
-        <file>Images/profile_load.png</file>
-        <file>Images/profile_reset.png</file>
-        <file>Images/profile_save.png</file>
-        <file>Images/profile_set.png</file>
         <file>Images/channel_1.png</file>
         <file>Images/channel_2.png</file>
         <file>Images/channel_3.png</file>
@@ -26,5 +22,7 @@
         <file>Images/phoebetria_icon_128.png</file>
         <file>Images/phoebetria_icon_256.png</file>
         <file>Images/phoebetria_icon_error.png</file>
+        <file>Images/profile_play.png</file>
+        <file>Images/profile_save.png</file>
     </qresource>
 </RCC>
