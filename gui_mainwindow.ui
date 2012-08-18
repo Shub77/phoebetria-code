@@ -959,7 +959,7 @@ margin:-2px;</string>
      </property>
     </widget>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="QGraphicsView" name="ctrl_logoAndStatus">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1685,7 +1685,7 @@ QSlider::handle:horizontal:disabled {
      <x>0</x>
      <y>0</y>
      <width>422</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
