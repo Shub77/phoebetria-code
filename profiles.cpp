@@ -32,7 +32,8 @@ void FanControllerProfile::initCommon(void)
                        "Phoebetria");
 
     m_defaultProfileLocation = QFileInfo(settings.fileName()).path()
-                                    + QDir::separator();
+                                    + "/";
+                                    //+ QDir::separator();
 }
 
 
