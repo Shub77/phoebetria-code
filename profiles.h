@@ -41,7 +41,8 @@ public:
 
     void setFromCurrentData(const FanControllerData& data);
 
-    bool save(const QString& filenameAndPath);
+    bool save(int profileNumber);
+    bool save(const QString& filename);
     bool load(const QString& filenameAndPath);
     void reset(void);
 

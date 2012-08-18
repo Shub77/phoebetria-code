@@ -666,8 +666,8 @@ void gui_MainWindow::onDebugMenu_profiles()
         qDebug() << "Channel" << QString::number(i)
                  << "\n--- Alarm temp:" << QString::number(ch_settings.alarmTemp)
                  << "\n--- Fan speed:" << QString::number(ch_settings.speed);
-
     }
+    fcp.save(1);
 }
 
 #endif

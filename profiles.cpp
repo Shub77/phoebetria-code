@@ -14,6 +14,7 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QDebug>
 #include <QFileInfo>
 #include <QDir>
 #include "profiles.h"
@@ -56,4 +57,35 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
         m_channelSettings[i].speed =  m_isAuto ? -1 :
                  (data.manualRPM(i) ==  -1 ? data.lastRPM(i) : data.manualRPM(i));
     }
+}
+
+
+bool FanControllerProfile::save(int profileNumber)
+{
+    QString filename;
+
+    filename = "P" + QString::number(profileNumber);
+    return save (filename);
+}
+
+
+bool FanControllerProfile::save(const QString& filename)
+{
+    QString fileAndPath = m_defaultProfileLocation + filename + ".ini";
+
+    QSettings settings (fileAndPath, QSettings::IniFormat);
+    settings.setValue("common/auto", m_isAuto ? 1 : 0);
+    settings.setValue("common/celcius", m_isCelcius ? 1 : 0);
+    settings.setValue("common/alarm", m_isAudibleAlarm ? 1 : 0);
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        QString group = "fan_" + QString::number(i);
+        settings.beginGroup(group);
+        settings.setValue("alarm_temperature_F",
+                          QString::number(m_channelSettings[i].alarmTemp));
+        settings.setValue("rpm", m_channelSettings[i].speed);
+        settings.endGroup();
+    }
+    settings.sync();
+    qDebug() << settings.status();
+    return settings.status() == QSettings::NoError;
 }
