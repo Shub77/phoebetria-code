@@ -78,6 +78,10 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_ctrl_SavePreset_clicked();
+
+    void on_ctrl_LoadPreset_clicked();
+
 private:
     void initCtrlArrays(void);
     void connectCustomSignals(void);
