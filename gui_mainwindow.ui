@@ -1352,12 +1352,15 @@ QSlider::handle:horizontal:disabled {
      <attribute name="title">
       <string>Profiles</string>
      </attribute>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="ctrl_presetName">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>101</width>
+        <width>221</width>
         <height>22</height>
        </rect>
       </property>
@@ -1365,37 +1368,11 @@ QSlider::handle:horizontal:disabled {
        <string>Preset 1</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QPushButton" name="ctrl_SavePreset">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>40</y>
-        <width>101</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Preset 2</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>70</y>
-        <width>101</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Preset 3</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset1Play">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>10</y>
         <width>22</width>
         <height>22</height>
        </rect>
@@ -1420,241 +1397,11 @@ QSlider::handle:horizontal:disabled {
         <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
       </property>
      </widget>
-     <widget class="QPushButton" name="btn_Preset1Set">
+     <widget class="QPushButton" name="ctrl_LoadPreset">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>10</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>Set Preset</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_set.png</normaloff>:/Images/profile_set.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset1Reset">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>10</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>Reset Preset</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_reset.png</normaloff>:/Images/profile_reset.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset1Save">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>10</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777200</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Save Preset</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset2Set">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
+        <x>40</x>
         <y>40</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>Set Preset</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_set.png</normaloff>:/Images/profile_set.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset2Play">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>40</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>25</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Load Preset</string>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset2Reset">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>40</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>Reset Preset</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_reset.png</normaloff>:/Images/profile_reset.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset2Save">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>40</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777200</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Save Preset</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset3Set">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>70</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>Set Preset</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_set.png</normaloff>:/Images/profile_set.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset3Play">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>70</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>25</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Load Preset</string>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_load.png</normaloff>:/Images/profile_load.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset3Reset">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>70</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>Reset Preset</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="gui_resources.qrc">
-        <normaloff>:/Images/profile_reset.png</normaloff>:/Images/profile_reset.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_Preset3Save">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>70</y>
         <width>22</width>
         <height>22</height>
        </rect>
