@@ -227,6 +227,26 @@ void gui_MainWindow::updateAllSpeedCtrls(void)
     }
 }
 
+void gui_MainWindow::syncDeviceSettingsCtrls(void)
+{
+    bool bs;
+
+    bs = ui->ctrl_tempScaleToggle->blockSignals(true);
+    ui->ctrl_tempScaleToggle->setValue(m_fcd.isCelcius() ? 1 : 0);
+    ui->ctrl_tempScaleToggle->blockSignals(bs);
+
+    bs = ui->ctrl_isManual->blockSignals(true);
+    ui->ctrl_isManual->setValue(m_fcd.isAuto()? 0 : 1);
+    ui->ctrl_isManual->blockSignals(bs);
+
+    bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
+    ui->ctrl_isAudibleAlarm->setValue(m_fcd.isAudibleAlarm() ? 1 : 0);
+    bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
+
+
+}
+
+
 void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
@@ -297,7 +317,7 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
     if (m_fcd.isCelcius() != isCelcius) {
         m_fcd.setIsCelcius(isCelcius);
         m_isCelciusToggleByDevice = true;
-        ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
+        //ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
 
         updateAllAlarmCtrls(m_fcd.isCelcius());
     }
@@ -305,16 +325,19 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
     if (m_fcd.isAuto()!= isAuto) {
         m_fcd.setIsAuto(isAuto);
         m_isAutoToggleByDevice = true;
-        ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
+        //ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
         enableDisableSpeedControls();
     }
 
     if (m_fcd.isAudibleAlarm() != isAudibleAlarm) {
         m_fcd.setIsAudibleAlarm(isAudibleAlarm);
         m_isAudibleAlarmByDevice = true;
-        ui->ctrl_isAudibleAlarm->setValue(isAudibleAlarm ? 1 : 0);
+        //ui->ctrl_isAudibleAlarm->setValue(isAudibleAlarm ? 1 : 0);
     }
+
+    syncDeviceSettingsCtrls();
 }
+
 
 void gui_MainWindow::onMaxRPM(int channel, int RPM)
 {
@@ -657,6 +680,8 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
         m_fcd.setIsAuto(fcp.isAuto());
         m_fcd.setIsCelcius(fcp.isCelcius());
         m_fcd.setIsAudibleAlarm(fcp.isAudibleAlarm());
+
+        syncDeviceSettingsCtrls();
         updateSpeedControlTooltips();
         updateAllSpeedCtrls();
         updateAllAlarmCtrls(m_fcd.isCelcius());

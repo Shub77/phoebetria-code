@@ -579,7 +579,7 @@ bool FanController::setDeviceFlags(bool isCelcius,
 
     fcdata.data[0] = bits;
 
-    fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
+    //fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
     issueCommand(fcdata);
 
     m_pollNumber  = 0;
@@ -608,7 +608,7 @@ bool FanController::setChannelSettings(int channel,
     fcdata.data[1] = speed % 256;
     fcdata.data[2] = speed / 256;
 
-    fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
+    //fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
     issueCommand(fcdata);
 
     m_pollNumber  = 0;

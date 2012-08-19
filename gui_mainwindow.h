@@ -93,6 +93,8 @@ private:
 
     void updateSpeedControl(int channel, int RPM);
     void updateAllSpeedCtrls(void);
+    void syncDeviceSettingsCtrls(void);
+
     void updateCurrentTempControl(int channel, int temp);
     void updateAllCurrentTempControls(void);
     void updateAlarmTempControl(int channel, int temp, bool isCelcius);
