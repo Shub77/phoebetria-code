@@ -730,10 +730,12 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
         speed = ceil(channelMaxRPM * 0.4);
     }
 
+#if 0
     // Speeds must be in multiples of 100 RPM
 
     double _speed = ((int)(speed / 100.0))*100;
     speed = _speed;
+#endif
 
     qDebug() << "reported max speed for channel"
                 << channel+1
