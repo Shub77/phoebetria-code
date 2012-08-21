@@ -108,9 +108,9 @@ public:
                                              int channel);
 
     int minProbeTemp(bool inCelcius) const
-        { return inCelcius ? FanControllerData::toCelcius(0) : 0; }
+        { return inCelcius ? -18 : 0; }     /* C : F */
     int maxProbeTemp(bool inCelcius) const
-        { return inCelcius ? FanControllerData::toCelcius(255) : 255; }
+        { return inCelcius ? 124 : 255; }   /* C : F */
 
 signals:
     void deviceConnected(void);
