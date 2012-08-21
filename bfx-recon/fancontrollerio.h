@@ -28,7 +28,11 @@ public:
     static const int VendorId;
     static const int ProductId;
 
+    //---------------------------------------------------------------------
+
     enum ControlByte {
+
+        RX_NULL                         = 0x00,
 
         TX_CurrentChannel               = 0x10,
 
@@ -43,7 +47,6 @@ public:
         RX_TempAndSpeed_Channel2        = 0x42,
         RX_TempAndSpeed_Channel3        = 0x43,
         RX_TempAndSpeed_Channel4        = 0x44,
-
 
         TX_DeviceSettings               = 0x50,
         RX_DeviceSettings               = 0x60,
@@ -67,6 +70,7 @@ public:
 
     };
 
+    //---------------------------------------------------------------------
 
     enum DeviceSettingsFlag {
         Auto                            = 1U << 0,
@@ -74,31 +78,58 @@ public:
         AudibleAlarm                    = 1U << 2
     };
 
-    /* USB Request Block
-     *
-     * Structure for the BitFenix Recon (BfxRecon):
-     *
-     *  Byte#
-     *    0     USB Report ID (0x00 for the recon)
-     *    1     Control Byte (see FanControllerIO::ControlByte)
-     *    2     Data Length (len). The number of bytes of data (0 <= len <= 4)
-     *    3-8   Data + checksum. The checksum at the byte after 3 + len.
-     *          The bytes after the checksum (if any) are zero padding.
+
+    //---------------------------------------------------------------------
+
+
+    static unsigned char calcChecksum(
+            ControlByte ctrlByte,
+            int blockLen,
+            const unsigned char* block
+        );
+
+
+    /* Parsed Input from the device
      */
-    class URB {
-        unsigned char m_data[8];
+    class Input {
+
+    public:
+
+    protected:
+
+        // Set from raw data
+        bool set(int blockLen, unsigned char* block);
+
+        unsigned char calcChecksum(void) const
+            { return FanControllerIO::calcChecksum(RX_NULL, m_dataLen, m_data); }
+
+    private:
+        ControlByte m_controlByte;
+        unsigned char m_checksum;
+        int m_dataLen;              // This may be < sizeof(m_data)
+        unsigned char m_data[5];
     };
 
 
-    /* This is the URB without the USB Report ID, BfxRecon control byte,
-     * the data length byte (preceding the data in the actual URB),
-     * and the trailing checksum.
-     */
-    class URB_Fragment {
-        ControlByte controlByte;
-        unsigned char data[4];
+    //---------------------------------------------------------------------
+
+    class Request {
+
+    protected:
+        bool toURB(int blockLen, unsigned char* block, bool pad);
+
+        unsigned char calcChecksum(void) const
+            { return FanControllerIO::calcChecksum(m_controlByte, m_dataLen, m_data); }
+
+    private:
+        ControlByte m_controlByte;
+        int m_dataLen;              // This may be < sizeof(m_data)
+        unsigned char m_data[4];    // Can only _send_ 4 data bytes
+                                    // (incoming may have 5)
     };
 
+
+    //---------------------------------------------------------------------
 
     /* Constructors
      */

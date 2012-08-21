@@ -16,6 +16,44 @@
 
 #include "fancontrollerio.h"
 
+
+//---------------------------------------------------------------------
+
+/* HID Report as recieved *from* the device
+ *
+ * Structure for the BitFenix Recon (BfxRecon):
+ *
+ *  Byte#
+ *    0     Control Byte (see FanControllerIO::ControlByte)
+ *    1     Data Length (len). The number of bytes of data (0 <= len <= 5)
+ *    2-7   Data + checksum. The checksum at the byte after 3 + len.
+ *          The bytes after the checksum (if any) are zero padding.
+ */
+//---------------------------------------------------------------------
+
+
+unsigned char FanControllerIO::calcChecksum(
+        ControlByte ctrlByte,
+        int blockLen,
+        const unsigned char *block
+    )
+{
+
+    unsigned checksum;
+
+    checksum = blockLen;
+    checksum += ctrlByte;
+
+    for (int i = 0; i < blockLen; ++i) {
+        checksum += *(block + i);
+    }
+    checksum ^= 0xff;
+    checksum = (checksum + 1) & 0xff;
+
+    return checksum;
+}
+
+
 FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent)
 {
