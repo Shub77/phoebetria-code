@@ -20,8 +20,8 @@
 
 //---------------------------------------------------------------------
 
-static const int HID_ProductId =  3141;
-static const int HID_VendorId =   28928;
+static const unsigned short int HID_ProductId =   28928;
+static const unsigned short HID_VendorId =  3141;
 
 //---------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
     m_controlByte = (ControlByte)*(block+1);
 
     for (int i = 2; i < m_dataLen; i++) {
-        *(m_data + i) = *(block + i);
+        *(m_data + i - 2) = *(block + i);
     }
 
     m_checksum = *(block + m_dataLen);
@@ -120,7 +120,7 @@ void FanControllerIO::connectSignals(void)
 
 bool FanControllerIO::connect(void)
 {
-    bool r = m_io_device.connect(3141, 28928);//HID_VendorId, HID_ProductId);
+    bool r = m_io_device.connect(HID_VendorId, HID_ProductId);
 
     if (r) emit deviceConnected();
 
