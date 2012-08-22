@@ -110,10 +110,8 @@ public:
 
     public:
 
-    protected:
-
         // Set from raw data
-        bool set(int blockLen, unsigned char* block);
+        bool set(int blockLen, const unsigned char* block);
 
         unsigned char calcChecksum(void) const
             { return FanControllerIO::calcChecksum(RX_NULL, m_dataLen, m_data); }
@@ -130,8 +128,8 @@ public:
 
     class Request {
 
-    protected:
-        bool toURB(int blockLen, unsigned char* block, bool pad);
+    public:
+        bool toURB(int blockLen, const unsigned char* block, bool pad);
 
         unsigned char calcChecksum(void) const
             { return FanControllerIO::calcChecksum(m_controlByte, m_dataLen, m_data); }
@@ -146,16 +144,20 @@ public:
 
     //---------------------------------------------------------------------
 
-
+public:
     /* Constructors
      */
     explicit FanControllerIO(QObject *parent = 0);
 
-public:
+    void connectSignals(void);
 
     bool connect(void);
     bool isConnected(void) const;
     void disconnect(void);
+
+public slots:
+    void onPollTimerTriggered(void);
+    void onRawData(QByteArray rawdata);
 
 private:
 
@@ -172,9 +174,6 @@ signals:
     void currentRpmOnAlarm(int channel, int RPM);
     void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
 
-public slots:
-    void onPollTimerTriggered(void);
-    void onRawData(QByteArray rawdata);
 };
 
 

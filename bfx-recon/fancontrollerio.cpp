@@ -14,21 +14,13 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QDebug>
 #include "fancontrollerio.h"
 
 
 //---------------------------------------------------------------------
 
-/* HID Report as recieved *from* the device
- *
- * Structure for the BitFenix Recon (BfxRecon):
- *
- *  Byte#
- *    0     Control Byte (see FanControllerIO::ControlByte)
- *    1     Data Length (len). The number of bytes of data (0 <= len <= 5)
- *    2-7   Data + checksum. The checksum at the byte after 3 + len.
- *          The bytes after the checksum (if any) are zero padding.
- */
+
 //---------------------------------------------------------------------
 
 
@@ -53,8 +45,67 @@ unsigned char FanControllerIO::calcChecksum(
     return checksum;
 }
 
+//---------------------------------------------------------------------
+
+bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
+{
+    /* HID Report as recieved *from* the device
+     *
+     * Structure for the BitFenix Recon (BfxRecon):
+     *
+     *  Byte#
+     *    0     Data Length (len). The number of bytes of data (0 <= len <= 5)
+     *    1     Control Byte (see FanControllerIO::ControlByte)
+     *    2-7   Data + checksum. The checksum at the byte after 3 + len.
+     *          The bytes after the checksum (if any) are zero padding.
+     */
+
+    if (blockLen < 2) {
+        qDebug ("FanController::parseRawData() not enough data");
+        return false;
+    }
+
+    m_dataLen = *block;
+    m_controlByte = (ControlByte)*(block+1);
+
+    for (int i = 2; i < m_dataLen; i++) {
+        *(m_data + i) = *(block + 2 + i);
+    }
+
+    m_checksum = *(block + 2 + m_dataLen);
+    if (m_checksum != calcChecksum()) {
+
+#ifdef QT_DEBUG
+        qDebug() << "File:" << QString(__FILE__)
+                 << "Line:" << QString(__LINE__)
+                 << "++++ Checksum mismatch";
+#endif
+
+        return false; // Checksum failure
+    }
+
+    return true;
+}
+
+
+//---------------------------------------------------------------------
 
 FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent)
 {
+
+}
+
+void FanControllerIO::connectSignals(void)
+{
+    QObject::connect(&m_io_device, SIGNAL(dataRX(QByteArray)),
+                     this, SLOT(onRawData(QByteArray)));
+}
+
+
+void FanControllerIO::onRawData(QByteArray rawdata)
+{
+    Input parsedData;
+
+    parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
 }
