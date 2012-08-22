@@ -20,8 +20,8 @@
 
 //---------------------------------------------------------------------
 
-const int FanControllerIO::HID_ProductId =  3141;
-const int FanControllerIO::HID_VendorId =   28928;
+static const int HID_ProductId =  3141;
+static const int HID_VendorId =   28928;
 
 //---------------------------------------------------------------------
 
@@ -95,7 +95,7 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent)
 {
-
+    connectSignals();
 }
 
 void FanControllerIO::connectSignals(void)
@@ -106,7 +106,7 @@ void FanControllerIO::connectSignals(void)
 
 bool FanControllerIO::connect(void)
 {
-    bool r = m_io_device.connect(HID_VendorId, HID_ProductId);
+    bool r = m_io_device.connect(3141, 28928);//HID_VendorId, HID_ProductId);
 
     if (r) emit deviceConnected();
 

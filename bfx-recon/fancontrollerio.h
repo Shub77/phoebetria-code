@@ -26,9 +26,6 @@ class FanControllerIO : public QObject
     Q_OBJECT
 public:
 
-    static const int HID_VendorId;
-    static const int HID_ProductId;
-
     //---------------------------------------------------------------------
 
     enum ControlByte {
