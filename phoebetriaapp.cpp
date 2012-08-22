@@ -17,7 +17,7 @@
 #include "phoebetriaapp.h"
 
 QTimer PhoebetriaApp::m_fanController_pollTimer;
-FanControllerIO PhoebetriaApp::m_fanControllerNew;
+FanControllerIO PhoebetriaApp::m_fanControllerIO;
 
 PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     : QApplication(argc, argv)

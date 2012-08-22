@@ -35,7 +35,7 @@ unsigned char FanControllerIO::calcChecksum(
 
     unsigned checksum;
 
-    checksum = blockLen;
+    checksum = blockLen + 1;
     checksum += ctrlByte;
 
     for (int i = 0; i < blockLen; ++i) {
@@ -43,6 +43,7 @@ unsigned char FanControllerIO::calcChecksum(
     }
     checksum ^= 0xff;
     checksum = (checksum + 1) & 0xff;
+    //checksum &= 0xff;
 
     return checksum;
 }
@@ -71,16 +72,29 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
     m_controlByte = (ControlByte)*(block+1);
 
     for (int i = 2; i < m_dataLen; i++) {
-        *(m_data + i) = *(block + 2 + i);
+        *(m_data + i) = *(block + i);
     }
 
-    m_checksum = *(block + 2 + m_dataLen);
-    if (m_checksum != calcChecksum()) {
+    m_checksum = *(block + m_dataLen);
+
+    unsigned calculatedChecksum = FanControllerIO::calcChecksum(
+                RX_NULL,
+                m_dataLen-1,    // Skipping the first byte
+                block+1
+                );
+
+    // Actual data length does not include bytes 0 and 1 of the input
+    m_dataLen = m_dataLen - 2;
+
 
 #ifdef QT_DEBUG
+    if (m_checksum != calculatedChecksum) {
+
         qDebug() << "File:" << QString(__FILE__)
-                 << "Line:" << QString(__LINE__)
-                 << "++++ Checksum mismatch";
+                 << "Line:" << QString::number(__LINE__)
+                 << "++++ Checksum mismatch."
+                 << "Expected" << QString::number(m_checksum)
+                 << "Got" << QString::number(calculatedChecksum);
 #endif
 
         return false; // Checksum failure
@@ -131,6 +145,8 @@ void FanControllerIO::disconnect(void)
 void FanControllerIO::onPollTimerTriggered(void)
 {
 
+    // Check for pending data (from device) every time timer is triggered
+    m_io_device.pollForData();
 }
 
 
@@ -139,4 +155,83 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     Input parsedData;
 
     parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
+
 }
+
+
+bool FanControllerIO::setDeviceFlags(bool isCelcius,
+                                   bool isAuto,
+                                   bool isAudibleAlarm)
+{
+#if 0
+    FcData fcdata;
+    const fcCommandDef* cmdDef;
+
+    cmdDef = getCommandDef(fcSet_DeviceFlags, -1);
+
+    fcdata.command = cmdDef;
+
+    unsigned char bits;
+
+    bits = !isCelcius ? bitfenix_flag_celcius : 0;
+    bits |= !isAuto ? bitfenix_flag_auto : 0;
+    bits |= isAudibleAlarm ? bitfenix_flag_alarm : 0;
+
+    fcdata.data[0] = bits;
+
+    //fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
+    issueCommand(fcdata);
+
+    m_pollNumber  = 0;
+#endif
+    return true;
+}
+
+bool FanControllerIO::setChannelSettings(int channel,
+                                         unsigned thresholdF,
+                                         unsigned speed)
+{
+#if 0
+    FcData fcdata;
+    const fcCommandDef* cmdDef;
+
+    cmdDef = getCommandDef(fcSet_SetChannelSettings, channel);
+
+    if (!cmdDef) {
+        qDebug() << "FanController::setChannelSettings()"
+                 << ": Invalid command";
+        return false;
+    }
+
+    fcdata.command = cmdDef;
+
+    fcdata.data[0] = thresholdF;
+    fcdata.data[1] = speed % 256;
+    fcdata.data[2] = speed / 256;
+
+    //fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
+    issueCommand(fcdata);
+
+    m_pollNumber  = 0;
+#endif
+    return true;
+}
+
+bool FanControllerIO::setFromProfile(const FanControllerProfile& profile)
+{
+#if 0
+    setDeviceFlags(profile.isCelcius(), profile.isAuto(), profile.isAudibleAlarm());
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+        BasicChannelData chd = profile.getChannelSettings(i);
+        int speed = chd.speed == -1 ? 65535 : chd.speed;
+        setChannelSettings(i, chd.alarmTemp, speed);
+    }
+
+    m_pollNumber  = 0;
+
+#endif
+    return true;
+}
+
+

@@ -20,6 +20,7 @@
 #include <QObject>
 
 #include "device-io.h"
+#include "profiles.h"
 
 class FanControllerIO : public QObject
 {
@@ -110,9 +111,6 @@ public:
         // Set from raw data
         bool set(int blockLen, const unsigned char* block);
 
-        unsigned char calcChecksum(void) const
-            { return FanControllerIO::calcChecksum(RX_NULL, m_dataLen, m_data); }
-
     private:
         ControlByte m_controlByte;
         unsigned char m_checksum;
@@ -127,9 +125,6 @@ public:
 
     public:
         bool toURB(int blockLen, const unsigned char* block, bool pad);
-
-        unsigned char calcChecksum(void) const
-            { return FanControllerIO::calcChecksum(m_controlByte, m_dataLen, m_data); }
 
     private:
         ControlByte m_controlByte;
@@ -151,6 +146,15 @@ public:
     bool connect(void);
     bool isConnected(void) const;
     void disconnect(void);
+
+    bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+    bool setChannelSettings(int channel, unsigned thresholdF, unsigned speed);
+    bool setFromProfile(const FanControllerProfile& profile);
+
+    int minProbeTemp(bool inCelcius) const
+        { return inCelcius ? -18 : 0; }     /* C : F */
+    int maxProbeTemp(bool inCelcius) const
+        { return inCelcius ? 124 : 255; }   /* C : F */
 
 public slots:
     void onPollTimerTriggered(void);

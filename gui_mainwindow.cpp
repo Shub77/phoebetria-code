@@ -47,7 +47,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     m_isAudibleAlarmByDevice = false;
 
     FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
-    if (fc->isInterfaceConnected() == false) {
+    if (fc->isConnected() == false) {
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
     }
 
