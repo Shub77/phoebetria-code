@@ -29,12 +29,11 @@ public:
 
     QTimer& fanController_pollTimer(void) { return m_fanController_pollTimer; }
 
-    FanController& fanController(void) { return m_fanController; }
+    FanControllerIO& fanControllerIO(void) { return m_fanControllerIO; }
 
 private:
     static QTimer m_fanController_pollTimer;
-    static FanController m_fanController;
-    static FanControllerIO m_fanControllerNew;
+    static FanControllerIO m_fanControllerIO;
 };
 
 
