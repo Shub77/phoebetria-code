@@ -20,6 +20,8 @@
 
 //---------------------------------------------------------------------
 
+const int FanControllerIO::HID_ProductId =  3141;
+const int FanControllerIO::HID_VendorId =   28928;
 
 //---------------------------------------------------------------------
 
@@ -100,6 +102,35 @@ void FanControllerIO::connectSignals(void)
 {
     QObject::connect(&m_io_device, SIGNAL(dataRX(QByteArray)),
                      this, SLOT(onRawData(QByteArray)));
+}
+
+bool FanControllerIO::connect(void)
+{
+    bool r = m_io_device.connect(HID_VendorId, HID_ProductId);
+
+    if (r) emit deviceConnected();
+
+    return r;
+}
+
+
+bool FanControllerIO::isConnected(void) const
+{
+    return m_io_device.isConnected();
+}
+
+
+void FanControllerIO::disconnect(void)
+{
+    m_io_device.disconnect();
+
+    emit deviceDisconnected();
+}
+
+
+void FanControllerIO::onPollTimerTriggered(void)
+{
+
 }
 
 
