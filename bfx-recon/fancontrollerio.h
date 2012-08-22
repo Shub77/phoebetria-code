@@ -19,51 +19,52 @@
 
 #include <QObject>
 
+#include "device-io.h"
 
 class FanControllerIO : public QObject
 {
     Q_OBJECT
 public:
 
-    static const int VendorId;
-    static const int ProductId;
+    static const int HID_VendorId;
+    static const int HID_ProductId;
 
     //---------------------------------------------------------------------
 
     enum ControlByte {
 
-        RX_NULL                         = 0x00,
+        RX_NULL                         = 0x00, /**< Not used by device. Required for calcChecksum() */
 
-        TX_CurrentChannel               = 0x10,
+        TX_CurrentChannel               = 0x10, /**< Current selected channel (??) */
 
-        TX_TempAndSpeed_Channel0        = 0x30,
-        TX_TempAndSpeed_Channel1        = 0x31,
-        TX_TempAndSpeed_Channel2        = 0x32,
-        TX_TempAndSpeed_Channel3        = 0x33,
-        TX_TempAndSpeed_Channel4        = 0x34,
+        TX_TempAndSpeed_Channel0        = 0x30, /**< IN  Temp in F and current speed (RPM) */
+        TX_TempAndSpeed_Channel1        = 0x31, /**< IN   in F and current speed (RPM) */
+        TX_TempAndSpeed_Channel2        = 0x32, /**< IN   in F and current speed (RPM) */
+        TX_TempAndSpeed_Channel3        = 0x33, /**< IN   in F and current speed (RPM) */
+        TX_TempAndSpeed_Channel4        = 0x34, /**< IN   in F and current speed (RPM) */
 
-        RX_TempAndSpeed_Channel0        = 0x40,
-        RX_TempAndSpeed_Channel1        = 0x41,
-        RX_TempAndSpeed_Channel2        = 0x42,
-        RX_TempAndSpeed_Channel3        = 0x43,
-        RX_TempAndSpeed_Channel4        = 0x44,
+        RX_TempAndSpeed_Channel0        = 0x40, /**< OUT Temp in F and speed (RPM)*/
+        RX_TempAndSpeed_Channel1        = 0x41, /**< OUT Temp in F and speed (RPM)*/
+        RX_TempAndSpeed_Channel2        = 0x42, /**< OUT Temp in F and speed (RPM)*/
+        RX_TempAndSpeed_Channel3        = 0x43, /**< OUT Temp in F and speed (RPM)*/
+        RX_TempAndSpeed_Channel4        = 0x44, /**< OUT Temp in F and speed (RPM)*/
 
-        TX_DeviceSettings               = 0x50,
-        RX_DeviceSettings               = 0x60,
+        TX_DeviceSettings               = 0x50, /**< IN  Device settings. See DeviceSetttingsFlag */
+        RX_DeviceSettings               = 0x60, /**< OUT Device settings. See DeviceSetttingsFlag */
 
-        TX_AlarmAndSpeed_Channel0       = 0x70,
-        TX_AlarmAndSpeed_Channel1       = 0x71,
-        TX_AlarmAndSpeed_Channel2       = 0x72,
-        TX_AlarmAndSpeed_Channel3       = 0x73,
-        TX_AlarmAndSpeed_Channel4       = 0x74,
+        TX_AlarmAndSpeed_Channel0       = 0x70, /**< OUT Alarm Temperature and Max RPM*/
+        TX_AlarmAndSpeed_Channel1       = 0x71, /**< OUT Alarm Temperature and Max RPM*/
+        TX_AlarmAndSpeed_Channel2       = 0x72, /**< OUT Alarm Temperature and Max RPM*/
+        TX_AlarmAndSpeed_Channel3       = 0x73, /**< OUT Alarm Temperature and Max RPM*/
+        TX_AlarmAndSpeed_Channel4       = 0x74, /**< OUT Alarm Temperature and Max RPM*/
 
-        RX_AlarmAndSpeed_Channel0       = 0x80,
-        RX_AlarmAndSpeed_Channel1       = 0x81,
-        RX_AlarmAndSpeed_Channel2       = 0x82,
-        RX_AlarmAndSpeed_Channel3       = 0x83,
-        RX_AlarmAndSpeed_Channel4       = 0x84,
+        RX_AlarmAndSpeed_Channel0       = 0x80, /**< IN  Alarm Temperature and Max RPM*/
+        RX_AlarmAndSpeed_Channel1       = 0x81, /**< IN  Alarm Temperature and Max RPM*/
+        RX_AlarmAndSpeed_Channel2       = 0x82, /**< IN  Alarm Temperature and Max RPM*/
+        RX_AlarmAndSpeed_Channel3       = 0x83, /**< IN  Alarm Temperature and Max RPM*/
+        RX_AlarmAndSpeed_Channel4       = 0x84, /**< IN  Alarm Temperature and Max RPM*/
 
-        TX_DeviceStatus                 = 0x90,
+        TX_DeviceStatus                 = 0x90, /**< Status: Ready/Not Ready */
 
         RX_ACK                          = 0xF0,
         TX_NAK                          = 0xFA
@@ -81,13 +82,27 @@ public:
 
     //---------------------------------------------------------------------
 
-
+    /** Calculates the data checksum present at the end of data blocks.
+      *
+      * The BitFenix Recon data block has a checksum at the end of the data.
+      * The checksum for input blocks the ctrlByte does \em not influence
+      * the checksum and therefore RX_NULL should be passed to this function
+      * if the data is input data. If the data is output data, then the
+      * ctrlByte is used in the checksum calculation and therefore should be
+      * set appropriately.
+      *
+      * @param ctrlByte     @see FanControllerIO::ControlByte.
+      * @param blockLen     The number of bytes in \em block .
+      * @param block        The data to calculate a checksum for.
+      */
     static unsigned char calcChecksum(
             ControlByte ctrlByte,
             int blockLen,
             const unsigned char* block
         );
 
+
+    //---------------------------------------------------------------------
 
     /* Parsed Input from the device
      */
@@ -131,9 +146,36 @@ public:
 
     //---------------------------------------------------------------------
 
+
     /* Constructors
      */
     explicit FanControllerIO(QObject *parent = 0);
+
+public:
+
+    bool connect(void);
+    bool isConnected(void) const;
+    void disconnect(void);
+
+private:
+
+    DeviceIO m_io_device;
+
+
+signals:
+    void deviceConnected(void);
+    void deviceDisconnected(void);
+    void currentTemp(int probe, int temp);
+    void currentRPM(int channel, int RPM);
+    void maxRPM(int channel, int RPM);
+    void currentAlarmTemp(int channel, int temp);
+    void currentRpmOnAlarm(int channel, int RPM);
+    void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+
+public slots:
+    void onPollTimerTriggered(void);
+    void onRawData(QByteArray rawdata);
 };
+
 
 #endif // FANCONTROLLERIO_H
