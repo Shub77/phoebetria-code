@@ -31,8 +31,13 @@ bool DeviceIO::isConnected(void) const
     return m_device != NULL;
 }
 
-int DeviceIO::sendData(char* data, int len)
+int DeviceIO::sendData(const unsigned char* data, int len)
 {
+
+    return hid_write(m_device, data, len);
+
+
+#if 0
     int r;
 
     // Need to prepend an 0x00 before sending (the report id)
@@ -50,6 +55,8 @@ int DeviceIO::sendData(char* data, int len)
 
     delete [] toSend;
     return r;
+#endif
+
 
 }
 

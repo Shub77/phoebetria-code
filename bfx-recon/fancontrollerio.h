@@ -107,6 +107,8 @@ public:
      */
     class Input {
 
+        friend class FanControllerIO;
+
     public:
 
         // Set from raw data
@@ -124,8 +126,12 @@ public:
 
     class Request {
 
+        friend class FanControllerIO;
+
     public:
         Request();
+        bool setURB(void) { return toURB (9, m_URB, true); }
+
         bool toURB(int blockLen, unsigned char *block, bool pad);
 
     private:
@@ -133,6 +139,7 @@ public:
         int m_dataLen;              // This may be < sizeof(m_data)
         unsigned char m_data[4];    // Can only _send_ 4 data bytes
                                     // (incoming may have 5)
+        unsigned char m_URB[9];     // Must be one byte longer than max URB size
     };
 
 
@@ -158,6 +165,11 @@ public:
     int maxProbeTemp(bool inCelcius) const
         { return inCelcius ? 124 : 255; }   /* C : F */
 
+
+    // Requests
+
+    void requestDeviceFlags(void);
+
 public slots:
     void onPollTimerTriggered(void);
     void onRawData(QByteArray rawdata);
@@ -166,6 +178,7 @@ private:
 
     DeviceIO m_io_device;
 
+    int m_pollNumber;
 
 signals:
     void deviceConnected(void);

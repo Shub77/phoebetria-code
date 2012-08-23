@@ -100,16 +100,18 @@ bool FanControllerIO::Request::toURB(int blockLen,
     int i;
 
     *block = 0x00;              // URB report ID
-    *(block + 1) = m_dataLen;
+    *(block + 1) = m_dataLen + 2;
     *(block + 2) = m_controlByte;
 
     for (i = 3; i < m_dataLen; i++) {
         *(block + i) = m_data[i-3];
     }
 
-    *(block + i + 3) = FanControllerIO::calcChecksum(m_controlByte,
+    *(block + i) = FanControllerIO::calcChecksum(m_controlByte,
                                                      m_dataLen,
-                                                     m_data);
+                                                     m_data) - 1;
+
+    qDebug() << "Creating URB, Checksum:" << QString::number((*block + i));
     i++;
 
     if (pad) {
@@ -154,6 +156,7 @@ unsigned char FanControllerIO::calcChecksum(
 FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent)
 {
+    m_pollNumber = 0;
     connectSignals();
 }
 
@@ -192,6 +195,12 @@ void FanControllerIO::onPollTimerTriggered(void)
 
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
+
+    if (m_pollNumber % 2) {
+        requestDeviceFlags();
+    }
+
+    m_pollNumber++;
 }
 
 
@@ -200,9 +209,29 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     Input parsedData;
 
     parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
-
+    if (parsedData.m_controlByte == TX_NAK) {
+        qDebug() << "NAK";
+    }
 }
 
+//---------------------------------------------------------------------
+// Requests
+//---------------------------------------------------------------------
+void FanControllerIO::requestDeviceFlags(void)
+{
+    Request r;
+
+    r.m_controlByte = TX_DeviceSettings;
+    r.setURB();
+
+    qDebug() << "URB set";
+
+    int bytesWritten = m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
+    qDebug() << "Bytes written:" << QString::number(bytesWritten);
+}
+
+
+//---------------------------------------------------------------------
 
 bool FanControllerIO::setDeviceFlags(bool isCelcius,
                                    bool isAuto,
