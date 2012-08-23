@@ -223,6 +223,20 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 }
 
 //---------------------------------------------------------------------
+// Command queue
+//---------------------------------------------------------------------
+
+void FanControllerIO::issueCommand(const Request& req)
+{
+
+}
+
+void processCommandQueue(void)
+{
+
+}
+
+//---------------------------------------------------------------------
 // Requests
 //---------------------------------------------------------------------
 void FanControllerIO::requestDeviceFlags(void)

@@ -174,6 +174,11 @@ public:
 
     void requestDeviceFlags(void);
 
+protected:
+
+    void issueCommand(const Request& req);
+    void processCommandQueue(void);
+
 public slots:
     void onPollTimerTriggered(void);
     void onRawData(QByteArray rawdata);
