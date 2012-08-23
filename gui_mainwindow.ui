@@ -534,7 +534,7 @@ QSlider::handle:horizontal:disabled {
           <number>5</number>
          </property>
          <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_channel2speed">
+          <widget class="QLineEdit" name="ctrl_probe2Temp">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -551,7 +551,7 @@ QSlider::handle:horizontal:disabled {
             </size>
            </property>
            <property name="toolTip">
-            <string>Current RPM</string>
+            <string>Temperature</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -633,7 +633,7 @@ QSlider::handle:horizontal:disabled {
           </widget>
          </item>
          <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_probe2Temp">
+          <widget class="QLineEdit" name="ctrl_channel2speed">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -650,7 +650,7 @@ QSlider::handle:horizontal:disabled {
             </size>
            </property>
            <property name="toolTip">
-            <string>Temperature</string>
+            <string>Current RPM</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1179,7 +1179,7 @@ margin:-2px;</string>
           <number>5</number>
          </property>
          <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_channel1speed">
+          <widget class="QLineEdit" name="ctrl_probe1Temp">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1196,10 +1196,7 @@ margin:-2px;</string>
             </size>
            </property>
            <property name="toolTip">
-            <string>Current RPM</string>
-           </property>
-           <property name="text">
-            <string/>
+            <string>Temperature</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1281,7 +1278,7 @@ margin:-2px;</string>
           </widget>
          </item>
          <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_probe1Temp">
+          <widget class="QLineEdit" name="ctrl_channel1speed">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -1298,7 +1295,10 @@ margin:-2px;</string>
             </size>
            </property>
            <property name="toolTip">
-            <string>Temperature</string>
+            <string>Current RPM</string>
+           </property>
+           <property name="text">
+            <string/>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1595,10 +1595,6 @@ margin:-2px;</string>
      </item>
     </layout>
    </widget>
-   <zorder>ctrl_logoAndStatus</zorder>
-   <zorder>tabWidget</zorder>
-   <zorder>gridLayoutWidget</zorder>
-   <zorder>channel1Group_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
