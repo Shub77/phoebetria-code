@@ -135,9 +135,6 @@ bool FanControllerIO::Request::toURB(int blockLen,
         *(block + i) = m_data[i-3];
     }
 
-    if (m_dataLen == 1) {
-        qDebug() << "Data length is 1";
-    }
     *(block + i) = FanControllerIO::calcChecksum(m_controlByte,
                                                      m_dataLen,
                                                      m_data) - 1;
