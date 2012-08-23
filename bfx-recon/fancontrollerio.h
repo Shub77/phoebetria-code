@@ -32,6 +32,7 @@ public:
     enum ControlByte {
 
         RX_NULL                         = 0x00, /**< Not used by device. Required for calcChecksum() */
+        TX_NULL                         = 0x00, /**< Not used by device; Internal use only */
 
         TX_CurrentChannel               = 0x10, /**< Current selected channel (??) */
 
@@ -124,6 +125,7 @@ public:
     class Request {
 
     public:
+        Request();
         bool toURB(int blockLen, unsigned char *block, bool pad);
 
     private:

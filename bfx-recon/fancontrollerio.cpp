@@ -86,13 +86,20 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
   FanControllerIO::Request
  *********************************************************************/
 
+
+FanControllerIO::Request::Request()
+{
+    m_controlByte = TX_NULL;
+    m_dataLen = 0;
+}
+
 bool FanControllerIO::Request::toURB(int blockLen,
                                      unsigned char* block,
                                      bool pad)
 {
     int i;
 
-    *block = 0x00;          // URB report ID
+    *block = 0x00;              // URB report ID
     *(block + 1) = m_dataLen;
     *(block + 2) = m_controlByte;
 
@@ -100,7 +107,9 @@ bool FanControllerIO::Request::toURB(int blockLen,
         *(block + i) = m_data[i-3];
     }
 
-    *(block + i + 3) = FanControllerIO::calcChecksum(m_controlByte, m_dataLen, m_data);
+    *(block + i + 3) = FanControllerIO::calcChecksum(m_controlByte,
+                                                     m_dataLen,
+                                                     m_data);
     i++;
 
     if (pad) {
