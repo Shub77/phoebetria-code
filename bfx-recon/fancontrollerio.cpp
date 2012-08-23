@@ -20,6 +20,8 @@
 // Maximum length of the command queue. Set to -1 for no max length
 #define MAX_COMMANDQUEUE_LEN -1
 
+#define MAX_FAN_CHANNELS 5
+
 //---------------------------------------------------------------------
 
 static const unsigned short int HID_ProductId =   28928;
@@ -228,12 +230,12 @@ void FanControllerIO::onPollTimerTriggered(void)
 
     if (m_pollNumber % 2) {
         // requestDeviceFlags();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
             requestTempAndSpeed(i);
         }
-//        for (int i = 0; i < 6; i++) {
-//            requestAlarmAndSpeed(i);
-//        }
+        for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
+            requestAlarmAndSpeed(i);
+        }
     }
 
     m_pollNumber++;
