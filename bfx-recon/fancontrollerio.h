@@ -124,7 +124,7 @@ public:
     class Request {
 
     public:
-        bool toURB(int blockLen, const unsigned char* block, bool pad);
+        bool toURB(int blockLen, unsigned char *block, bool pad);
 
     private:
         ControlByte m_controlByte;

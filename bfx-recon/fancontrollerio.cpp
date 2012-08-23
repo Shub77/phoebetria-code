@@ -23,32 +23,10 @@
 static const unsigned short int HID_ProductId =   28928;
 static const unsigned short HID_VendorId =  3141;
 
-//---------------------------------------------------------------------
 
-
-unsigned char FanControllerIO::calcChecksum(
-        ControlByte ctrlByte,
-        int blockLen,
-        const unsigned char *block
-    )
-{
-
-    unsigned checksum;
-
-    checksum = blockLen + 1;
-    checksum += ctrlByte;
-
-    for (int i = 0; i < blockLen; ++i) {
-        checksum += *(block + i);
-    }
-    checksum ^= 0xff;
-    checksum = (checksum + 1) & 0xff;
-    //checksum &= 0xff;
-
-    return checksum;
-}
-
-//---------------------------------------------------------------------
+/**********************************************************************
+  FanControllerIO::Input
+ *********************************************************************/
 
 bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 {
@@ -103,6 +81,64 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
     return true;
 }
 
+
+/**********************************************************************
+  FanControllerIO::Request
+ *********************************************************************/
+
+bool FanControllerIO::Request::toURB(int blockLen,
+                                     unsigned char* block,
+                                     bool pad)
+{
+    int i;
+
+    *block = 0x00;          // URB report ID
+    *(block + 1) = m_dataLen;
+    *(block + 2) = m_controlByte;
+
+    for (i = 3; i < m_dataLen; i++) {
+        *(block + i) = m_data[i-3];
+    }
+
+    *(block + i + 3) = FanControllerIO::calcChecksum(m_controlByte, m_dataLen, m_data);
+    i++;
+
+    if (pad) {
+        for (; i < blockLen; i++) {
+            *(block + i) = 0x00;
+        }
+    }
+
+    return true;
+}
+
+/**********************************************************************
+  FanControllerIO
+ *********************************************************************/
+
+/* Static functions */
+
+unsigned char FanControllerIO::calcChecksum(
+        ControlByte ctrlByte,
+        int blockLen,
+        const unsigned char *block
+    )
+{
+
+    unsigned checksum;
+
+    checksum = blockLen + 1;
+    checksum += ctrlByte;
+
+    for (int i = 0; i < blockLen; ++i) {
+        checksum += *(block + i);
+    }
+    checksum ^= 0xff;
+    checksum = (checksum + 1) & 0xff;
+    //checksum &= 0xff;
+
+    return checksum;
+}
 
 //---------------------------------------------------------------------
 
