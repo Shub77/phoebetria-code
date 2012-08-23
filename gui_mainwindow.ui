@@ -101,7 +101,7 @@
         <height>91</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="tab1Layout">
+      <layout class="QGridLayout" name="ctrlTabLayout">
        <item row="0" column="0" alignment="Qt::AlignVCenter">
         <widget class="QLabel" name="ctrl_tempScaleLabel">
          <property name="minimumSize">
@@ -411,12 +411,12 @@ QSlider::handle:horizontal:disabled {
         <height>91</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="profileLayout">
+      <layout class="QGridLayout" name="ctrlTab2Layout">
        <item row="1" column="0">
         <widget class="QLineEdit" name="ctrl_presetName"/>
        </item>
        <item row="2" column="0">
-        <layout class="QGridLayout" name="profileButoonLayout">
+        <layout class="QGridLayout" name="ctrlButtonLayout">
          <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
           <widget class="QPushButton" name="ctrl_LoadPreset">
            <property name="maximumSize">
