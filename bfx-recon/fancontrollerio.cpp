@@ -131,10 +131,13 @@ bool FanControllerIO::Request::toURB(int blockLen,
     *(block + 1) = m_dataLen + 2;
     *(block + 2) = m_controlByte;
 
-    for (i = 3; i < m_dataLen; i++) {
+    for (i = 3; i < m_dataLen + 3; i++) {
         *(block + i) = m_data[i-3];
     }
 
+    if (m_dataLen == 1) {
+        qDebug() << "Data length is 1";
+    }
     *(block + i) = FanControllerIO::calcChecksum(m_controlByte,
                                                      m_dataLen,
                                                      m_data) - 1;
@@ -228,8 +231,12 @@ void FanControllerIO::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-    if (m_pollNumber % 2) {
+    if (m_pollNumber % 19 || m_pollNumber == 0) {
         requestDeviceFlags();
+    }
+#if 0
+    if (m_pollNumber % 10) {
+
         for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
             requestTempAndSpeed(i);
         }
@@ -237,7 +244,7 @@ void FanControllerIO::onPollTimerTriggered(void)
             requestAlarmAndSpeed(i);
         }
     }
-
+#endif
     m_pollNumber++;
 }
 
@@ -276,7 +283,7 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 
         isAuto =    rawdata[2] & FanControllerIO::Auto ? false : true;
         isCelcius = rawdata[2] & FanControllerIO::Celcius ? false : true;
-        isAudibleAlarm =   rawdata[2] & FanControllerIO::AudibleAlarm ? true : false;
+        isAudibleAlarm = rawdata[2] & FanControllerIO::AudibleAlarm ? true : false;
 
         emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
         break;
@@ -397,6 +404,23 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
                                    bool isAuto,
                                    bool isAudibleAlarm)
 {
+    unsigned char bits;
+
+    bits = !isCelcius ? FanControllerIO::Celcius : 0;
+    bits |= !isAuto ? FanControllerIO::Auto : 0;
+    bits |= isAudibleAlarm ? FanControllerIO::AudibleAlarm : 0;
+
+    Request req;
+
+    req.m_controlByte = RX_DeviceSettings;
+    req.m_data[0] = bits;
+    req.m_dataLen = 1;
+    req.setURB();
+
+    issueRequest(req);
+
+    m_pollNumber = 0;
+
 #if 0
     FcData fcdata;
     const fcCommandDef* cmdDef;
