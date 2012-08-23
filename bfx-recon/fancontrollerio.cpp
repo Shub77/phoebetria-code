@@ -229,7 +229,7 @@ void FanControllerIO::onPollTimerTriggered(void)
     m_io_device.pollForData();
 
     if (m_pollNumber % 2) {
-        // requestDeviceFlags();
+        requestDeviceFlags();
         for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
             requestTempAndSpeed(i);
         }
@@ -245,12 +245,79 @@ void FanControllerIO::onPollTimerTriggered(void)
 void FanControllerIO::onRawData(QByteArray rawdata)
 {
     Input parsedData;
+    int channel;
 
     parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
-    if (parsedData.m_controlByte == TX_NAK) {
+
+    switch (parsedData.m_controlByte)
+    {
+    case RX_TempAndSpeed_Channel0:
+    case RX_TempAndSpeed_Channel1:
+    case RX_TempAndSpeed_Channel2:
+    case RX_TempAndSpeed_Channel3:
+    case RX_TempAndSpeed_Channel4:
+        channel = parsedData.m_controlByte - RX_TempAndSpeed_Channel0;
+        emit currentTemp(channel, rawToTemp(rawdata.at(2)));
+        emit currentRPM(channel, rawToRPM(rawdata.at(4), rawdata.at(3)));
+        emit maxRPM(channel, rawToRPM(rawdata.at(6), rawdata.at(5)));
+        break;
+    case RX_AlarmAndSpeed_Channel0:
+    case RX_AlarmAndSpeed_Channel1:
+    case RX_AlarmAndSpeed_Channel2:
+    case RX_AlarmAndSpeed_Channel3:
+    case RX_AlarmAndSpeed_Channel4:
+        channel = parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0;
+        emit currentAlarmTemp(channel, rawToTemp(rawdata[2]));
+        // TODO: What are bytes 3 and 4? RPM on Alarm?
+        break;
+
+    case RX_DeviceSettings:
+        bool isAuto, isCelcius, isAudibleAlarm;
+
+        isAuto =    rawdata[2] & FanControllerIO::Auto ? false : true;
+        isCelcius = rawdata[2] & FanControllerIO::Celcius ? false : true;
+        isAudibleAlarm =   rawdata[2] & FanControllerIO::AudibleAlarm ? true : false;
+
+        emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
+        break;
+
+    case RX_ACK:
+
+#ifdef QT_DEBUG
+        qDebug() << "ACK";
+#endif
+
+        break;
+
+    case RX_NAK:
+
+#ifdef QT_DEBUG
         qDebug() << "NAK";
+#endif
+        break;
+
+    default:
+
+#ifdef QT_DEBUG
+        qDebug() << "Unhandled response code:"
+                 << QString::number(parsedData.m_controlByte);
+#endif
+        break;
+
     }
 }
+
+
+int FanControllerIO::rawToTemp(unsigned char byte) const
+{
+    return byte;
+}
+
+int FanControllerIO::rawToRPM(char highByte, char lowByte) const
+{
+    return (unsigned char)highByte*256 + (unsigned char)lowByte;
+}
+
 
 //---------------------------------------------------------------------
 // Command queue

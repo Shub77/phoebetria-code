@@ -64,10 +64,11 @@ public:
         RX_AlarmAndSpeed_Channel3       = 0x83, /**< IN  Alarm Temperature and Max RPM*/
         RX_AlarmAndSpeed_Channel4       = 0x84, /**< IN  Alarm Temperature and Max RPM*/
 
-        TX_DeviceStatus                 = 0x90, /**< Status: Ready/Not Ready */
+        TX_DeviceStatus                 = 0x90, /**< OUT Request Status: Ready/Not Ready */
+        RX_DeviceStatus                 = 0xA0, /**< IN  Status: Ready/Not Ready */
 
         RX_ACK                          = 0xF0,
-        TX_NAK                          = 0xFA
+        RX_NAK                          = 0xFA
 
     };
 
@@ -135,7 +136,7 @@ public:
         explicit Request(ControlByte controlByte);
 
 
-        bool setURB(void) { return toURB (8, m_URB, true); }
+        bool setURB(void) { return toURB (9, m_URB, true); }
 
         bool toURB(int blockLen, unsigned char *block, bool pad);
 
@@ -144,7 +145,7 @@ public:
         int m_dataLen;              // This may be < sizeof(m_data)
         unsigned char m_data[4];    // Can only _send_ 4 data bytes
                                     // (incoming may have 5)
-        unsigned char m_URB[8];     // Must be one byte longer than max URB size
+        unsigned char m_URB[9];     // Must be one byte longer than max URB size
 
         bool m_URB_isSet;
     };
@@ -182,6 +183,9 @@ public:
     void requestAlarmAndSpeed(int channel);
 
 protected:
+
+    int rawToTemp(unsigned char byte) const;
+    int rawToRPM(char highByte, char lowByte) const;
 
     void issueRequest(const Request& req);
     void processRequestQueue(void);
