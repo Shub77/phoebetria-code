@@ -130,6 +130,8 @@ public:
 
     public:
         Request();
+        explicit Request(ControlByte controlByte);
+
         bool setURB(void) { return toURB (9, m_URB, true); }
 
         bool toURB(int blockLen, unsigned char *block, bool pad);
@@ -140,6 +142,8 @@ public:
         unsigned char m_data[4];    // Can only _send_ 4 data bytes
                                     // (incoming may have 5)
         unsigned char m_URB[9];     // Must be one byte longer than max URB size
+
+        bool m_URB_isSet;
     };
 
 

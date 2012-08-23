@@ -91,6 +91,14 @@ FanControllerIO::Request::Request()
 {
     m_controlByte = TX_NULL;
     m_dataLen = 0;
+    m_URB_isSet = false;
+}
+
+FanControllerIO::Request::Request(ControlByte controlByte)
+{
+    m_controlByte = controlByte;
+    m_dataLen = 0;
+    setURB();
 }
 
 bool FanControllerIO::Request::toURB(int blockLen,
@@ -117,6 +125,8 @@ bool FanControllerIO::Request::toURB(int blockLen,
             *(block + i) = 0x00;
         }
     }
+
+    m_URB_isSet = true;
 
     return true;
 }
@@ -217,17 +227,9 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 //---------------------------------------------------------------------
 void FanControllerIO::requestDeviceFlags(void)
 {
-    Request r;
+    Request r(TX_DeviceSettings);
 
-    r.m_controlByte = TX_DeviceSettings;
-    r.setURB();
-
-    int bytesWritten = m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
-
-#if 0
-    qDebug() << "URB set";
-    qDebug() << "Bytes written:" << QString::number(bytesWritten);
-#endif
+    m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
 }
 
 
