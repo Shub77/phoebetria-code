@@ -231,11 +231,11 @@ void FanControllerIO::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-    if (m_pollNumber % 39 || m_pollNumber == 0) {
+    if ((m_pollNumber % 39 || m_pollNumber == 0) && m_requestQueue.isEmpty()) {
         requestDeviceFlags();
     }
 
-    if (m_pollNumber % 10 || m_pollNumber == 0) {
+    if ( (m_pollNumber % 10 || m_pollNumber == 0) && m_requestQueue.isEmpty()) {
 
         for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
             requestTempAndSpeed(i);
@@ -419,7 +419,7 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
 
     issueRequest(req);
 
-    m_pollNumber = 0;
+    //m_pollNumber = 0;
 
 #if 0
     FcData fcdata;
