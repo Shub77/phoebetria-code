@@ -17,6 +17,8 @@
 #include <QDebug>
 #include "fancontrollerio.h"
 
+// Maximum length of the command queue. Set to -1 for no max length
+#define MAX_COMMANDQUEUE_LEN -1
 
 //---------------------------------------------------------------------
 
@@ -170,7 +172,6 @@ unsigned char FanControllerIO::calcChecksum(
     }
     checksum ^= 0xff;
     checksum = (checksum + 1) & 0xff;
-    //checksum &= 0xff;
 
     return checksum;
 }
@@ -216,6 +217,11 @@ void FanControllerIO::disconnect(void)
 
 void FanControllerIO::onPollTimerTriggered(void)
 {
+    if (!isConnected()) return;
+
+    if (signalsBlocked()) return;
+
+    processRequestQueue();
 
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
@@ -242,15 +248,42 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 // Command queue
 //---------------------------------------------------------------------
 
-void FanControllerIO::issueCommand(const Request& req)
+void FanControllerIO::issueRequest(const Request& req)
 {
+    // Discard old commands
+    if (MAX_COMMANDQUEUE_LEN != -1) {
+        while (m_requestQueue.length() > MAX_COMMANDQUEUE_LEN - 1) {
+            m_requestQueue.removeFirst();
+        }
+    }
 
+    m_requestQueue.append(req);
 }
 
-void processCommandQueue(void)
+void FanControllerIO::processRequestQueue(void)
 {
+    /* We don't want to process all the commands at once because the device
+     * only supports sending one command at a time; i.e. if more than one
+     * command is sent only the last command sent is processed by the device
+     */
+    if (m_requestQueue.isEmpty()) return;
 
+    Request r = m_requestQueue.takeFirst();
+
+    bool bs = blockSignals(true);
+
+    if (!r.m_URB_isSet) {
+#       ifdef QT_DEBUG
+            qDebug() << "Attempt to issue request without URB set";
+#       endif
+
+        return;
+    }
+
+    m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
+    blockSignals(bs);
 }
+
 
 //---------------------------------------------------------------------
 // Requests
@@ -259,7 +292,7 @@ void FanControllerIO::requestDeviceFlags(void)
 {
     Request r(TX_DeviceSettings);
 
-    m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
+    issueRequest(r);
 }
 
 

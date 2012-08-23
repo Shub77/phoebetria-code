@@ -18,6 +18,7 @@
 #define FANCONTROLLERIO_H
 
 #include <QObject>
+#include <QQueue>
 
 #include "device-io.h"
 #include "profiles.h"
@@ -178,8 +179,8 @@ public:
 
 protected:
 
-    void issueCommand(const Request& req);
-    void processCommandQueue(void);
+    void issueRequest(const Request& req);
+    void processRequestQueue(void);
 
 public slots:
     void onPollTimerTriggered(void);
@@ -190,6 +191,8 @@ private:
     DeviceIO m_io_device;
 
     int m_pollNumber;
+
+    QQueue<Request> m_requestQueue;
 
 signals:
     void deviceConnected(void);
