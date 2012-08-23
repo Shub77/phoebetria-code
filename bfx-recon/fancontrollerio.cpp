@@ -231,17 +231,21 @@ void FanControllerIO::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-    if ((m_pollNumber % 39 || m_pollNumber == 0) && m_requestQueue.isEmpty()) {
-        requestDeviceFlags();
-    }
+    // Only create new requests if there are none pending processing
+    if (m_requestQueue.isEmpty()) {
 
-    if ( (m_pollNumber % 10 || m_pollNumber == 0) && m_requestQueue.isEmpty()) {
-
-        for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
-            requestTempAndSpeed(i);
+        if ((m_pollNumber % 51 || m_pollNumber == 0)) {
+            requestDeviceFlags();
         }
-        for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
-            requestAlarmAndSpeed(i);
+
+        if ( (m_pollNumber % 9 || m_pollNumber == 0)) {
+
+            for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
+                requestTempAndSpeed(i);
+            }
+            for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
+                requestAlarmAndSpeed(i);
+            }
         }
     }
 
