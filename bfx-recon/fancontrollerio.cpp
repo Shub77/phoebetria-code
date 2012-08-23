@@ -110,8 +110,6 @@ bool FanControllerIO::Request::toURB(int blockLen,
     *(block + i) = FanControllerIO::calcChecksum(m_controlByte,
                                                      m_dataLen,
                                                      m_data) - 1;
-
-    qDebug() << "Creating URB, Checksum:" << QString::number((*block + i));
     i++;
 
     if (pad) {
@@ -224,10 +222,12 @@ void FanControllerIO::requestDeviceFlags(void)
     r.m_controlByte = TX_DeviceSettings;
     r.setURB();
 
-    qDebug() << "URB set";
-
     int bytesWritten = m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
+
+#if 0
+    qDebug() << "URB set";
     qDebug() << "Bytes written:" << QString::number(bytesWritten);
+#endif
 }
 
 

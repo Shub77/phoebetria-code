@@ -33,31 +33,7 @@ bool DeviceIO::isConnected(void) const
 
 int DeviceIO::sendData(const unsigned char* data, int len)
 {
-
     return hid_write(m_device, data, len);
-
-
-#if 0
-    int r;
-
-    // Need to prepend an 0x00 before sending (the report id)
-    unsigned char* toSend = new unsigned char[len+1];
-    toSend[0] = 0x00;
-    for (int i = 0; i < len; i++) {
-        toSend[i+1] = data[i];
-    }
-
-    //if (!m_device) return 0;  // TODO: ************** TEMP LINE *********************setBlocking(true);
-
-    r = hid_write(m_device, toSend, len+1);
-    const wchar_t* err = hid_error(m_device);
-    if (r == -1) qDebug() << "*** Send Error:" << QString::fromStdWString(err);
-
-    delete [] toSend;
-    return r;
-#endif
-
-
 }
 
 QString DeviceIO::lastErrorString(void) const
@@ -71,7 +47,6 @@ QString DeviceIO::lastErrorString(void) const
 
 void DeviceIO::setBlocking(bool block)
 {
-    //if (!m_device) return;  // TODO: ************** TEMP LINE *********************
     hid_set_nonblocking(m_device, block ? 0 : 1);
 }
 
