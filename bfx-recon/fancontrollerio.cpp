@@ -94,6 +94,22 @@ FanControllerIO::Request::Request()
     m_URB_isSet = false;
 }
 
+FanControllerIO::Request::Request(const Request& ref)
+{
+    m_controlByte = ref.m_controlByte;
+    m_dataLen = ref.m_dataLen;
+    m_URB_isSet = ref.m_URB_isSet;
+
+    for (unsigned i = 0; i < sizeof(m_data); i++) {
+        *(m_data + i) = *(ref.m_data + i);
+    }
+    if (m_URB_isSet) {
+        for (unsigned i = 0; i < sizeof(m_URB); i++) {
+            *(m_URB + i) = *(ref.m_URB + i);
+        }
+    }
+}
+
 FanControllerIO::Request::Request(ControlByte controlByte)
 {
     m_controlByte = controlByte;

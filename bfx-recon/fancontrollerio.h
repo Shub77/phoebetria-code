@@ -130,7 +130,9 @@ public:
 
     public:
         Request();
+        Request(const Request& ref);
         explicit Request(ControlByte controlByte);
+
 
         bool setURB(void) { return toURB (9, m_URB, true); }
 
