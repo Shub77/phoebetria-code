@@ -37,17 +37,17 @@ public:
 
         TX_CurrentChannel               = 0x10, /**< Current selected channel (??) */
 
-        TX_TempAndSpeed_Channel0        = 0x30, /**< IN  Temp in F and current speed (RPM) */
-        TX_TempAndSpeed_Channel1        = 0x31, /**< IN   in F and current speed (RPM) */
-        TX_TempAndSpeed_Channel2        = 0x32, /**< IN   in F and current speed (RPM) */
-        TX_TempAndSpeed_Channel3        = 0x33, /**< IN   in F and current speed (RPM) */
-        TX_TempAndSpeed_Channel4        = 0x34, /**< IN   in F and current speed (RPM) */
+        TX_TempAndSpeed_Channel0        = 0x30, /**< OUT  Temp in F and current speed (RPM) */
+        TX_TempAndSpeed_Channel1        = 0x31, /**< OUT   in F and current speed (RPM) */
+        TX_TempAndSpeed_Channel2        = 0x32, /**< OUT   in F and current speed (RPM) */
+        TX_TempAndSpeed_Channel3        = 0x33, /**< OUT   in F and current speed (RPM) */
+        TX_TempAndSpeed_Channel4        = 0x34, /**< OUT   in F and current speed (RPM) */
 
-        RX_TempAndSpeed_Channel0        = 0x40, /**< OUT Temp in F and speed (RPM)*/
-        RX_TempAndSpeed_Channel1        = 0x41, /**< OUT Temp in F and speed (RPM)*/
-        RX_TempAndSpeed_Channel2        = 0x42, /**< OUT Temp in F and speed (RPM)*/
-        RX_TempAndSpeed_Channel3        = 0x43, /**< OUT Temp in F and speed (RPM)*/
-        RX_TempAndSpeed_Channel4        = 0x44, /**< OUT Temp in F and speed (RPM)*/
+        RX_TempAndSpeed_Channel0        = 0x40, /**< IN  Temp in F and speed (RPM)*/
+        RX_TempAndSpeed_Channel1        = 0x41, /**< IN  Temp in F and speed (RPM)*/
+        RX_TempAndSpeed_Channel2        = 0x42, /**< IN  Temp in F and speed (RPM)*/
+        RX_TempAndSpeed_Channel3        = 0x43, /**< IN  Temp in F and speed (RPM)*/
+        RX_TempAndSpeed_Channel4        = 0x44, /**< IN  Temp in F and speed (RPM)*/
 
         TX_DeviceSettings               = 0x50, /**< IN  Device settings. See DeviceSetttingsFlag */
         RX_DeviceSettings               = 0x60, /**< OUT Device settings. See DeviceSetttingsFlag */
@@ -176,6 +176,10 @@ public:
     // Requests
 
     void requestDeviceFlags(void);
+
+    void requestTempAndSpeed(int channel);
+
+    void requestAlarmAndSpeed(int channel);
 
 protected:
 

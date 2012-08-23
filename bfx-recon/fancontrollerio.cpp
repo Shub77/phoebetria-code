@@ -227,7 +227,13 @@ void FanControllerIO::onPollTimerTriggered(void)
     m_io_device.pollForData();
 
     if (m_pollNumber % 2) {
-        requestDeviceFlags();
+        // requestDeviceFlags();
+        for (int i = 0; i < 6; i++) {
+            requestTempAndSpeed(i);
+        }
+//        for (int i = 0; i < 6; i++) {
+//            requestAlarmAndSpeed(i);
+//        }
     }
 
     m_pollNumber++;
@@ -281,21 +287,41 @@ void FanControllerIO::processRequestQueue(void)
     }
 
     m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
+
     blockSignals(bs);
 }
 
 
 //---------------------------------------------------------------------
-// Requests
+// Passive Requests
 //---------------------------------------------------------------------
 void FanControllerIO::requestDeviceFlags(void)
 {
     Request r(TX_DeviceSettings);
-
     issueRequest(r);
 }
 
 
+void FanControllerIO::requestTempAndSpeed(int channel)
+{
+    ControlByte cb = (ControlByte)(TX_TempAndSpeed_Channel0 + channel);
+
+    Request r(cb);
+    issueRequest(r);
+}
+
+
+void FanControllerIO::requestAlarmAndSpeed(int channel)
+{
+    ControlByte cb = (ControlByte)(TX_AlarmAndSpeed_Channel0 + channel);
+
+    Request r(cb);
+    issueRequest(r);
+}
+
+
+//---------------------------------------------------------------------
+// Active Requests
 //---------------------------------------------------------------------
 
 bool FanControllerIO::setDeviceFlags(bool isCelcius,
