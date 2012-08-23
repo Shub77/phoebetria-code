@@ -241,7 +241,7 @@ void gui_MainWindow::syncDeviceSettingsCtrls(void)
 
     bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
     ui->ctrl_isAudibleAlarm->setValue(m_fcd.isAudibleAlarm() ? 1 : 0);
-    bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
+    bs = ui->ctrl_isAudibleAlarm->blockSignals(bs);
 
 
 }
@@ -316,23 +316,26 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
 
     if (m_fcd.isCelcius() != isCelcius) {
         m_fcd.setIsCelcius(isCelcius);
-        m_isCelciusToggleByDevice = true;
-        //ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
+        bool bs = ui->ctrl_tempScaleToggle->blockSignals(true);
+        ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
+        ui->ctrl_tempScaleToggle->blockSignals(bs);
 
         updateAllAlarmCtrls(m_fcd.isCelcius());
     }
 
     if (m_fcd.isAuto()!= isAuto) {
         m_fcd.setIsAuto(isAuto);
-        m_isAutoToggleByDevice = true;
-        //ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
+        bool bs = ui->ctrl_isManual->blockSignals(true);
+        ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
         enableDisableSpeedControls();
+        ui->ctrl_isManual->blockSignals(bs);
     }
 
     if (m_fcd.isAudibleAlarm() != isAudibleAlarm) {
         m_fcd.setIsAudibleAlarm(isAudibleAlarm);
-        m_isAudibleAlarmByDevice = true;
-        //ui->ctrl_isAudibleAlarm->setValue(isAudibleAlarm ? 1 : 0);
+        bool bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
+        ui->ctrl_isAudibleAlarm->setValue(isAudibleAlarm ? 1 : 0);
+        ui->ctrl_isAudibleAlarm->blockSignals(bs);
     }
 
     syncDeviceSettingsCtrls();
@@ -350,10 +353,6 @@ void gui_MainWindow::onMaxRPM(int channel, int RPM)
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {
-   if (m_isAutoToggleByDevice) {
-        m_isAutoToggleByDevice = false;
-        return;
-   }
 
     m_fcd.setIsAuto((value == 0 ? true : false));
 
@@ -369,11 +368,6 @@ void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 
 void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
 {
-    if (m_isAudibleAlarmByDevice) {
-        m_isAudibleAlarmByDevice = false;
-        return;
-    }
-
     m_fcd.setIsAudibleAlarm((value == 1 ? true : false));
 
     FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
@@ -386,10 +380,6 @@ void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
 
 void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 {
-    if (m_isCelciusToggleByDevice) {
-        m_isCelciusToggleByDevice = false;
-        return;
-    }
 
     m_fcd.setIsCelcius((value == 1 ? true : false));
 
