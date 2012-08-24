@@ -451,7 +451,6 @@ bool FanControllerIO::setChannelSettings(int channel,
 
 bool FanControllerIO::setFromProfile(const FanControllerProfile& profile)
 {
-#if 0
     setDeviceFlags(profile.isCelcius(), profile.isAuto(), profile.isAudibleAlarm());
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
@@ -462,7 +461,6 @@ bool FanControllerIO::setFromProfile(const FanControllerProfile& profile)
 
     m_pollNumber  = 0;
 
-#endif
     return true;
 }
 
