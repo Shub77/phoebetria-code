@@ -295,7 +295,12 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     case RX_AlarmAndSpeed_Channel4:
         channel = parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0;
         emit currentAlarmTemp(channel, rawToTemp(rawdata[2]));
-        // TODO: What are bytes 3 and 4? RPM on Alarm?
+#if 0
+        // TODO: What are bytes 3 and 4? They always seem to be 0xffff
+        qDebug() << "Channel"
+                 << QString::number(channel)
+                 << QString::number((rawToRPM(rawdata.at(4), rawdata.at(3))));
+#endif
         break;
 
     case RX_DeviceSettings:
