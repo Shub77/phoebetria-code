@@ -16,9 +16,13 @@
 
 #include <QDebug>
 #include "fancontrollerio.h"
+#include "utils.h"
 
 // Maximum length of the command queue. Set to -1 for no max length
 #define MAX_COMMANDQUEUE_LEN -1
+
+// Uncomment to output raw hex to/from the device
+// #define PHOEBETRIA_OUTPUT_RAW_HEX 1
 
 #define MAX_FAN_CHANNELS 5
 
@@ -255,6 +259,11 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     Input parsedData;
     int channel;
     bool inputParsed;
+
+#if defined QT_DEBUG && PHOEBETRIA_OUTPUT_RAW_HEX
+    qDebug() << "#### Raw Data From Device:"
+             << toHexString((const unsigned char*)rawdata.constData(), rawdata.length());
+#endif
 
     inputParsed = parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
 
