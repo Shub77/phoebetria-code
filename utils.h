@@ -14,19 +14,11 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "phoebetriaapp.h"
+#ifndef PHOEBETRIA_UTILS_H
+#define PHOEBETRIA_UTILS_H
 
-QTimer PhoebetriaApp::m_fanController_pollTimer;
-FanControllerIO PhoebetriaApp::m_fanControllerIO;
+#include <QString>
 
-PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
-    : QApplication(argc, argv)
-{
-    m_fanController_pollTimer.start(200);
+QString toHexString(const unsigned char *data, int len);
 
-    m_fanControllerIO.connect();
-
-    QObject::connect(&m_fanController_pollTimer, SIGNAL(timeout()),
-                     &m_fanControllerIO, SLOT(onPollTimerTriggered()));
-}
-
+#endif // PHOEBETRIA_UTILS_H

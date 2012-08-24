@@ -19,7 +19,7 @@
 
 #include <QApplication>
 #include <QTimer>
-#include "bfx-recon/fancontroller.h"
+#include "bfx-recon/fancontrollerio.h"
 
 class PhoebetriaApp : public QApplication
 {
@@ -28,11 +28,11 @@ public:
 
     QTimer& fanController_pollTimer(void) { return m_fanController_pollTimer; }
 
-    FanController& fanController(void) { return m_fanController; }
+    FanControllerIO& fanControllerIO(void) { return m_fanControllerIO; }
 
 private:
     static QTimer m_fanController_pollTimer;
-    static FanController m_fanController;
+    static FanControllerIO m_fanControllerIO;
 };
 
 

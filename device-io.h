@@ -16,7 +16,7 @@ public:
 
     bool isConnected(void) const;
 
-    int sendData(char *data, int len);
+    int sendData(const unsigned char *data, int len);
 
     QString lastErrorString(void) const;
 
