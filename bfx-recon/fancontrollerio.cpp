@@ -254,8 +254,18 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 {
     Input parsedData;
     int channel;
+    bool inputParsed;
 
-    parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
+    inputParsed = parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
+
+    if (!inputParsed) {
+#ifdef QT_DEBUG
+        qDebug() << "Could not parse input."
+                 << "File:" << QString(__FILE__)
+                            << "Line:" << QString::number(__LINE__);
+#endif
+        return;
+    }
 
     switch (parsedData.m_controlByte)
     {
