@@ -15,8 +15,8 @@
         <file>Images/channel_4.png</file>
         <file>Images/channel_5.png</file>
         <file>Images/phoebetria_animated_128.gif</file>
-        <file>Images/icons/16x16/phoebetria.png</file>
-        <file>Images/icons/22x22/phoebetria.png</file>
+        <file alias="icon16x16">Images/icons/16x16/phoebetria.png</file>
+        <file alias="icon22x22">Images/icons/22x22/phoebetria.png</file>
         <file>Images/icons/32x32/phoebetria.png</file>
         <file>Images/icons/48x48/phoebetria.png</file>
         <file>Images/icons/64x64/phoebetria.png</file>
