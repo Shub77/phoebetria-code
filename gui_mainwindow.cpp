@@ -26,7 +26,7 @@
 #include "bfx-recon/fancontrollerio.h"
 #include "gui_about.h"
 #include "profiles.h"
-
+#include "qglobal.h"
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -36,7 +36,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
 #ifdef Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
-#elif defined Q_WS_MAC || Q_WS_X11
+#elif Q_WS_MAC
+    m_trayIcon.setIcon(QIcon(":/icon22x22"));
+#elif defined Q_WS_X11
     m_trayIcon.setIcon(QIcon(":/icon22x22"));
 #else
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
