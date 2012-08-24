@@ -414,35 +414,16 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
     Request req;
 
     req.m_controlByte = TX_SetDeviceSettings;
-    req.m_data[0] = bits;
-    req.m_dataLen = 1;
-    req.setURB();
 
+
+    req.m_dataLen = 1;
+    req.m_data[0] = bits;
+
+    req.setURB();
     issueRequest(req);
 
-    //m_pollNumber = 0;
+    m_pollNumber = 0;
 
-#if 0
-    FcData fcdata;
-    const fcCommandDef* cmdDef;
-
-    cmdDef = getCommandDef(fcSet_DeviceFlags, -1);
-
-    fcdata.command = cmdDef;
-
-    unsigned char bits;
-
-    bits = !isCelcius ? bitfenix_flag_celcius : 0;
-    bits |= !isAuto ? bitfenix_flag_auto : 0;
-    bits |= isAudibleAlarm ? bitfenix_flag_alarm : 0;
-
-    fcdata.data[0] = bits;
-
-    //fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
-    issueCommand(fcdata);
-
-    m_pollNumber  = 0;
-#endif
     return true;
 }
 
@@ -450,31 +431,23 @@ bool FanControllerIO::setChannelSettings(int channel,
                                          unsigned thresholdF,
                                          unsigned speed)
 {
-#if 0
-    FcData fcdata;
-    const fcCommandDef* cmdDef;
+    Request req;
 
-    cmdDef = getCommandDef(fcSet_SetChannelSettings, channel);
+    req.m_controlByte = (ControlByte)(TX_SetAlarmAndSpeed_Channel0 + channel);
 
-    if (!cmdDef) {
-        qDebug() << "FanController::setChannelSettings()"
-                 << ": Invalid command";
-        return false;
-    }
+    req.m_dataLen = 3;
+    req.m_data[0] = thresholdF;
+    req.m_data[1] = speed % 256;
+    req.m_data[2] = speed / 256;
 
-    fcdata.command = cmdDef;
+    req.setURB();
+    issueRequest(req);
 
-    fcdata.data[0] = thresholdF;
-    fcdata.data[1] = speed % 256;
-    fcdata.data[2] = speed / 256;
+    m_pollNumber = 0;
 
-    //fcdata.m_blockCommandsAfterExecuting_timeout = blockRequestsDefaultTimeout;
-    issueCommand(fcdata);
-
-    m_pollNumber  = 0;
-#endif
     return true;
 }
+
 
 bool FanControllerIO::setFromProfile(const FanControllerProfile& profile)
 {
