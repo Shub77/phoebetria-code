@@ -309,18 +309,9 @@ void FanControllerIO::onRawData(QByteArray rawdata)
         break;
 
     case RX_ACK:
-
-#ifdef QT_DEBUG
-        qDebug() << "ACK";
-#endif
-
         break;
 
     case RX_NAK:
-
-#ifdef QT_DEBUG
-        qDebug() << "NAK";
-#endif
         break;
 
     default:
