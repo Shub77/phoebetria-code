@@ -16,9 +16,13 @@
 
 #include <QDebug>
 #include "fancontrollerio.h"
+#include "utils.h"
 
 // Maximum length of the command queue. Set to -1 for no max length
 #define MAX_COMMANDQUEUE_LEN -1
+
+// Uncomment to output raw hex to/from the device
+//#define PHOEBETRIA_OUTPUT_RAW_HEX 1
 
 #define MAX_FAN_CHANNELS 5
 
@@ -77,10 +81,10 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
                  << "++++ Checksum mismatch."
                  << "Expected" << QString::number(m_checksum)
                  << "Got" << QString::number(calculatedChecksum);
-#endif
 
         return false; // Checksum failure
     }
+#endif
 
     return true;
 }
@@ -254,8 +258,23 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 {
     Input parsedData;
     int channel;
+    bool inputParsed;
 
-    parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
+#if defined QT_DEBUG && PHOEBETRIA_OUTPUT_RAW_HEX
+    qDebug() << "#### Raw Data From Device:"
+             << toHexString((const unsigned char*)rawdata.constData(), rawdata.length());
+#endif
+
+    inputParsed = parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
+
+    if (!inputParsed) {
+#ifdef QT_DEBUG
+        qDebug() << "Could not parse input."
+                 << "File:" << QString(__FILE__)
+                            << "Line:" << QString::number(__LINE__);
+#endif
+        return;
+    }
 
     switch (parsedData.m_controlByte)
     {
@@ -276,7 +295,12 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     case RX_AlarmAndSpeed_Channel4:
         channel = parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0;
         emit currentAlarmTemp(channel, rawToTemp(rawdata[2]));
-        // TODO: What are bytes 3 and 4? RPM on Alarm?
+#if 0
+        // TODO: What are bytes 3 and 4? They always seem to be 0xffff
+        qDebug() << "Channel"
+                 << QString::number(channel)
+                 << QString::number((rawToRPM(rawdata.at(4), rawdata.at(3))));
+#endif
         break;
 
     case RX_DeviceSettings:
@@ -290,18 +314,9 @@ void FanControllerIO::onRawData(QByteArray rawdata)
         break;
 
     case RX_ACK:
-
-#ifdef QT_DEBUG
-        qDebug() << "ACK";
-#endif
-
         break;
 
     case RX_NAK:
-
-#ifdef QT_DEBUG
-        qDebug() << "NAK";
-#endif
         break;
 
     default:
@@ -362,6 +377,12 @@ void FanControllerIO::processRequestQueue(void)
 
         return;
     }
+
+#if defined QT_DEBUG && PHOEBETRIA_OUTPUT_RAW_HEX
+    qDebug() << "#### Raw Data To Device:  "
+             << toHexString(r.m_URB, sizeof(r.m_URB));
+#endif
+
 
     m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
 

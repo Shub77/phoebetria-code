@@ -52,25 +52,25 @@ pixmap.files += Images/icons/48x48/phoebetria.png
 SOURCES += main.cpp\
         gui_mainwindow.cpp \
     phoebetriaapp.cpp \
-    bfx-recon/fancontroller.cpp \
     device-io.cpp \
     profiles.cpp \
     fanchanneldata.cpp \
     fancontrollerdata.cpp \
     gui_about.cpp \
     builddetails.cpp \
-    bfx-recon/fancontrollerio.cpp
+    bfx-recon/fancontrollerio.cpp \
+    utils.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
-    bfx-recon/fancontroller.h \
     device-io.h \
     profiles.h \
     fanchanneldata.h \
     fancontrollerdata.h \
     gui_about.h \
     builddetails.h \
-    bfx-recon/fancontrollerio.h
+    bfx-recon/fancontrollerio.h \
+    utils.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui

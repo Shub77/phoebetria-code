@@ -14,26 +14,11 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PHOEBETRIA_APP_H
-#define PHOEBETRIA_APP_H
+#ifndef PHOEBETRIA_UTILS_H
+#define PHOEBETRIA_UTILS_H
 
-#include <QApplication>
-#include <QTimer>
-#include "bfx-recon/fancontrollerio.h"
+#include <QString>
 
-class PhoebetriaApp : public QApplication
-{
-public:
-    PhoebetriaApp(int &argc, char **argv);
+QString toHexString(const unsigned char *data, int len);
 
-    QTimer& fanController_pollTimer(void) { return m_fanController_pollTimer; }
-
-    FanControllerIO& fanControllerIO(void) { return m_fanControllerIO; }
-
-private:
-    static QTimer m_fanController_pollTimer;
-    static FanControllerIO m_fanControllerIO;
-};
-
-
-#endif // PHOEBETRIA_APP_H
+#endif // PHOEBETRIA_UTILS_H

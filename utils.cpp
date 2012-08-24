@@ -14,26 +14,23 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PHOEBETRIA_APP_H
-#define PHOEBETRIA_APP_H
+#include "utils.h"
 
-#include <QApplication>
-#include <QTimer>
-#include "bfx-recon/fancontrollerio.h"
-
-class PhoebetriaApp : public QApplication
+QString toHexString(const unsigned char *data, int len)
 {
-public:
-    PhoebetriaApp(int &argc, char **argv);
+    /* QByteArray can do a similar thing, but as far as I know it cannot be
+     * made to format the output in this manner
+     */
+    static const char* hexDigits = "0123456789ABCDEF";
 
-    QTimer& fanController_pollTimer(void) { return m_fanController_pollTimer; }
+    QString result;
 
-    FanControllerIO& fanControllerIO(void) { return m_fanControllerIO; }
+    for (int i = 0; i < len; i++) {
+        unsigned char cc = *(data + i);
+        if (i != 0) result.append(' ');
+        result.append(hexDigits[(cc >> 4) & 0x0f]);
+        result.append(hexDigits[cc & 0x0f]);
+    }
 
-private:
-    static QTimer m_fanController_pollTimer;
-    static FanControllerIO m_fanControllerIO;
-};
-
-
-#endif // PHOEBETRIA_APP_H
+    return result;
+}
