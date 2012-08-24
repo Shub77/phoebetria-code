@@ -22,7 +22,7 @@
 #define MAX_COMMANDQUEUE_LEN -1
 
 // Uncomment to output raw hex to/from the device
-// #define PHOEBETRIA_OUTPUT_RAW_HEX 1
+//#define PHOEBETRIA_OUTPUT_RAW_HEX 1
 
 #define MAX_FAN_CHANNELS 5
 
@@ -377,6 +377,12 @@ void FanControllerIO::processRequestQueue(void)
 
         return;
     }
+
+#if defined QT_DEBUG && PHOEBETRIA_OUTPUT_RAW_HEX
+    qDebug() << "#### Raw Data To Device:  "
+             << toHexString(r.m_URB, sizeof(r.m_URB));
+#endif
+
 
     m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
 
