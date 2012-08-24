@@ -23,7 +23,7 @@
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
 #include "phoebetriaapp.h"
-#include "bfx-recon/fanControllerIO.h"
+#include "bfx-recon/fancontrollerio.h"
 #include "gui_about.h"
 #include "profiles.h"
 

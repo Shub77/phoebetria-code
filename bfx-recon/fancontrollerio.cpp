@@ -77,10 +77,10 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
                  << "++++ Checksum mismatch."
                  << "Expected" << QString::number(m_checksum)
                  << "Got" << QString::number(calculatedChecksum);
-#endif
 
         return false; // Checksum failure
     }
+#endif
 
     return true;
 }
