@@ -49,14 +49,21 @@ public:
         RX_TempAndSpeed_Channel3        = 0x43, /**< IN  Temp in F and speed (RPM)*/
         RX_TempAndSpeed_Channel4        = 0x44, /**< IN  Temp in F and speed (RPM)*/
 
-        TX_DeviceSettings               = 0x50, /**< IN  Device settings. See DeviceSetttingsFlag */
-        RX_DeviceSettings               = 0x60, /**< OUT Device settings. See DeviceSetttingsFlag */
+        TX_ReqDeviceSettings            = 0x50, /**< OUT Device settings. See DeviceSetttingsFlag */
+        TX_SetDeviceSettings            = 0x60, /**< OUT Set Device settings. See DeviceSetttingsFlag */
+        RX_DeviceSettings               = 0x60, /**< IN  Device settings. See DeviceSetttingsFlag */
 
-        TX_AlarmAndSpeed_Channel0       = 0x70, /**< OUT Alarm Temperature and Max RPM*/
-        TX_AlarmAndSpeed_Channel1       = 0x71, /**< OUT Alarm Temperature and Max RPM*/
-        TX_AlarmAndSpeed_Channel2       = 0x72, /**< OUT Alarm Temperature and Max RPM*/
-        TX_AlarmAndSpeed_Channel3       = 0x73, /**< OUT Alarm Temperature and Max RPM*/
-        TX_AlarmAndSpeed_Channel4       = 0x74, /**< OUT Alarm Temperature and Max RPM*/
+        TX_ReqAlarmAndSpeed_Channel0    = 0x70, /**< OUT Alarm Temperature and Max RPM*/
+        TX_ReqAlarmAndSpeed_Channel1    = 0x71, /**< OUT Alarm Temperature and Max RPM*/
+        TX_ReqAlarmAndSpeed_Channel2    = 0x72, /**< OUT Alarm Temperature and Max RPM*/
+        TX_ReqAlarmAndSpeed_Channel3    = 0x73, /**< OUT Alarm Temperature and Max RPM*/
+        TX_ReqAlarmAndSpeed_Channel4    = 0x74, /**< OUT Alarm Temperature and Max RPM*/
+
+        TX_SetAlarmAndSpeed_Channel0    = 0x80, /**< OUT Alarm Temperature and Max RPM*/
+        TX_SetAlarmAndSpeed_Channel1    = 0x81, /**< OUT Alarm Temperature and Max RPM*/
+        TX_SetAlarmAndSpeed_Channel2    = 0x82, /**< OUT Alarm Temperature and Max RPM*/
+        TX_SetAlarmAndSpeed_Channel3    = 0x83, /**< OUT Alarm Temperature and Max RPM*/
+        TX_SetAlarmAndSpeed_Channel4    = 0x84, /**< OUT Alarm Temperature and Max RPM*/
 
         RX_AlarmAndSpeed_Channel0       = 0x80, /**< IN  Alarm Temperature and Max RPM*/
         RX_AlarmAndSpeed_Channel1       = 0x81, /**< IN  Alarm Temperature and Max RPM*/

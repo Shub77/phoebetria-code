@@ -374,7 +374,7 @@ void FanControllerIO::processRequestQueue(void)
 //---------------------------------------------------------------------
 void FanControllerIO::requestDeviceFlags(void)
 {
-    Request r(TX_DeviceSettings);
+    Request r(TX_ReqDeviceSettings);
     issueRequest(r);
 }
 
@@ -390,7 +390,7 @@ void FanControllerIO::requestTempAndSpeed(int channel)
 
 void FanControllerIO::requestAlarmAndSpeed(int channel)
 {
-    ControlByte cb = (ControlByte)(TX_AlarmAndSpeed_Channel0 + channel);
+    ControlByte cb = (ControlByte)(TX_ReqAlarmAndSpeed_Channel0 + channel);
 
     Request r(cb);
     issueRequest(r);
@@ -413,7 +413,7 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
 
     Request req;
 
-    req.m_controlByte = RX_DeviceSettings;
+    req.m_controlByte = TX_SetDeviceSettings;
     req.m_data[0] = bits;
     req.m_dataLen = 1;
     req.setURB();
