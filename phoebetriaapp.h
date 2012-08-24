@@ -19,7 +19,6 @@
 
 #include <QApplication>
 #include <QTimer>
-#include "bfx-recon/fancontroller.h"
 #include "bfx-recon/fancontrollerio.h"
 
 class PhoebetriaApp : public QApplication
