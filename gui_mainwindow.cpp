@@ -23,7 +23,7 @@
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
 #include "phoebetriaapp.h"
-#include "bfx-recon/fancontroller.h"
+#include "bfx-recon/fanControllerIO.h"
 #include "gui_about.h"
 #include "profiles.h"
 
@@ -46,8 +46,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     m_isAutoToggleByDevice = false;
     m_isAudibleAlarmByDevice = false;
 
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
-    if (fc->isInterfaceConnected() == false) {
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
+    if (fc->isConnected() == false) {
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
     }
 
@@ -108,15 +108,15 @@ void gui_MainWindow::connectCustomSignals(void)
 {
     PhoebetriaApp *app = (PhoebetriaApp*)qApp;
 
-    connect(&app->fanController(), SIGNAL(currentRPM(int,int)),
+    connect(&app->fanControllerIO(), SIGNAL(currentRPM(int,int)),
             this, SLOT(onCurrentRPM(int,int)));
-    connect(&app->fanController(), SIGNAL(currentTemp(int,int)),
+    connect(&app->fanControllerIO(), SIGNAL(currentTemp(int,int)),
             this, SLOT(onCurrentTemp(int,int)));
-    connect(&app->fanController(), SIGNAL(deviceSettings(bool,bool,bool)),
+    connect(&app->fanControllerIO(), SIGNAL(deviceSettings(bool,bool,bool)),
             this, SLOT(onDeviceSettings(bool,bool,bool)));
-    connect(&app->fanController(), SIGNAL(maxRPM(int, int)),
+    connect(&app->fanControllerIO(), SIGNAL(maxRPM(int, int)),
             this, SLOT(onMaxRPM(int, int)));
-    connect(&app->fanController(), SIGNAL(currentAlarmTemp(int,int)),
+    connect(&app->fanControllerIO(), SIGNAL(currentAlarmTemp(int,int)),
             this, SLOT(onCurrentAlarmTemp(int,int)));
 }
 
@@ -241,7 +241,7 @@ void gui_MainWindow::syncDeviceSettingsCtrls(void)
 
     bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
     ui->ctrl_isAudibleAlarm->setValue(m_fcd.isAudibleAlarm() ? 1 : 0);
-    bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
+    bs = ui->ctrl_isAudibleAlarm->blockSignals(bs);
 
 
 }
@@ -312,27 +312,30 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
                                       bool isAuto,
                                       bool isAudibleAlarm)
 {
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     if (m_fcd.isCelcius() != isCelcius) {
         m_fcd.setIsCelcius(isCelcius);
-        m_isCelciusToggleByDevice = true;
-        //ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
+        bool bs = ui->ctrl_tempScaleToggle->blockSignals(true);
+        ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
+        ui->ctrl_tempScaleToggle->blockSignals(bs);
 
         updateAllAlarmCtrls(m_fcd.isCelcius());
     }
 
     if (m_fcd.isAuto()!= isAuto) {
         m_fcd.setIsAuto(isAuto);
-        m_isAutoToggleByDevice = true;
-        //ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
+        bool bs = ui->ctrl_isManual->blockSignals(true);
+        ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
         enableDisableSpeedControls();
+        ui->ctrl_isManual->blockSignals(bs);
     }
 
     if (m_fcd.isAudibleAlarm() != isAudibleAlarm) {
         m_fcd.setIsAudibleAlarm(isAudibleAlarm);
-        m_isAudibleAlarmByDevice = true;
-        //ui->ctrl_isAudibleAlarm->setValue(isAudibleAlarm ? 1 : 0);
+        bool bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
+        ui->ctrl_isAudibleAlarm->setValue(isAudibleAlarm ? 1 : 0);
+        ui->ctrl_isAudibleAlarm->blockSignals(bs);
     }
 
     syncDeviceSettingsCtrls();
@@ -350,14 +353,10 @@ void gui_MainWindow::onMaxRPM(int channel, int RPM)
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {
-   if (m_isAutoToggleByDevice) {
-        m_isAutoToggleByDevice = false;
-        return;
-   }
 
     m_fcd.setIsAuto((value == 0 ? true : false));
 
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     fc->setDeviceFlags(m_fcd.isCelcius(),
                        m_fcd.isAuto(),
@@ -369,14 +368,9 @@ void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 
 void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
 {
-    if (m_isAudibleAlarmByDevice) {
-        m_isAudibleAlarmByDevice = false;
-        return;
-    }
-
     m_fcd.setIsAudibleAlarm((value == 1 ? true : false));
 
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     fc->setDeviceFlags(m_fcd.isCelcius(),
                        m_fcd.isAuto(),
@@ -386,14 +380,10 @@ void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
 
 void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 {
-    if (m_isCelciusToggleByDevice) {
-        m_isCelciusToggleByDevice = false;
-        return;
-    }
 
     m_fcd.setIsCelcius((value == 1 ? true : false));
 
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     fc->setDeviceFlags(m_fcd.isCelcius(),
                        m_fcd.isAuto(),
@@ -408,7 +398,7 @@ void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 // TODO: Move this into class ChannelData
 void gui_MainWindow::setFcChannelSpeed(int channel, int RPM)
 {
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     int channelAlarmTemp = m_fcd.alarmTemp(channel);
 
@@ -420,13 +410,13 @@ void gui_MainWindow::setFcChannelSpeed(int channel, int RPM)
 
 void gui_MainWindow::userPressedChannelRpmSlider(int channel)
 {
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
     fc->blockSignals(true);
 }
 
 void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
 {
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
     fc->blockSignals(false);
     int val = rpmSliderValueToRPM(channel, m_ctrls_RpmSliders[channel]->value());
     if (val != m_fcd.lastRPM(channel)) {
@@ -440,7 +430,7 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
 
 void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
 {
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     int val = rpmSliderValueToRPM(channel, value);
     m_ctrls_currentRPM[channel]->setText(QString::number((int)val));
@@ -475,7 +465,7 @@ void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
     if (m_fcd.isCelcius()) {
         currentAlarmTemp = m_fcd.toCelcius(currentAlarmTemp);
     }
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
     int minProbeTemp = fc->minProbeTemp(m_fcd.isCelcius());
     int maxProbTemp = fc->maxProbeTemp(m_fcd.isCelcius());
 
@@ -629,7 +619,7 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
 
     if (filename.isEmpty()) return;
 
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     bool sb1 = this->blockSignals(true);
     bool sb2 = fc->blockSignals(true);
@@ -666,7 +656,7 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
     if (fcp.load(filename)) {
         //qDebug() << "profile loaded";
 
-        FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+        FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
         bool sb1 = this->blockSignals(true);
         bool sb2 = fc->blockSignals(true);
@@ -730,10 +720,12 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
         speed = ceil(channelMaxRPM * 0.4);
     }
 
+#if 0
     // Speeds must be in multiples of 100 RPM
 
     double _speed = ((int)(speed / 100.0))*100;
     speed = _speed;
+#endif
 
     qDebug() << "reported max speed for channel"
                 << channel+1
@@ -747,7 +739,7 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
                 << "RPM"
                    ;
 
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     int channelAlarmTemp = m_fcd.alarmTemp(channel);
 
@@ -759,7 +751,7 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
 void gui_MainWindow::onDebugMenu_profiles()
 {
     FanControllerProfile fcp;
-    FanController* fc = &((PhoebetriaApp*)qApp)->fanController();
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     qDebug() << fcp.defualtProfileLocation();
 

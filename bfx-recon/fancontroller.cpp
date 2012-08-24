@@ -488,7 +488,7 @@ void  FanController::processCommandQueue(void)
             blockRequests(dataToSend.m_blockCommandsAfterExecuting_timeout);
         }
 
-        m_io_device.sendData(reqBuff, 8);
+        m_io_device.sendData((const unsigned char*)reqBuff, 8);
 
         blockSignals(bs);
     }
