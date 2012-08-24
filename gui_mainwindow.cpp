@@ -48,6 +48,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     connect(&m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(onTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 
+
+    setWindowIcon(QIcon(":/icon16x16"));
+
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
         m_speedSliderMovedByDevice[i] = false;
     }
