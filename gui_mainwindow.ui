@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>410</width>
-    <height>520</height>
+    <width>422</width>
+    <height>519</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>410</width>
-    <height>520</height>
+    <width>409</width>
+    <height>487</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -33,6 +33,932 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <widget class="QGroupBox" name="groupBox_6">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>150</y>
+      <width>71</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLineEdit" name="ctrl_channel5speed">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="ctrl_probe5Temp">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>240</y>
+       <width>51</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Channel</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-image: url(:/Images/channel_5.png);
+margin:-2px;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="ctrl_channel5speedSlider">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>39</y>
+       <width>51</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>150</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:vertical {
+     border: 1px solid #bbb;
+     background: darkBlue;
+     width: 20px;
+     border-radius: 4px;
+ }
+
+ QSlider::handle:vertical {
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:20px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
+ }
+
+ QSlider::add-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 border: 1px solid #777;
+	 border-radius: 4px;
+ }
+
+ QSlider::sub-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     border: 1px solid #777;
+	 border-radius: 4px;
+ }</string>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="invertedControls">
+      <bool>false</bool>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::TicksAbove</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ctrl_channel5AlarmTemp">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>280</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>150</y>
+      <width>71</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLineEdit" name="ctrl_channel2speed">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="ctrl_probe2Temp">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>240</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Channel</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-image: url(:/Images/channel_2.png);
+margin:-2px;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="ctrl_channel2speedSlider">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>51</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>150</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:vertical {
+     border: 1px solid #bbb;
+     background: darkBlue;
+     width: 20px;
+     border-radius: 4px;
+ }
+
+ QSlider::handle:vertical {
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:20px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
+ }
+
+ QSlider::add-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 border: 1px solid #777;
+	 border-radius: 4px;
+ }
+
+ QSlider::sub-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     border: 1px solid #777;
+	 border-radius: 4px;
+ }</string>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="invertedControls">
+      <bool>false</bool>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::TicksAbove</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ctrl_channel2AlarmTemp">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>280</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_5">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>150</y>
+      <width>71</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLineEdit" name="ctrl_channel4speed">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="ctrl_probe4Temp">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>240</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Channel</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-image: url(:/Images/channel_4.png);
+margin:-2px;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="ctrl_channel4speedSlider">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>39</y>
+       <width>51</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>150</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:vertical {
+     border: 1px solid #bbb;
+     background: darkBlue;
+     width: 20px;
+     border-radius: 4px;
+ }
+
+ QSlider::handle:vertical {
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:20px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
+ }
+
+ QSlider::add-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 border: 1px solid #777;
+	 border-radius: 4px;
+ }
+
+ QSlider::sub-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     border: 1px solid #777;
+	 border-radius: 4px;
+ }</string>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="invertedControls">
+      <bool>false</bool>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::TicksAbove</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ctrl_channel4AlarmTemp">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>280</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+    <zorder>label_5</zorder>
+    <zorder>ctrl_channel4speedSlider</zorder>
+    <zorder>ctrl_channel4speed</zorder>
+    <zorder>ctrl_probe4Temp</zorder>
+    <zorder>ctrl_channel4AlarmTemp</zorder>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_4">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>150</y>
+      <width>71</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLineEdit" name="ctrl_channel3speed">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="ctrl_probe3Temp">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>240</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Channel</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-image: url(:/Images/channel_3.png);
+margin:-2px;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="ctrl_channel3speedSlider">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>39</y>
+       <width>51</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>150</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:vertical {
+     border: 1px solid #bbb;
+     background: darkBlue;
+     width: 20px;
+     border-radius: 4px;
+ }
+
+ QSlider::handle:vertical {
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:20px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
+ }
+
+ QSlider::add-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 border: 1px solid #777;
+	 border-radius: 4px;
+ }
+
+ QSlider::sub-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     border: 1px solid #777;
+	 border-radius: 4px;
+ }</string>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="invertedControls">
+      <bool>false</bool>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::TicksAbove</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ctrl_channel3AlarmTemp">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>280</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>150</y>
+      <width>71</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> QGroupBox {     
+ background-image: url(:/Images/mesh.png);
+ }</string>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLineEdit" name="ctrl_channel1speed">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Current RPM</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="ctrl_probe1Temp">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>240</y>
+       <width>51</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Channel</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-image: url(:/Images/channel_1.png);
+margin:-2px;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="ctrl_channel1speedSlider">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>51</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>150</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:vertical {
+     border: 1px solid #bbb;
+     background: darkBlue;
+     width: 20px;
+     border-radius: 4px;
+ }
+
+ QSlider::handle:vertical {
+	 background-image: url(:/Images/slider_toggle.png);
+ 	width:35px;
+ 	height:20px;
+ 	margin:-7px;
+ 	border:0px;
+ 	padding:0px;
+ }
+
+ QSlider::add-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 border: 1px solid #777;
+	 border-radius: 4px;
+ }
+
+ QSlider::sub-page:vertical {
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     border: 1px solid #777;
+	 border-radius: 4px;
+ }</string>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="invertedControls">
+      <bool>false</bool>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::TicksAbove</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ctrl_channel1AlarmTemp">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>280</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Alarm Temperature</string>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </widget>
    <widget class="QGraphicsView" name="ctrl_logoAndStatus">
     <property name="geometry">
      <rect>
@@ -86,64 +1012,261 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
       <string>Control</string>
      </attribute>
-     <widget class="QWidget" name="gridLayoutWidget_2">
+     <widget class="QSlider" name="ctrl_isAudibleAlarm">
       <property name="geometry">
        <rect>
-        <x>7</x>
-        <y>0</y>
-        <width>231</width>
-        <height>91</height>
+        <x>160</x>
+        <y>40</y>
+        <width>71</width>
+        <height>21</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="ctrlTabLayout">
-       <item row="0" column="0" alignment="Qt::AlignVCenter">
-        <widget class="QLabel" name="ctrl_tempScaleLabel">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>21</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <kerning>true</kerning>
-          </font>
-         </property>
-         <property name="text">
-          <string>Temperature Scale</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" alignment="Qt::AlignVCenter">
-        <widget class="QLabel" name="ctrl_isAudibleAlarmLabel">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>21</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Audible Alarm</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" alignment="Qt::AlignVCenter">
-        <widget class="QLabel" name="ctrl_isManualLabel">
-         <property name="text">
-          <string>Manual Control</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" alignment="Qt::AlignHCenter">
-        <widget class="QSlider" name="ctrl_tempScaleToggle">
-         <property name="styleSheet">
-          <string notr="true">QSlider {
+      <property name="styleSheet">
+       <string notr="true">QSlider {
+ min-width:71px;
+ min-height:21px;
+ max-width:71px;
+ max-height:21px;
+ }
+ QSlider::groove:horizontal {
+ background-image: url(:/Images/slider_onoff_bg.png);
+ background-repeat: no-repeat;
+ background-position:center;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+ 
+QSlider::sub-page:horizontal {
+ background-image: url(:/Images/slider_onoff_on.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-left:0px;
+ }
+ 
+QSlider::add-page:horizontal {
+ background-image: url(:/Images/slider_onoff_off.png);
+ background-repeat: no-repeat;
+ background-position:right;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-right:0px;
+ }
+ 
+QSlider::handle:horizontal {
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+ 
+QSlider::sub-page:horizontal:disabled {
+ background-image: url(:/Images/slider_onoff_on_disabled.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-left:0px;
+ }
+ 
+QSlider::add-page:horizontal:disabled {
+ background-image: url(:/Images/slider_onoff_on_disabled.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-right:0px;
+ }
+ 
+QSlider::handle:horizontal:disabled {
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+</string>
+      </property>
+      <property name="maximum">
+       <number>1</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Manual Control</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="ctrl_isManual">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>70</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider {
+ min-width:71px;
+ min-height:21px;
+ max-width:71px;
+ max-height:21px;
+ }
+ QSlider::groove:horizontal {
+ background-image: url(:/Images/slider_onoff_bg.png);
+ background-repeat: no-repeat;
+ background-position:center;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+ 
+QSlider::sub-page:horizontal {
+ background-image: url(:/Images/slider_onoff_on.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-left:0px;
+ }
+ 
+QSlider::add-page:horizontal {
+ background-image: url(:/Images/slider_onoff_off.png);
+ background-repeat: no-repeat;
+ background-position:right;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-right:0px;
+ }
+ 
+QSlider::handle:horizontal {
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+ 
+QSlider::sub-page:horizontal:disabled {
+ background-image: url(:/Images/slider_onoff_on_disabled.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-left:0px;
+ }
+ 
+QSlider::add-page:horizontal:disabled {
+ background-image: url(:/Images/slider_onoff_on_disabled.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-right:0px;
+ }
+ 
+QSlider::handle:horizontal:disabled {
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+</string>
+      </property>
+      <property name="maximum">
+       <number>1</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>21</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Audible Alarm</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>21</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="text">
+       <string>Temperature Scale</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="ctrl_tempScaleToggle">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>10</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider {
  min-width:71px;
  min-height:21px;
  max-width:71px;
@@ -216,1364 +1339,85 @@ QSlider::handle:horizontal:disabled {
  padding:0px;
  }
 </string>
-         </property>
-         <property name="maximum">
-          <number>1</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" alignment="Qt::AlignHCenter">
-        <widget class="QSlider" name="ctrl_isAudibleAlarm">
-         <property name="styleSheet">
-          <string notr="true">QSlider {
- min-width:71px;
- min-height:21px;
- max-width:71px;
- max-height:21px;
- }
- QSlider::groove:horizontal {
- background-image: url(:/Images/slider_onoff_bg.png);
- background-repeat: no-repeat;
- background-position:center;
- margin:0px;
- border:0px;
- padding:0px;
- }
- 
-QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_onoff_on.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-left:0px;
- }
- 
-QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_onoff_off.png);
- background-repeat: no-repeat;
- background-position:right;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-right:0px;
- }
- 
-QSlider::handle:horizontal {
- background-image: url(:/Images/slider_toggle.png);
- width:35px;
- height:17px;
- margin:0px;
- border:0px;
- padding:0px;
- }
- 
-QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_onoff_on_disabled.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-left:0px;
- }
- 
-QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_onoff_on_disabled.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-right:0px;
- }
- 
-QSlider::handle:horizontal:disabled {
- background-image: url(:/Images/slider_toggle.png);
- width:35px;
- height:17px;
- margin:0px;
- border:0px;
- padding:0px;
- }
-</string>
-         </property>
-         <property name="maximum">
-          <number>1</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1" alignment="Qt::AlignHCenter">
-        <widget class="QSlider" name="ctrl_isManual">
-         <property name="styleSheet">
-          <string notr="true">QSlider {
- min-width:71px;
- min-height:21px;
- max-width:71px;
- max-height:21px;
- }
- QSlider::groove:horizontal {
- background-image: url(:/Images/slider_onoff_bg.png);
- background-repeat: no-repeat;
- background-position:center;
- margin:0px;
- border:0px;
- padding:0px;
- }
- 
-QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_onoff_on.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-left:0px;
- }
- 
-QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_onoff_off.png);
- background-repeat: no-repeat;
- background-position:right;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-right:0px;
- }
- 
-QSlider::handle:horizontal {
- background-image: url(:/Images/slider_toggle.png);
- width:35px;
- height:17px;
- margin:0px;
- border:0px;
- padding:0px;
- }
- 
-QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_onoff_on_disabled.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-left:0px;
- }
- 
-QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_onoff_on_disabled.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-right:0px;
- }
- 
-QSlider::handle:horizontal:disabled {
- background-image: url(:/Images/slider_toggle.png);
- width:35px;
- height:17px;
- margin:0px;
- border:0px;
- padding:0px;
- }
-</string>
-         </property>
-         <property name="maximum">
-          <number>1</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      </property>
+      <property name="maximum">
+       <number>1</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
       <string>Profiles</string>
      </attribute>
-     <widget class="QWidget" name="gridLayoutWidget_3">
+     <widget class="QPushButton" name="ctrl_LoadPreset">
       <property name="geometry">
        <rect>
-        <x>9</x>
-        <y>0</y>
-        <width>221</width>
-        <height>91</height>
+        <x>10</x>
+        <y>40</y>
+        <width>65</width>
+        <height>21</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="ctrlTab2Layout">
-       <item row="1" column="0">
-        <widget class="QLineEdit" name="ctrl_presetName"/>
-       </item>
-       <item row="2" column="0">
-        <layout class="QGridLayout" name="ctrlButtonLayout">
-         <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-          <widget class="QPushButton" name="ctrl_LoadPreset">
-           <property name="maximumSize">
-            <size>
-             <width>65</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Load Preset</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string>Load</string>
-           </property>
-           <property name="icon">
-            <iconset resource="gui_resources.qrc">
-             <normaloff>:/Images/profile_play.png</normaloff>:/Images/profile_play.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-          <widget class="QPushButton" name="ctrl_SavePreset">
-           <property name="maximumSize">
-            <size>
-             <width>65</width>
-             <height>21</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Save Preset</string>
-           </property>
-           <property name="text">
-            <string>Save</string>
-           </property>
-           <property name="icon">
-            <iconset resource="gui_resources.qrc">
-             <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Name:</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <property name="maximumSize">
+       <size>
+        <width>65</width>
+        <height>21</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Load Preset</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>Load</string>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_play.png</normaloff>:/Images/profile_play.png</iconset>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="ctrl_SavePreset">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>40</y>
+        <width>65</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>65</width>
+        <height>21</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Save Preset</string>
+      </property>
+      <property name="text">
+       <string>Save</string>
+      </property>
+      <property name="icon">
+       <iconset resource="gui_resources.qrc">
+        <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="ctrl_presetName">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>221</width>
+        <height>20</height>
+       </rect>
+      </property>
      </widget>
     </widget>
-   </widget>
-   <widget class="QWidget" name="gridLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>150</y>
-      <width>391</width>
-      <height>331</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="channelLayout" rowstretch="0">
-     <property name="margin">
-      <number>5</number>
-     </property>
-     <property name="spacing">
-      <number>5</number>
-     </property>
-     <item row="0" column="1">
-      <widget class="QGroupBox" name="channel2Group">
-       <property name="title">
-        <string/>
-       </property>
-       <widget class="QWidget" name="verticalLayoutWidget_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>72</width>
-          <height>311</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="channel2Layout" stretch="0,0,0,0,0">
-         <property name="spacing">
-          <number>5</number>
-         </property>
-         <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
-         </property>
-         <property name="margin">
-          <number>5</number>
-         </property>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_probe2Temp">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Temperature</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QSlider" name="ctrl_channel2speedSlider">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>60</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
- }
-
- QSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="invertedAppearance">
-            <bool>false</bool>
-           </property>
-           <property name="invertedControls">
-            <bool>false</bool>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::TicksAbove</enum>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_channel2speed">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Current RPM</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="ctrl_channel3Label">
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Arial Black</family>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Channel</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-image: url(:/Images/channel_2.png);
-margin:-2px;</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Panel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="ctrl_channel2AlarmTemp">
-           <property name="minimumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Alarm Temperature</string>
-           </property>
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QGroupBox" name="channel3Group">
-       <property name="title">
-        <string/>
-       </property>
-       <widget class="QWidget" name="verticalLayoutWidget_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>73</width>
-          <height>311</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="channel3Layout" stretch="0,0,0,0,0">
-         <property name="spacing">
-          <number>5</number>
-         </property>
-         <property name="margin">
-          <number>5</number>
-         </property>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_probe3Temp">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Temperature</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QSlider" name="ctrl_channel3speedSlider">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>60</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
- }
-
- QSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="invertedAppearance">
-            <bool>false</bool>
-           </property>
-           <property name="invertedControls">
-            <bool>false</bool>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::TicksAbove</enum>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_channel3speed">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Current RPM</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="ctrl_channel3Label_2">
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Arial Black</family>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Channel</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-image: url(:/Images/channel_3.png);
-margin:-2px;</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Panel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="ctrl_channel3AlarmTemp">
-           <property name="minimumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Alarm Temperature</string>
-           </property>
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QGroupBox" name="channel4Group">
-       <property name="title">
-        <string/>
-       </property>
-       <widget class="QWidget" name="verticalLayoutWidget_4">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>72</width>
-          <height>311</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="channel4Layout">
-         <property name="spacing">
-          <number>5</number>
-         </property>
-         <property name="margin">
-          <number>5</number>
-         </property>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_probe4Temp">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Temperature</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QSlider" name="ctrl_channel4speedSlider">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>60</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
- }
-
- QSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="invertedAppearance">
-            <bool>false</bool>
-           </property>
-           <property name="invertedControls">
-            <bool>false</bool>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::TicksAbove</enum>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_channel4speed">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Current RPM</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="ctrl_channel4Label">
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Arial Black</family>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Channel</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-image: url(:/Images/channel_4.png);
-margin:-2px;</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Panel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="ctrl_channel4AlarmTemp">
-           <property name="minimumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Alarm Temperature</string>
-           </property>
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QGroupBox" name="channel1Group">
-       <property name="title">
-        <string/>
-       </property>
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>72</width>
-          <height>311</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="channel1Layout">
-         <property name="spacing">
-          <number>5</number>
-         </property>
-         <property name="margin">
-          <number>5</number>
-         </property>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_probe1Temp">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Temperature</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QSlider" name="ctrl_channel1speedSlider">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>60</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
- }
-
- QSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="invertedAppearance">
-            <bool>false</bool>
-           </property>
-           <property name="invertedControls">
-            <bool>false</bool>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::TicksAbove</enum>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_channel1speed">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Current RPM</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="ctrl_channel1Label">
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Arial Black</family>
-             <pointsize>16</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Channel</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-image: url(:/Images/channel_1.png);
-margin:-2px;</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Panel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="ctrl_channel1AlarmTemp">
-           <property name="minimumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Alarm Temperature</string>
-           </property>
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QGroupBox" name="channel5Group">
-       <property name="title">
-        <string/>
-       </property>
-       <widget class="QWidget" name="verticalLayoutWidget_5">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>72</width>
-          <height>311</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="channel5Layout">
-         <property name="spacing">
-          <number>5</number>
-         </property>
-         <property name="margin">
-          <number>5</number>
-         </property>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_probe5Temp">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Temperature</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QSlider" name="ctrl_channel5speedSlider">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>60</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
- }
-
- QSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="invertedAppearance">
-            <bool>false</bool>
-           </property>
-           <property name="invertedControls">
-            <bool>false</bool>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::TicksAbove</enum>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLineEdit" name="ctrl_channel5speed">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Current RPM</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QLabel" name="ctrl_channel5Label">
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>50</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Arial Black</family>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Channel</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-image: url(:/Images/channel_5.png);
-margin:-2px;</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Panel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="ctrl_channel5AlarmTemp">
-           <property name="minimumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>70</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Alarm Temperature</string>
-           </property>
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-     </item>
-    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -1581,7 +1425,7 @@ margin:-2px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>410</width>
+     <width>422</width>
      <height>22</height>
     </rect>
    </property>
