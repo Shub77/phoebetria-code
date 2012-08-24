@@ -84,6 +84,8 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
         return false; // Checksum failure
     }
+#else
+    (void)calculatedChecksum;   // not used in release builds
 #endif
 
     return true;

@@ -362,8 +362,6 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
                                       bool isAuto,
                                       bool isAudibleAlarm)
 {
-    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
-
     if (m_fcd.isCelcius() != isCelcius) {
         m_fcd.setIsCelcius(isCelcius);
         bool bs = ui->ctrl_tempScaleToggle->blockSignals(true);
@@ -480,8 +478,6 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
 
 void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
 {
-    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
-
     int val = rpmSliderValueToRPM(channel, value);
     m_ctrls_currentRPM[channel]->setText(QString::number((int)val));
     if (!m_ctrls_RpmSliders[channel]->isSliderDown()
