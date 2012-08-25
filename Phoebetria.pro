@@ -99,6 +99,9 @@ macx {
     LIBS += -framework CoreFoundation -framework IOKit
     SOURCES += hidapi-0.7.0/mac/hid.c
     ICON = Phoebetria.icns
+    APP_QML_FILES.files = mac/qt_menu.nib
+    APP_QML_FILES.path = Contents/Resources
+    QMAKE_BUNDLE_DATA += APP_QML_FILES
 }
 
 RESOURCES += \
