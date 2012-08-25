@@ -61,7 +61,15 @@ public:
     int minLoggedRPM(int channel) const;
     int maxLoggedRPM(int channel) const;
 
+    //
+    bool updateMaxRPM(int channel, int to);
+    bool updateAlarmTemp(int channel, int to);
+    bool updateManualRPM(int channel, int to);
+    bool updateTempF(int channel, int to);
+    bool updateRPM(int channel, int to);
+
     // Set channel settings
+    // TODO: make these protected or even private
     void setMaxRPM(int channel, int to);
     void setAlarmTemp(int channel, int to);
 
@@ -74,6 +82,8 @@ public:
     void setLastRPM(int channel, int to);
     void setMinLoggedRPM(int channel, int to);
     void setMaxLoggedRPM(int channel, int to);
+    // END TODO: make these protected or even private
+
 
     static QString temperatureString(int temperature,
                                      bool asCelcius,
