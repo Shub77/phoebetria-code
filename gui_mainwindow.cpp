@@ -26,13 +26,30 @@
 #include "bfx-recon/fancontrollerio.h"
 #include "gui_about.h"
 #include "profiles.h"
-
+#include "qglobal.h"
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
 {
     ui->setupUi(this);
+
+#if defined Q_WS_WIN
+    m_trayIcon.setIcon(QIcon(":/icon16x16"));
+#elif defined Q_WS_MAC
+    m_trayIcon.setIcon(QIcon(":/icon22x22"));
+#elif defined Q_WS_X11
+    m_trayIcon.setIcon(QIcon(":/icon22x22"));
+#else
+    m_trayIcon.setIcon(QIcon(":/icon16x16"));
+#endif
+
+    m_trayIcon.setToolTip("Phoebetria");
+    connect(&m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this, SLOT(onTrayIconActivated(QSystemTrayIcon::ActivationReason)));
+
+
+    setWindowIcon(QIcon(":/icon16x16"));
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
         m_speedSliderMovedByDevice[i] = false;
@@ -247,6 +264,42 @@ void gui_MainWindow::syncDeviceSettingsCtrls(void)
 }
 
 
+void gui_MainWindow::changeEvent(QEvent* e)
+{
+    switch (e->type())
+    {
+        case QEvent::WindowStateChange:
+            {
+                if (this->windowState() & Qt::WindowMinimized)
+                {
+                    //if (Preferences::instance().minimizeToTray())
+                    if (QSystemTrayIcon::isSystemTrayAvailable())
+                    {
+                        QTimer::singleShot(0, this, SLOT(hide()));
+                        m_trayIcon.show();
+                        m_trayIcon.showMessage("Phoebetria",
+                                                tr("Minimised to tray"));
+                    }
+                }
+
+                break;
+            }
+        default:
+            break;
+    }
+
+    QMainWindow::changeEvent(e);
+}
+
+
+void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    m_trayIcon.hide();
+    this->showNormal();
+    this->raise();
+    this->activateWindow();
+}
+
 void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
@@ -312,8 +365,6 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
                                       bool isAuto,
                                       bool isAudibleAlarm)
 {
-    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
-
     if (m_fcd.isCelcius() != isCelcius) {
         m_fcd.setIsCelcius(isCelcius);
         bool bs = ui->ctrl_tempScaleToggle->blockSignals(true);
@@ -430,8 +481,6 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
 
 void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
 {
-    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
-
     int val = rpmSliderValueToRPM(channel, value);
     m_ctrls_currentRPM[channel]->setText(QString::number((int)val));
     if (!m_ctrls_RpmSliders[channel]->isSliderDown()

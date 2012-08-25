@@ -26,8 +26,8 @@ FanControllerData::FanControllerData()
 void FanControllerData::init(void)
 {
     m_isCelcius = false;
-    m_isAuto = false;
-    m_isAudibleAlarm = false;
+    m_isAuto = true;
+    m_isAudibleAlarm = true;
 }
 
 // ------------------------------------------------------------------------
@@ -77,6 +77,78 @@ int FanControllerData::maxLoggedRPM(int channel) const
 {
     return m_channelSettings[channel].maxLoggedRPM();
 }
+
+// ------------------------------------------------------------------------
+// Update channel settings
+// ------------------------------------------------------------------------
+
+bool FanControllerData::updateMaxRPM(int channel, int to)
+{
+    bool r = false;
+    FanChannelData& cd = m_channelSettings[channel];
+    if (cd.maxRPM() != to || !cd.isSet_maxRpm()) {
+        cd.setMaxRPM(to);
+        r = true;
+    }
+    return r;
+}
+
+bool FanControllerData::updateAlarmTemp(int channel, int to)
+{
+    bool r = false;
+    FanChannelData& cd = m_channelSettings[channel];
+    if (cd.alarmTemp() != to || !cd.isSet_alarmTemp()) {
+        cd.setAlarmTemp(to);
+        r = true;
+    }
+    return r;
+}
+
+bool FanControllerData::updateManualRPM(int channel, int to)
+{
+    bool r = false;
+    FanChannelData& cd = m_channelSettings[channel];
+    if (cd.manualRPM() != to || !cd.isSet_manualRPM()) {
+        cd.setManualRPM(to);
+        r = true;
+    }
+    return r;
+}
+
+bool FanControllerData::updateTempF(int channel, int to)
+{
+    bool r = false;
+    FanChannelData& cd = m_channelSettings[channel];
+    if (cd.lastTemp() != to || !cd.isSet_lastTemp()) {
+        if (cd.minTemp() > to || !cd.isSet_MinTemp()) {
+            cd.setMinTemp(to);
+        }
+        if (cd.maxTemp() < to || !cd.isSet_MaxTemp()) {
+            cd.setMaxTemp(to);
+        }
+        cd.setLastTemp(to);
+        r = true;
+    }
+    return r;
+}
+
+bool FanControllerData::updateRPM(int channel, int to)
+{
+    bool r = false;
+    FanChannelData& cd = m_channelSettings[channel];
+    if (cd.lastRPM() != to || !cd.isSet_lastRPM()) {
+        if (cd.minLoggedRPM() > to || !cd.isSet_minLoggedRPM()) {
+            cd.setMinLoggedRPM(to);
+        }
+        if (cd.maxLoggedRPM() < to || !cd.isSet_maxLoggedRPM()) {
+            cd.setMaxLoggedRPM(to);
+        }
+        cd.setLastRPM(to);
+        r = true;
+    }
+    return r;
+}
+
 
 // ------------------------------------------------------------------------
 // Set channel settings

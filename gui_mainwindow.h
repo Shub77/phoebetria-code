@@ -21,6 +21,7 @@
 #include <QLineEdit>
 #include <QSlider>
 #include <QPushButton>
+#include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
 
 namespace Ui {
@@ -36,6 +37,10 @@ public:
     ~gui_MainWindow();
 
 public slots:
+
+    void changeEvent(QEvent* e);
+    void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
+
     void onCurrentRPM(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
     void onCurrentAlarmTemp(int channel, int tempInF);
@@ -117,6 +122,8 @@ private:
     QLineEdit* m_ctrls_currentRPM[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
+
+    QSystemTrayIcon m_trayIcon;
 
 #if 0
     // Common data
