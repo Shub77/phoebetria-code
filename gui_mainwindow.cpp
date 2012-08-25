@@ -34,9 +34,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-#ifdef Q_WS_WIN
+#if defined Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
-#elif Q_WS_MAC
+#elif defined Q_WS_MAC
     m_trayIcon.setIcon(QIcon(":/icon22x22"));
 #elif defined Q_WS_X11
     m_trayIcon.setIcon(QIcon(":/icon22x22"));

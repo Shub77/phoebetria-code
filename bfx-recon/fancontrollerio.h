@@ -22,6 +22,7 @@
 
 #include "device-io.h"
 #include "profiles.h"
+#include "fancontrollerdata.h"
 
 class FanControllerIO : public QObject
 {
@@ -180,6 +181,9 @@ public:
     int maxProbeTemp(bool inCelcius) const
         { return inCelcius ? 124 : 255; }   /* C : F */
 
+    void processTempAndSpeed(int channel, int tempF, int rpm, int maxRpm);
+    void processAlarmAndSpeed(int channel, int alarmTempF);
+    void processDeviceSettings(bool isAuto, bool isCelcius, bool isAudibleAlarm);
 
     // Requests
 
@@ -201,14 +205,6 @@ public slots:
     void onPollTimerTriggered(void);
     void onRawData(QByteArray rawdata);
 
-private:
-
-    DeviceIO m_io_device;
-
-    int m_pollNumber;
-
-    QQueue<Request> m_requestQueue;
-
 signals:
     void deviceConnected(void);
     void deviceDisconnected(void);
@@ -219,6 +215,15 @@ signals:
     void currentRpmOnAlarm(int channel, int RPM);
     void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
 
+private:
+
+    DeviceIO m_io_device;
+
+    int m_pollNumber;
+
+    QQueue<Request> m_requestQueue;
+
+    FanControllerData m_fcd;
 };
 
 

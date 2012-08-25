@@ -26,8 +26,8 @@ FanControllerData::FanControllerData()
 void FanControllerData::init(void)
 {
     m_isCelcius = false;
-    m_isAuto = false;
-    m_isAudibleAlarm = false;
+    m_isAuto = true;
+    m_isAudibleAlarm = true;
 }
 
 // ------------------------------------------------------------------------

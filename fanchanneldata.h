@@ -52,6 +52,21 @@ public:
     void setMinLoggedRPM(int to) { m_minLoggedRPM = to; }
     void setMaxLoggedRPM(int to) { m_maxLoggedRPM = to; }
 
+    //
+
+    bool isSet_maxRpm(void) const { return m_maxRPM != m_RpmNotSetValue; }
+    bool isSet_alarmTemp(void) const { return m_alarmTemp != m_TemperatureNotSetValue; }
+
+    bool isSet_manualRPM(void) const { return m_manualRPM != m_manualRPMNotSetValue; }
+
+    bool isSet_lastTemp(void) const { return m_lastTemp != m_TemperatureNotSetValue; }
+    bool isSet_MinTemp(void) const { return m_minTemp != m_minLoggedTempNotSetValue; }
+    bool isSet_MaxTemp(void) const { return m_maxTemp != m_maxLoggedTempNotSetValue; }
+
+    bool isSet_lastRPM(void) const { return m_lastRPM != m_RpmNotSetValue; }
+    bool isSet_minLoggedRPM(void) const { return m_minLoggedRPM != m_RpmNotSetValue; }
+    bool isSet_maxLoggedRPM(void) const { return m_maxLoggedRPM != m_RpmNotSetValue; }
+
 private:
     int m_maxRPM;
     int m_alarmTemp;
@@ -65,6 +80,12 @@ private:
     int m_maxLoggedRPM;
 
     int m_manualRPM;
+
+    static const int m_RpmNotSetValue;
+    static const int m_TemperatureNotSetValue;
+    static const int m_maxLoggedTempNotSetValue;
+    static const int m_minLoggedTempNotSetValue;
+    static const int m_manualRPMNotSetValue;
 };
 
 #endif // FANCHANNELDATA_H
