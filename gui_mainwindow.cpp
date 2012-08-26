@@ -58,23 +58,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
-
-    //bool bs = fc->blockSignals(true);
-
-//    bool isC = ui->ctrl_tempScaleToggle->value() == 1 ? true : false;
-//    bool isAuto = ui->ctrl_isManual->value() == 0 ? true : false;
-//    bool isAA = ui->ctrl_isAudibleAlarm->value() == 1 ? true : false;
-
-//    fcdata().setIsCelcius(fcdata().isCelcius());
-//    fcdata().setIsAuto(fcdata().isAuto());
-//    fcdata().setIsAudibleAlarm(fcdata().isAudibleAlarm());
-
-    //this->ui->ctrl_isManual->setValue(fcdata().isAuto() ? 0 : 1);
-    //enableSpeedControls(!(fcdata().isAuto() || !fcdata().isAutoSet()));
-
-    //fc->blockSignals(bs);
-
-
     if (fc->isConnected() == false) {
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
     }
