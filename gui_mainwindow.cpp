@@ -59,7 +59,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
 
-    bool bs = fc->blockSignals(true);
+    //bool bs = fc->blockSignals(true);
 
 //    bool isC = ui->ctrl_tempScaleToggle->value() == 1 ? true : false;
 //    bool isAuto = ui->ctrl_isManual->value() == 0 ? true : false;
@@ -69,10 +69,10 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 //    fcdata().setIsAuto(fcdata().isAuto());
 //    fcdata().setIsAudibleAlarm(fcdata().isAudibleAlarm());
 
-    this->ui->ctrl_isManual->setValue(fcdata().isAuto() ? 0 : 1);
-    enableSpeedControls(!(fcdata().isAuto() && fcdata().isAutoSet()));
+    //this->ui->ctrl_isManual->setValue(fcdata().isAuto() ? 0 : 1);
+    //enableSpeedControls(!(fcdata().isAuto() || !fcdata().isAutoSet()));
 
-    fc->blockSignals(bs);
+    //fc->blockSignals(bs);
 
 
     if (fc->isConnected() == false) {
@@ -93,6 +93,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
 #endif
     /* **** END DEBUGGING MENU ***/
+
 }
 
 gui_MainWindow::~gui_MainWindow()
@@ -339,6 +340,7 @@ void gui_MainWindow::onControlModeChanged(bool isAuto)
     bool bs = ui->ctrl_isManual->blockSignals(true);
     ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
     ui->ctrl_isManual->blockSignals(bs);
+    enableSpeedControls(!isAuto);
 
 }
 
