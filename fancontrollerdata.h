@@ -38,9 +38,12 @@ public:
     bool save(const char* filename);
 
     // Access functions for common settings
-    bool isCelcius(void) const { return m_isCelcius; }
-    bool isAuto(void) const {return m_isAuto; }
-    bool isAudibleAlarm(void) const { return m_isAudibleAlarm; }
+    bool isCelcius(void) const { return m_isCelcius != -1 ? m_isCelcius : false; }
+    bool isAuto(void) const {return m_isAuto != -1 ? m_isAuto : false; }
+    bool isAudibleAlarm(void) const { return m_isAudibleAlarm != -1 ? m_isAudibleAlarm : false; }
+
+
+    bool isAutoSet(void) const { return m_isAuto != -1; }
 
     // Set common settings
     void setIsCelcius(bool isC)
@@ -99,9 +102,9 @@ public:
 private:
 
     // Common data
-    bool m_isCelcius;
-    bool m_isAuto;
-    bool m_isAudibleAlarm;
+    short m_isCelcius;
+    short m_isAuto;
+    short m_isAudibleAlarm;
 
     FanChannelData m_channelSettings[FC_MAX_CHANNELS];
 

@@ -25,9 +25,9 @@ FanControllerData::FanControllerData(QObject *parent)
 
 void FanControllerData::init(void)
 {
-    m_isCelcius = false;
-    m_isAuto = true;
-    m_isAudibleAlarm = true;
+    m_isCelcius = -1;
+    m_isAuto = -1;
+    m_isAudibleAlarm = -1;
 }
 
 // ------------------------------------------------------------------------
@@ -162,8 +162,8 @@ void FanControllerData::updateIsCelcius(bool isCelcius, bool emitSignal)
 
 void FanControllerData::updateIsAuto(bool isAuto, bool emitSignal)
 {
-    if (m_isAuto != isAuto) {
-        m_isAuto = isAuto;
+    if (m_isAuto != (short)isAuto || m_isAuto == -1) {
+        m_isAuto = (short)isAuto;
         if (emitSignal) emit controlMode_changed(isAuto);
     }
 }

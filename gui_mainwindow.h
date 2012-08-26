@@ -97,7 +97,7 @@ private:
 
     void connectCustomSignals(void);
 
-    void enableDisableSpeedControls(void);
+    void enableSpeedControls(bool enabled = true);
 
     void updateSpeedControlTooltip(int channel);
     void updateSpeedControlTooltips(void);
@@ -105,7 +105,6 @@ private:
     int maxRPM(int channel) const;
     void updateSpeedControl(int channel, int RPM);
     void updateAllSpeedCtrls(void);
-    void syncDeviceSettingsCtrls(void);
 
     void updateCurrentTempControl(int channel, int temp);
     void updateAllCurrentTempControls(void);
@@ -113,8 +112,6 @@ private:
     void updateAllAlarmCtrls(bool isCelcius);
 
     int rpmSliderValueToRPM(int channel, int value) const;
-
-    void setFcChannelSpeed(int channel, int RPM);
 
     void userPressedChannelRpmSlider(int channel);
     void userReleasedChannelRpmSlider(int channel);
