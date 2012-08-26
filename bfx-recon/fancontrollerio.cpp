@@ -190,7 +190,7 @@ FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent)
 {
     m_pollNumber = 0;
-    m_fcd.init();
+    m_fanControllerData.init();
     connectSignals();
 }
 
@@ -352,15 +352,15 @@ void FanControllerIO::processTempAndSpeed(int channel,
                                           int rpm,
                                           int maxRpm)
 {
-    // TODO emit currentTemp(channel, tempF);
-    // TODO emit currentRPM(channel, rpm);
-    // TODO emit maxRPM(channel, maxRpm);
+    m_fanControllerData.updateTempF(channel, tempF);
+    m_fanControllerData.updateRPM(channel, rpm);
+    m_fanControllerData.updateMaxRPM(channel, maxRpm);
 }
 
 
 void FanControllerIO::processAlarmAndSpeed(int channel, int alarmTempF)
 {
-    // TODO emit currentAlarmTemp(channel, alarmTempF);
+    m_fanControllerData.updateAlarmTemp(channel, alarmTempF);
 }
 
 void FanControllerIO::processDeviceSettings(bool isAuto,

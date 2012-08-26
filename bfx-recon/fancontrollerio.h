@@ -172,6 +172,9 @@ public:
     bool isConnected(void) const;
     void disconnect(void);
 
+    const FanControllerData& fanControllerData(void) const
+        { return m_fanControllerData; }
+
     bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
     bool setChannelSettings(int channel, unsigned thresholdF, unsigned speed);
     bool setFromProfile(const FanControllerProfile& profile);
@@ -213,7 +216,7 @@ private:
 
     QQueue<Request> m_requestQueue;
 
-    FanControllerData m_fcd;
+    FanControllerData m_fanControllerData;
 };
 
 

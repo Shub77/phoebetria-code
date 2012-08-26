@@ -125,15 +125,15 @@ void gui_MainWindow::connectCustomSignals(void)
 {
     PhoebetriaApp *app = (PhoebetriaApp*)qApp;
 
-    connect(&app->fanControllerIO(), SIGNAL(currentRPM(int,int)),
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(currentRPM(int,int)),
             this, SLOT(onCurrentRPM(int,int)));
-    connect(&app->fanControllerIO(), SIGNAL(currentTemp(int,int)),
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(currentTemp(int,int)),
             this, SLOT(onCurrentTemp(int,int)));
-    connect(&app->fanControllerIO(), SIGNAL(deviceSettings(bool,bool,bool)),
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(deviceSettings(bool,bool,bool)),
             this, SLOT(onDeviceSettings(bool,bool,bool)));
-    connect(&app->fanControllerIO(), SIGNAL(maxRPM(int, int)),
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(maxRPM(int, int)),
             this, SLOT(onMaxRPM(int, int)));
-    connect(&app->fanControllerIO(), SIGNAL(currentAlarmTemp(int,int)),
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(currentAlarmTemp(int,int)),
             this, SLOT(onCurrentAlarmTemp(int,int)));
 }
 
