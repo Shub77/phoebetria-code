@@ -55,15 +55,21 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
         m_speedSliderMovedByDevice[i] = false;
     }
 
-    m_fcd.setIsCelcius((ui->ctrl_tempScaleToggle->value() == 1 ? true : false));
-    m_fcd.setIsAuto((ui->ctrl_isManual->value() == 0 ? true : false));
-    m_fcd.setIsAudibleAlarm((ui->ctrl_isAudibleAlarm->value() == 1 ? true : false));
+    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
+
+    // Synchronise fan controller data with GUI.
+    bool bs = fc->fanControllerData().blockSignals(true);
+    bool isC = ui->ctrl_tempScaleToggle->value() == 1 ? true : false;
+    bool isAuto = ui->ctrl_isManual->value() == 0 ? true : false;
+    bool isAA = ui->ctrl_isAudibleAlarm->value() == 1 ? true : false;
+    fc->fanControllerData().updateDeviceSettings(isC, isAuto, isAA);
+    fc->fanControllerData().blockSignals(bs);
 
     m_isAutoToggleByDevice = false;
     m_isAutoToggleByDevice = false;
     m_isAudibleAlarmByDevice = false;
 
-    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
+
     if (fc->isConnected() == false) {
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
     }
@@ -125,15 +131,15 @@ void gui_MainWindow::connectCustomSignals(void)
 {
     PhoebetriaApp *app = (PhoebetriaApp*)qApp;
 
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(currentRPM(int,int)),
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(RPM_changed(int,int)),
             this, SLOT(onCurrentRPM(int,int)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(currentTemp(int,int)),
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(temperature_changed(int,int)),
             this, SLOT(onCurrentTemp(int,int)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(deviceSettings(bool,bool,bool)),
-            this, SLOT(onDeviceSettings(bool,bool,bool)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(maxRPM(int, int)),
+//    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(deviceSettings(bool,bool,bool)),
+//            this, SLOT(onDeviceSettings(bool,bool,bool)));
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(maxRPM_changed(int, int)),
             this, SLOT(onMaxRPM(int, int)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(currentAlarmTemp(int,int)),
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(currentAlarmTemp_changed(int,int)),
             this, SLOT(onCurrentAlarmTemp(int,int)));
 }
 

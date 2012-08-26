@@ -172,7 +172,7 @@ public:
     bool isConnected(void) const;
     void disconnect(void);
 
-    const FanControllerData& fanControllerData(void) const
+    FanControllerData& fanControllerData(void)
         { return m_fanControllerData; }
 
     bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
