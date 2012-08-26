@@ -44,7 +44,6 @@ public slots:
     void onCurrentRPM(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
     void onCurrentAlarmTemp(int channel, int tempInF);
-    //void onDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
     void onTemperatureScaleChanged(bool isCelcius);
     void onControlModeChanged(bool isAuto);
     void onIsAudibleAlarmChanged(bool isAudibleAlarm);
@@ -132,9 +131,6 @@ private:
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
     QSystemTrayIcon m_trayIcon;
-
-    FanControllerData m_fcd;  // fcd == fan controller data
-
 
     /* **** DEBUGGING MENU ***/
 #ifdef QT_DEBUG
