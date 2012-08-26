@@ -367,7 +367,9 @@ void FanControllerIO::processDeviceSettings(bool isAuto,
                                             bool isCelcius,
                                             bool isAudibleAlarm)
 {
-    m_fanControllerData.updateDeviceSettings(isCelcius, isAuto, isAudibleAlarm);
+    m_fanControllerData.updateIsAuto(isAuto);
+    m_fanControllerData.updateIsCelcius(isCelcius);
+    m_fanControllerData.updateIsAudibleAlarm(isAudibleAlarm);
 }
 
 int FanControllerIO::rawToTemp(unsigned char byte) const
