@@ -367,7 +367,7 @@ void FanControllerIO::processDeviceSettings(bool isAuto,
                                             bool isCelcius,
                                             bool isAudibleAlarm)
 {
-    // TODO emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
+    m_fanControllerData.updateDeviceSettings(isCelcius, isAuto, isAudibleAlarm);
 }
 
 int FanControllerIO::rawToTemp(unsigned char byte) const

@@ -51,7 +51,7 @@ public:
         { m_isAudibleAlarm = isAudible; }
 
     // Access functions to channel settings
-    int maxRPM(int channel) const;
+    int maxRPM_changed(int channel) const;
     int alarmTemp(int channel) const;
 
     int manualRPM(int channel) const;
@@ -70,6 +70,7 @@ public:
     bool updateManualRPM(int channel, int to);
     bool updateTempF(int channel, int to);
     bool updateRPM(int channel, int to);
+    bool updateDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
 
     // Set channel settings
     // TODO: make these protected or even private
@@ -107,17 +108,20 @@ private:
 signals:
     void deviceConnected(void);
     void deviceDisconnected(void);
-    void currentTemp(int channel, int temp);
+    void temperature_changed(int channel, int temp);
     void minLoggedTemp_changed(int channel, int temp);
     void maxLoggedTemp_changed(int channel, int temp);
-    void currentRPM(int channel, int RPM);
+    void RPM_changed(int channel, int RPM);
     void minLoggedRPM_changed(int channel, int RPM);
     void maxLoggedRPM_changed(int channel, int RPM);
-    void currentManualRPM(int channel, int RPM);
-    void maxRPM(int channel, int RPM);
-    void currentAlarmTemp(int channel, int temp);
-    void currentRpmOnAlarm(int channel, int RPM);
-    void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+    void manualRPM_changed(int channel, int RPM);
+    void maxRPM_changed(int channel, int RPM);
+    void currentAlarmTemp_changed(int channel, int temp);
+    void currentRpmOnAlarm_changed(int channel, int RPM);
+    //void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+    void temperatureScale_changed(bool isCelcius);
+    void controlMode_changed (bool isAuto);
+    void alarmIsAudible_changed (bool isAudibleAlarm);
 };
 
 

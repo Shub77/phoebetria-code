@@ -184,7 +184,7 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    int maxRPM = m_fcd.maxRPM(channel);
+    int maxRPM = m_fcd.maxRPM_changed(channel);
     if (maxRPM < 1) maxRPM = 1;
 
     bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
@@ -495,7 +495,7 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
 
 int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
 {
-    int channelMaxRPM = m_fcd.maxRPM(channel);
+    int channelMaxRPM = m_fcd.maxRPM_changed(channel);
     int channelMinRPM = floor(channelMaxRPM * 0.50 / 100) * 100;
 
     double val = value / 100.0 * channelMaxRPM;
@@ -538,7 +538,7 @@ void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
     }
 
     if (userTemperature != currentAlarmTemp) {
-        fc->setChannelSettings(channel, userTemperature, m_fcd.maxRPM(channel));
+        fc->setChannelSettings(channel, userTemperature, m_fcd.maxRPM_changed(channel));
         updateAlarmTempControl(channel, userTemperature, m_fcd.isCelcius());
     }
 }
@@ -762,7 +762,7 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
         return;
     }
 
-    int channelMaxRPM = m_fcd.maxRPM(channel);
+    int channelMaxRPM = m_fcd.maxRPM_changed(channel);
 
     if (speed < channelMaxRPM * 0.4 && speed != 0) {
         qDebug() << "Speed is less than 40%, but not OFF. Setting to 40%";

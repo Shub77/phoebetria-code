@@ -33,7 +33,7 @@ void FanControllerData::init(void)
 // ------------------------------------------------------------------------
 //  Access functions to channel settings
 // ------------------------------------------------------------------------
-int FanControllerData::maxRPM(int channel) const
+int FanControllerData::maxRPM_changed(int channel) const
 {
     return m_channelSettings[channel].maxRPM();
 }
@@ -89,7 +89,7 @@ bool FanControllerData::updateMaxRPM(int channel, int to)
     if (cd.maxRPM() != to || !cd.isSet_maxRpm()) {
         cd.setMaxRPM(to);
         r = true;
-        emit maxRPM(channel, to);
+        emit maxRPM_changed(channel, to);
     }
     return r;
 }
@@ -101,7 +101,7 @@ bool FanControllerData::updateAlarmTemp(int channel, int to)
     if (cd.alarmTemp() != to || !cd.isSet_alarmTemp()) {
         cd.setAlarmTemp(to);
         r = true;
-        emit currentAlarmTemp(channel, to);
+        emit currentAlarmTemp_changed(channel, to);
     }
     return r;
 }
@@ -113,7 +113,7 @@ bool FanControllerData::updateManualRPM(int channel, int to)
     if (cd.manualRPM() != to || !cd.isSet_manualRPM()) {
         cd.setManualRPM(to);
         r = true;
-        emit currentManualRPM(channel, to);
+        emit manualRPM_changed(channel, to);
     }
     return r;
 }
@@ -132,7 +132,7 @@ bool FanControllerData::updateTempF(int channel, int to)
             emit maxLoggedTemp_changed(channel, to);
         }
         cd.setLastTemp(to);
-        emit currentTemp(channel, to);
+        emit temperature_changed(channel, to);
         r = true;
     }
     return r;
@@ -152,12 +152,39 @@ bool FanControllerData::updateRPM(int channel, int to)
             emit maxLoggedRPM_changed(channel, to);
         }
         cd.setLastRPM(to);
-        emit currentRPM(channel, to);
+        emit RPM_changed(channel, to);
         r = true;
     }
     return r;
 }
 
+
+bool FanControllerData::updateDeviceSettings(bool isCelcius,
+                                             bool isAuto,
+                                             bool isAudibleAlarm)
+{
+    bool r = false;
+
+    if (m_isCelcius != isCelcius) {
+        m_isCelcius = isCelcius;
+        emit temperatureScale_changed(isCelcius);
+        r = true;
+    }
+
+    if (m_isAuto != isAuto) {
+        m_isAuto = isAuto;
+        emit controlMode_changed(isAuto);
+        r = true;
+    }
+
+    if (m_isAudibleAlarm != isAudibleAlarm) {
+        m_isAudibleAlarm = isAudibleAlarm;
+        emit alarmIsAudible_changed(isAudibleAlarm);
+        r = true;
+    }
+
+    return r;
+}
 
 // ------------------------------------------------------------------------
 // Set channel settings
