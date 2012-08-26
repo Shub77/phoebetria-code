@@ -82,43 +82,34 @@ int FanControllerData::maxLoggedRPM(int channel) const
 // Update channel settings
 // ------------------------------------------------------------------------
 
-bool FanControllerData::updateMaxRPM(int channel, int to)
+void FanControllerData::updateMaxRPM(int channel, int to, bool emitSignal)
 {
-    bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.maxRPM() != to || !cd.isSet_maxRpm()) {
         cd.setMaxRPM(to);
-        r = true;
-        emit maxRPM_changed(channel, to);
+        if (emitSignal) emit maxRPM_changed(channel, to);
     }
-    return r;
 }
 
-bool FanControllerData::updateAlarmTemp(int channel, int to)
+void FanControllerData::updateAlarmTemp(int channel, int to, bool emitSignal)
 {
-    bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.alarmTemp() != to || !cd.isSet_alarmTemp()) {
         cd.setAlarmTemp(to);
-        r = true;
-        emit currentAlarmTemp_changed(channel, to);
+        if (emitSignal) emit currentAlarmTemp_changed(channel, to);
     }
-    return r;
 }
 
-bool FanControllerData::updateManualRPM(int channel, int to)
+void FanControllerData::updateManualRPM(int channel, int to, bool emitSignal)
 {
-    bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.manualRPM() != to || !cd.isSet_manualRPM()) {
         cd.setManualRPM(to);
-        r = true;
-        emit manualRPM_changed(channel, to);
+        if (emitSignal) emit manualRPM_changed(channel, to);
     }
-    return r;
 }
 
-bool FanControllerData::updateTempF(int channel, int to)
+void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 {
     /* !!!!!!!!! TODO: HOW? The range is 0x00 to 0xFF */
 
@@ -126,9 +117,8 @@ bool FanControllerData::updateTempF(int channel, int to)
      * incorrect). The specs page for the recon show 0-100C as the probes'
      * range, so ignore these -'ve values.
      */
-    if (to < 0) return false;
+    if (to < 0) return;
 
-    bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.lastTemp() != to || !cd.isSet_lastTemp()) {
         if (cd.minTemp() > to || !cd.isSet_MinTemp()) {
@@ -140,15 +130,12 @@ bool FanControllerData::updateTempF(int channel, int to)
             emit maxLoggedTemp_changed(channel, to);
         }
         cd.setLastTemp(to);
-        emit temperature_changed(channel, to);
-        r = true;
+        if (emitSignal) emit temperature_changed(channel, to);
     }
-    return r;
 }
 
-bool FanControllerData::updateRPM(int channel, int to)
+void FanControllerData::updateRPM(int channel, int to, bool emitSignal)
 {
-    bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.lastRPM() != to || !cd.isSet_lastRPM()) {
         if (cd.minLoggedRPM() > to || !cd.isSet_minLoggedRPM()) {
@@ -160,39 +147,35 @@ bool FanControllerData::updateRPM(int channel, int to)
             emit maxLoggedRPM_changed(channel, to);
         }
         cd.setLastRPM(to);
-        emit RPM_changed(channel, to);
-        r = true;
+        if (emitSignal) emit RPM_changed(channel, to);
     }
-    return r;
 }
 
 
-bool FanControllerData::updateDeviceSettings(bool isCelcius,
-                                             bool isAuto,
-                                             bool isAudibleAlarm)
+void FanControllerData::updateIsCelcius(bool isCelcius, bool emitSignal)
 {
-    bool r = false;
-
     if (m_isCelcius != isCelcius) {
         m_isCelcius = isCelcius;
-        emit temperatureScale_changed(isCelcius);
-        r = true;
+        if (emitSignal) emit temperatureScale_changed(isCelcius);
     }
+}
 
+void FanControllerData::updateIsAuto(bool isAuto, bool emitSignal)
+{
     if (m_isAuto != isAuto) {
         m_isAuto = isAuto;
-        emit controlMode_changed(isAuto);
-        r = true;
+        if (emitSignal) emit controlMode_changed(isAuto);
     }
-
-    if (m_isAudibleAlarm != isAudibleAlarm) {
-        m_isAudibleAlarm = isAudibleAlarm;
-        emit alarmIsAudible_changed(isAudibleAlarm);
-        r = true;
-    }
-
-    return r;
 }
+
+void FanControllerData::updateIsAudibleAlarm(bool isAudible, bool emitSignal)
+{
+    if (m_isAudibleAlarm != isAudible) {
+        m_isAudibleAlarm = isAudible;
+        if (emitSignal) emit alarmIsAudible_changed(isAudible);
+    }
+}
+
 
 // ------------------------------------------------------------------------
 // Set channel settings

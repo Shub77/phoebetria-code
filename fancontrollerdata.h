@@ -65,12 +65,14 @@ public:
     int maxLoggedRPM(int channel) const;
 
     //
-    bool updateMaxRPM(int channel, int to);
-    bool updateAlarmTemp(int channel, int to);
-    bool updateManualRPM(int channel, int to);
-    bool updateTempF(int channel, int to);
-    bool updateRPM(int channel, int to);
-    bool updateDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+    void updateMaxRPM(int channel, int to, bool emitSignal = true);
+    void updateAlarmTemp(int channel, int to, bool emitSignal = true);
+    void updateManualRPM(int channel, int to, bool emitSignal = true);
+    void updateTempF(int channel, int to, bool emitSignal = true);
+    void updateRPM(int channel, int to, bool emitSignal = true);
+    void updateIsCelcius(bool isCelcius, bool emitSignal = true);
+    void updateIsAuto(bool isAuto, bool emitSignal = true);
+    void updateIsAudibleAlarm(bool isAudible, bool emitSignal = true);
 
     // Set channel settings
     // TODO: make these protected or even private
@@ -116,7 +118,6 @@ signals:
     void maxRPM_changed(int channel, int RPM);
     void currentAlarmTemp_changed(int channel, int temp);
     void currentRpmOnAlarm_changed(int channel, int RPM);
-    //void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
     void temperatureScale_changed(bool isCelcius);
     void controlMode_changed (bool isAuto);
     void alarmIsAudible_changed (bool isAudibleAlarm);
