@@ -107,8 +107,13 @@ private:
 signals:
     void deviceConnected(void);
     void deviceDisconnected(void);
-    void currentTemp(int probe, int temp);
+    void currentTemp(int channel, int temp);
+    void minLoggedTemp_changed(int channel, int temp);
+    void maxLoggedTemp_changed(int channel, int temp);
     void currentRPM(int channel, int RPM);
+    void minLoggedRPM_changed(int channel, int RPM);
+    void maxLoggedRPM_changed(int channel, int RPM);
+    void currentManualRPM(int channel, int RPM);
     void maxRPM(int channel, int RPM);
     void currentAlarmTemp(int channel, int temp);
     void currentRpmOnAlarm(int channel, int RPM);

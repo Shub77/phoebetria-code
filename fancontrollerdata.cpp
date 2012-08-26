@@ -89,6 +89,7 @@ bool FanControllerData::updateMaxRPM(int channel, int to)
     if (cd.maxRPM() != to || !cd.isSet_maxRpm()) {
         cd.setMaxRPM(to);
         r = true;
+        emit maxRPM(channel, to);
     }
     return r;
 }
@@ -100,6 +101,7 @@ bool FanControllerData::updateAlarmTemp(int channel, int to)
     if (cd.alarmTemp() != to || !cd.isSet_alarmTemp()) {
         cd.setAlarmTemp(to);
         r = true;
+        emit currentAlarmTemp(channel, to);
     }
     return r;
 }
@@ -111,6 +113,7 @@ bool FanControllerData::updateManualRPM(int channel, int to)
     if (cd.manualRPM() != to || !cd.isSet_manualRPM()) {
         cd.setManualRPM(to);
         r = true;
+        emit currentManualRPM(channel, to);
     }
     return r;
 }
@@ -122,11 +125,14 @@ bool FanControllerData::updateTempF(int channel, int to)
     if (cd.lastTemp() != to || !cd.isSet_lastTemp()) {
         if (cd.minTemp() > to || !cd.isSet_MinTemp()) {
             cd.setMinTemp(to);
+            emit minLoggedTemp_changed(channel, to);
         }
         if (cd.maxTemp() < to || !cd.isSet_MaxTemp()) {
             cd.setMaxTemp(to);
+            emit maxLoggedTemp_changed(channel, to);
         }
         cd.setLastTemp(to);
+        emit currentTemp(channel, to);
         r = true;
     }
     return r;
@@ -139,11 +145,14 @@ bool FanControllerData::updateRPM(int channel, int to)
     if (cd.lastRPM() != to || !cd.isSet_lastRPM()) {
         if (cd.minLoggedRPM() > to || !cd.isSet_minLoggedRPM()) {
             cd.setMinLoggedRPM(to);
+            emit minLoggedRPM_changed(channel, to);
         }
         if (cd.maxLoggedRPM() < to || !cd.isSet_maxLoggedRPM()) {
             cd.setMaxLoggedRPM(to);
+            emit maxLoggedRPM_changed(channel, to);
         }
         cd.setLastRPM(to);
+        emit currentRPM(channel, to);
         r = true;
     }
     return r;
