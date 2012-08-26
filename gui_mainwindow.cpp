@@ -417,6 +417,8 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
     if (!m_ctrls_RpmSliders[channel]->isSliderDown()
             && val != fcdata().lastRPM(channel)) { // TODO: this should probably be last manual setting
         fcdata().updateManualRPM(channel, val, false);
+        FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
+        fc->setChannelSettings(channel, fcdata().alarmTemp(channel), val);
         qDebug() << "New slider value for channel"
                     << QString::number(channel+1)
                     << "is"
@@ -437,22 +439,21 @@ int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
 
 void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
 {
-#if 0 // TODO REMOVE
     int currentAlarmTemp;
     int userTemperature;
     bool ok;
 
-    currentAlarmTemp = m_fcd.alarmTemp(channel);
-    if (m_fcd.isCelcius()) {
-        currentAlarmTemp = m_fcd.toCelcius(currentAlarmTemp);
+    currentAlarmTemp = fcdata().alarmTemp(channel);
+    if (fcdata().isCelcius()) {
+        currentAlarmTemp = FanControllerData::toCelcius(currentAlarmTemp);
     }
     FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
-    int minProbeTemp = fc->minProbeTemp(m_fcd.isCelcius());
-    int maxProbTemp = fc->maxProbeTemp(m_fcd.isCelcius());
+    int minProbeTemp = fc->minProbeTemp(fcdata().isCelcius());
+    int maxProbTemp = fc->maxProbeTemp(fcdata().isCelcius());
 
     QString prompt = QString(tr("Enter new alarm temperature %1"
                                 " for channel %2.\nRange is %3 to %4"))
-                             .arg(m_fcd.isCelcius() ? "C" : "F")
+                             .arg(fcdata().isCelcius() ? "C" : "F")
                              .arg(channel)
                              .arg(minProbeTemp)
                              .arg(maxProbTemp);
@@ -465,18 +466,17 @@ void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
                                            maxProbTemp,
                                            1,
                                            &ok);
-    if (m_fcd.isCelcius()) {
-        userTemperature = m_fcd.toFahrenheit(userTemperature);
+    if (fcdata().isCelcius()) {
+        userTemperature = FanControllerData::toFahrenheit(userTemperature);
     }
 
     if (userTemperature != currentAlarmTemp) {
-        fc->setChannelSettings(channel, userTemperature, maxRPM(channel));
-        updateAlarmTempControl(channel, userTemperature, m_fcd.isCelcius());
+
+        fcdata().updateAlarmTemp(channel, userTemperature, false);
+
+        fc->setChannelSettings(channel, userTemperature, fcdata().maxRPM(channel));
+        updateAlarmTempControl(channel, userTemperature, fcdata().isCelcius());
     }
-#endif
-
-    // TODO REIMPLEMENT!
-
 }
 
 void gui_MainWindow::on_ctrl_channel1speedSlider_sliderPressed()
@@ -604,15 +604,13 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
 
     if (filename.isEmpty()) return;
 
-    FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
-
-    bool sb1 = this->blockSignals(true);
-    bool sb2 = fc->blockSignals(true);
+    bool bs1 = this->blockSignals(true);
+    bool bs2 = fcdata().blockSignals(true);
 
     fcp.setFromCurrentData(fcdata());
 
-    this->blockSignals(sb1);
-    this->blockSignals(sb2);
+    this->blockSignals(bs1);
+    fcdata().blockSignals(bs2);
 
     if (!fcp.save(filename)) {
         QMessageBox msg;
@@ -623,8 +621,6 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
         msg.setIcon(QMessageBox::Warning);
         msg.exec();
     }
-
-
 }
 
 void gui_MainWindow::on_ctrl_LoadPreset_clicked()

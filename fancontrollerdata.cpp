@@ -154,7 +154,7 @@ void FanControllerData::updateRPM(int channel, int to, bool emitSignal)
 
 void FanControllerData::updateIsCelcius(bool isCelcius, bool emitSignal)
 {
-    if (m_isCelcius != isCelcius) {
+    if (m_isCelcius != (short)isCelcius || m_isCelcius == -1) {
         m_isCelcius = isCelcius;
         if (emitSignal) emit temperatureScale_changed(isCelcius);
     }
@@ -170,7 +170,7 @@ void FanControllerData::updateIsAuto(bool isAuto, bool emitSignal)
 
 void FanControllerData::updateIsAudibleAlarm(bool isAudible, bool emitSignal)
 {
-    if (m_isAudibleAlarm != isAudible) {
+    if (m_isAudibleAlarm != (short)isAudible || m_isAudibleAlarm == -1) {
         m_isAudibleAlarm = isAudible;
         if (emitSignal) emit alarmIsAudible_changed(isAudible);
     }

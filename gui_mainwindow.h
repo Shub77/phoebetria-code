@@ -47,7 +47,6 @@ public slots:
     void onTemperatureScaleChanged(bool isCelcius);
     void onControlModeChanged(bool isAuto);
     void onIsAudibleAlarmChanged(bool isAudibleAlarm);
-
     void onMaxRPM(int channel, int RPM);
 
 private slots:
