@@ -625,7 +625,6 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
 
 void gui_MainWindow::on_ctrl_LoadPreset_clicked()
 {
-#if 0 // TODO REMOVE
     FanControllerProfile fcp;
     QString profilesLocation = fcp.defualtProfileLocation();
 
@@ -640,32 +639,14 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
 
         FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
-        bool sb1 = this->blockSignals(true);
-        bool sb2 = fc->blockSignals(true);
-
         if (fc->setFromProfile(fcp)) {
-            for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-                BasicChannelData bcd = fcp.getChannelSettings(i);
-                m_fcd.setManualRPM(i, bcd.speed);
-            }
+            updateSpeedControlTooltips();
+            updateAllSpeedCtrls();
+            updateAllAlarmCtrls(fcdata().isCelcius());
+
         }
-        m_fcd.setIsAuto(fcp.isAuto());
-        m_fcd.setIsCelcius(fcp.isCelcius());
-        m_fcd.setIsAudibleAlarm(fcp.isAudibleAlarm());
-
-        syncDeviceSettingsCtrls();
-        updateSpeedControlTooltips();
-        updateAllSpeedCtrls();
-        updateAllAlarmCtrls(m_fcd.isCelcius());
-
-        this->blockSignals(sb1);
-        fc->blockSignals(sb2);
     }
-#endif
-
-    // TODO REIMPLEMENT!
 }
-
 
 
 /**************************************************************************

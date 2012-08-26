@@ -424,7 +424,6 @@ void FanControllerIO::processRequestQueue(void)
              << toHexString(r.m_URB, sizeof(r.m_URB));
 #endif
 
-
     m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
 
     blockSignals(bs);
@@ -476,7 +475,6 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
     Request req;
 
     req.m_controlByte = TX_SetDeviceSettings;
-
 
     req.m_dataLen = 1;
     req.m_data[0] = bits;
