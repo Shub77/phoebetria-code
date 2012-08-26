@@ -204,7 +204,7 @@ bool FanControllerIO::connect(void)
 {
     bool r = m_io_device.connect(HID_VendorId, HID_ProductId);
 
-    if (r) emit deviceConnected();
+    // TODO if (r) emit deviceConnected();
 
     return r;
 }
@@ -220,7 +220,7 @@ void FanControllerIO::disconnect(void)
 {
     m_io_device.disconnect();
 
-    emit deviceDisconnected();
+    // TODO emit deviceDisconnected();
 }
 
 
@@ -352,22 +352,22 @@ void FanControllerIO::processTempAndSpeed(int channel,
                                           int rpm,
                                           int maxRpm)
 {
-    emit currentTemp(channel, tempF);
-    emit currentRPM(channel, rpm);
-    emit maxRPM(channel, maxRpm);
+    // TODO emit currentTemp(channel, tempF);
+    // TODO emit currentRPM(channel, rpm);
+    // TODO emit maxRPM(channel, maxRpm);
 }
 
 
 void FanControllerIO::processAlarmAndSpeed(int channel, int alarmTempF)
 {
-    emit currentAlarmTemp(channel, alarmTempF);
+    // TODO emit currentAlarmTemp(channel, alarmTempF);
 }
 
 void FanControllerIO::processDeviceSettings(bool isAuto,
                                             bool isCelcius,
                                             bool isAudibleAlarm)
 {
-        emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
+    // TODO emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
 }
 
 int FanControllerIO::rawToTemp(unsigned char byte) const

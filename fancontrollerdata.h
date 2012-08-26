@@ -17,15 +17,18 @@
 #ifndef FANCONTROLLERDATA_H
 #define FANCONTROLLERDATA_H
 
+#include <QObject>
 #include <QString>
 #include "fanchanneldata.h"
 
 #define FC_MAX_CHANNELS 5
 
-class FanControllerData
+class FanControllerData : public QObject
 {
+    Q_OBJECT
+
 public:
-    FanControllerData();
+    explicit FanControllerData(QObject *parent = 0);
 
     const QString& name(void) const;
 
@@ -101,6 +104,15 @@ private:
 
     FanChannelData m_channelSettings[FC_MAX_CHANNELS];
 
+signals:
+    void deviceConnected(void);
+    void deviceDisconnected(void);
+    void currentTemp(int probe, int temp);
+    void currentRPM(int channel, int RPM);
+    void maxRPM(int channel, int RPM);
+    void currentAlarmTemp(int channel, int temp);
+    void currentRpmOnAlarm(int channel, int RPM);
+    void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
 };
 
 
