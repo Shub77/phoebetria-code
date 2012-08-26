@@ -33,7 +33,7 @@ void FanControllerData::init(void)
 // ------------------------------------------------------------------------
 //  Access functions to channel settings
 // ------------------------------------------------------------------------
-int FanControllerData::maxRPM_changed(int channel) const
+int FanControllerData::maxRPM(int channel) const
 {
     return m_channelSettings[channel].maxRPM();
 }
@@ -120,6 +120,14 @@ bool FanControllerData::updateManualRPM(int channel, int to)
 
 bool FanControllerData::updateTempF(int channel, int to)
 {
+    /* !!!!!!!!! TODO: HOW? The range is 0x00 to 0xFF */
+
+    /* Sometimes -'ve temperatures are sent from the device (that are
+     * incorrect). The specs page for the recon show 0-100C as the probes'
+     * range, so ignore these -'ve values.
+     */
+    if (to < 0) return false;
+
     bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.lastTemp() != to || !cd.isSet_lastTemp()) {
@@ -236,13 +244,12 @@ void FanControllerData::setMaxLoggedRPM(int channel, int to)
 }
 
 QString FanControllerData::temperatureString(int temperature,
-                                                bool asCelcius,
-                                                bool addScaleSymbol)
+                                             bool addScaleSymbol)
 {
     QString r;
-    int t = asCelcius ? ceil((temperature-32)*5.0/9) : temperature;
+    int t = m_isCelcius ? ceil((temperature-32)*5.0/9) : temperature;
     r = QString::number(t);
-    if (addScaleSymbol) r += (asCelcius ? " C" : " F");
+    if (addScaleSymbol) r += (m_isCelcius ? " C" : " F");
     return r;
 }
 

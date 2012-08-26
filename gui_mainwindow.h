@@ -44,7 +44,11 @@ public slots:
     void onCurrentRPM(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
     void onCurrentAlarmTemp(int channel, int tempInF);
-    void onDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+    //void onDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+    void onTemperatureScaleChanged(bool isCelcius);
+    void onControlModeChanged(bool isAuto);
+    void onIsAudibleAlarmChanged(bool isAudibleAlarm);
+
     void onMaxRPM(int channel, int RPM);
 
 private slots:
@@ -89,6 +93,9 @@ private slots:
 
 private:
     void initCtrlArrays(void);
+
+    FanControllerData& fcdata(void) const;
+
     void connectCustomSignals(void);
 
     void enableDisableSpeedControls(void);
@@ -96,6 +103,7 @@ private:
     void updateSpeedControlTooltip(int channel);
     void updateSpeedControlTooltips(void);
 
+    int maxRPM(int channel) const;
     void updateSpeedControl(int channel, int RPM);
     void updateAllSpeedCtrls(void);
     void syncDeviceSettingsCtrls(void);
@@ -125,24 +133,7 @@ private:
 
     QSystemTrayIcon m_trayIcon;
 
-#if 0
-    // Common data
-    bool m_isCelcius;
-    bool m_isAuto;
-    bool m_isAudibleAlarm;
-
-    // Channel sepecific data
-    FanChannelData m_channelData[FC_MAX_CHANNELS];
-#endif
-
     FanControllerData m_fcd;  // fcd == fan controller data
-
-    // Blocking flags
-    bool m_isAutoToggleByDevice;
-    bool m_isCelciusToggleByDevice;
-    bool m_isAudibleAlarmByDevice;
-
-    bool m_speedSliderMovedByDevice[FC_MAX_CHANNELS];
 
 
     /* **** DEBUGGING MENU ***/

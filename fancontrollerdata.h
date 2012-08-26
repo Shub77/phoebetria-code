@@ -51,7 +51,7 @@ public:
         { m_isAudibleAlarm = isAudible; }
 
     // Access functions to channel settings
-    int maxRPM_changed(int channel) const;
+    int maxRPM(int channel) const;
     int alarmTemp(int channel) const;
 
     int manualRPM(int channel) const;
@@ -89,9 +89,7 @@ public:
     // END TODO: make these protected or even private
 
 
-    static QString temperatureString(int temperature,
-                                     bool asCelcius,
-                                     bool addScaleSymbol);
+    QString temperatureString(int temperature, bool addScaleSymbol);
 
     static int toCelcius(int tempInF);
     static int toFahrenheit(int tempInC);

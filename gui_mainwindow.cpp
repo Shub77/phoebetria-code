@@ -51,10 +51,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     setWindowIcon(QIcon(":/icon16x16"));
 
-    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
-        m_speedSliderMovedByDevice[i] = false;
-    }
-
     FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
     // Synchronise fan controller data with GUI.
@@ -64,11 +60,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     bool isAA = ui->ctrl_isAudibleAlarm->value() == 1 ? true : false;
     fc->fanControllerData().updateDeviceSettings(isC, isAuto, isAA);
     fc->fanControllerData().blockSignals(bs);
-
-    m_isAutoToggleByDevice = false;
-    m_isAutoToggleByDevice = false;
-    m_isAudibleAlarmByDevice = false;
-
 
     if (fc->isConnected() == false) {
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
@@ -126,6 +117,10 @@ void gui_MainWindow::initCtrlArrays(void)
 
 }
 
+FanControllerData& gui_MainWindow::fcdata(void) const
+{
+    return ((PhoebetriaApp*)qApp)->fanControllerIO().fanControllerData();
+}
 
 void gui_MainWindow::connectCustomSignals(void)
 {
@@ -135,12 +130,16 @@ void gui_MainWindow::connectCustomSignals(void)
             this, SLOT(onCurrentRPM(int,int)));
     connect(&app->fanControllerIO().fanControllerData(), SIGNAL(temperature_changed(int,int)),
             this, SLOT(onCurrentTemp(int,int)));
-//    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(deviceSettings(bool,bool,bool)),
-//            this, SLOT(onDeviceSettings(bool,bool,bool)));
     connect(&app->fanControllerIO().fanControllerData(), SIGNAL(maxRPM_changed(int, int)),
             this, SLOT(onMaxRPM(int, int)));
     connect(&app->fanControllerIO().fanControllerData(), SIGNAL(currentAlarmTemp_changed(int,int)),
             this, SLOT(onCurrentAlarmTemp(int,int)));
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(controlMode_changed(bool)),
+            this, SLOT(onControlModeChanged(bool)));
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(temperatureScale_changed(bool)),
+            this, SLOT(onTemperatureScaleChanged(bool)));
+    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(alarmIsAudible_changed(bool)),
+            this, SLOT(onIsAudibleAlarmChanged(bool)));
 }
 
 void gui_MainWindow::enableDisableSpeedControls(void)
@@ -158,15 +157,13 @@ void gui_MainWindow::updateSpeedControlTooltip(int channel)
 
     QString tooltip;
     tooltip += tr("Min Temp: ");
-    tooltip += FanControllerData::temperatureString(
+    tooltip += fcdata().temperatureString(
                 m_fcd.minTemp(channel),
-                m_fcd.isCelcius(),
                 true);
     tooltip += "\n";
     tooltip += tr("Max Temp: ");
-    tooltip += FanControllerData::temperatureString(
+    tooltip += fcdata().temperatureString(
                 m_fcd.maxTemp(channel),
-                m_fcd.isCelcius(),
                 true);
     tooltip += "\n";
     tooltip += tr("Min logged RPM: ");
@@ -179,6 +176,7 @@ void gui_MainWindow::updateSpeedControlTooltip(int channel)
     m_ctrls_RpmSliders[channel]->setToolTip(tooltip);
 }
 
+
 void gui_MainWindow::updateSpeedControlTooltips(void)
 {
     for (int i = 0; i < FC_MAX_CHANNELS; i++) {
@@ -186,15 +184,22 @@ void gui_MainWindow::updateSpeedControlTooltips(void)
     }
 }
 
+int gui_MainWindow::maxRPM(int channel) const
+{
+    PhoebetriaApp *app = (PhoebetriaApp*)qApp;
+
+    int mrpm;
+
+    mrpm = app->fanControllerIO().fanControllerData().maxRPM(channel);
+    return mrpm < 0 ? 0 : mrpm;
+}
+
 void gui_MainWindow::updateSpeedControl(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    int maxRPM = m_fcd.maxRPM_changed(channel);
-    if (maxRPM < 1) maxRPM = 1;
-
     bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
-    m_ctrls_RpmSliders[channel]->setValue(ceil(RPM*100.0/maxRPM));
+    m_ctrls_RpmSliders[channel]->setValue(ceil(RPM*100.0/maxRPM(channel)));
     QString RpmText;
     RpmText = RPM == 0 ? "OFF" : QString::number(RPM);
     m_ctrls_currentRPM[channel]->setText(RpmText);
@@ -210,10 +215,8 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM)
 void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
 {
     m_ctrls_probeTemps[channel]->setText(
-                FanControllerData::temperatureString(
-                    temp,
-                    m_fcd.isCelcius(),
-                    true) );
+                fcdata().temperatureString(temp, true)
+                );
 }
 
 void gui_MainWindow::updateAllCurrentTempControls(void)
@@ -229,10 +232,8 @@ void gui_MainWindow::updateAlarmTempControl(int channel, int temp, bool isCelciu
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     m_ctrls_alarmTemps[channel]->setText(
-        FanControllerData::temperatureString(
-                    temp,
-                    m_fcd.isCelcius(),
-                    true) );
+        fcdata().temperatureString(temp, true)
+        );
 
 }
 
@@ -255,15 +256,15 @@ void gui_MainWindow::syncDeviceSettingsCtrls(void)
     bool bs;
 
     bs = ui->ctrl_tempScaleToggle->blockSignals(true);
-    ui->ctrl_tempScaleToggle->setValue(m_fcd.isCelcius() ? 1 : 0);
+    ui->ctrl_tempScaleToggle->setValue(fcdata().isCelcius() ? 1 : 0);
     ui->ctrl_tempScaleToggle->blockSignals(bs);
 
     bs = ui->ctrl_isManual->blockSignals(true);
-    ui->ctrl_isManual->setValue(m_fcd.isAuto()? 0 : 1);
+    ui->ctrl_isManual->setValue(fcdata().isAuto()? 0 : 1);
     ui->ctrl_isManual->blockSignals(bs);
 
     bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
-    ui->ctrl_isAudibleAlarm->setValue(m_fcd.isAudibleAlarm() ? 1 : 0);
+    ui->ctrl_isAudibleAlarm->setValue(fcdata().isAudibleAlarm() ? 1 : 0);
     bs = ui->ctrl_isAudibleAlarm->blockSignals(bs);
 
 
@@ -310,6 +311,10 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
+    updateSpeedControl(channel, RPM);
+
+#if 0 // TODO REMOVE
+    REMOVE
     if (m_fcd.lastRPM(channel) != RPM) {
         m_fcd.setLastRPM(channel, RPM);
 
@@ -322,10 +327,9 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
             m_fcd.setMinLoggedRPM(channel, RPM);
             updateSpeedControlTooltip(channel);
         }
-        m_speedSliderMovedByDevice[channel] = true;
-
         updateSpeedControl(channel, RPM);
     }
+#endif
 }
 
 
@@ -334,6 +338,9 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
+    updateCurrentTempControl(channel, tempInF);
+
+#if 0 // TODO REMOVE
     /* Sometimes -'ve temperatures are sent from the device (that are
      * incorrect). The specs page for the recon show 0-100C as the probes'
      * range, so ignore these -'ve values.
@@ -354,6 +361,7 @@ void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
 
         updateSpeedControlTooltip(channel);
     }
+#endif
 }
 
 void gui_MainWindow::onCurrentAlarmTemp(int channel, int tempInF)
@@ -366,11 +374,12 @@ void gui_MainWindow::onCurrentAlarmTemp(int channel, int tempInF)
     }
 }
 
-
+#if 0
 void gui_MainWindow::onDeviceSettings(bool isCelcius,
                                       bool isAuto,
                                       bool isAudibleAlarm)
 {
+
     if (m_fcd.isCelcius() != isCelcius) {
         m_fcd.setIsCelcius(isCelcius);
         bool bs = ui->ctrl_tempScaleToggle->blockSignals(true);
@@ -395,17 +404,40 @@ void gui_MainWindow::onDeviceSettings(bool isCelcius,
         ui->ctrl_isAudibleAlarm->blockSignals(bs);
     }
 
+
     syncDeviceSettingsCtrls();
 }
+#endif
+
+void gui_MainWindow::onTemperatureScaleChanged(bool isCelcius)
+{
+    bool bs = ui->ctrl_tempScaleToggle->blockSignals(true);
+    ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
+    ui->ctrl_tempScaleToggle->blockSignals(bs);
+}
+
+void gui_MainWindow::onControlModeChanged(bool isAuto)
+{
+    bool bs = ui->ctrl_isManual->blockSignals(true);
+    ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
+    ui->ctrl_isManual->blockSignals(bs);
+
+}
+
+void gui_MainWindow::onIsAudibleAlarmChanged(bool isAudibleAlarm)
+{
+    bool bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
+    ui->ctrl_isAudibleAlarm->setValue(isAudibleAlarm ? 1 : 0);
+    bs = ui->ctrl_isAudibleAlarm->blockSignals(bs);
+}
+
 
 
 void gui_MainWindow::onMaxRPM(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    m_fcd.setMaxRPM(channel, RPM);
-
-    updateSpeedControl(channel, m_fcd.lastRPM(channel));
+    updateSpeedControl(channel, fcdata().lastRPM(channel));
 }
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
@@ -501,7 +533,7 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
 
 int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
 {
-    int channelMaxRPM = m_fcd.maxRPM_changed(channel);
+    int channelMaxRPM = maxRPM(channel);
     int channelMinRPM = floor(channelMaxRPM * 0.50 / 100) * 100;
 
     double val = value / 100.0 * channelMaxRPM;
@@ -544,7 +576,7 @@ void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
     }
 
     if (userTemperature != currentAlarmTemp) {
-        fc->setChannelSettings(channel, userTemperature, m_fcd.maxRPM_changed(channel));
+        fc->setChannelSettings(channel, userTemperature, maxRPM(channel));
         updateAlarmTempControl(channel, userTemperature, m_fcd.isCelcius());
     }
 }
@@ -768,7 +800,7 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
         return;
     }
 
-    int channelMaxRPM = m_fcd.maxRPM_changed(channel);
+    int channelMaxRPM = maxRPM(channel);
 
     if (speed < channelMaxRPM * 0.4 && speed != 0) {
         qDebug() << "Speed is less than 40%, but not OFF. Setting to 40%";
