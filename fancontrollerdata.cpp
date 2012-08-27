@@ -18,7 +18,8 @@
 #include <cmath>
 
 
-FanControllerData::FanControllerData(QObject *parent)
+FanControllerData::FanControllerData(QObject *parent) :
+    QObject(parent)
 {
     init();
 }
