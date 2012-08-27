@@ -8,6 +8,7 @@ gui_About::gui_About(QWidget *parent) :
     ui(new Ui::gui_About)
 {
     ui->setupUi(this);
+    this->setFixedSize(this->size());   // Disable resizing
     ui->ctrl_version->setText("Version " + BuildDetails::versionStr());
     ui->ctrl_build->setText("Build date: " + BuildDetails::buildDateTimeStr());
 }

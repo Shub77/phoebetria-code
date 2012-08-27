@@ -36,6 +36,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
+    // Stop resizing
+    this->setFixedSize(this->size());
+
 #if defined Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
 #elif defined Q_WS_MAC
