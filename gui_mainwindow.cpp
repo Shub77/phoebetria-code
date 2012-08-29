@@ -457,7 +457,7 @@ void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
     QString prompt = QString(tr("Enter new alarm temperature %1"
                                 " for channel %2.\nRange is %3 to %4"))
                              .arg(fcdata().isCelcius() ? "C" : "F")
-                             .arg(channel)
+                             .arg(channel + 1)
                              .arg(minProbeTemp)
                              .arg(maxProbTemp);
 
