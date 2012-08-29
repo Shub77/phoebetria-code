@@ -185,7 +185,8 @@ public:
         { return inCelcius ? 124 : 255; }   /* C : F */
 
     void processTempAndSpeed(int channel, int tempF, int rpm, int maxRpm);
-    void processAlarmAndSpeed(int channel, int alarmTempF);
+    void processAlarmTemp(int channel, int alarmTempF);
+    void processManualSpeed(int channel, int rpm);
     void processDeviceSettings(bool isAuto, bool isCelcius, bool isAudibleAlarm);
 
     // Requests
