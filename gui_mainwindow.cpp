@@ -65,6 +65,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
     }
 
+    //updateSpeedControlTooltips();
+
     /* **** DEBUGGING MENU ***/
 #ifdef QT_DEBUG
 
@@ -124,21 +126,49 @@ void gui_MainWindow::connectCustomSignals(void)
 {
     PhoebetriaApp *app = (PhoebetriaApp*)qApp;
 
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(RPM_changed(int,int)),
-            this, SLOT(onCurrentRPM(int,int)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(temperature_changed(int,int)),
-            this, SLOT(onCurrentTemp(int,int)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(maxRPM_changed(int, int)),
-            this, SLOT(onMaxRPM(int, int)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(currentAlarmTemp_changed(int,int)),
-            this, SLOT(onCurrentAlarmTemp(int,int)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(controlMode_changed(bool)),
+    const FanControllerData& fcd = app->fanControllerIO().fanControllerData();
+
+    // **** Signals for common settings
+
+    connect(&fcd, SIGNAL(controlMode_changed(bool)),
             this, SLOT(onControlModeChanged(bool)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(temperatureScale_changed(bool)),
+
+    connect(&fcd, SIGNAL(temperatureScale_changed(bool)),
             this, SLOT(onTemperatureScaleChanged(bool)));
-    connect(&app->fanControllerIO().fanControllerData(), SIGNAL(alarmIsAudible_changed(bool)),
+
+    connect(&fcd, SIGNAL(alarmIsAudible_changed(bool)),
             this, SLOT(onIsAudibleAlarmChanged(bool)));
+
+    // **** Channel related signals
+
+    connect(&fcd, SIGNAL(RPM_changed(int,int)),
+            this, SLOT(onCurrentRPM(int,int)));
+
+    connect(&fcd, SIGNAL(temperature_changed(int,int)),
+            this, SLOT(onCurrentTemp(int,int)));
+
+    connect(&fcd, SIGNAL(maxRPM_changed(int, int)),
+            this, SLOT(onMaxRPM(int, int))); 
+
+    connect(&fcd, SIGNAL(currentAlarmTemp_changed(int,int)),
+            this, SLOT(onCurrentAlarmTemp(int,int)));
+
+
+    // **** Logging related signals
+
+    connect(&fcd, SIGNAL(minLoggedRPM_changed(int,int)),
+            this, SLOT(onMinLoggedRpmChanged(int,int)));
+
+    connect(&fcd, SIGNAL(maxLoggedRPM_changed(int,int)),
+            this, SLOT(onMaxLoggedRpmChanged(int,int)));
+
+    connect(&fcd, SIGNAL(minLoggedRPM_changed(int,int)),
+            this, SLOT(onMinLoggedTempChanged(int,int)));
+
+    connect(&fcd, SIGNAL(maxLoggedRPM_changed(int,int)),
+            this, SLOT(onMaxLoggedTempChanged(int,int)));
 }
+
 
 void gui_MainWindow::enableSpeedControls(bool enabled)
 {
@@ -290,29 +320,9 @@ void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
     this->activateWindow();
 }
 
-void gui_MainWindow::onCurrentRPM(int channel, int RPM)
-{
-    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
-
-    updateSpeedControl(channel, RPM);
-}
-
-
-
-void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
-{
-    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
-
-    updateCurrentTempControl(channel, tempInF);
-}
-
-void gui_MainWindow::onCurrentAlarmTemp(int channel, int tempInF)
-{
-    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
-
-    updateAlarmTempControl(channel, tempInF, fcdata().isCelcius());
-}
-
+/* ------------------------------------------------------------------------
+   Slots for common settings
+   ----------------------------------------------------------------------*/
 
 void gui_MainWindow::onTemperatureScaleChanged(bool isCelcius)
 {
@@ -337,12 +347,71 @@ void gui_MainWindow::onIsAudibleAlarmChanged(bool isAudibleAlarm)
     bs = ui->ctrl_isAudibleAlarm->blockSignals(bs);
 }
 
+/* ------------------------------------------------------------------------
+   Channel related slots
+   ----------------------------------------------------------------------*/
+
+void gui_MainWindow::onCurrentRPM(int channel, int RPM)
+{
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
+
+    updateSpeedControl(channel, RPM);
+}
+
+void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
+{
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
+
+    updateCurrentTempControl(channel, tempInF);
+}
+
+void gui_MainWindow::onCurrentAlarmTemp(int channel, int tempInF)
+{
+    Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
+
+    updateAlarmTempControl(channel, tempInF, fcdata().isCelcius());
+}
+
 void gui_MainWindow::onMaxRPM(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     updateSpeedControl(channel, fcdata().lastRPM(channel));
 }
+
+
+/* ------------------------------------------------------------------------
+   Logging related slots
+   ----------------------------------------------------------------------*/
+
+void gui_MainWindow::onMinLoggedRpmChanged(int channel, int rpm)
+{
+    (void)rpm;  // Unused
+    updateSpeedControlTooltip(channel);
+}
+
+void gui_MainWindow::onMaxLoggedRpmChanged(int channel, int rpm)
+{
+    (void)rpm;  // Unused
+    updateSpeedControlTooltip(channel);
+}
+
+void gui_MainWindow::onMinLoggedTempChanged (int channel, int temperature)
+{
+    (void)temperature;  // Unused
+    updateSpeedControlTooltip(channel);
+}
+
+void gui_MainWindow::onMaxLoggedTempChanged (int channel, int temperature)
+{
+    (void)temperature;  // Unused
+    updateSpeedControlTooltip(channel);
+}
+
+
+/* ------------------------------------------------------------------------
+   GUI slots
+   ----------------------------------------------------------------------*/
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {

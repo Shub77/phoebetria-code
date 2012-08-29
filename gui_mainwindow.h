@@ -41,13 +41,22 @@ public slots:
     void changeEvent(QEvent* e);
     void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
 
+    // **** Slots for common settings
+    void onControlModeChanged(bool isAuto);
+    void onIsAudibleAlarmChanged(bool isAudibleAlarm);
+    void onMaxRPM(int channel, int RPM);
+
+    // **** Channel related slots
     void onCurrentRPM(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
     void onCurrentAlarmTemp(int channel, int tempInF);
     void onTemperatureScaleChanged(bool isCelcius);
-    void onControlModeChanged(bool isAuto);
-    void onIsAudibleAlarmChanged(bool isAudibleAlarm);
-    void onMaxRPM(int channel, int RPM);
+
+    // **** Logging related slots
+    void onMinLoggedRpmChanged(int channel, int rpm);
+    void onMaxLoggedRpmChanged(int channel, int rpm);
+    void onMinLoggedTempChanged (int channel, int temperature);
+    void onMaxLoggedTempChanged (int channel, int temperature);
 
 private slots:
 
