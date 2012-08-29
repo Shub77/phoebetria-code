@@ -44,7 +44,9 @@ public slots:
     void onCurrentRPM(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
     void onCurrentAlarmTemp(int channel, int tempInF);
-    void onDeviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
+    void onTemperatureScaleChanged(bool isCelcius);
+    void onControlModeChanged(bool isAuto);
+    void onIsAudibleAlarmChanged(bool isAudibleAlarm);
     void onMaxRPM(int channel, int RPM);
 
 private slots:
@@ -89,16 +91,19 @@ private slots:
 
 private:
     void initCtrlArrays(void);
+
+    FanControllerData& fcdata(void) const;
+
     void connectCustomSignals(void);
 
-    void enableDisableSpeedControls(void);
+    void enableSpeedControls(bool enabled = true);
 
     void updateSpeedControlTooltip(int channel);
     void updateSpeedControlTooltips(void);
 
+    int maxRPM(int channel) const;
     void updateSpeedControl(int channel, int RPM);
     void updateAllSpeedCtrls(void);
-    void syncDeviceSettingsCtrls(void);
 
     void updateCurrentTempControl(int channel, int temp);
     void updateAllCurrentTempControls(void);
@@ -106,8 +111,6 @@ private:
     void updateAllAlarmCtrls(bool isCelcius);
 
     int rpmSliderValueToRPM(int channel, int value) const;
-
-    void setFcChannelSpeed(int channel, int RPM);
 
     void userPressedChannelRpmSlider(int channel);
     void userReleasedChannelRpmSlider(int channel);
@@ -124,26 +127,6 @@ private:
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
     QSystemTrayIcon m_trayIcon;
-
-#if 0
-    // Common data
-    bool m_isCelcius;
-    bool m_isAuto;
-    bool m_isAudibleAlarm;
-
-    // Channel sepecific data
-    FanChannelData m_channelData[FC_MAX_CHANNELS];
-#endif
-
-    FanControllerData m_fcd;  // fcd == fan controller data
-
-    // Blocking flags
-    bool m_isAutoToggleByDevice;
-    bool m_isCelciusToggleByDevice;
-    bool m_isAudibleAlarmByDevice;
-
-    bool m_speedSliderMovedByDevice[FC_MAX_CHANNELS];
-
 
     /* **** DEBUGGING MENU ***/
 #ifdef QT_DEBUG

@@ -24,4 +24,7 @@
         <file>Images/profile_play.png</file>
         <file>Images/profile_save.png</file>
     </qresource>
+    <qresource prefix="/html">
+        <file>LICENSE-BRIEF.html</file>
+    </qresource>
 </RCC>

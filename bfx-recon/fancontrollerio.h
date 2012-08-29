@@ -172,6 +172,9 @@ public:
     bool isConnected(void) const;
     void disconnect(void);
 
+    FanControllerData& fanControllerData(void)
+        { return m_fanControllerData; }
+
     bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
     bool setChannelSettings(int channel, unsigned thresholdF, unsigned speed);
     bool setFromProfile(const FanControllerProfile& profile);
@@ -205,16 +208,6 @@ public slots:
     void onPollTimerTriggered(void);
     void onRawData(QByteArray rawdata);
 
-signals:
-    void deviceConnected(void);
-    void deviceDisconnected(void);
-    void currentTemp(int probe, int temp);
-    void currentRPM(int channel, int RPM);
-    void maxRPM(int channel, int RPM);
-    void currentAlarmTemp(int channel, int temp);
-    void currentRpmOnAlarm(int channel, int RPM);
-    void deviceSettings(bool isCelcius, bool isAuto, bool isAudibleAlarm);
-
 private:
 
     DeviceIO m_io_device;
@@ -223,7 +216,7 @@ private:
 
     QQueue<Request> m_requestQueue;
 
-    FanControllerData m_fcd;
+    FanControllerData m_fanControllerData;
 };
 
 

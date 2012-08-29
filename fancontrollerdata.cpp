@@ -18,16 +18,16 @@
 #include <cmath>
 
 
-FanControllerData::FanControllerData()
+FanControllerData::FanControllerData(QObject *parent)
 {
     init();
 }
 
 void FanControllerData::init(void)
 {
-    m_isCelcius = false;
-    m_isAuto = true;
-    m_isAudibleAlarm = true;
+    m_isCelcius = -1;
+    m_isAuto = -1;
+    m_isAudibleAlarm = -1;
 }
 
 // ------------------------------------------------------------------------
@@ -82,71 +82,98 @@ int FanControllerData::maxLoggedRPM(int channel) const
 // Update channel settings
 // ------------------------------------------------------------------------
 
-bool FanControllerData::updateMaxRPM(int channel, int to)
+void FanControllerData::updateMaxRPM(int channel, int to, bool emitSignal)
 {
-    bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.maxRPM() != to || !cd.isSet_maxRpm()) {
         cd.setMaxRPM(to);
-        r = true;
+        if (emitSignal) emit maxRPM_changed(channel, to);
     }
-    return r;
 }
 
-bool FanControllerData::updateAlarmTemp(int channel, int to)
+void FanControllerData::updateAlarmTemp(int channel, int to, bool emitSignal)
 {
-    bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.alarmTemp() != to || !cd.isSet_alarmTemp()) {
         cd.setAlarmTemp(to);
-        r = true;
+        if (emitSignal) emit currentAlarmTemp_changed(channel, to);
     }
-    return r;
 }
 
-bool FanControllerData::updateManualRPM(int channel, int to)
+void FanControllerData::updateManualRPM(int channel, int to, bool emitSignal)
 {
-    bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.manualRPM() != to || !cd.isSet_manualRPM()) {
         cd.setManualRPM(to);
-        r = true;
+        if (emitSignal) emit manualRPM_changed(channel, to);
     }
-    return r;
 }
 
-bool FanControllerData::updateTempF(int channel, int to)
+void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 {
-    bool r = false;
+    /* !!!!!!!!! TODO: HOW? The range is 0x00 to 0xFF */
+
+    /* Sometimes -'ve temperatures are sent from the device (that are
+     * incorrect). The specs page for the recon show 0-100C as the probes'
+     * range, so ignore these -'ve values.
+     */
+    if (to < 0) return;
+
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.lastTemp() != to || !cd.isSet_lastTemp()) {
         if (cd.minTemp() > to || !cd.isSet_MinTemp()) {
             cd.setMinTemp(to);
+            emit minLoggedTemp_changed(channel, to);
         }
         if (cd.maxTemp() < to || !cd.isSet_MaxTemp()) {
             cd.setMaxTemp(to);
+            emit maxLoggedTemp_changed(channel, to);
         }
         cd.setLastTemp(to);
-        r = true;
+        if (emitSignal) emit temperature_changed(channel, to);
     }
-    return r;
 }
 
-bool FanControllerData::updateRPM(int channel, int to)
+void FanControllerData::updateRPM(int channel, int to, bool emitSignal)
 {
-    bool r = false;
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.lastRPM() != to || !cd.isSet_lastRPM()) {
         if (cd.minLoggedRPM() > to || !cd.isSet_minLoggedRPM()) {
             cd.setMinLoggedRPM(to);
+            emit minLoggedRPM_changed(channel, to);
         }
         if (cd.maxLoggedRPM() < to || !cd.isSet_maxLoggedRPM()) {
             cd.setMaxLoggedRPM(to);
+            emit maxLoggedRPM_changed(channel, to);
         }
         cd.setLastRPM(to);
-        r = true;
+        if (emitSignal) emit RPM_changed(channel, to);
     }
-    return r;
+}
+
+
+void FanControllerData::updateIsCelcius(bool isCelcius, bool emitSignal)
+{
+    if (m_isCelcius != (short)isCelcius || m_isCelcius == -1) {
+        m_isCelcius = isCelcius;
+        if (emitSignal) emit temperatureScale_changed(isCelcius);
+    }
+}
+
+void FanControllerData::updateIsAuto(bool isAuto, bool emitSignal)
+{
+    if (m_isAuto != (short)isAuto || m_isAuto == -1) {
+        m_isAuto = (short)isAuto;
+        if (emitSignal) emit controlMode_changed(isAuto);
+    }
+}
+
+void FanControllerData::updateIsAudibleAlarm(bool isAudible, bool emitSignal)
+{
+    if (m_isAudibleAlarm != (short)isAudible || m_isAudibleAlarm == -1) {
+        m_isAudibleAlarm = isAudible;
+        if (emitSignal) emit alarmIsAudible_changed(isAudible);
+    }
 }
 
 
@@ -200,13 +227,12 @@ void FanControllerData::setMaxLoggedRPM(int channel, int to)
 }
 
 QString FanControllerData::temperatureString(int temperature,
-                                                bool asCelcius,
-                                                bool addScaleSymbol)
+                                             bool addScaleSymbol)
 {
     QString r;
-    int t = asCelcius ? ceil((temperature-32)*5.0/9) : temperature;
+    int t = m_isCelcius ? ceil((temperature-32)*5.0/9) : temperature;
     r = QString::number(t);
-    if (addScaleSymbol) r += (asCelcius ? " C" : " F");
+    if (addScaleSymbol) r += (m_isCelcius ? " C" : " F");
     return r;
 }
 

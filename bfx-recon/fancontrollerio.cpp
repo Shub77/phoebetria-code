@@ -190,7 +190,7 @@ FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent)
 {
     m_pollNumber = 0;
-    m_fcd.init();
+    m_fanControllerData.init();
     connectSignals();
 }
 
@@ -204,7 +204,7 @@ bool FanControllerIO::connect(void)
 {
     bool r = m_io_device.connect(HID_VendorId, HID_ProductId);
 
-    if (r) emit deviceConnected();
+    // TODO if (r) emit deviceConnected();
 
     return r;
 }
@@ -220,7 +220,7 @@ void FanControllerIO::disconnect(void)
 {
     m_io_device.disconnect();
 
-    emit deviceDisconnected();
+    // TODO emit deviceDisconnected();
 }
 
 
@@ -352,22 +352,24 @@ void FanControllerIO::processTempAndSpeed(int channel,
                                           int rpm,
                                           int maxRpm)
 {
-    emit currentTemp(channel, tempF);
-    emit currentRPM(channel, rpm);
-    emit maxRPM(channel, maxRpm);
+    m_fanControllerData.updateTempF(channel, tempF);
+    m_fanControllerData.updateRPM(channel, rpm);
+    m_fanControllerData.updateMaxRPM(channel, maxRpm);
 }
 
 
 void FanControllerIO::processAlarmAndSpeed(int channel, int alarmTempF)
 {
-    emit currentAlarmTemp(channel, alarmTempF);
+    m_fanControllerData.updateAlarmTemp(channel, alarmTempF);
 }
 
 void FanControllerIO::processDeviceSettings(bool isAuto,
                                             bool isCelcius,
                                             bool isAudibleAlarm)
 {
-        emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
+    m_fanControllerData.updateIsAuto(isAuto);
+    m_fanControllerData.updateIsCelcius(isCelcius);
+    m_fanControllerData.updateIsAudibleAlarm(isAudibleAlarm);
 }
 
 int FanControllerIO::rawToTemp(unsigned char byte) const
@@ -422,7 +424,6 @@ void FanControllerIO::processRequestQueue(void)
              << toHexString(r.m_URB, sizeof(r.m_URB));
 #endif
 
-
     m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
 
     blockSignals(bs);
@@ -474,7 +475,6 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
     Request req;
 
     req.m_controlByte = TX_SetDeviceSettings;
-
 
     req.m_dataLen = 1;
     req.m_data[0] = bits;
