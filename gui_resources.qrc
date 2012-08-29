@@ -27,6 +27,6 @@
         <file>Images/profile_save.png</file>
     </qresource>
     <qresource prefix="/html">
-        <file>LICENSE-BRIEF.html</file>
+        <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>
     </qresource>
 </RCC>

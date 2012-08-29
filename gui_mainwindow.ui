@@ -1737,9 +1737,6 @@ margin:-2px;</string>
           </layout>
          </item>
         </layout>
-        <zorder>ctrl_channel4speed</zorder>
-        <zorder>ctrl_probe4Temp</zorder>
-        <zorder>verticalSpacer_7</zorder>
        </widget>
       </item>
       <item>
