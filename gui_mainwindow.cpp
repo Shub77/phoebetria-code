@@ -295,21 +295,19 @@ void gui_MainWindow::changeEvent(QEvent* e)
     switch (e->type())
     {
     case QEvent::WindowStateChange:
-    {
         if (this->windowState() & Qt::WindowMinimized)
         {
-            //if (Preferences::instance().minimizeToTray())
             if (QSystemTrayIcon::isSystemTrayAvailable())
             {
                 QTimer::singleShot(0, this, SLOT(hide()));
                 m_trayIcon.show();
-                m_trayIcon.showMessage("Phoebetria",
-                                       tr("Minimised to tray"));
+//                m_trayIcon.showMessage("Phoebetria",
+//                                       tr("Minimised to tray"));
             }
         }
 
         break;
-    }
+
     default:
         break;
     }
