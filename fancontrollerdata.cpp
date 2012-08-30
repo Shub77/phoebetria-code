@@ -104,7 +104,8 @@ void FanControllerData::updateAlarmTemp(int channel, int to, bool emitSignal)
 void FanControllerData::updateManualRPM(int channel, int to, bool emitSignal)
 {
     FanChannelData& cd = m_channelSettings[channel];
-    if (cd.manualRPM() != to || !cd.isSet_manualRPM()) {
+    if ( cd.manualRPM() != to || !cd.isSet_manualRPM())
+    {
         cd.setManualRPM(to);
         if (emitSignal) emit manualRPM_changed(channel, to);
     }

@@ -2,6 +2,7 @@
 #define GUI_ABOUT_H
 
 #include <QDialog>
+#include <QAbstractButton>
 
 namespace Ui {
 class gui_About;
@@ -15,6 +16,10 @@ public:
     explicit gui_About(QWidget *parent = 0);
     ~gui_About();
     
+private slots:
+
+    void on_ctrl_aboutDlgBtnBox_clicked(QAbstractButton *button);
+
 private:
     Ui::gui_About *ui;
 };
