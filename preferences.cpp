@@ -17,17 +17,20 @@
 #include "preferences.h"
 
 /**************************************************************************
- Class Preferences::Entry
  *************************************************************************/
 Preferences::Entry::Entry()
 {
-
 }
 
 
+/**************************************************************************
+ *************************************************************************/
+
+const QString Preferences::PrefKey::MinimiseToTray = "MinimiseToTray";
+const QString Preferences::PrefKey::ShowTooltipOnMinimise = "ShowToolTipOnMinimise";
+const QString Preferences::PrefKey::DevicePollTime = "DevicePollTime";
 
 /**************************************************************************
- Class Preferences
  *************************************************************************/
 Preferences::Preferences(QObject *parent) :
     QObject(parent)
@@ -43,4 +46,12 @@ void Preferences::set(const QString& key, int value)
 void Preferences::set(const QString& key, bool value)
 {
     m_prefs.insert(key, value);
+}
+
+
+void Preferences::setDefaults(void)
+{
+    set(PrefKey::MinimiseToTray, true);
+    set(PrefKey::ShowTooltipOnMinimise, false);
+    set(PrefKey::DevicePollTime, 200);
 }

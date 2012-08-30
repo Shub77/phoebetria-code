@@ -42,7 +42,14 @@ class Preferences : public QObject
     private:
 
         QVariant m_value;
+    };
 
+    class PrefKey
+    {
+    public:
+        static const QString MinimiseToTray;
+        static const QString ShowTooltipOnMinimise;
+        static const QString DevicePollTime;
     };
 
 public:
@@ -51,6 +58,10 @@ public:
 
     void set(const QString& key, int value);
     void set(const QString& key, bool value);
+
+protected:
+
+    void setDefaults(void);
 
 private:
 
