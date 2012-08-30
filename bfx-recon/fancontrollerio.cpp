@@ -84,6 +84,8 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
         return false; // Checksum failure
     }
+#else
+    (void)calculatedChecksum;   // not used in release builds
 #endif
 
     return true;
@@ -188,6 +190,7 @@ FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent)
 {
     m_pollNumber = 0;
+    m_fanControllerData.init();
     connectSignals();
 }
 
@@ -201,7 +204,7 @@ bool FanControllerIO::connect(void)
 {
     bool r = m_io_device.connect(HID_VendorId, HID_ProductId);
 
-    if (r) emit deviceConnected();
+    // TODO if (r) emit deviceConnected();
 
     return r;
 }
@@ -217,7 +220,7 @@ void FanControllerIO::disconnect(void)
 {
     m_io_device.disconnect();
 
-    emit deviceDisconnected();
+    // TODO emit deviceDisconnected();
 }
 
 
@@ -257,7 +260,6 @@ void FanControllerIO::onPollTimerTriggered(void)
 void FanControllerIO::onRawData(QByteArray rawdata)
 {
     Input parsedData;
-    int channel;
     bool inputParsed;
 
 #if defined QT_DEBUG && PHOEBETRIA_OUTPUT_RAW_HEX
@@ -283,34 +285,50 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     case RX_TempAndSpeed_Channel2:
     case RX_TempAndSpeed_Channel3:
     case RX_TempAndSpeed_Channel4:
-        channel = parsedData.m_controlByte - RX_TempAndSpeed_Channel0;
-        emit currentTemp(channel, rawToTemp(rawdata.at(2)));
-        emit currentRPM(channel, rawToRPM(rawdata.at(4), rawdata.at(3)));
-        emit maxRPM(channel, rawToRPM(rawdata.at(6), rawdata.at(5)));
+
+        processTempAndSpeed(
+                    // Channel
+                    parsedData.m_controlByte - RX_TempAndSpeed_Channel0,
+                    // Current temperature
+                    rawToTemp(rawdata.at(2)),
+                    // Current RPM
+                    rawToRPM(rawdata.at(4), rawdata.at(3)),
+                     // RPM at alarm temp (MAX RPM)
+                    rawToRPM(rawdata.at(6), rawdata.at(5))
+                    );
         break;
+
     case RX_AlarmAndSpeed_Channel0:
     case RX_AlarmAndSpeed_Channel1:
     case RX_AlarmAndSpeed_Channel2:
     case RX_AlarmAndSpeed_Channel3:
     case RX_AlarmAndSpeed_Channel4:
-        channel = parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0;
-        emit currentAlarmTemp(channel, rawToTemp(rawdata[2]));
-#if 0
-        // TODO: What are bytes 3 and 4? They always seem to be 0xffff
-        qDebug() << "Channel"
-                 << QString::number(channel)
-                 << QString::number((rawToRPM(rawdata.at(4), rawdata.at(3))));
-#endif
+
+        processAlarmTemp(
+                    // Channel
+                    parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0,
+                    // Alarm temperature
+                    rawToTemp(rawdata.at(2))
+                    );
+
+        processManualSpeed(
+                    // Channel
+                    parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0,
+                    // Manual speed
+                    rawToRPM(rawdata.at(4), rawdata.at(3))
+                    );
         break;
 
     case RX_DeviceSettings:
-        bool isAuto, isCelcius, isAudibleAlarm;
 
-        isAuto =    rawdata[2] & FanControllerIO::Auto ? false : true;
-        isCelcius = rawdata[2] & FanControllerIO::Celcius ? false : true;
-        isAudibleAlarm = rawdata[2] & FanControllerIO::AudibleAlarm ? true : false;
-
-        emit deviceSettings(isCelcius, isAuto, isAudibleAlarm);
+        processDeviceSettings(
+                    // Is Auto
+                    rawdata[2] & FanControllerIO::Auto ? false : true,
+                    // Is Celcius
+                    rawdata[2] & FanControllerIO::Celcius ? false : true,
+                    // Is Audible Alarm
+                    rawdata[2] & FanControllerIO::AudibleAlarm ? true : false
+                    );
         break;
 
     case RX_ACK:
@@ -330,6 +348,36 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     }
 }
 
+void FanControllerIO::processTempAndSpeed(int channel,
+                                          int tempF,
+                                          int rpm,
+                                          int maxRpm)
+{
+    m_fanControllerData.updateTempF(channel, tempF);
+    m_fanControllerData.updateRPM(channel, rpm);
+    m_fanControllerData.updateMaxRPM(channel, maxRpm);
+}
+
+
+void FanControllerIO::processAlarmTemp(int channel, int alarmTempF)
+{
+    m_fanControllerData.updateAlarmTemp(channel, alarmTempF);
+}
+
+void FanControllerIO::processManualSpeed(int channel, int rpm)
+{
+    m_fanControllerData.updateManualRPM(channel, rpm);
+}
+
+
+void FanControllerIO::processDeviceSettings(bool isAuto,
+                                            bool isCelcius,
+                                            bool isAudibleAlarm)
+{
+    m_fanControllerData.updateIsAuto(isAuto);
+    m_fanControllerData.updateIsCelcius(isCelcius);
+    m_fanControllerData.updateIsAudibleAlarm(isAudibleAlarm);
+}
 
 int FanControllerIO::rawToTemp(unsigned char byte) const
 {
@@ -383,7 +431,6 @@ void FanControllerIO::processRequestQueue(void)
              << toHexString(r.m_URB, sizeof(r.m_URB));
 #endif
 
-
     m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
 
     blockSignals(bs);
@@ -435,7 +482,6 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
     Request req;
 
     req.m_controlByte = TX_SetDeviceSettings;
-
 
     req.m_dataLen = 1;
     req.m_data[0] = bits;

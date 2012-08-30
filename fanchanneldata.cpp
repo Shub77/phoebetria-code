@@ -17,18 +17,29 @@
 #include <cmath>
 #include "fanchanneldata.h"
 
+
+const int FanChannelData::m_RpmNotSetValue = -1;
+const int FanChannelData::m_TemperatureNotSetValue = -65535;
+const int FanChannelData::m_maxLoggedTempNotSetValue = -65535;
+const int FanChannelData::m_minLoggedTempNotSetValue = 63335;
+const int FanChannelData::m_manualRPMNotSetValue = -1;
+// Keeping -1 so that V1.0.0-Beta profiles do not break.
+const int FanChannelData::m_manualRPMNotSetValue_Preferred = 65535;
+
+
 FanChannelData::FanChannelData()
 {
-    m_maxTemp = 0;
-    m_maxLoggedRPM = 0;
-    m_lastRPM = -1;
-    m_minLoggedRPM = -1;
-    m_lastTemp = -1;
-    m_minTemp = 9999;
 
-    m_alarmTemp = -1;
-    m_maxRPM = 1400;
+    m_maxLoggedRPM = m_RpmNotSetValue;
+    m_lastRPM = m_RpmNotSetValue;
+    m_minLoggedRPM = m_RpmNotSetValue;
+    m_lastTemp = m_TemperatureNotSetValue;
+    m_maxTemp = m_maxLoggedTempNotSetValue;
+    m_minTemp = m_minLoggedTempNotSetValue;
 
-    m_manualRPM = -1;
+    m_alarmTemp = m_TemperatureNotSetValue;
+    m_maxRPM = m_RpmNotSetValue;
+
+    m_manualRPM = m_manualRPMNotSetValue_Preferred;
 }
 

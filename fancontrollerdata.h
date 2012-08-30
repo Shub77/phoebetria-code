@@ -17,15 +17,18 @@
 #ifndef FANCONTROLLERDATA_H
 #define FANCONTROLLERDATA_H
 
+#include <QObject>
 #include <QString>
 #include "fanchanneldata.h"
 
 #define FC_MAX_CHANNELS 5
 
-class FanControllerData
+class FanControllerData : public QObject
 {
+    Q_OBJECT
+
 public:
-    FanControllerData();
+    explicit FanControllerData(QObject *parent = 0);
 
     const QString& name(void) const;
 
@@ -35,9 +38,12 @@ public:
     bool save(const char* filename);
 
     // Access functions for common settings
-    bool isCelcius(void) const { return m_isCelcius; }
-    bool isAuto(void) const {return m_isAuto; }
-    bool isAudibleAlarm(void) const { return m_isAudibleAlarm; }
+    bool isCelcius(void) const { return m_isCelcius != -1 ? m_isCelcius : false; }
+    bool isAuto(void) const {return m_isAuto != -1 ? m_isAuto : false; }
+    bool isAudibleAlarm(void) const { return m_isAudibleAlarm != -1 ? m_isAudibleAlarm : false; }
+
+
+    bool isAutoSet(void) const { return m_isAuto != -1; }
 
     // Set common settings
     void setIsCelcius(bool isC)
@@ -61,7 +67,18 @@ public:
     int minLoggedRPM(int channel) const;
     int maxLoggedRPM(int channel) const;
 
+    //
+    void updateMaxRPM(int channel, int to, bool emitSignal = true);
+    void updateAlarmTemp(int channel, int to, bool emitSignal = true);
+    void updateManualRPM(int channel, int to, bool emitSignal = true);
+    void updateTempF(int channel, int to, bool emitSignal = true);
+    void updateRPM(int channel, int to, bool emitSignal = true);
+    void updateIsCelcius(bool isCelcius, bool emitSignal = true);
+    void updateIsAuto(bool isAuto, bool emitSignal = true);
+    void updateIsAudibleAlarm(bool isAudible, bool emitSignal = true);
+
     // Set channel settings
+    // TODO: make these protected or even private
     void setMaxRPM(int channel, int to);
     void setAlarmTemp(int channel, int to);
 
@@ -74,10 +91,10 @@ public:
     void setLastRPM(int channel, int to);
     void setMinLoggedRPM(int channel, int to);
     void setMaxLoggedRPM(int channel, int to);
+    // END TODO: make these protected or even private
 
-    static QString temperatureString(int temperature,
-                                     bool asCelcius,
-                                     bool addScaleSymbol);
+
+    QString temperatureString(int temperature, bool addScaleSymbol);
 
     static int toCelcius(int tempInF);
     static int toFahrenheit(int tempInC);
@@ -85,12 +102,28 @@ public:
 private:
 
     // Common data
-    bool m_isCelcius;
-    bool m_isAuto;
-    bool m_isAudibleAlarm;
+    short m_isCelcius;
+    short m_isAuto;
+    short m_isAudibleAlarm;
 
     FanChannelData m_channelSettings[FC_MAX_CHANNELS];
 
+signals:
+    void deviceConnected(void);
+    void deviceDisconnected(void);
+    void temperature_changed(int channel, int temp);
+    void minLoggedTemp_changed(int channel, int temp);
+    void maxLoggedTemp_changed(int channel, int temp);
+    void RPM_changed(int channel, int RPM);
+    void minLoggedRPM_changed(int channel, int RPM);
+    void maxLoggedRPM_changed(int channel, int RPM);
+    void manualRPM_changed(int channel, int RPM);
+    void maxRPM_changed(int channel, int RPM);
+    void currentAlarmTemp_changed(int channel, int temp);
+    void currentRpmOnAlarm_changed(int channel, int RPM);
+    void temperatureScale_changed(bool isCelcius);
+    void controlMode_changed (bool isAuto);
+    void alarmIsAudible_changed (bool isAudibleAlarm);
 };
 
 
