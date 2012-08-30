@@ -49,7 +49,7 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
      *          The bytes after the checksum (if any) are zero padding.
      */
 
-    if (blockLen < 2) {
+    if (blockLen < 3) { // Need at least Data Length, Control Byte, Checksum
         qDebug ("FanController::parseRawData() not enough data");
         return false;
     }
@@ -57,11 +57,12 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
     m_dataLen = *block;
     m_controlByte = (ControlByte)*(block+1);
 
-    if (m_dataLen + 2 > blockLen) {
-        // qDebug ("No Data");
-        // No data is not necessarily an error
-        return true;
-    }
+//    if (m_dataLen + 2 > blockLen) {
+//        qDebug() << "No Data. Block is:"
+//                 << toHexString(block, blockLen);
+
+//        return true; // No data is not necessarily an error
+//    }
 
     for (int i = 2; i < m_dataLen; i++) {
         *(m_data + i - 2) = *(block + i);
