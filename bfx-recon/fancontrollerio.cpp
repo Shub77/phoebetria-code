@@ -304,18 +304,19 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     case RX_AlarmAndSpeed_Channel3:
     case RX_AlarmAndSpeed_Channel4:
 
-        processAlarmAndSpeed(
+        processAlarmTemp(
                     // Channel
                     parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0,
                     // Alarm temperature
-                    rawToTemp(rawdata[2])
+                    rawToTemp(rawdata.at(2))
                     );
-#if 0
-        // TODO: What are bytes 3 and 4? They always seem to be 0xffff
-        qDebug() << "Channel"
-                 << QString::number(channel)
-                 << QString::number((rawToRPM(rawdata.at(4), rawdata.at(3))));
-#endif
+
+        processManualSpeed(
+                    // Channel
+                    parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0,
+                    // Manual speed
+                    rawToRPM(rawdata.at(4), rawdata.at(3))
+                    );
         break;
 
     case RX_DeviceSettings:
@@ -358,10 +359,16 @@ void FanControllerIO::processTempAndSpeed(int channel,
 }
 
 
-void FanControllerIO::processAlarmAndSpeed(int channel, int alarmTempF)
+void FanControllerIO::processAlarmTemp(int channel, int alarmTempF)
 {
     m_fanControllerData.updateAlarmTemp(channel, alarmTempF);
 }
+
+void FanControllerIO::processManualSpeed(int channel, int rpm)
+{
+    m_fanControllerData.updateManualRPM(channel, rpm);
+}
+
 
 void FanControllerIO::processDeviceSettings(bool isAuto,
                                             bool isCelcius,

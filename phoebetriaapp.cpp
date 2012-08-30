@@ -22,11 +22,11 @@ FanControllerIO PhoebetriaApp::m_fanControllerIO;
 PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-    m_fanController_pollTimer.start(200);
-
     m_fanControllerIO.connect();
 
     QObject::connect(&m_fanController_pollTimer, SIGNAL(timeout()),
                      &m_fanControllerIO, SLOT(onPollTimerTriggered()));
+
+    m_fanController_pollTimer.start(200);
 }
 

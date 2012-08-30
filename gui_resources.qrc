@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/" lang="English">
-        <file>Images/animated_fan.gif</file>
-        <file>Images/phoebetria_fan.gif</file>
         <file>Images/slider_onoff_bg.png</file>
         <file>Images/slider_onoff_off.png</file>
         <file>Images/slider_onoff_on.png</file>
