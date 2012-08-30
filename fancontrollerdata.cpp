@@ -86,7 +86,8 @@ int FanControllerData::maxLoggedRPM(int channel) const
 void FanControllerData::updateMaxRPM(int channel, int to, bool emitSignal)
 {
     FanChannelData& cd = m_channelSettings[channel];
-    if (cd.maxRPM() != to || !cd.isSet_maxRpm()) {
+    if (cd.maxRPM() != to || !cd.isSet_maxRpm())
+    {
         cd.setMaxRPM(to);
         if (emitSignal) emit maxRPM_changed(channel, to);
     }
@@ -95,7 +96,8 @@ void FanControllerData::updateMaxRPM(int channel, int to, bool emitSignal)
 void FanControllerData::updateAlarmTemp(int channel, int to, bool emitSignal)
 {
     FanChannelData& cd = m_channelSettings[channel];
-    if (cd.alarmTemp() != to || !cd.isSet_alarmTemp()) {
+    if (cd.alarmTemp() != to || !cd.isSet_alarmTemp())
+    {
         cd.setAlarmTemp(to);
         if (emitSignal) emit currentAlarmTemp_changed(channel, to);
     }
@@ -122,12 +124,15 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
     if (to < 0) return;
 
     FanChannelData& cd = m_channelSettings[channel];
-    if (cd.lastTemp() != to || !cd.isSet_lastTemp()) {
-        if (cd.minTemp() > to || !cd.isSet_MinTemp()) {
+    if (cd.lastTemp() != to || !cd.isSet_lastTemp())
+    {
+        if (cd.minTemp() > to || !cd.isSet_MinTemp())
+        {
             cd.setMinTemp(to);
             emit minLoggedTemp_changed(channel, to);
         }
-        if (cd.maxTemp() < to || !cd.isSet_MaxTemp()) {
+        if (cd.maxTemp() < to || !cd.isSet_MaxTemp())
+        {
             cd.setMaxTemp(to);
             emit maxLoggedTemp_changed(channel, to);
         }
@@ -139,12 +144,15 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 void FanControllerData::updateRPM(int channel, int to, bool emitSignal)
 {
     FanChannelData& cd = m_channelSettings[channel];
-    if (cd.lastRPM() != to || !cd.isSet_lastRPM()) {
-        if (cd.minLoggedRPM() > to || !cd.isSet_minLoggedRPM()) {
+    if (cd.lastRPM() != to || !cd.isSet_lastRPM())
+    {
+        if (cd.minLoggedRPM() > to || !cd.isSet_minLoggedRPM())
+        {
             cd.setMinLoggedRPM(to);
             emit minLoggedRPM_changed(channel, to);
         }
-        if (cd.maxLoggedRPM() < to || !cd.isSet_maxLoggedRPM()) {
+        if (cd.maxLoggedRPM() < to || !cd.isSet_maxLoggedRPM())
+        {
             cd.setMaxLoggedRPM(to);
             emit maxLoggedRPM_changed(channel, to);
         }
@@ -156,7 +164,8 @@ void FanControllerData::updateRPM(int channel, int to, bool emitSignal)
 
 void FanControllerData::updateIsCelcius(bool isCelcius, bool emitSignal)
 {
-    if (m_isCelcius != (short)isCelcius || m_isCelcius == -1) {
+    if (m_isCelcius != (short)isCelcius || m_isCelcius == -1)
+    {
         m_isCelcius = isCelcius;
         if (emitSignal) emit temperatureScale_changed(isCelcius);
     }
@@ -164,7 +173,8 @@ void FanControllerData::updateIsCelcius(bool isCelcius, bool emitSignal)
 
 void FanControllerData::updateIsAuto(bool isAuto, bool emitSignal)
 {
-    if (m_isAuto != (short)isAuto || m_isAuto == -1) {
+    if (m_isAuto != (short)isAuto || m_isAuto == -1)
+    {
         m_isAuto = (short)isAuto;
         if (emitSignal) emit controlMode_changed(isAuto);
     }
@@ -172,7 +182,8 @@ void FanControllerData::updateIsAuto(bool isAuto, bool emitSignal)
 
 void FanControllerData::updateIsAudibleAlarm(bool isAudible, bool emitSignal)
 {
-    if (m_isAudibleAlarm != (short)isAudible || m_isAudibleAlarm == -1) {
+    if (m_isAudibleAlarm != (short)isAudible || m_isAudibleAlarm == -1)
+    {
         m_isAudibleAlarm = isAudible;
         if (emitSignal) emit alarmIsAudible_changed(isAudible);
     }
@@ -229,7 +240,7 @@ void FanControllerData::setMaxLoggedRPM(int channel, int to)
 }
 
 QString FanControllerData::temperatureString(int temperature,
-                                             bool addScaleSymbol)
+        bool addScaleSymbol)
 {
     QString r;
     int t = m_isCelcius ? ceil((temperature-32)*5.0/9) : temperature;

@@ -49,7 +49,8 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
      *          The bytes after the checksum (if any) are zero padding.
      */
 
-    if (blockLen < 3) { // Need at least Data Length, Control Byte, Checksum
+    if (blockLen < 3)   // Need at least Data Length, Control Byte, Checksum
+    {
         qDebug ("FanController::parseRawData() not enough data");
         return false;
     }
@@ -64,24 +65,26 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 //        return true; // No data is not necessarily an error
 //    }
 
-    for (int i = 2; i < m_dataLen; i++) {
+    for (int i = 2; i < m_dataLen; i++)
+    {
         *(m_data + i - 2) = *(block + i);
     }
 
     m_checksum = *(block + m_dataLen);
 
     unsigned calculatedChecksum = FanControllerIO::calcChecksum(
-                RX_NULL,
-                m_dataLen-1,    // Skipping the first byte
-                block+1
-                );
+                                      RX_NULL,
+                                      m_dataLen-1,    // Skipping the first byte
+                                      block+1
+                                  );
 
     // Actual data length does not include bytes 0 and 1 of the input
     m_dataLen = m_dataLen - 2;
 
 
 #ifdef QT_DEBUG
-    if (m_checksum != calculatedChecksum) {
+    if (m_checksum != calculatedChecksum)
+    {
 
         qDebug() << "File:" << QString(__FILE__)
                  << "Line:" << QString::number(__LINE__)
@@ -117,11 +120,14 @@ FanControllerIO::Request::Request(const Request& ref)
     m_dataLen = ref.m_dataLen;
     m_URB_isSet = ref.m_URB_isSet;
 
-    for (unsigned i = 0; i < sizeof(m_data); i++) {
+    for (unsigned i = 0; i < sizeof(m_data); i++)
+    {
         *(m_data + i) = *(ref.m_data + i);
     }
-    if (m_URB_isSet) {
-        for (unsigned i = 0; i < sizeof(m_URB); i++) {
+    if (m_URB_isSet)
+    {
+        for (unsigned i = 0; i < sizeof(m_URB); i++)
+        {
             *(m_URB + i) = *(ref.m_URB + i);
         }
     }
@@ -144,17 +150,20 @@ bool FanControllerIO::Request::toURB(int blockLen,
     *(block + 1) = m_dataLen + 2;
     *(block + 2) = m_controlByte;
 
-    for (i = 3; i < m_dataLen + 3; i++) {
+    for (i = 3; i < m_dataLen + 3; i++)
+    {
         *(block + i) = m_data[i-3];
     }
 
     *(block + i) = FanControllerIO::calcChecksum(m_controlByte,
-                                                     m_dataLen,
-                                                     m_data) - 1;
+                   m_dataLen,
+                   m_data) - 1;
     i++;
 
-    if (pad) {
-        for (; i < blockLen; i++) {
+    if (pad)
+    {
+        for (; i < blockLen; i++)
+        {
             *(block + i) = 0x00;
         }
     }
@@ -171,10 +180,10 @@ bool FanControllerIO::Request::toURB(int blockLen,
 /* Static functions */
 
 unsigned char FanControllerIO::calcChecksum(
-        ControlByte ctrlByte,
-        int blockLen,
-        const unsigned char *block
-    )
+    ControlByte ctrlByte,
+    int blockLen,
+    const unsigned char *block
+)
 {
 
     unsigned checksum;
@@ -182,7 +191,8 @@ unsigned char FanControllerIO::calcChecksum(
     checksum = blockLen + 1;
     checksum += ctrlByte;
 
-    for (int i = 0; i < blockLen; ++i) {
+    for (int i = 0; i < blockLen; ++i)
+    {
         checksum += *(block + i);
     }
     checksum ^= 0xff;
@@ -243,18 +253,23 @@ void FanControllerIO::onPollTimerTriggered(void)
     m_io_device.pollForData();
 
     // Only create new requests if there are none pending processing
-    if (m_requestQueue.isEmpty()) {
+    if (m_requestQueue.isEmpty())
+    {
 
-        if ((m_pollNumber % 51 || m_pollNumber == 0)) {
+        if ((m_pollNumber % 51 || m_pollNumber == 0))
+        {
             requestDeviceFlags();
         }
 
-        if ( (m_pollNumber % 9 || m_pollNumber == 0)) {
+        if ( (m_pollNumber % 9 || m_pollNumber == 0))
+        {
 
-            for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
+            for (int i = 0; i < MAX_FAN_CHANNELS; i++)
+            {
                 requestTempAndSpeed(i);
             }
-            for (int i = 0; i < MAX_FAN_CHANNELS; i++) {
+            for (int i = 0; i < MAX_FAN_CHANNELS; i++)
+            {
                 requestAlarmAndSpeed(i);
             }
         }
@@ -276,11 +291,12 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 
     inputParsed = parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
 
-    if (!inputParsed) {
+    if (!inputParsed)
+    {
 #ifdef QT_DEBUG
         qDebug() << "Could not parse input."
                  << "File:" << QString(__FILE__)
-                            << "Line:" << QString::number(__LINE__);
+                 << "Line:" << QString::number(__LINE__);
 #endif
         return;
     }
@@ -294,15 +310,15 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     case RX_TempAndSpeed_Channel4:
 
         processTempAndSpeed(
-                    // Channel
-                    parsedData.m_controlByte - RX_TempAndSpeed_Channel0,
-                    // Current temperature
-                    rawToTemp(rawdata.at(2)),
-                    // Current RPM
-                    rawToRPM(rawdata.at(4), rawdata.at(3)),
-                     // RPM at alarm temp (MAX RPM)
-                    rawToRPM(rawdata.at(6), rawdata.at(5))
-                    );
+            // Channel
+            parsedData.m_controlByte - RX_TempAndSpeed_Channel0,
+            // Current temperature
+            rawToTemp(rawdata.at(2)),
+            // Current RPM
+            rawToRPM(rawdata.at(4), rawdata.at(3)),
+            // RPM at alarm temp (MAX RPM)
+            rawToRPM(rawdata.at(6), rawdata.at(5))
+        );
         break;
 
     case RX_AlarmAndSpeed_Channel0:
@@ -312,30 +328,30 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     case RX_AlarmAndSpeed_Channel4:
 
         processAlarmTemp(
-                    // Channel
-                    parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0,
-                    // Alarm temperature
-                    rawToTemp(rawdata.at(2))
-                    );
+            // Channel
+            parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0,
+            // Alarm temperature
+            rawToTemp(rawdata.at(2))
+        );
 
         processManualSpeed(
-                    // Channel
-                    parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0,
-                    // Manual speed
-                    rawToRPM(rawdata.at(4), rawdata.at(3))
-                    );
+            // Channel
+            parsedData.m_controlByte - RX_AlarmAndSpeed_Channel0,
+            // Manual speed
+            rawToRPM(rawdata.at(4), rawdata.at(3))
+        );
         break;
 
     case RX_DeviceSettings:
 
         processDeviceSettings(
-                    // Is Auto
-                    rawdata[2] & FanControllerIO::Auto ? false : true,
-                    // Is Celcius
-                    rawdata[2] & FanControllerIO::Celcius ? false : true,
-                    // Is Audible Alarm
-                    rawdata[2] & FanControllerIO::AudibleAlarm ? true : false
-                    );
+            // Is Auto
+            rawdata[2] & FanControllerIO::Auto ? false : true,
+            // Is Celcius
+            rawdata[2] & FanControllerIO::Celcius ? false : true,
+            // Is Audible Alarm
+            rawdata[2] & FanControllerIO::AudibleAlarm ? true : false
+        );
         break;
 
     case RX_ACK:
@@ -356,9 +372,9 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 }
 
 void FanControllerIO::processTempAndSpeed(int channel,
-                                          int tempF,
-                                          int rpm,
-                                          int maxRpm)
+        int tempF,
+        int rpm,
+        int maxRpm)
 {
     m_fanControllerData.updateTempF(channel, tempF);
     m_fanControllerData.updateRPM(channel, rpm);
@@ -378,8 +394,8 @@ void FanControllerIO::processManualSpeed(int channel, int rpm)
 
 
 void FanControllerIO::processDeviceSettings(bool isAuto,
-                                            bool isCelcius,
-                                            bool isAudibleAlarm)
+        bool isCelcius,
+        bool isAudibleAlarm)
 {
     m_fanControllerData.updateIsAuto(isAuto);
     m_fanControllerData.updateIsCelcius(isCelcius);
@@ -404,8 +420,10 @@ int FanControllerIO::rawToRPM(char highByte, char lowByte) const
 void FanControllerIO::issueRequest(const Request& req)
 {
     // Discard old commands
-    if (MAX_COMMANDQUEUE_LEN != -1) {
-        while (m_requestQueue.length() > MAX_COMMANDQUEUE_LEN - 1) {
+    if (MAX_COMMANDQUEUE_LEN != -1)
+    {
+        while (m_requestQueue.length() > MAX_COMMANDQUEUE_LEN - 1)
+        {
             m_requestQueue.removeFirst();
         }
     }
@@ -425,9 +443,10 @@ void FanControllerIO::processRequestQueue(void)
 
     bool bs = blockSignals(true);
 
-    if (!r.m_URB_isSet) {
+    if (!r.m_URB_isSet)
+    {
 #       ifdef QT_DEBUG
-            qDebug() << "Attempt to issue request without URB set";
+        qDebug() << "Attempt to issue request without URB set";
 #       endif
 
         return;
@@ -477,8 +496,8 @@ void FanControllerIO::requestAlarmAndSpeed(int channel)
 //---------------------------------------------------------------------
 
 bool FanControllerIO::setDeviceFlags(bool isCelcius,
-                                   bool isAuto,
-                                   bool isAudibleAlarm)
+                                     bool isAuto,
+                                     bool isAudibleAlarm)
 {
     unsigned char bits;
 
@@ -502,8 +521,8 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
 }
 
 bool FanControllerIO::setChannelSettings(int channel,
-                                         unsigned thresholdF,
-                                         unsigned speed)
+        unsigned thresholdF,
+        unsigned speed)
 {
     Request req;
 
@@ -527,7 +546,8 @@ bool FanControllerIO::setFromProfile(const FanControllerProfile& profile)
 {
     setDeviceFlags(profile.isCelcius(), profile.isAuto(), profile.isAudibleAlarm());
 
-    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
         BasicChannelData chd = profile.getChannelSettings(i);
         int speed = chd.speed == -1 ? 65535 : chd.speed;
         setChannelSettings(i, chd.alarmTemp, speed);

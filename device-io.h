@@ -9,7 +9,7 @@ class DeviceIO : public QObject
     Q_OBJECT
 public:
     explicit DeviceIO(QObject *parent = 0);
-    
+
     bool connect(unsigned short vendorId, unsigned short productId);
 
     void disconnect(void);

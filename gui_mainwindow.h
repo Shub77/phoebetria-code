@@ -24,7 +24,8 @@
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
 
-namespace Ui {
+namespace Ui
+{
 class gui_MainWindow;
 }
 

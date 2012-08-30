@@ -38,20 +38,38 @@ public:
     bool save(const char* filename);
 
     // Access functions for common settings
-    bool isCelcius(void) const { return m_isCelcius != -1 ? m_isCelcius : false; }
-    bool isAuto(void) const {return m_isAuto != -1 ? m_isAuto : false; }
-    bool isAudibleAlarm(void) const { return m_isAudibleAlarm != -1 ? m_isAudibleAlarm : false; }
+    bool isCelcius(void) const
+    {
+        return m_isCelcius != -1 ? m_isCelcius : false;
+    }
+    bool isAuto(void) const
+    {
+        return m_isAuto != -1 ? m_isAuto : false;
+    }
+    bool isAudibleAlarm(void) const
+    {
+        return m_isAudibleAlarm != -1 ? m_isAudibleAlarm : false;
+    }
 
 
-    bool isAutoSet(void) const { return m_isAuto != -1; }
+    bool isAutoSet(void) const
+    {
+        return m_isAuto != -1;
+    }
 
     // Set common settings
     void setIsCelcius(bool isC)
-        { m_isCelcius = isC; }
+    {
+        m_isCelcius = isC;
+    }
     void setIsAuto(bool isAuto)
-        { m_isAuto = isAuto; }
+    {
+        m_isAuto = isAuto;
+    }
     void setIsAudibleAlarm(bool isAudible)
-        { m_isAudibleAlarm = isAudible; }
+    {
+        m_isAudibleAlarm = isAudible;
+    }
 
     // Access functions to channel settings
     int maxRPM(int channel) const;
