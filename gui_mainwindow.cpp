@@ -305,6 +305,14 @@ void gui_MainWindow::updateAllSpeedCtrls(void)
 }
 
 
+void gui_MainWindow::updateToggleControls(void)
+{
+    ui->ctrl_tempScaleToggle->setValue(fcdata().isCelcius() ? 1 : 0);
+    ui->ctrl_isManual->setValue(fcdata().isAuto() ? 0 : 1);
+    ui->ctrl_isAudibleAlarm->setValue(fcdata().isAudibleAlarm() ? 1 : 0);
+}
+
+
 void gui_MainWindow::changeEvent(QEvent* e)
 {
     switch (e->type())
@@ -745,6 +753,7 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
             updateSpeedControlTooltips();
             updateAllSpeedCtrls();
             updateAllAlarmCtrls(fcdata().isCelcius());
+            updateToggleControls();
             enableSpeedControls(!fcp.isAuto());
 
         }

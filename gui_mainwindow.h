@@ -115,6 +115,8 @@ private:
     void updateSpeedControl(int channel, int RPM, bool updateSlider = true);
     void updateAllSpeedCtrls(void);
 
+    void updateToggleControls(void);
+
     void updateCurrentTempControl(int channel, int temp);
     void updateAllCurrentTempControls(void);
     void updateAlarmTempControl(int channel, int temp, bool isCelcius);
