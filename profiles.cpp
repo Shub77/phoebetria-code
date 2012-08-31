@@ -18,6 +18,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include "profiles.h"
+#include "fancontrollerdata.h"
 
 FanControllerProfile::FanControllerProfile()
 {

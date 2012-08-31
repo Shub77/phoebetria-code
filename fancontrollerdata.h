@@ -20,8 +20,7 @@
 #include <QObject>
 #include <QString>
 #include "fanchanneldata.h"
-
-#define FC_MAX_CHANNELS 5
+#include "profiles.h"
 
 class FanControllerData : public QObject
 {
@@ -34,8 +33,7 @@ public:
 
     void init(void);
 
-    bool load();
-    bool save(const char* filename);
+    void syncWithProfile(const FanControllerProfile& fcp);
 
     const FanChannelData& fanChannelSettings(int channel) const
         { return m_channelSettings[channel]; }

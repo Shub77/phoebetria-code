@@ -72,7 +72,8 @@ HEADERS  += gui_mainwindow.h \
     builddetails.h \
     bfx-recon/fancontrollerio.h \
     utils.h \
-    preferences.h
+    preferences.h \
+    bfx-recon/bfxrecon.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui

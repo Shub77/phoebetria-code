@@ -19,8 +19,10 @@
 
 #include <QString>
 #include <QSettings>
-#include "fancontrollerdata.h"
+#include "bfx-recon/bfxrecon.h"
 #include "fanchanneldata.h"
+
+class FanControllerData;
 
 typedef struct
 {

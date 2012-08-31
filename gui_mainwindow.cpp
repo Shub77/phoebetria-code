@@ -239,8 +239,19 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 
     if (updateSlider)
     {
+        const FanChannelData& fcs = fcdata().fanChannelSettings(channel);
+        int newRPM;
+
+        if (!fcdata().isAuto() && fcs.isSet_manualRPM())
+        {
+            newRPM = fcs.manualRPM();
+        }
+        else
+        {
+            newRPM = RPM;
+        }
         bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
-        m_ctrls_RpmSliders[channel]->setValue(ceil(RPM*100.0/maxRPM(channel)));
+        m_ctrls_RpmSliders[channel]->setValue(ceil(newRPM*100.0/maxRPM(channel)));
         m_ctrls_RpmSliders[channel]->blockSignals(sb);
     }
 
@@ -730,9 +741,11 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
 
         if (fc->setFromProfile(fcp))
         {
+            fcdata().syncWithProfile(fcp);
             updateSpeedControlTooltips();
             updateAllSpeedCtrls();
             updateAllAlarmCtrls(fcdata().isCelcius());
+            enableSpeedControls(!fcp.isAuto());
 
         }
     }

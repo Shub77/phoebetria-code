@@ -15,6 +15,7 @@
 */
 
 #include "fancontrollerdata.h"
+#include "fanchanneldata.h"
 #include <cmath>
 
 
@@ -30,6 +31,21 @@ void FanControllerData::init(void)
     m_isAuto = -1;
     m_isAudibleAlarm = -1;
 }
+
+void FanControllerData::syncWithProfile(const FanControllerProfile& fcp)
+{
+    m_isCelcius = fcp.isCelcius();
+    m_isAuto = fcp.isAuto();
+    m_isAudibleAlarm = fcp.isAudibleAlarm();
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
+        const BasicChannelData& fcs = fcp.getChannelSettings(i);
+        setAlarmTemp(i, fcs.alarmTemp);
+        setManualRPM(i, fcs.speed);
+    }
+}
+
 
 // ------------------------------------------------------------------------
 //  Access functions to channel settings
