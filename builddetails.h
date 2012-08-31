@@ -4,9 +4,9 @@
 #include <QString>
 
 #define PHOEBETRIA_VERSION  1
-#define PHOEBETRIA_MAJOR_REVISION   0
-#define PHOEBETRIA_MINOR_REVISION   1
-#define PHOEBETRIA_STATUS_STR       "Unreleased [git 496852]"
+#define PHOEBETRIA_MAJOR_REVISION   1
+#define PHOEBETRIA_MINOR_REVISION   0
+#define PHOEBETRIA_STATUS_STR       "Beta"
 
 class BuildDetails
 {
