@@ -37,39 +37,32 @@ public:
     bool load();
     bool save(const char* filename);
 
+    const FanChannelData& fanChannelSettings(int channel) const
+        { return m_channelSettings[channel]; }
+
     // Access functions for common settings
     bool isCelcius(void) const
-    {
-        return m_isCelcius != -1 ? m_isCelcius : false;
-    }
+        { return m_isCelcius != -1 ? m_isCelcius : false; }
+
     bool isAuto(void) const
-    {
-        return m_isAuto != -1 ? m_isAuto : false;
-    }
+        { return m_isAuto != -1 ? m_isAuto : false; }
+
     bool isAudibleAlarm(void) const
-    {
-        return m_isAudibleAlarm != -1 ? m_isAudibleAlarm : false;
-    }
+        { return m_isAudibleAlarm != -1 ? m_isAudibleAlarm : false; }
 
 
     bool isAutoSet(void) const
-    {
-        return m_isAuto != -1;
-    }
+        { return m_isAuto != -1; }
 
     // Set common settings
     void setIsCelcius(bool isC)
-    {
-        m_isCelcius = isC;
-    }
+        { m_isCelcius = isC; }
+
     void setIsAuto(bool isAuto)
-    {
-        m_isAuto = isAuto;
-    }
+        { m_isAuto = isAuto;}
+
     void setIsAudibleAlarm(bool isAudible)
-    {
-        m_isAudibleAlarm = isAudible;
-    }
+        { m_isAudibleAlarm = isAudible; }
 
     // Access functions to channel settings
     int maxRPM(int channel) const;
