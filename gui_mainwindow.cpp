@@ -363,7 +363,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    updateSpeedControl(channel, RPM);
+    updateSpeedControl(channel, RPM, fcdata().isAuto());
 }
 
 void gui_MainWindow::onCurrentTemp(int channel, int tempInF)

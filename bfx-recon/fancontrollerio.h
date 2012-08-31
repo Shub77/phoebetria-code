@@ -163,6 +163,8 @@ public:
         unsigned char m_URB[9];     // Must be one byte longer than max URB size
 
         bool m_URB_isSet;
+
+        bool m_expectAckNak;
     };
 
 
@@ -215,8 +217,11 @@ protected:
     int rawToTemp(unsigned char byte) const;
     int rawToRPM(char highByte, char lowByte) const;
 
+    void updateProcessedReqs(bool ack);
     void issueRequest(const Request& req);
     void processRequestQueue(void);
+
+    bool waitingForAckNak(void) const;
 
 public slots:
     void onPollTimerTriggered(void);
@@ -230,7 +235,11 @@ private:
 
     QQueue<Request> m_requestQueue;
 
+    QQueue<Request> m_processedRequests;
+
     FanControllerData m_fanControllerData;
+
+    bool m_waitForAckNak;
 };
 
 

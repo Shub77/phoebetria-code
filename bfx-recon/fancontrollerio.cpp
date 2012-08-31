@@ -112,6 +112,7 @@ FanControllerIO::Request::Request()
     m_controlByte = TX_NULL;
     m_dataLen = 0;
     m_URB_isSet = false;
+    m_expectAckNak = false;
 }
 
 FanControllerIO::Request::Request(const Request& ref)
@@ -119,6 +120,7 @@ FanControllerIO::Request::Request(const Request& ref)
     m_controlByte = ref.m_controlByte;
     m_dataLen = ref.m_dataLen;
     m_URB_isSet = ref.m_URB_isSet;
+    m_expectAckNak = ref.m_expectAckNak;
 
     for (unsigned i = 0; i < sizeof(m_data); i++)
     {
@@ -137,6 +139,7 @@ FanControllerIO::Request::Request(ControlByte controlByte)
 {
     m_controlByte = controlByte;
     m_dataLen = 0;
+    m_expectAckNak = false;
     setURB();
 }
 
@@ -206,6 +209,7 @@ unsigned char FanControllerIO::calcChecksum(
 FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent)
 {
+    m_waitForAckNak = false;
     m_pollNumber = 0;
     m_fanControllerData.init();
     connectSignals();
@@ -303,6 +307,11 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 
     switch (parsedData.m_controlByte)
     {
+    case RX_ACK:
+    case RX_NAK:
+        updateProcessedReqs(parsedData.m_controlByte == RX_ACK);
+        break;
+
     case RX_TempAndSpeed_Channel0:
     case RX_TempAndSpeed_Channel1:
     case RX_TempAndSpeed_Channel2:
@@ -352,12 +361,6 @@ void FanControllerIO::onRawData(QByteArray rawdata)
             // Is Audible Alarm
             rawdata[2] & FanControllerIO::AudibleAlarm ? true : false
         );
-        break;
-
-    case RX_ACK:
-        break;
-
-    case RX_NAK:
         break;
 
     default:
@@ -417,6 +420,19 @@ int FanControllerIO::rawToRPM(char highByte, char lowByte) const
 // Command queue
 //---------------------------------------------------------------------
 
+void FanControllerIO::updateProcessedReqs(bool ack)
+{
+    if (m_processedRequests.isEmpty())
+        return;
+
+    Request r = m_processedRequests.dequeue();
+
+    qDebug() << "Processed" << QString::number(r.m_controlByte)
+             << (ack ? "ACK" : "NAK");
+    qDebug() << "Queue size" << m_processedRequests.count();
+
+}
+
 void FanControllerIO::issueRequest(const Request& req)
 {
     // Discard old commands
@@ -424,11 +440,11 @@ void FanControllerIO::issueRequest(const Request& req)
     {
         while (m_requestQueue.length() > MAX_COMMANDQUEUE_LEN - 1)
         {
-            m_requestQueue.removeFirst();
+            m_requestQueue.dequeue();
         }
     }
 
-    m_requestQueue.append(req);
+    m_requestQueue.enqueue(req);
 }
 
 void FanControllerIO::processRequestQueue(void)
@@ -439,9 +455,7 @@ void FanControllerIO::processRequestQueue(void)
      */
     if (m_requestQueue.isEmpty()) return;
 
-    Request r = m_requestQueue.takeFirst();
-
-    bool bs = blockSignals(true);
+    Request r = m_requestQueue.dequeue();
 
     if (!r.m_URB_isSet)
     {
@@ -457,9 +471,14 @@ void FanControllerIO::processRequestQueue(void)
              << toHexString(r.m_URB, sizeof(r.m_URB));
 #endif
 
+    bool bs = blockSignals(true);
+
     m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
 
     blockSignals(bs);
+
+    if (r.m_expectAckNak)
+        m_processedRequests.enqueue(r);
 }
 
 
@@ -513,7 +532,11 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
     req.m_data[0] = bits;
 
     req.setURB();
+
+    req.m_expectAckNak = true;
     issueRequest(req);
+
+
 
     m_pollNumber = 0;
 
@@ -534,6 +557,8 @@ bool FanControllerIO::setChannelSettings(int channel,
     req.m_data[2] = speed / 256;
 
     req.setURB();
+
+    req.m_expectAckNak = true;
     issueRequest(req);
 
     m_pollNumber = 0;
