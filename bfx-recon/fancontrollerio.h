@@ -199,6 +199,8 @@ public:
         return inCelcius ? 124 : 255;    /* C : F */
     }
 
+    bool waitingForAckNak(void) const;
+
     void processTempAndSpeed(int channel, int tempF, int rpm, int maxRpm);
     void processAlarmTemp(int channel, int alarmTempF);
     void processManualSpeed(int channel, int rpm);
@@ -221,8 +223,6 @@ protected:
     void issueRequest(const Request& req);
     void processRequestQueue(void);
 
-    bool waitingForAckNak(void) const;
-
 public slots:
     void onPollTimerTriggered(void);
     void onRawData(QByteArray rawdata);
@@ -238,8 +238,6 @@ private:
     QQueue<Request> m_processedRequests;
 
     FanControllerData m_fanControllerData;
-
-    bool m_waitForAckNak;
 };
 
 

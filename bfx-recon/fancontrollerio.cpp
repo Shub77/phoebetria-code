@@ -209,7 +209,6 @@ unsigned char FanControllerIO::calcChecksum(
 FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent)
 {
-    m_waitForAckNak = false;
     m_pollNumber = 0;
     m_fanControllerData.init();
     connectSignals();
@@ -255,6 +254,10 @@ void FanControllerIO::onPollTimerTriggered(void)
 
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
+
+    // TODO: Should add some timeout here, probably
+    if (waitingForAckNak())
+        return;
 
     // Only create new requests if there are none pending processing
     if (m_requestQueue.isEmpty())
@@ -373,6 +376,12 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 
     }
 }
+
+bool FanControllerIO::waitingForAckNak(void) const
+{
+    return !m_processedRequests.isEmpty();
+}
+
 
 void FanControllerIO::processTempAndSpeed(int channel,
         int tempF,
