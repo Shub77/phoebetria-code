@@ -112,7 +112,7 @@ private:
     void updateSpeedControlTooltips(void);
 
     int maxRPM(int channel) const;
-    void updateSpeedControl(int channel, int RPM);
+    void updateSpeedControl(int channel, int RPM, bool updateSlider = true);
     void updateAllSpeedCtrls(void);
 
     void updateCurrentTempControl(int channel, int temp);

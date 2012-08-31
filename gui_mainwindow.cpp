@@ -229,16 +229,20 @@ int gui_MainWindow::maxRPM(int channel) const
     return mrpm < 0 ? 0 : mrpm;
 }
 
-void gui_MainWindow::updateSpeedControl(int channel, int RPM)
+void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
-    bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
-    m_ctrls_RpmSliders[channel]->setValue(ceil(RPM*100.0/maxRPM(channel)));
     QString RpmText;
     RpmText = RPM == 0 ? "OFF" : QString::number(RPM);
     m_ctrls_currentRPM[channel]->setText(RpmText);
-    m_ctrls_RpmSliders[channel]->blockSignals(sb);
+
+    if (updateSlider)
+    {
+        bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
+        m_ctrls_RpmSliders[channel]->setValue(ceil(RPM*100.0/maxRPM(channel)));
+        m_ctrls_RpmSliders[channel]->blockSignals(sb);
+    }
 
 #if 0
     qDebug() << "============ Setting slider value to" << ceil(RPM*100.0/maxRPM);
