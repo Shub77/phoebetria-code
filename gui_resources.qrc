@@ -23,6 +23,8 @@
         <file>Images/phoebetria_icon_error.png</file>
         <file>Images/profile_play.png</file>
         <file>Images/profile_save.png</file>
+        <file>Images/slider_toggle_green.png</file>
+        <file>Images/slider_toggle_yellow.png</file>
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>
