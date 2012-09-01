@@ -578,7 +578,13 @@ void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
 
         fcdata().updateAlarmTemp(channel, userTemperature, false);
 
-        fc->setChannelSettings(channel, userTemperature, fcdata().maxRPM(channel));
+        int RpmToSet;
+
+        RpmToSet = fcdata().isAuto()
+                        ? fcdata().lastRPM(channel)
+                        : fcdata().manualRPM(channel);
+
+        fc->setChannelSettings(channel, userTemperature, RpmToSet);
         updateAlarmTempControl(channel, userTemperature, fcdata().isCelcius());
     }
 }
