@@ -583,7 +583,9 @@ bool FanControllerIO::setFromProfile(const FanControllerProfile& profile)
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         BasicChannelData chd = profile.getChannelSettings(i);
-        int speed = chd.speed == -1 ? 65535 : chd.speed;
+        int speed = (chd.speed == -1 || chd.speed == 65535)
+                        ? m_fanControllerData.lastRPM(i)
+                        : chd.speed;
         setChannelSettings(i, chd.alarmTemp, speed);
     }
 
