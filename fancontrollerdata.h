@@ -67,6 +67,8 @@ public:
     int alarmTemp(int channel) const;
 
     int manualRPM(int channel) const;
+    bool isManualRpmSet(int channel) const
+        { return m_channelSettings[channel].isSet_manualRPM(); }
 
     int lastTemp(int channel) const;
     int maxTemp(int channel) const;

@@ -59,7 +59,13 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_channelSettings[i].alarmTemp = data.alarmTemp(i);
-        m_channelSettings[i].speed = data.manualRPM(i);
+
+        int speedToSave;
+
+        speedToSave = data.isManualRpmSet(i) ? data.manualRPM(i)
+                                             : data.lastRPM(i);
+
+        m_channelSettings[i].speed = speedToSave;
     }
 }
 
