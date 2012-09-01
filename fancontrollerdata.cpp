@@ -122,6 +122,9 @@ void FanControllerData::updateAlarmTemp(int channel, int to, bool emitSignal)
 void FanControllerData::updateManualRPM(int channel, int to, bool emitSignal)
 {
     FanChannelData& cd = m_channelSettings[channel];
+
+    if (to == 0xffff) return; // Ignore (0xffff is "not set")
+
     if ( cd.manualRPM() != to || !cd.isSet_manualRPM())
     {
         cd.setManualRPM(to);

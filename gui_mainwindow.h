@@ -49,6 +49,7 @@ public slots:
 
     // **** Channel related slots
     void onCurrentRPM(int channel, int RPM);
+    void onManualRPMChanged(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
     void onCurrentAlarmTemp(int channel, int tempInF);
     void onTemperatureScaleChanged(bool isCelcius);

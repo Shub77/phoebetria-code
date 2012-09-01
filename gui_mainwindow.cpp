@@ -145,6 +145,9 @@ void gui_MainWindow::connectCustomSignals(void)
     connect(&fcd, SIGNAL(RPM_changed(int,int)),
             this, SLOT(onCurrentRPM(int,int)));
 
+    connect(&fcd, SIGNAL(manualRPM_changed(int,int)),
+            this, SLOT(onManualRPMChanged(int,int)));
+
     connect(&fcd, SIGNAL(temperature_changed(int,int)),
             this, SLOT(onCurrentTemp(int,int)));
 
@@ -385,6 +388,11 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
     updateSpeedControl(channel, RPM, fcdata().isAuto());
 }
 
+void gui_MainWindow::onManualRPMChanged(int channel, int RPM)
+{
+    updateSpeedControl(channel, RPM, true);
+}
+
 void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
@@ -453,6 +461,7 @@ void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
                       );
 
     enableSpeedControls(!isAuto);
+    updateAllSpeedCtrls();
 }
 
 void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
