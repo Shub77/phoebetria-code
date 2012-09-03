@@ -58,10 +58,12 @@ void DeviceIO::pollForData(void)
 
     if (!m_device) return;
 
-    while ( (bytesRead = hid_read(m_device, buff, sizeof(buff))) > 0 ) {
+    while ( (bytesRead = hid_read(m_device, buff, sizeof(buff))) > 0 )
+    {
         //rawdata.fromRawData((const char*) buff, bytesRead);
         rawdata.clear();
-        for (int i = 0; i < bytesRead; i++) {
+        for (int i = 0; i < bytesRead; i++)
+        {
             rawdata.append(buff[i]);
         }
         emit dataRX(rawdata);

@@ -59,7 +59,8 @@ SOURCES += main.cpp\
     gui_about.cpp \
     builddetails.cpp \
     bfx-recon/fancontrollerio.cpp \
-    utils.cpp
+    utils.cpp \
+    preferences.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -70,7 +71,9 @@ HEADERS  += gui_mainwindow.h \
     gui_about.h \
     builddetails.h \
     bfx-recon/fancontrollerio.h \
-    utils.h
+    utils.h \
+    preferences.h \
+    bfx-recon/bfxrecon.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui

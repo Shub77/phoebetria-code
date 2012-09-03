@@ -24,7 +24,8 @@
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
 
-namespace Ui {
+namespace Ui
+{
 class gui_MainWindow;
 }
 
@@ -48,6 +49,7 @@ public slots:
 
     // **** Channel related slots
     void onCurrentRPM(int channel, int RPM);
+    void onManualRPMChanged(int channel, int RPM);
     void onCurrentTemp(int channel, int tempInF);
     void onCurrentAlarmTemp(int channel, int tempInF);
     void onTemperatureScaleChanged(bool isCelcius);
@@ -111,8 +113,10 @@ private:
     void updateSpeedControlTooltips(void);
 
     int maxRPM(int channel) const;
-    void updateSpeedControl(int channel, int RPM);
+    void updateSpeedControl(int channel, int RPM, bool updateSlider = true);
     void updateAllSpeedCtrls(void);
+
+    void updateToggleControls(void);
 
     void updateCurrentTempControl(int channel, int temp);
     void updateAllCurrentTempControls(void);

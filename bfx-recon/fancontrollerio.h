@@ -31,7 +31,8 @@ public:
 
     //---------------------------------------------------------------------
 
-    enum ControlByte {
+    enum ControlByte
+    {
 
         RX_NULL                         = 0x00, /**< Not used by device. Required for calcChecksum() */
         TX_NULL                         = 0x00, /**< Not used by device; Internal use only */
@@ -82,7 +83,8 @@ public:
 
     //---------------------------------------------------------------------
 
-    enum DeviceSettingsFlag {
+    enum DeviceSettingsFlag
+    {
         Auto                            = 1U << 0,
         Celcius                         = 1U << 1,
         AudibleAlarm                    = 1U << 2
@@ -105,17 +107,18 @@ public:
       * @param block        The data to calculate a checksum for.
       */
     static unsigned char calcChecksum(
-            ControlByte ctrlByte,
-            int blockLen,
-            const unsigned char* block
-        );
+        ControlByte ctrlByte,
+        int blockLen,
+        const unsigned char* block
+    );
 
 
     //---------------------------------------------------------------------
 
     /* Parsed Input from the device
      */
-    class Input {
+    class Input
+    {
 
         friend class FanControllerIO;
 
@@ -134,7 +137,8 @@ public:
 
     //---------------------------------------------------------------------
 
-    class Request {
+    class Request
+    {
 
         friend class FanControllerIO;
 
@@ -144,7 +148,10 @@ public:
         explicit Request(ControlByte controlByte);
 
 
-        bool setURB(void) { return toURB (9, m_URB, true); }
+        bool setURB(void)
+        {
+            return toURB (9, m_URB, true);
+        }
 
         bool toURB(int blockLen, unsigned char *block, bool pad);
 
@@ -152,10 +159,12 @@ public:
         ControlByte m_controlByte;
         int m_dataLen;              // This may be < sizeof(m_data)
         unsigned char m_data[4];    // Can only _send_ 4 data bytes
-                                    // (incoming may have 5)
+        // (incoming may have 5)
         unsigned char m_URB[9];     // Must be one byte longer than max URB size
 
         bool m_URB_isSet;
+
+        bool m_expectAckNak;
     };
 
 
@@ -173,16 +182,24 @@ public:
     void disconnect(void);
 
     FanControllerData& fanControllerData(void)
-        { return m_fanControllerData; }
+    {
+        return m_fanControllerData;
+    }
 
     bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
     bool setChannelSettings(int channel, unsigned thresholdF, unsigned speed);
     bool setFromProfile(const FanControllerProfile& profile);
 
     int minProbeTemp(bool inCelcius) const
-        { return inCelcius ? -18 : 0; }     /* C : F */
+    {
+        return inCelcius ? -18 : 0;    /* C : F */
+    }
     int maxProbeTemp(bool inCelcius) const
-        { return inCelcius ? 124 : 255; }   /* C : F */
+    {
+        return inCelcius ? 124 : 255;    /* C : F */
+    }
+
+    bool waitingForAckNak(void) const;
 
     void processTempAndSpeed(int channel, int tempF, int rpm, int maxRpm);
     void processAlarmTemp(int channel, int alarmTempF);
@@ -202,6 +219,7 @@ protected:
     int rawToTemp(unsigned char byte) const;
     int rawToRPM(char highByte, char lowByte) const;
 
+    void updateProcessedReqs(bool ack);
     void issueRequest(const Request& req);
     void processRequestQueue(void);
 
@@ -216,6 +234,8 @@ private:
     int m_pollNumber;
 
     QQueue<Request> m_requestQueue;
+
+    QQueue<Request> m_processedRequests;
 
     FanControllerData m_fanControllerData;
 };

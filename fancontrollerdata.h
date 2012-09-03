@@ -20,8 +20,7 @@
 #include <QObject>
 #include <QString>
 #include "fanchanneldata.h"
-
-#define FC_MAX_CHANNELS 5
+#include "profiles.h"
 
 class FanControllerData : public QObject
 {
@@ -34,22 +33,32 @@ public:
 
     void init(void);
 
-    bool load();
-    bool save(const char* filename);
+    void syncWithProfile(const FanControllerProfile& fcp);
+
+    const FanChannelData& fanChannelSettings(int channel) const
+        { return m_channelSettings[channel]; }
 
     // Access functions for common settings
-    bool isCelcius(void) const { return m_isCelcius != -1 ? m_isCelcius : false; }
-    bool isAuto(void) const {return m_isAuto != -1 ? m_isAuto : false; }
-    bool isAudibleAlarm(void) const { return m_isAudibleAlarm != -1 ? m_isAudibleAlarm : false; }
+    bool isCelcius(void) const
+        { return m_isCelcius != -1 ? m_isCelcius : false; }
+
+    bool isAuto(void) const
+        { return m_isAuto != -1 ? m_isAuto : false; }
+
+    bool isAudibleAlarm(void) const
+        { return m_isAudibleAlarm != -1 ? m_isAudibleAlarm : false; }
 
 
-    bool isAutoSet(void) const { return m_isAuto != -1; }
+    bool isAutoSet(void) const
+        { return m_isAuto != -1; }
 
     // Set common settings
     void setIsCelcius(bool isC)
         { m_isCelcius = isC; }
+
     void setIsAuto(bool isAuto)
-        { m_isAuto = isAuto; }
+        { m_isAuto = isAuto;}
+
     void setIsAudibleAlarm(bool isAudible)
         { m_isAudibleAlarm = isAudible; }
 
@@ -58,6 +67,8 @@ public:
     int alarmTemp(int channel) const;
 
     int manualRPM(int channel) const;
+    bool isManualRpmSet(int channel) const
+        { return m_channelSettings[channel].isSet_manualRPM(); }
 
     int lastTemp(int channel) const;
     int maxTemp(int channel) const;

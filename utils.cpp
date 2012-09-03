@@ -25,7 +25,8 @@ QString toHexString(const unsigned char *data, int len)
 
     QString result;
 
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++)
+    {
         unsigned char cc = *(data + i);
         if (i != 0) result.append(' ');
         result.append(hexDigits[(cc >> 4) & 0x0f]);

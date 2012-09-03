@@ -25,58 +25,136 @@ public:
     FanChannelData();
 
     //
-    int maxRPM(void) const { return m_maxRPM; }
-    int alarmTemp(void) const { return m_alarmTemp; }
+    int maxRPM(void) const
+    {
+        return m_maxRPM;
+    }
+    int alarmTemp(void) const
+    {
+        return m_alarmTemp;
+    }
 
-    int manualRPM(void) const { return m_manualRPM; }
+    int manualRPM(void) const
+    {
+        return m_manualRPM;
+    }
 
-    int lastTemp(void) const { return m_lastTemp; }
-    int maxTemp(void) const { return m_maxTemp; }
-    int minTemp(void) const { return m_minTemp; }
+    int lastTemp(void) const
+    {
+        return m_lastTemp;
+    }
+    int maxTemp(void) const
+    {
+        return m_maxTemp;
+    }
+    int minTemp(void) const
+    {
+        return m_minTemp;
+    }
 
-    int lastRPM(void) const { return m_lastRPM; }
-    int minLoggedRPM(void) const { return m_minLoggedRPM; }
-    int maxLoggedRPM(void) const { return m_maxLoggedRPM; }
+    int lastRPM(void) const
+    {
+        return m_lastRPM;
+    }
+    int minLoggedRPM(void) const
+    {
+        return m_minLoggedRPM;
+    }
+    int maxLoggedRPM(void) const
+    {
+        return m_maxLoggedRPM;
+    }
 
     //
-    void setMaxRPM(int to) { m_maxRPM = to; }
-    void setAlarmTemp(int to) { m_alarmTemp = to; }
+    void setMaxRPM(int to)
+    {
+        m_maxRPM = to;
+    }
+    void setAlarmTemp(int to)
+    {
+        m_alarmTemp = to;
+    }
 
-    void setManualRPM(int to) { m_manualRPM = to; }
+    void setManualRPM(int to)
+    {
+        m_manualRPM = to;
+    }
 
-    void setLastTemp(int to) { m_lastTemp = to; }
-    void setMinTemp(int to) { m_minTemp = to; }
-    void setMaxTemp(int to) { m_maxTemp = to; }
+    void setLastTemp(int to)
+    {
+        m_lastTemp = to;
+    }
+    void setMinTemp(int to)
+    {
+        m_minTemp = to;
+    }
+    void setMaxTemp(int to)
+    {
+        m_maxTemp = to;
+    }
 
-    void setLastRPM(int to) { m_lastRPM = to; }
-    void setMinLoggedRPM(int to) { m_minLoggedRPM = to; }
-    void setMaxLoggedRPM(int to) { m_maxLoggedRPM = to; }
+    void setLastRPM(int to)
+    {
+        m_lastRPM = to;
+    }
+    void setMinLoggedRPM(int to)
+    {
+        m_minLoggedRPM = to;
+    }
+    void setMaxLoggedRPM(int to)
+    {
+        m_maxLoggedRPM = to;
+    }
 
     //
 
-    bool isSet_maxRpm(void) const { return m_maxRPM != m_RpmNotSetValue; }
-    bool isSet_alarmTemp(void) const { return m_alarmTemp != m_TemperatureNotSetValue; }
+    bool isSet_maxRpm(void) const
+    {
+        return m_maxRPM != m_RpmNotSetValue;
+    }
+    bool isSet_alarmTemp(void) const
+    {
+        return m_alarmTemp != m_TemperatureNotSetValue;
+    }
 
     bool isSet_manualRPM(void) const
-        {
-            return m_manualRPM != m_manualRPMNotSetValue
-                && m_manualRPM != m_manualRPMNotSetValue_Preferred;
-        }
+    {
+        return m_manualRPM != m_manualRPMNotSetValue
+               && m_manualRPM != m_manualRPMNotSetValue_Preferred;
+    }
 
-    bool isSet_lastTemp(void) const { return m_lastTemp != m_TemperatureNotSetValue; }
-    bool isSet_MinTemp(void) const { return m_minTemp != m_minLoggedTempNotSetValue; }
-    bool isSet_MaxTemp(void) const { return m_maxTemp != m_maxLoggedTempNotSetValue; }
+    bool isSet_lastTemp(void) const
+    {
+        return m_lastTemp != m_TemperatureNotSetValue;
+    }
+    bool isSet_MinTemp(void) const
+    {
+        return m_minTemp != m_minLoggedTempNotSetValue;
+    }
+    bool isSet_MaxTemp(void) const
+    {
+        return m_maxTemp != m_maxLoggedTempNotSetValue;
+    }
 
-    bool isSet_lastRPM(void) const { return m_lastRPM != m_RpmNotSetValue; }
-    bool isSet_minLoggedRPM(void) const { return m_minLoggedRPM != m_RpmNotSetValue; }
-    bool isSet_maxLoggedRPM(void) const { return m_maxLoggedRPM != m_RpmNotSetValue; }
+    bool isSet_lastRPM(void) const
+    {
+        return m_lastRPM != m_RpmNotSetValue;
+    }
+    bool isSet_minLoggedRPM(void) const
+    {
+        return m_minLoggedRPM != m_RpmNotSetValue;
+    }
+    bool isSet_maxLoggedRPM(void) const
+    {
+        return m_maxLoggedRPM != m_RpmNotSetValue;
+    }
 
 
     static bool isUndefinedValue_manualRPM(int value)
-        {
-            return !( value == m_manualRPMNotSetValue
-                        || value == m_manualRPMNotSetValue_Preferred );
-        }
+    {
+        return !( value == m_manualRPMNotSetValue
+                  || value == m_manualRPMNotSetValue_Preferred );
+    }
 
 private:
     int m_maxRPM;

@@ -19,10 +19,13 @@
 
 #include <QString>
 #include <QSettings>
-#include "fancontrollerdata.h"
+#include "bfx-recon/bfxrecon.h"
 #include "fanchanneldata.h"
 
-typedef struct {
+class FanControllerData;
+
+typedef struct
+{
     int alarmTemp;
     int speed;
 } BasicChannelData;
@@ -44,12 +47,23 @@ public:
     bool save(const QString& filenameAndPath);
     bool load(const QString& filenameAndPath);
 
-    bool isCelcius(void) const { return m_isCelcius; }
-    bool isAuto(void) const { return m_isAuto; }
-    bool isAudibleAlarm(void) const { return m_isAudibleAlarm; }
+    bool isCelcius(void) const
+    {
+        return m_isCelcius;
+    }
+    bool isAuto(void) const
+    {
+        return m_isAuto;
+    }
+    bool isAudibleAlarm(void) const
+    {
+        return m_isAudibleAlarm;
+    }
 
     const BasicChannelData& getChannelSettings(int channel) const
-        { return m_channelSettings[channel]; }
+    {
+        return m_channelSettings[channel];
+    }
 
 protected:
 
