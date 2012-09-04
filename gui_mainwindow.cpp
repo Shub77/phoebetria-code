@@ -253,15 +253,6 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
         m_ctrls_RpmSliders[channel]->setValue(ceil(newRPM*100.0/maxRPM(channel)));
         m_ctrls_RpmSliders[channel]->blockSignals(sb);
     }
-
-    qDebug() << "Channel" << channel << "RPM: " << newRPM
-             << "(RPM Sent in signal:" << RPM << ")";
-
-#if 0
-    qDebug() << "============ Setting slider value to" << ceil(newRPM*100.0/maxRPM(channel));
-    qDebug() << "============  Actual slider value is" <<  m_ctrls_RpmSliders[channel]->value();
-    qDebug() << "==== Expected max RPM for channel is" << maxRPM(channel);
-#endif
 }
 
 void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
@@ -517,11 +508,6 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
     {
         fcdata().updateManualRPM(channel, val, false);
         fc->setChannelSettings(channel, fcdata().alarmTemp(channel), val);
-
-        qDebug() << "New slider value for channel"
-                 << QString::number(channel+1)
-                 << "is"
-                 << QString::number((int)val);
     }
 }
 
@@ -535,10 +521,6 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
         fcdata().updateManualRPM(channel, val, false);
         FanControllerIO* fc = &phoebetriaApp()->fanControllerIO();
         fc->setChannelSettings(channel, fcdata().alarmTemp(channel), val);
-        qDebug() << "New slider value for channel"
-                 << QString::number(channel+1)
-                 << "is"
-                 << QString::number((int)val);
     }
 }
 
@@ -764,7 +746,6 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
 
     if (fcp.load(filename))
     {
-        //qDebug() << "profile loaded";
 
         FanControllerIO* fc = &phoebetriaApp()->fanControllerIO();
 
