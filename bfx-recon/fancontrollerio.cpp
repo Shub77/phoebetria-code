@@ -118,6 +118,7 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
 FanControllerIO::Request::Request()
 {
+    m_category = Passive;
     m_controlByte = TX_NULL;
     m_dataLen = 0;
     m_URB_isSet = false;
@@ -194,6 +195,52 @@ FanControllerIO::HandshakeQueue::HandshakeQueue()
     m_deviceSettingsCounter     = 0;
     m_channelSettingsCounter    = 0;
 }
+
+
+void FanControllerIO::HandshakeQueue::updateProcessedReqs(bool ack)
+{
+    if (m_requestsWaiting.isEmpty())
+        return;
+
+    Request r = m_requestsWaiting.dequeue();
+
+    switch (r.m_category)
+    {
+    case Request::Set_ChannelSettings:
+        if (m_deviceSettingsCounter < 1)
+        {
+            qDebug() << "Handshake queue out of sync";
+        }
+        else
+            --m_deviceSettingsCounter;
+        break;
+    case Request::Set_DeviceSettings:
+
+        break;
+
+    default:
+        qDebug() << "Unhandled request category:"<< __FILE__ << ":" << __LINE__;
+        break;
+    }
+
+    qDebug() << "Processed" << QString::number(r.m_controlByte)
+             << (ack ? "ACK" : "NAK");
+    qDebug() << "Queue size" << m_requestsWaiting.count();
+
+}
+
+void FanControllerIO::HandshakeQueue::enqueue(const Request& req)
+{
+    if (!req.m_expectAckNak)
+    {
+        qDebug() << "Internal error:"
+                 << "Request being added to handshake queue does not have"
+                 << "'m_expectAckNak' == true";
+        return;
+    }
+    m_requestsWaiting.enqueue(req);
+}
+
 
 /**********************************************************************
   FanControllerIO
@@ -331,7 +378,7 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     {
     case RX_ACK:
     case RX_NAK:
-        updateProcessedReqs(parsedData.m_controlByte == RX_ACK);
+        m_handshakeQueue.updateProcessedReqs(parsedData.m_controlByte == RX_ACK);
         break;
 
     case RX_TempAndSpeed_Channel0:
@@ -398,8 +445,7 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 
 bool FanControllerIO::waitingForAckNak(void) const
 {
-    return
-            !m_requestsAwaitingHandshake.isEmpty();
+    return !m_handshakeQueue.isEmpty();
 }
 
 
@@ -449,19 +495,6 @@ int FanControllerIO::rawToRPM(char highByte, char lowByte) const
 // Command queue
 //---------------------------------------------------------------------
 
-void FanControllerIO::updateProcessedReqs(bool ack)
-{
-    if (m_requestsAwaitingHandshake.isEmpty())
-        return;
-
-    Request r = m_requestsAwaitingHandshake.dequeue();
-
-    qDebug() << "Processed" << QString::number(r.m_controlByte)
-             << (ack ? "ACK" : "NAK");
-    qDebug() << "Queue size" << m_requestsAwaitingHandshake.count();
-
-}
-
 void FanControllerIO::issueRequest(const Request& req)
 {
     // Discard old commands
@@ -507,7 +540,7 @@ void FanControllerIO::processRequestQueue(void)
     blockSignals(bs);
 
     if (r.m_expectAckNak)
-        m_requestsAwaitingHandshake.enqueue(r);
+        m_handshakeQueue.enqueue(r);
 }
 
 

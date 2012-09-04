@@ -144,6 +144,13 @@ public:
 
         friend class FanControllerIO;
 
+        enum Category
+        {
+            Passive,
+            Set_ChannelSettings,
+            Set_DeviceSettings
+        };
+
     public:
         Request();
         Request(const Request& ref);
@@ -158,6 +165,7 @@ public:
         bool toURB(int blockLen, unsigned char *block, bool pad);
 
     private:
+        Category m_category;
         ControlByte m_controlByte;
         int m_dataLen;              // This may be < sizeof(m_data)
         unsigned char m_data[4];    // Can only _send_ 4 data bytes
@@ -177,12 +185,19 @@ public:
 
         HandshakeQueue();
 
+        bool isEmpty(void) const { return m_requestsWaiting.isEmpty(); }
+
+    protected:
+
+        void updateProcessedReqs(bool ack);
+        void enqueue(const Request& req);
+
     private:
 
         int m_deviceSettingsCounter;
         int m_channelSettingsCounter;
 
-        QQueue<Request> m_requestsAwaitingHandshake;
+        QQueue<Request> m_requestsWaiting;
     };
 
     //---------------------------------------------------------------------
@@ -253,6 +268,8 @@ private:
     QQueue<Request> m_requestQueue;
 
     FanControllerData m_fanControllerData;
+
+    HandshakeQueue m_handshakeQueue;
 };
 
 
