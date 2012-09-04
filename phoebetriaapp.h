@@ -41,5 +41,9 @@ private:
     static FanControllerIO m_fanControllerIO;
 };
 
+// Non-class functions
+
+PhoebetriaApp* phoebetriaApp(void);
+FanControllerData& fanControllerData(void);
 
 #endif // PHOEBETRIA_APP_H
