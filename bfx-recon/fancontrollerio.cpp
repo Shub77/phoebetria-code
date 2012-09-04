@@ -388,7 +388,7 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 
 bool FanControllerIO::waitingForAckNak(void) const
 {
-    return !m_processedRequests.isEmpty();
+    return !m_requestsAwaitingHandshake.isEmpty();
 }
 
 
@@ -440,14 +440,14 @@ int FanControllerIO::rawToRPM(char highByte, char lowByte) const
 
 void FanControllerIO::updateProcessedReqs(bool ack)
 {
-    if (m_processedRequests.isEmpty())
+    if (m_requestsAwaitingHandshake.isEmpty())
         return;
 
-    Request r = m_processedRequests.dequeue();
+    Request r = m_requestsAwaitingHandshake.dequeue();
 
     qDebug() << "Processed" << QString::number(r.m_controlByte)
              << (ack ? "ACK" : "NAK");
-    qDebug() << "Queue size" << m_processedRequests.count();
+    qDebug() << "Queue size" << m_requestsAwaitingHandshake.count();
 
 }
 
@@ -496,7 +496,7 @@ void FanControllerIO::processRequestQueue(void)
     blockSignals(bs);
 
     if (r.m_expectAckNak)
-        m_processedRequests.enqueue(r);
+        m_requestsAwaitingHandshake.enqueue(r);
 }
 
 

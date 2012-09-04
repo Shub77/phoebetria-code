@@ -237,7 +237,7 @@ private:
 
     QQueue<Request> m_requestQueue;
 
-    QQueue<Request> m_processedRequests;
+    QQueue<Request> m_requestsAwaitingHandshake;
 
     FanControllerData m_fanControllerData;
 };
