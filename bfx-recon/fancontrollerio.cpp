@@ -186,6 +186,16 @@ bool FanControllerIO::Request::toURB(int blockLen,
 }
 
 /**********************************************************************
+  FanControllerIO::HandshakeQueue
+ *********************************************************************/
+
+FanControllerIO::HandshakeQueue::HandshakeQueue()
+{
+    m_deviceSettingsCounter     = 0;
+    m_channelSettingsCounter    = 0;
+}
+
+/**********************************************************************
   FanControllerIO
  *********************************************************************/
 
@@ -388,7 +398,8 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 
 bool FanControllerIO::waitingForAckNak(void) const
 {
-    return !m_requestsAwaitingHandshake.isEmpty();
+    return
+            !m_requestsAwaitingHandshake.isEmpty();
 }
 
 

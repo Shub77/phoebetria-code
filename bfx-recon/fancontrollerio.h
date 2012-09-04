@@ -169,6 +169,21 @@ public:
         bool m_expectAckNak;
     };
 
+    class HandshakeQueue
+    {
+        friend class FanControllerIO;
+
+    public:
+
+        HandshakeQueue();
+
+    private:
+
+        int m_deviceSettingsCounter;
+        int m_channelSettingsCounter;
+
+        QQueue<Request> m_requestsAwaitingHandshake;
+    };
 
     //---------------------------------------------------------------------
 
@@ -236,8 +251,6 @@ private:
     int m_pollNumber;
 
     QQueue<Request> m_requestQueue;
-
-    QQueue<Request> m_requestsAwaitingHandshake;
 
     FanControllerData m_fanControllerData;
 };
