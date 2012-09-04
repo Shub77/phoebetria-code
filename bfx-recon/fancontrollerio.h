@@ -33,7 +33,7 @@ public:
 
     enum ControlByte
     {
-
+        NOTSET                          = 0x00, /**< Not used by device. Required for calcChecksum() */
         RX_NULL                         = 0x00, /**< Not used by device. Required for calcChecksum() */
         TX_NULL                         = 0x00, /**< Not used by device; Internal use only */
 
@@ -123,6 +123,8 @@ public:
         friend class FanControllerIO;
 
     public:
+
+        Input();
 
         // Set from raw data
         bool set(int blockLen, const unsigned char* block);

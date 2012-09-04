@@ -36,6 +36,13 @@ static const unsigned short HID_VendorId =  3141;
   FanControllerIO::Input
  *********************************************************************/
 
+FanControllerIO::Input::Input()
+{
+    m_controlByte = FanControllerIO::NOTSET;
+    m_checksum = 0;
+    m_dataLen = 0;
+}
+
 bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 {
     /* HID Report as recieved *from* the device
@@ -56,7 +63,9 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
     }
 
     m_dataLen = *block;
-    m_controlByte = (ControlByte)*(block+1);
+    m_controlByte = (ControlByte) (*(block+1));
+
+    if (m_controlByte == FanControllerIO::NOTSET) return false;
 
 //    if (m_dataLen + 2 > blockLen) {
 //        qDebug() << "No Data. Block is:"
