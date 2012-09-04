@@ -232,32 +232,35 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 {
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
+    const FanChannelData& fcs = fcdata().fanChannelSettings(channel);
+    int newRPM;
+    if (!fcdata().isAuto() && fcs.isSet_manualRPM())
+    {
+        newRPM = fcs.manualRPM();
+    }
+    else
+    {
+        newRPM = RPM;
+    }
+
     QString RpmText;
-    RpmText = RPM == 0 ? "OFF" : QString::number(RPM);
+    RpmText = newRPM == 0 ? "OFF" : QString::number(newRPM);
     m_ctrls_currentRPM[channel]->setText(RpmText);
 
     if (updateSlider)
     {
-        const FanChannelData& fcs = fcdata().fanChannelSettings(channel);
-        int newRPM;
-
-        if (!fcdata().isAuto() && fcs.isSet_manualRPM())
-        {
-            newRPM = fcs.manualRPM();
-        }
-        else
-        {
-            newRPM = RPM;
-        }
         bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
         m_ctrls_RpmSliders[channel]->setValue(ceil(newRPM*100.0/maxRPM(channel)));
         m_ctrls_RpmSliders[channel]->blockSignals(sb);
     }
 
+    qDebug() << "Channel" << channel << "RPM: " << newRPM
+             << "(RPM Sent in signal:" << RPM << ")";
+
 #if 0
-    qDebug() << "============ Setting slider value to" << ceil(RPM*100.0/maxRPM);
+    qDebug() << "============ Setting slider value to" << ceil(newRPM*100.0/maxRPM(channel));
     qDebug() << "============  Actual slider value is" <<  m_ctrls_RpmSliders[channel]->value();
-    qDebug() << "==== Expected max RPM for channel is" << m_channelMaxRPM[channel];
+    qDebug() << "==== Expected max RPM for channel is" << maxRPM(channel);
 #endif
 }
 
@@ -390,7 +393,8 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 
 void gui_MainWindow::onManualRPMChanged(int channel, int RPM)
 {
-    updateSpeedControl(channel, RPM, true);
+    if (!fcdata().isAuto())
+        updateSpeedControl(channel, RPM, true);
 }
 
 void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
