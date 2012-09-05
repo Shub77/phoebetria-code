@@ -336,10 +336,6 @@ void FanControllerIO::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-    // TODO: Should add some timeout here, probably
-    if (waitingForAckNak())
-        return;
-
     // Only create new requests if there are none pending processing
     if (m_requestQueue.isEmpty())
     {
@@ -349,7 +345,11 @@ void FanControllerIO::onPollTimerTriggered(void)
             requestDeviceFlags();
         }
 
-        if ( (m_pollNumber % 9 || m_pollNumber == 0))
+        /* TODO: Should probably have some kind of timeout for
+         *       waitingForHandshake
+         */
+        if ( (m_pollNumber % 9 || m_pollNumber == 0)
+             && !waitingForHandshake(Request::Set_ChannelSettings))
         {
 
             for (int i = 0; i < MAX_FAN_CHANNELS; i++)
@@ -458,9 +458,22 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     }
 }
 
-bool FanControllerIO::waitingForAckNak(void) const
+bool FanControllerIO::waitingForHandshake(Request::Category cat) const
 {
-    return !m_handshakeQueue.isEmpty();
+    bool r;
+
+    switch (cat)
+    {
+    case Request::Set_ChannelSettings:
+        r = m_handshakeQueue.m_channelSettingsCounter > 0;
+        break;
+    case Request::Set_DeviceSettings:
+        r = m_handshakeQueue.m_deviceSettingsCounter > 0;
+    default:
+        r = false;
+    }
+
+    return r;
 }
 
 

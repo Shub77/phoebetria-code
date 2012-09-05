@@ -232,7 +232,7 @@ public:
         return inCelcius ? 124 : 255;    /* C : F */
     }
 
-    bool waitingForAckNak(void) const;
+    bool waitingForHandshake(Request::Category cat) const;
 
     void processTempAndSpeed(int channel, int tempF, int rpm, int maxRpm);
     void processAlarmTemp(int channel, int alarmTempF);
