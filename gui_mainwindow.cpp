@@ -104,6 +104,12 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_currentRPM[3] = ui->ctrl_channel4speed;
     m_ctrls_currentRPM[4] = ui->ctrl_channel5speed;
 
+    m_ctrls_rpmIndicator[0] = ui->ctrl_channel1RpmIndicator;
+    m_ctrls_rpmIndicator[1] = ui->ctrl_channel2RpmIndicator;
+    m_ctrls_rpmIndicator[2] = ui->ctrl_channel3RpmIndicator;
+    m_ctrls_rpmIndicator[3] = ui->ctrl_channel4RpmIndicator;
+    m_ctrls_rpmIndicator[4] = ui->ctrl_channel5RpmIndicator;
+
     m_ctrls_RpmSliders[0] = ui->ctrl_channel1speedSlider;
     m_ctrls_RpmSliders[1] = ui->ctrl_channel2speedSlider;
     m_ctrls_RpmSliders[2] = ui->ctrl_channel3speedSlider;
@@ -301,6 +307,34 @@ void gui_MainWindow::updateAllSpeedCtrls(void)
     }
 }
 
+void gui_MainWindow::updateRpmIndicator(int channel)
+{
+    QString style;
+
+    if (fcdata().isAuto())
+        style = "background-image: url(:/Images/bar_green.png);margin:0px;";
+    else
+    {
+        if (fcdata().isManualRpmSet(channel)
+                && fcdata().lastRPM(channel) != fcdata().manualRPM(channel)
+                && fcdata().manualRPM(channel) != 0)
+        {
+            style = "background-image: url(:/Images/bar_yellow.png);margin:0px;";
+        }
+        else
+            style = "background-image: url(:/Images/bar_green.png);margin:0px;";
+    }
+
+    m_ctrls_rpmIndicator[channel]->setStyleSheet(style);
+}
+
+void gui_MainWindow::updateRpmIndicators(void)
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
+        updateRpmIndicator(i);
+    }
+}
 
 void gui_MainWindow::updateToggleControls(void)
 {
@@ -363,7 +397,7 @@ void gui_MainWindow::onControlModeChanged(bool isAuto)
     ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
     ui->ctrl_isManual->blockSignals(bs);
     enableSpeedControls(!isAuto);
-
+    updateRpmIndicators();
 }
 
 void gui_MainWindow::onIsAudibleAlarmChanged(bool isAudibleAlarm)
@@ -382,12 +416,16 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     updateSpeedControl(channel, RPM, fcdata().isAuto());
+    updateRpmIndicator(channel);
 }
 
 void gui_MainWindow::onManualRPMChanged(int channel, int RPM)
 {
     if (!fcdata().isAuto())
+    {
         updateSpeedControl(channel, RPM, true);
+        updateRpmIndicator(channel);
+    }
 }
 
 void gui_MainWindow::onCurrentTemp(int channel, int tempInF)
@@ -461,6 +499,7 @@ void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 
     enableSpeedControls(!isAuto);
     updateAllSpeedCtrls();
+    updateRpmIndicators();
 }
 
 void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
