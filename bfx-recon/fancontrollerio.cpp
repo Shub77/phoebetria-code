@@ -131,6 +131,7 @@ FanControllerIO::Request::Request(const Request& ref)
     m_dataLen = ref.m_dataLen;
     m_URB_isSet = ref.m_URB_isSet;
     m_expectAckNak = ref.m_expectAckNak;
+    m_category = ref.m_category;
 
     for (unsigned i = 0; i < sizeof(m_data); i++)
     {
@@ -204,18 +205,25 @@ void FanControllerIO::HandshakeQueue::updateProcessedReqs(bool ack)
 
     Request r = m_requestsWaiting.dequeue();
 
-    switch (r.m_category)
+    updateCounters(r.m_category, -1);
+
+    qDebug() << "Processed" << QString::number(r.m_controlByte)
+             << (ack ? "ACK" : "NAK");
+    qDebug() << "Queue size" << m_requestsWaiting.count();
+
+}
+
+void FanControllerIO::HandshakeQueue::updateCounters(Request::Category cat,
+                                                     int delta)
+{
+    switch (cat)
     {
     case Request::Set_ChannelSettings:
-        if (m_deviceSettingsCounter < 1)
-        {
-            qDebug() << "Handshake queue out of sync";
-        }
-        else
-            --m_deviceSettingsCounter;
+        m_channelSettingsCounter += delta;
         break;
-    case Request::Set_DeviceSettings:
 
+    case Request::Set_DeviceSettings:
+        m_deviceSettingsCounter += delta;
         break;
 
     default:
@@ -223,10 +231,16 @@ void FanControllerIO::HandshakeQueue::updateProcessedReqs(bool ack)
         break;
     }
 
-    qDebug() << "Processed" << QString::number(r.m_controlByte)
-             << (ack ? "ACK" : "NAK");
-    qDebug() << "Queue size" << m_requestsWaiting.count();
-
+    if (m_channelSettingsCounter < 0)
+    {
+        m_channelSettingsCounter = 0;
+        qDebug() << "Handshake queue out of sync";
+    }
+    if (m_deviceSettingsCounter < 0)
+    {
+        m_deviceSettingsCounter = 0;
+        qDebug() << "Handshake queue out of sync";
+    }
 }
 
 void FanControllerIO::HandshakeQueue::enqueue(const Request& req)
@@ -239,6 +253,7 @@ void FanControllerIO::HandshakeQueue::enqueue(const Request& req)
         return;
     }
     m_requestsWaiting.enqueue(req);
+    updateCounters(req.m_category, 1);
 }
 
 
@@ -588,6 +603,7 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
 
     Request req;
 
+    req.m_category = Request::Set_DeviceSettings;
     req.m_controlByte = TX_SetDeviceSettings;
 
     req.m_dataLen = 1;
@@ -611,6 +627,7 @@ bool FanControllerIO::setChannelSettings(int channel,
 {
     Request req;
 
+    req.m_category = Request::Set_ChannelSettings;
     req.m_controlByte = (ControlByte)(TX_SetAlarmAndSpeed_Channel0 + channel);
 
     req.m_dataLen = 3;

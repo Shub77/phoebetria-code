@@ -190,6 +190,7 @@ public:
     protected:
 
         void updateProcessedReqs(bool ack);
+        void updateCounters(Request::Category cat, int delta);
         void enqueue(const Request& req);
 
     private:
