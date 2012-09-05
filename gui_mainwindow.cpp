@@ -233,22 +233,24 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     const FanChannelData& fcs = fcdata().fanChannelSettings(channel);
-    int newRPM;
-    if (!fcdata().isAuto() && fcs.isSet_manualRPM())
-    {
-        newRPM = fcs.manualRPM();
-    }
-    else
-    {
-        newRPM = RPM;
-    }
+
 
     QString RpmText;
-    RpmText = newRPM == 0 ? "OFF" : QString::number(newRPM);
+    RpmText = RPM == 0 ? "OFF" : QString::number(RPM);
     m_ctrls_currentRPM[channel]->setText(RpmText);
 
     if (updateSlider)
     {
+        int newRPM;
+        if (!fcdata().isAuto() && fcs.isSet_manualRPM())
+        {
+            newRPM = fcs.manualRPM();
+        }
+        else
+        {
+            newRPM = RPM;
+        }
+
         bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
         m_ctrls_RpmSliders[channel]->setValue(ceil(newRPM*100.0/maxRPM(channel)));
         m_ctrls_RpmSliders[channel]->blockSignals(sb);
