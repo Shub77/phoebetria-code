@@ -207,9 +207,11 @@ void FanControllerIO::HandshakeQueue::updateProcessedReqs(bool ack)
 
     updateCounters(r.m_category, -1);
 
+#if 0
     qDebug() << "Processed" << QString::number(r.m_controlByte)
              << (ack ? "ACK" : "NAK");
     qDebug() << "Queue size" << m_requestsWaiting.count();
+#endif
 
 }
 
