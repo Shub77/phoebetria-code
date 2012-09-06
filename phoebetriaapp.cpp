@@ -29,19 +29,3 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
 
     m_fanController_pollTimer.start(200);
 }
-
-
-/**************************************************************************
- Non-class functions
- *************************************************************************/
-
-
-PhoebetriaApp* phoebetriaApp(void)
-{
-    return static_cast<PhoebetriaApp*> qApp;
-}
-
-FanControllerData& fanControllerData(void)
-{
-    return phoebetriaApp()->fanControllerIO().fanControllerData();
-}

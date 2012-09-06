@@ -21,29 +21,29 @@
 #include <QTimer>
 #include "bfx-recon/fancontrollerio.h"
 
+
+#define ph_phoebetriaApp() (static_cast<PhoebetriaApp*> qApp)
+#define ph_fanControllerData() (ph_phoebetriaApp()->fcd())
+#define ph_fanControllerIO() (ph_phoebetriaApp()->fanControllerIO())
+
 class PhoebetriaApp : public QApplication
 {
 public:
     PhoebetriaApp(int &argc, char **argv);
 
     QTimer& fanController_pollTimer(void)
-    {
-        return m_fanController_pollTimer;
-    }
+        { return m_fanController_pollTimer; }
 
     FanControllerIO& fanControllerIO(void)
-    {
-        return m_fanControllerIO;
-    }
+        { return m_fanControllerIO; }
+
+    FanControllerData& fcd(void)
+        { return m_fanControllerIO.fanControllerData(); }
 
 private:
     static QTimer m_fanController_pollTimer;
     static FanControllerIO m_fanControllerIO;
 };
 
-// Non-class functions
-
-PhoebetriaApp* phoebetriaApp(void);
-FanControllerData& fanControllerData(void);
 
 #endif // PHOEBETRIA_APP_H
