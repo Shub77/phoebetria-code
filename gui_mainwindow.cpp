@@ -257,8 +257,12 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
             newRPM = RPM;
         }
 
+        // Avoid potential division by 0
+        int ch_maxRPM = maxRPM(channel);
+        if (ch_maxRPM < 1) ch_maxRPM = 1;
+
         bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
-        m_ctrls_RpmSliders[channel]->setValue(ceil(newRPM*100.0/maxRPM(channel)));
+        m_ctrls_RpmSliders[channel]->setValue(ceil(newRPM*100.0/ch_maxRPM));
         m_ctrls_RpmSliders[channel]->blockSignals(sb);
     }
 }
