@@ -629,8 +629,6 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
     req.m_expectAckNak = true;
     issueRequest(req);
 
-
-
     m_pollNumber = 0;
 
     return true;
