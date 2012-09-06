@@ -64,6 +64,12 @@ it unlocks the BitFenix Recon to allow the hardware to be used to its
 full capacity.
 
 
+Installation
+============
+
+See INSTALL.txt
+
+
 Conclusion
 ==========
 We hope you enjoy Phoebetria as much as we have enjoyed developing it!
