@@ -1,7 +1,7 @@
                  
-                 Phoebetria - Favourable Winds
+                           Phoebetria
 
-           Software for controlling the BitFenix Recon
+           Software for controlling the BitFenix(R) Recon
                         fan controller.
                         
                           INSTALLATION
@@ -15,7 +15,18 @@
     The Windows build is distributed as a zip file containing the
     executable and required libraries. Simply decompress the zip file
     to a location of your choice and double-click Phoebetria.exe to
-    launch the application. 
+    launch the application.
+    
+    To uninstall, simply delete the folder that you decompressed the
+    zip file into. Phoebetria does not modify the Windows registry so
+    there is no cleaning up to do there. If you want to delete settings
+    (such as saved profiles) they are saved in:
+    
+    Vista/Windows 7:    C:\Users\{name}\AppData\Roaming\Phoebetria
+    Windows XP:         C:\Documents and Settings\{name}\Phoebetria
+    
+    Replace C: with your system drive if necessary and {name} with
+    your windows login name.
 
     1.2 OS X
     ========
@@ -29,5 +40,31 @@
 
 2. Compiling from source
 ========================
-TODO: INSERT
 
+    Make
+    ----
+    a) Download the source package and decompress it
+    b) cd to the source folder
+    c) qmake && make
+    d) The file "99-fancontroller.rules" must be copied to
+       /etc/udev/rules.d/ 
+       Note: If you already have a file called
+       "99-fancontroller.rules" in /etc/udev/rules.d/ then edit the file
+       and add the rule manually.
+    e) Restart the udev system so the new rule is loaded
+       (reboot if you're not sure)
+    f) The rule in "99-fancontroller.rules" gives permission to read the
+       Recon USB device to users belonging to the group "fancontrollers".
+       Create the group if necessary and add yourself to the group.
+       Without this step Phoebetria will not have access to the Recon's
+       USB connection. 
+       
+    *Note: qmake may be renamed on your system (for example, qmake-qt4)
+    
+    Requirements
+    ------------
+    Qt and Qt development files (Qt 4)
+    libudev and development files
+    libusb-1.0 and development files
+    gcc
+    
