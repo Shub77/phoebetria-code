@@ -312,7 +312,10 @@ void gui_MainWindow::updateRpmIndicator(int channel)
     QString style;
 
     if (fcdata().isAuto())
+    {
         style = "background-image: url(:/Images/bar_green.png);margin:0px;";
+        m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
+    }
     else
     {
         if (fcdata().isManualRpmSet(channel)
@@ -320,12 +323,20 @@ void gui_MainWindow::updateRpmIndicator(int channel)
                 && fcdata().manualRPM(channel) != 0)
         {
             style = "background-image: url(:/Images/bar_yellow.png);margin:0px;";
-        }
+                    }
         else
+        {
             style = "background-image: url(:/Images/bar_green.png);margin:0px;";
+
+        }
+        m_ctrls_rpmIndicator[channel]->setToolTip(QString(tr("Manual RPM = %1"))
+                                                  .arg(fcdata().manualRPM(channel))
+                                                  );
     }
 
     m_ctrls_rpmIndicator[channel]->setStyleSheet(style);
+
+
 }
 
 void gui_MainWindow::updateRpmIndicators(void)
