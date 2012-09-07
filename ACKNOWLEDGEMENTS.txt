@@ -1,0 +1,13 @@
+In addition to thanking the creators of Qt, gcc, g++ and the myriad of 
+open source software, we would like to particularly thank the following 
+individuals, organisations or entities. 
+
+* BitFenix for making the Recon ;-) 
+
+* Alan Ott, Ludovic Rousseau and contributors for the HID API library 
+(http://www.signal11.us/oss/hidapi/) 
+
+* Chris's brother for creating the SPEC file to create RPMs
+
+* 'tealc' from Overclockers UK for testing, advice, feedback and 
+suggestions 
