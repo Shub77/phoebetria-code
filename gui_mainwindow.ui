@@ -94,7 +94,7 @@
          </size>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -461,61 +461,87 @@ QSlider::handle:horizontal:disabled {
          <attribute name="title">
           <string>Profiles</string>
          </attribute>
-         <widget class="QWidget" name="layoutWidget">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>30</y>
-            <width>143</width>
-            <height>46</height>
-           </rect>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_21">
-           <item>
-            <widget class="QPushButton" name="ctrl_LoadPreset">
-             <property name="maximumSize">
-              <size>
-               <width>65</width>
-               <height>21</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Load Preset</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Load</string>
-             </property>
-             <property name="icon">
-              <iconset resource="gui_resources.qrc">
-               <normaloff>:/Images/profile_play.png</normaloff>:/Images/profile_play.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="ctrl_SavePreset">
-             <property name="maximumSize">
-              <size>
-               <width>65</width>
-               <height>21</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Save Preset</string>
-             </property>
-             <property name="text">
-              <string>Save</string>
-             </property>
-             <property name="icon">
-              <iconset resource="gui_resources.qrc">
-               <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_21" stretch="0,0,0,0">
+            <property name="spacing">
+             <number>30</number>
+            </property>
+            <property name="margin">
+             <number>12</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="ctrl_LoadPreset">
+              <property name="maximumSize">
+               <size>
+                <width>65</width>
+                <height>21</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Load Preset</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Load</string>
+              </property>
+              <property name="icon">
+               <iconset resource="gui_resources.qrc">
+                <normaloff>:/Images/profile_play.png</normaloff>:/Images/profile_play.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="ctrl_SavePreset">
+              <property name="maximumSize">
+               <size>
+                <width>65</width>
+                <height>21</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Save Preset</string>
+              </property>
+              <property name="text">
+               <string>Save</string>
+              </property>
+              <property name="icon">
+               <iconset resource="gui_resources.qrc">
+                <normaloff>:/Images/profile_save.png</normaloff>:/Images/profile_save.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
@@ -564,13 +590,13 @@ QSlider::handle:horizontal:disabled {
              </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>55</horstretch>
+               <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
               <size>
-               <width>55</width>
+               <width>0</width>
                <height>0</height>
               </size>
              </property>
@@ -681,13 +707,13 @@ QSlider::handle:horizontal:disabled {
              </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>55</horstretch>
+               <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
               <size>
-               <width>55</width>
+               <width>0</width>
                <height>0</height>
               </size>
              </property>
@@ -785,8 +811,8 @@ margin:0px;</string>
             <widget class="QLabel" name="label_9">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>51</horstretch>
-               <verstretch>30</verstretch>
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
@@ -836,13 +862,13 @@ margin:-2px;</string>
             <widget class="QPushButton" name="ctrl_channel1AlarmTemp">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>56</horstretch>
+               <horstretch>51</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
               <size>
-               <width>56</width>
+               <width>51</width>
                <height>0</height>
               </size>
              </property>
@@ -1080,8 +1106,8 @@ margin:0px;</string>
             <widget class="QLabel" name="label_6">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>51</horstretch>
-               <verstretch>30</verstretch>
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
@@ -2037,7 +2063,7 @@ margin:-2px;</string>
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
