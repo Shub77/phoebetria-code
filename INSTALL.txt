@@ -46,8 +46,30 @@ icon or in Finder use the key combination Command + Delete.
 
 1.3 Linux
 ---------
-TODO: INSERT
 
+Fedora:
+  The Fedora build is distributed as a standard RedHat package or .RPM
+  file.  To manage this application simply download the latest rpm,
+  launch your terminal application of choice and execute the following
+  commands as desired.
+
+  To Install: 
+  sudo rpm --install /{pathtodownload}/Phoebetria-{version}.fc17.x86_64.rpm
+
+  To Upgrade:
+  sudo rpm --upgrade /{pathtodownload}/Phoebetria-{version}.fc17.x86_64.rpm
+
+  To Remove:
+  sudo rpm --erase phoebetria
+
+  The settings and profiles are stored in your $HOME/.config/Phoebetria 
+  folder. By default this folder is hidden in Nautilus (Files) but you can
+  go there freely via the Terminal application or in Nautilus (Files) use
+  the key combination Control + L and paste in the path.
+
+Others:
+  At this time we only include the installation process for the Fedora.
+  Instructions for other distributions may follow as time permits.
 
 2. Compiling from source
 ========================
