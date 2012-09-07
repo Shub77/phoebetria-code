@@ -89,6 +89,11 @@ win32 {
     LIBS += -lsetupapi
 }
 
+# Windows Icons
+win32 {
+    RC_FILE = Windows/Phoebetria.rc
+}
+
 unix:!macx {
     CONFIG += link_pkgconfig
     PKGCONFIG += libusb-1.0
