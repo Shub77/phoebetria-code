@@ -26,7 +26,7 @@ control that the official software does not provide -- giving you even
 more control over your fans.
 
 Ancient sailors often regarded the albatross as a bringer of luck or
-favourable winds. The genus for albatross is Phoebetria.
+favourable winds. The genus that the albatross belong to is Phoebetria.
 
 Features
 ========
