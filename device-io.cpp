@@ -54,14 +54,13 @@ void DeviceIO::pollForData(void)
 {
     unsigned char buff[PHOEBETRIA_HID_INPUT_BUFFSIZE];
     int bytesRead;
-    QByteArray rawdata;
 
     if (!m_device) return;
 
     while ( (bytesRead = hid_read(m_device, buff, sizeof(buff))) > 0 )
     {
         //rawdata.fromRawData((const char*) buff, bytesRead);
-        rawdata.clear();
+        QByteArray rawdata;
         for (int i = 0; i < bytesRead; i++)
         {
             rawdata.append(buff[i]);

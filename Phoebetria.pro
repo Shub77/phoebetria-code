@@ -89,6 +89,11 @@ win32 {
     LIBS += -lsetupapi
 }
 
+# Windows Icons
+win32 {
+    RC_FILE = Windows/Phoebetria.rc
+}
+
 unix:!macx {
     CONFIG += link_pkgconfig
     PKGCONFIG += libusb-1.0
@@ -96,12 +101,12 @@ unix:!macx {
     LIBS += -lusb-1.0 -ludev -lrt
 }
 macx {
-    QMAKE_INFO_PLIST = Info.plist
+    QMAKE_INFO_PLIST = mac/Info.plist
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     QMAKE_MAC_SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
     LIBS += -framework CoreFoundation -framework IOKit
     SOURCES += hidapi-0.7.0/mac/hid.c
-    ICON = Phoebetria.icns
+    ICON = mac/Phoebetria.icns
     APP_QML_FILES.files = mac/qt_menu.nib
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES

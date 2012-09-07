@@ -33,7 +33,7 @@ public:
 
     enum ControlByte
     {
-
+        NOTSET                          = 0x00, /**< Not used by device. Required for calcChecksum() */
         RX_NULL                         = 0x00, /**< Not used by device. Required for calcChecksum() */
         TX_NULL                         = 0x00, /**< Not used by device; Internal use only */
 
@@ -124,6 +124,8 @@ public:
 
     public:
 
+        Input();
+
         // Set from raw data
         bool set(int blockLen, const unsigned char* block);
 
@@ -142,6 +144,13 @@ public:
 
         friend class FanControllerIO;
 
+        enum Category
+        {
+            Passive,
+            Set_ChannelSettings,
+            Set_DeviceSettings
+        };
+
     public:
         Request();
         Request(const Request& ref);
@@ -156,6 +165,7 @@ public:
         bool toURB(int blockLen, unsigned char *block, bool pad);
 
     private:
+        Category m_category;
         ControlByte m_controlByte;
         int m_dataLen;              // This may be < sizeof(m_data)
         unsigned char m_data[4];    // Can only _send_ 4 data bytes
@@ -167,6 +177,29 @@ public:
         bool m_expectAckNak;
     };
 
+    class HandshakeQueue
+    {
+        friend class FanControllerIO;
+
+    public:
+
+        HandshakeQueue();
+
+        bool isEmpty(void) const { return m_requestsWaiting.isEmpty(); }
+
+    protected:
+
+        void updateProcessedReqs(bool ack);
+        void updateCounters(Request::Category cat, int delta);
+        void enqueue(const Request& req);
+
+    private:
+
+        int m_deviceSettingsCounter;
+        int m_channelSettingsCounter;
+
+        QQueue<Request> m_requestsWaiting;
+    };
 
     //---------------------------------------------------------------------
 
@@ -199,7 +232,7 @@ public:
         return inCelcius ? 124 : 255;    /* C : F */
     }
 
-    bool waitingForAckNak(void) const;
+    bool waitingForHandshake(Request::Category cat) const;
 
     void processTempAndSpeed(int channel, int tempF, int rpm, int maxRpm);
     void processAlarmTemp(int channel, int alarmTempF);
@@ -235,9 +268,9 @@ private:
 
     QQueue<Request> m_requestQueue;
 
-    QQueue<Request> m_processedRequests;
-
     FanControllerData m_fanControllerData;
+
+    HandshakeQueue m_handshakeQueue;
 };
 
 

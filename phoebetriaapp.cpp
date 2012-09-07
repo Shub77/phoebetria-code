@@ -29,4 +29,3 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
 
     m_fanController_pollTimer.start(200);
 }
-

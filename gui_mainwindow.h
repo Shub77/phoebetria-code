@@ -19,6 +19,7 @@
 
 #include <QMainWindow>
 #include <QLineEdit>
+#include <QLabel>
 #include <QSlider>
 #include <QPushButton>
 #include <QSystemTrayIcon>
@@ -116,6 +117,9 @@ private:
     void updateSpeedControl(int channel, int RPM, bool updateSlider = true);
     void updateAllSpeedCtrls(void);
 
+    void updateRpmIndicator(int channel);
+    void updateRpmIndicators(void);
+
     void updateToggleControls(void);
 
     void updateCurrentTempControl(int channel, int temp);
@@ -136,6 +140,7 @@ private:
     // Convenience pointers to controls
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
     QLineEdit* m_ctrls_currentRPM[FC_MAX_CHANNELS];
+    QLabel* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 

@@ -36,6 +36,13 @@ static const unsigned short HID_VendorId =  3141;
   FanControllerIO::Input
  *********************************************************************/
 
+FanControllerIO::Input::Input()
+{
+    m_controlByte = FanControllerIO::NOTSET;
+    m_checksum = 0;
+    m_dataLen = 0;
+}
+
 bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 {
     /* HID Report as recieved *from* the device
@@ -56,7 +63,9 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
     }
 
     m_dataLen = *block;
-    m_controlByte = (ControlByte)*(block+1);
+    m_controlByte = (ControlByte) (*(block+1));
+
+    if (m_controlByte == FanControllerIO::NOTSET) return false;
 
 //    if (m_dataLen + 2 > blockLen) {
 //        qDebug() << "No Data. Block is:"
@@ -109,6 +118,7 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
 FanControllerIO::Request::Request()
 {
+    m_category = Passive;
     m_controlByte = TX_NULL;
     m_dataLen = 0;
     m_URB_isSet = false;
@@ -121,6 +131,7 @@ FanControllerIO::Request::Request(const Request& ref)
     m_dataLen = ref.m_dataLen;
     m_URB_isSet = ref.m_URB_isSet;
     m_expectAckNak = ref.m_expectAckNak;
+    m_category = ref.m_category;
 
     for (unsigned i = 0; i < sizeof(m_data); i++)
     {
@@ -175,6 +186,78 @@ bool FanControllerIO::Request::toURB(int blockLen,
 
     return true;
 }
+
+/**********************************************************************
+  FanControllerIO::HandshakeQueue
+ *********************************************************************/
+
+FanControllerIO::HandshakeQueue::HandshakeQueue()
+{
+    m_deviceSettingsCounter     = 0;
+    m_channelSettingsCounter    = 0;
+}
+
+
+void FanControllerIO::HandshakeQueue::updateProcessedReqs(bool ack)
+{
+    if (m_requestsWaiting.isEmpty())
+        return;
+
+    Request r = m_requestsWaiting.dequeue();
+
+    updateCounters(r.m_category, -1);
+
+#if 0
+    qDebug() << "Processed" << QString::number(r.m_controlByte)
+             << (ack ? "ACK" : "NAK");
+    qDebug() << "Queue size" << m_requestsWaiting.count();
+#endif
+
+}
+
+void FanControllerIO::HandshakeQueue::updateCounters(Request::Category cat,
+                                                     int delta)
+{
+    switch (cat)
+    {
+    case Request::Set_ChannelSettings:
+        m_channelSettingsCounter += delta;
+        break;
+
+    case Request::Set_DeviceSettings:
+        m_deviceSettingsCounter += delta;
+        break;
+
+    default:
+        qDebug() << "Unhandled request category:"<< __FILE__ << ":" << __LINE__;
+        break;
+    }
+
+    if (m_channelSettingsCounter < 0)
+    {
+        m_channelSettingsCounter = 0;
+        qDebug() << "Handshake queue out of sync";
+    }
+    if (m_deviceSettingsCounter < 0)
+    {
+        m_deviceSettingsCounter = 0;
+        qDebug() << "Handshake queue out of sync";
+    }
+}
+
+void FanControllerIO::HandshakeQueue::enqueue(const Request& req)
+{
+    if (!req.m_expectAckNak)
+    {
+        qDebug() << "Internal error:"
+                 << "Request being added to handshake queue does not have"
+                 << "'m_expectAckNak' == true";
+        return;
+    }
+    m_requestsWaiting.enqueue(req);
+    updateCounters(req.m_category, 1);
+}
+
 
 /**********************************************************************
   FanControllerIO
@@ -255,10 +338,6 @@ void FanControllerIO::onPollTimerTriggered(void)
     // Check for pending data (from device) every time timer is triggered
     m_io_device.pollForData();
 
-    // TODO: Should add some timeout here, probably
-    if (waitingForAckNak())
-        return;
-
     // Only create new requests if there are none pending processing
     if (m_requestQueue.isEmpty())
     {
@@ -268,7 +347,11 @@ void FanControllerIO::onPollTimerTriggered(void)
             requestDeviceFlags();
         }
 
-        if ( (m_pollNumber % 9 || m_pollNumber == 0))
+        /* TODO: Should probably have some kind of timeout for
+         *       waitingForHandshake
+         */
+        if ( (m_pollNumber % 9 || m_pollNumber == 0)
+             && !waitingForHandshake(Request::Set_ChannelSettings))
         {
 
             for (int i = 0; i < MAX_FAN_CHANNELS; i++)
@@ -312,7 +395,7 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     {
     case RX_ACK:
     case RX_NAK:
-        updateProcessedReqs(parsedData.m_controlByte == RX_ACK);
+        m_handshakeQueue.updateProcessedReqs(parsedData.m_controlByte == RX_ACK);
         break;
 
     case RX_TempAndSpeed_Channel0:
@@ -377,9 +460,22 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     }
 }
 
-bool FanControllerIO::waitingForAckNak(void) const
+bool FanControllerIO::waitingForHandshake(Request::Category cat) const
 {
-    return !m_processedRequests.isEmpty();
+    bool r;
+
+    switch (cat)
+    {
+    case Request::Set_ChannelSettings:
+        r = m_handshakeQueue.m_channelSettingsCounter > 0;
+        break;
+    case Request::Set_DeviceSettings:
+        r = m_handshakeQueue.m_deviceSettingsCounter > 0;
+    default:
+        r = false;
+    }
+
+    return r;
 }
 
 
@@ -429,19 +525,6 @@ int FanControllerIO::rawToRPM(char highByte, char lowByte) const
 // Command queue
 //---------------------------------------------------------------------
 
-void FanControllerIO::updateProcessedReqs(bool ack)
-{
-    if (m_processedRequests.isEmpty())
-        return;
-
-    Request r = m_processedRequests.dequeue();
-
-    qDebug() << "Processed" << QString::number(r.m_controlByte)
-             << (ack ? "ACK" : "NAK");
-    qDebug() << "Queue size" << m_processedRequests.count();
-
-}
-
 void FanControllerIO::issueRequest(const Request& req)
 {
     // Discard old commands
@@ -487,7 +570,7 @@ void FanControllerIO::processRequestQueue(void)
     blockSignals(bs);
 
     if (r.m_expectAckNak)
-        m_processedRequests.enqueue(r);
+        m_handshakeQueue.enqueue(r);
 }
 
 
@@ -535,6 +618,7 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
 
     Request req;
 
+    req.m_category = Request::Set_DeviceSettings;
     req.m_controlByte = TX_SetDeviceSettings;
 
     req.m_dataLen = 1;
@@ -544,8 +628,6 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
 
     req.m_expectAckNak = true;
     issueRequest(req);
-
-
 
     m_pollNumber = 0;
 
@@ -558,6 +640,7 @@ bool FanControllerIO::setChannelSettings(int channel,
 {
     Request req;
 
+    req.m_category = Request::Set_ChannelSettings;
     req.m_controlByte = (ControlByte)(TX_SetAlarmAndSpeed_Channel0 + channel);
 
     req.m_dataLen = 3;
