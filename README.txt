@@ -26,20 +26,18 @@ control that the official software does not provide -- giving you even
 more control over your fans.
 
 Ancient sailors often regarded the albatross as a bringer of luck or
-favourable winds. Phoebetria is named after the genus that the albatross
-belong.
-
+favourable winds. The genus for albatross is Phoebetria.
 
 Features
 ========
-First, the primary aim of Phoebetria is to provide at least the same
-functionality that the OEM software for the BitFenix provides. The
-exception to this is remote control, however this is planned for a
-future release. The second aim is to provide features not available in
-the official software. Examples of this second aim are software
-controlled "auto" mode, logging, and much more. These extended features
-shall be added to Phoebetria once the software matures and provides the
-same features that the OEM software provides (the "baseline").
+First, the primary aim of Phoebetria is to provide at least the same 
+functionality that the OEM software for the BitFenix Recon provides. The 
+exception to this is remote control, however this is planned for a 
+future release. The second aim is to provide features not available in 
+the official software. Examples of this second aim are software 
+controlled "auto" mode, logging, and much more. These extended features 
+shall be added to Phoebetria once the software matures and provides the 
+same features that the OEM software provides (the "baseline"). 
 
 As of Version 1.1.1 all features of the BitFenix Recon are supported.
 The software runs as a normal, native application, in contrast to the
