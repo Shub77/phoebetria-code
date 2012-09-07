@@ -1,0 +1,37 @@
+                               
+                               Phoebetria
+
+              Software for controlling the BitFenix(R) Recon
+                              fan controller.
+                        
+                                CHANGE LOG
+
+
+Version 1.1.1 (Beta)
+====================
+Although this is a "point release" many changes and improvements have 
+been incorporated. Behind the scenes the code is more efficient. These 
+efficiency gains mean that, from a user perspective, the GUI is more 
+responsive and many bugs have been fixed. The GUI has been polished and 
+now the controls and window properly resize themselves depending on user 
+settings and the user environment. Additionally, when setting a manual 
+RPM using the RPM sliders, the sliders now 'lock' to the user-defined 
+RPM; if the reported RPM is not equivalent to the manual RPM an 
+indicator below the slider changes to yellow. Minimise to tray has been 
+implemented and user profiles have been improved. 
+
+This release is also a milestone. From this point onward we will be 
+adding features to Phoebetria that the OEM software does not provide. 
+
+For developers: The full change log can be obtained from the Git
+repository. 
+
+
+Version 1.1.0 (Beta)
+====================
+This version was not officially released to the public.
+
+
+Version 1.0.0 (Beta)
+====================
+Initial public release

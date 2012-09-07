@@ -1,10 +1,10 @@
 
-                           Phoebetria
+                               Phoebetria
 
-           Software for controlling the BitFenix(R) Recon
-                        fan controller.
+              Software for controlling the BitFenix(R) Recon
+                              fan controller.
 
-                    Bringer of Favourable Winds
+                       Bringer of Favourable Winds
                         
  "I am going to unexplored regions, to "the land of mist and snow," but
 I shall kill no albatross; therefore do not be alarmed for my safety or
