@@ -55,10 +55,7 @@ The authors of Phoebetria are probably just like you. We own the
 BitFenix Recon and want to coax as much from the fan controller as
 possible. We like hardware. We like to have fun. We like to experiment.
 
-Phoebetria is not (currently) endorsed by BitFenix. In fact, the authors
-wrote Phoebetria with no input at all from BitFenix. The USB protocol
-has been reverse engineered by us and implemented to the best of our
-ability given the (lack of) documentation we have. That said, we believe
+Phoebetria is not (currently) endorsed by BitFenix. That said, we believe
 that Phoebetria is at least as good as the "official" software and that
 it unlocks the BitFenix Recon to allow the hardware to be used to its
 full capacity.
