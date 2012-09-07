@@ -36,7 +36,7 @@
 
     The settings and profiles are stored in your $HOME/.config/Phoebetria
     folder. By default this folder is hidden in Finder but you can go there 
-    freely via the "Terminal.app" application or using Finder use the key
+    freely via the "Terminal.app" application or in Finder use the key
     combination Command + Shift + G and paste in the path.
 
     To uninstall this software simply drag the application to your "Trash"
