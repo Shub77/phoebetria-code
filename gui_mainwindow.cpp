@@ -758,7 +758,14 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
     QString ProfileName = ui->ctrl_PresetName->currentText();
     if (ProfileName.isEmpty()) return;
 
+    bool bs1 = this->blockSignals(true);
+    bool bs2 = fcdata().blockSignals(true);
+
     fcp.setFromCurrentData(fcdata());
+
+    this->blockSignals(bs1);
+    fcdata().blockSignals(bs2);
+
     fcp.save(ProfileName);
 
     populate_ctrl_PresetName();
