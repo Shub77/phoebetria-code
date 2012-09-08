@@ -56,6 +56,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     setWindowIcon(QIcon(":/icon16x16"));
 
     initCtrlArrays();
+    populate_ctrl_PresetName();
 
     // Synchronise fan controller data with GUI.
 
@@ -743,85 +744,46 @@ void gui_MainWindow::on_actionAbout_triggered()
     aboutDlg->exec();
 }
 
+void gui_MainWindow::populate_ctrl_PresetName(void)
+{
+    FanControllerProfile fcp;
+    ui->ctrl_PresetName->clear();
+    ui->ctrl_PresetName->addItems(fcp.getProfileNames());
+}
+
 void gui_MainWindow::on_ctrl_SavePreset_clicked()
 {
     FanControllerProfile fcp;
-    QString profilesLocation = fcp.defualtProfileLocation();
 
-    /* QFileDialog::getSaveFileName expects the directory to
-     * exist, therefore create it now if it doesn't exist
-     */
-    QDir dir;
-    dir.setPath(profilesLocation);
-    if (!dir.exists())
-    {
-        if (!dir.mkpath(profilesLocation))
-        {
-            QMessageBox msg;
-            QString msgText = QString(tr("Could not create default profiles location: %1")
-                                      .arg(profilesLocation));
-            msg.setText(msgText);
-            msg.setInformativeText(tr("You can save in a different location if you choose."));
-            msg.setStandardButtons(QMessageBox::Close);
-            msg.setIcon(QMessageBox::Warning);
-            msg.exec();
-        }
-    }
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save profile"),
-                       profilesLocation,
-                       tr("Profiles (*.ini)"));
-
-    if (filename.isEmpty()) return;
-
-    bool bs1 = this->blockSignals(true);
-    bool bs2 = fcdata().blockSignals(true);
+    QString ProfileName = ui->ctrl_PresetName->currentText();
+    if (ProfileName.isEmpty()) return;
 
     fcp.setFromCurrentData(fcdata());
+    fcp.save(ProfileName);
 
-    this->blockSignals(bs1);
-    fcdata().blockSignals(bs2);
-
-    if (!fcp.save(filename))
-    {
-        QMessageBox msg;
-        QString msgText = QString(tr("Could not save profile!"));
-        msg.setText(msgText);
-        msg.setInformativeText(filename);
-        msg.setStandardButtons(QMessageBox::Close);
-        msg.setIcon(QMessageBox::Warning);
-        msg.exec();
-    }
+    populate_ctrl_PresetName();
 }
 
 void gui_MainWindow::on_ctrl_LoadPreset_clicked()
 {
     FanControllerProfile fcp;
-    QString profilesLocation = fcp.defualtProfileLocation();
+    QString profileName = ui->ctrl_PresetName->currentText();
+    if (profileName.isEmpty()) return;
 
-    QString filename = QFileDialog::getOpenFileName(this, tr("Save profile"),
-                       profilesLocation,
-                       tr("Profiles (*.ini)"));
+    if (fcp.load(profileName))
+		{
 
-    if (filename.isEmpty()) return;
+        FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
-    if (fcp.load(filename))
-    {
-
-        FanControllerIO* fc = &ph_fanControllerIO();
-
-        if (fc->setFromProfile(fcp))
-        {
-            fcdata().syncWithProfile(fcp);
+        if (fc->setFromProfile(fcp)) 
+		{
             updateSpeedControlTooltips();
             updateAllSpeedCtrls();
             updateAllAlarmCtrls(fcdata().isCelcius());
-            updateToggleControls();
-            enableSpeedControls(!fcp.isAuto());
 
         }
     }
 }
-
 
 /**************************************************************************
   Debugging menu

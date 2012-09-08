@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 TARGET = Phoebetria
 TEMPLATE = app
@@ -60,7 +60,8 @@ SOURCES += main.cpp\
     builddetails.cpp \
     bfx-recon/fancontrollerio.cpp \
     utils.cpp \
-    preferences.cpp
+    preferences.cpp \
+    database.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -73,7 +74,8 @@ HEADERS  += gui_mainwindow.h \
     bfx-recon/fancontrollerio.h \
     utils.h \
     preferences.h \
-    bfx-recon/bfxrecon.h
+    bfx-recon/bfxrecon.h \
+    database.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui

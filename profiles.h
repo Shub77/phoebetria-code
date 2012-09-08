@@ -19,6 +19,7 @@
 
 #include <QString>
 #include <QSettings>
+#include <QtSql>
 #include "bfx-recon/bfxrecon.h"
 #include "fanchanneldata.h"
 
@@ -38,14 +39,15 @@ public:
     FanControllerProfile();
 
     QString defualtProfileLocation(void) const;
+    QStringList getProfileNames(void);
 
     void setProfileName(const QString& name);
     void setFilenameAndPath(const QString& filenameAndPath);
 
     void setFromCurrentData(const FanControllerData& data);
 
-    bool save(const QString& filenameAndPath);
-    bool load(const QString& filenameAndPath);
+    bool save(const QString& profileName);
+    bool load(const QString& profileName);
 
     bool isCelcius(void) const
     {
@@ -76,9 +78,9 @@ private:
     QString m_name;
     QString m_fileNameAndPath;
 
-    bool m_isCelcius;
-    bool m_isAuto;
-    bool m_isAudibleAlarm;
+    int m_isCelcius;
+    int m_isAuto;
+    int m_isAudibleAlarm;
 
     BasicChannelData m_channelSettings[FC_MAX_CHANNELS];
 };

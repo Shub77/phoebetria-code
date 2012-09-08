@@ -19,6 +19,7 @@
 #include <QDir>
 #include "profiles.h"
 #include "fancontrollerdata.h"
+#include "database.h"
 
 FanControllerProfile::FanControllerProfile()
 {
@@ -47,6 +48,13 @@ QString FanControllerProfile::defualtProfileLocation(void) const
     return m_defaultProfileLocation;
 }
 
+QStringList FanControllerProfile::getProfileNames()
+{
+    Database m_database;
+    QStringList m_Presets = m_database.readProfileNames();
+
+    return m_Presets;
+}
 
 /* Set from the current controller settings
  */
@@ -70,71 +78,39 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
 }
 
 
-bool FanControllerProfile::save(const QString& filenameAndPath)
+bool FanControllerProfile::save(const QString& profileName)
 {
-    QSettings settings (filenameAndPath, QSettings::IniFormat);
+    Database m_database;
 
-    settings.setValue("common/auto", m_isAuto ? 1 : 0);
-    settings.setValue("common/celcius", m_isCelcius ? 1 : 0);
-    settings.setValue("common/alarm", m_isAudibleAlarm ? 1 : 0);
-    for (int i = 0; i < FC_MAX_CHANNELS; i++)
-    {
-        QString group = "fan_" + QString::number(i);
-        settings.beginGroup(group);
-        settings.setValue("alarm_temperature_F",
-                          QString::number(m_channelSettings[i].alarmTemp));
-        settings.setValue("rpm", m_channelSettings[i].speed);
-        settings.endGroup();
-    }
-    settings.sync();
-    qDebug() << settings.status();
-    return settings.status() == QSettings::NoError;
-}
-
-
-bool FanControllerProfile::load(const QString& filenameAndPath)
-{
-    bool r = true;
-
-    QFile file;
-    file.setFileName(filenameAndPath);
-    if (!file.exists())
-    {
-        return false;
-    }
-
-    QSettings settings (filenameAndPath, QSettings::IniFormat);
-
-    m_isAuto = settings.value("common/auto", m_isAuto).toBool();
-    m_isCelcius = settings.value("common/celcius", m_isCelcius).toBool();
-    m_isAudibleAlarm = settings.value("common/alarm", m_isAudibleAlarm).toBool();
+    m_database.saveProfile(profileName, "isAuto", 0, m_isAuto);
+    m_database.saveProfile(profileName, "isCelcius", 0, m_isCelcius);
+    m_database.saveProfile(profileName, "isAudibleAlarm", 0, m_isAudibleAlarm);
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
-        QString group = "fan_" + QString::number(i);
-        settings.beginGroup(group);
-
-        int value;
-        bool ok;
-
-        value = settings.value("alarm_temperature_F",
-                               m_channelSettings[i].alarmTemp).toInt(&ok);
-        if (ok)
-        {
-            m_channelSettings[i].alarmTemp = value;
-        }
-        else r = false;
-
-        value = settings.value("rpm",
-                               m_channelSettings[i].speed).toInt(&ok);
-        if (ok)
-        {
-            m_channelSettings[i].speed = value;
-        }
-        else r = false;
-
-        settings.endGroup();
+        m_database.saveProfile(profileName, "FanRPM", i, m_channelSettings[i].speed);
+        m_database.saveProfile(profileName, "AlarmTempF", i, m_channelSettings[i].alarmTemp);
     }
 
-    return r && (settings.status() == QSettings::NoError);
+    return 0;
 }
+
+
+bool FanControllerProfile::load(const QString& profileName)
+{
+    Database m_database;
+
+    m_isAuto = m_database.readProfile(profileName, "isAuto", 0);
+    m_isCelcius = m_database.readProfile(profileName, "isCelcius", 0);
+    m_isAudibleAlarm = m_database.readProfile(profileName, "isAudibleAlarm", 0);
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++) {
+
+        m_channelSettings[i].alarmTemp = m_database.readProfile(profileName, "AlarmTempF", i);
+        m_channelSettings[i].speed = m_database.readProfile(profileName, "FanRPM", i);
+
+    }
+
+    return 0;
+}
+

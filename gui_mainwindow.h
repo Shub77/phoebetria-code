@@ -103,6 +103,7 @@ private slots:
 
 private:
     void initCtrlArrays(void);
+    void populate_ctrl_PresetName(void);
 
     FanControllerData& fcdata(void) const;
 
