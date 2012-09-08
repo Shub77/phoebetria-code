@@ -784,10 +784,13 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
 
         if (fc->setFromProfile(fcp)) 
 		{
+
+            fcdata().syncWithProfile(fcp);
             updateSpeedControlTooltips();
             updateAllSpeedCtrls();
             updateAllAlarmCtrls(fcdata().isCelcius());
-
+            updateToggleControls();
+            enableSpeedControls(!fcp.isAuto());
         }
     }
 }
