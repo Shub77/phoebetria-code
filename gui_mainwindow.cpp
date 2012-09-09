@@ -779,7 +779,7 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
 
     if (fcp.load(profileName))
     {
-        FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
+        FanControllerIO* fc = &ph_fanControllerIO();
 
         if (fc->setFromProfile(fcp)) 
 		{
@@ -855,7 +855,7 @@ void gui_MainWindow::onDebugMenu_setChannelSpeed()
              << "RPM"
              ;
 
-    FanControllerIO* fc = &phoebetriaApp()->fanControllerIO();
+    FanControllerIO* fc = &ph_fanControllerIO();
 
     int channelAlarmTemp = m_fcd.alarmTemp(channel);
 
