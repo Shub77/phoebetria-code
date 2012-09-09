@@ -111,6 +111,6 @@ bool FanControllerProfile::load(const QString& profileName)
 
     }
 
-    return 0;
+    return true;
 }
 
