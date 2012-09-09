@@ -92,7 +92,7 @@ bool FanControllerProfile::save(const QString& profileName)
         m_database.saveProfile(profileName, "AlarmTempF", i, m_channelSettings[i].alarmTemp);
     }
 
-    return 0;
+    return true;
 }
 
 

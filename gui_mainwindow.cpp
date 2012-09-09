@@ -778,8 +778,7 @@ void gui_MainWindow::on_ctrl_LoadPreset_clicked()
     if (profileName.isEmpty()) return;
 
     if (fcp.load(profileName))
-		{
-
+    {
         FanControllerIO* fc = &((PhoebetriaApp*)qApp)->fanControllerIO();
 
         if (fc->setFromProfile(fcp)) 
