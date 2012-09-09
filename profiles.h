@@ -78,9 +78,9 @@ private:
     QString m_name;
     QString m_fileNameAndPath;
 
-    int m_isCelcius;
-    int m_isAuto;
-    int m_isAudibleAlarm;
+    bool m_isCelcius;
+    bool m_isAuto;
+    bool m_isAudibleAlarm;
 
     BasicChannelData m_channelSettings[FC_MAX_CHANNELS];
 };
