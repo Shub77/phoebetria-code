@@ -14,16 +14,16 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DISPATCHER_H
-#define DISPATCHER_H
+#ifndef PHOEBETRIA_SIGNALDISPATCHER_H
+#define PHOEBETRIA_SINGALDISPATCHER_H
 
 #include <QObject>
 
-class Dispatcher : public QObject
+class SignalDispatcher : public QObject
 {
     Q_OBJECT
 public:
-    explicit Dispatcher(QObject *parent = 0);
+    explicit SignalDispatcher(QObject *parent = 0);
     
 signals:
     
@@ -31,4 +31,4 @@ public slots:
     
 };
 
-#endif // DISPATCHER_H
+#endif // PHOEBETRIA_DISPATCHER_H

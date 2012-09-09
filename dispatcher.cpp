@@ -16,7 +16,7 @@
 
 #include "dispatcher.h"
 
-Dispatcher::Dispatcher(QObject *parent) :
+SignalDispatcher::SignalDispatcher(QObject *parent) :
     QObject(parent)
 {
 }
