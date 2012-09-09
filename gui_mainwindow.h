@@ -101,6 +101,8 @@ private slots:
 
     void on_ctrl_LoadPreset_clicked();
 
+    void on_ctrl_ErasePreset_clicked();
+
 private:
     void initCtrlArrays(void);
     void populate_ctrl_PresetName(void);

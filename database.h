@@ -15,7 +15,7 @@ public:
     QStringList readProfileNames();
     int readProfile(const QString name, const QString setting, int channel);
     QSqlError saveProfile(const QString name, const QString setting, int channel, int value);
-
+    QSqlError eraseProfile(const QString name);
 
 protected:
 

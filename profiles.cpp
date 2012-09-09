@@ -114,3 +114,11 @@ bool FanControllerProfile::load(const QString& profileName)
     return true;
 }
 
+bool FanControllerProfile::erase(const QString& profileName)
+{
+    Database m_database;
+
+    m_database.eraseProfile(profileName);
+
+    return true;
+}

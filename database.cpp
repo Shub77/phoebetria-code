@@ -107,6 +107,17 @@ QSqlError Database::saveProfile(const QString name, const QString setting, int c
     return QSqlError();
 }
 
+QSqlError Database::eraseProfile(const QString name)
+{
+    QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
+
+    if (!query.prepare(QLatin1String("delete from Profile where name = :name")))
+        return query.lastError();
+    query.bindValue(":name", name);
+
+    return QSqlError();
+}
+
 int Database::readProfile(const QString name, const QString setting, int channel)
 {
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
