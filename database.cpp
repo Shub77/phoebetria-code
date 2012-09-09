@@ -109,8 +109,6 @@ QSqlError Database::saveProfile(const QString name, const QString setting, int c
 
 int Database::readProfile(const QString name, const QString setting, int channel)
 {
-    int m_value;
-
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
 
     query.prepare(QLatin1String("select value from Profile where name = :name and setting = :setting and channel = :channel"));
@@ -118,9 +116,41 @@ int Database::readProfile(const QString name, const QString setting, int channel
     query.bindValue(":setting", setting, QSql::Out);
     query.bindValue(":channel", channel, QSql::Out);
 
-    m_value = query.exec();
+    if (!query.exec())
+    {
+#ifdef QT_DEBUG
+        qDebug() << "SQL Query failed:" << query.lastError()
+                 << "("
+                 << "File:" << __FILE__ << ", Line: " << __LINE__
+                 << ")";
+#endif
+        return -1;  // TODO: Need a better mechanism for reporting failure (valid returns may indeed be -1)
+    }
 
-    return m_value;
+    // Check number of rows selected
+    if (query.size() > 0 && query.size() > 1)
+    {
+#ifdef QT_DEBUG
+        qDebug() << "SQL Query returned wrong number of results:"
+                 << query.lastError()
+                 << "("
+                 << "File:" << __FILE__ << ", Line: " << __LINE__
+                 << ")";
+#endif
+        return -1;  // TODO: Need a better mechanism for reporting failure (valid returns may indeed be -1)
+    }
+
+    if (!query.first())
+    {
+        qDebug() << "Could not position on first query result!"
+                 << "("
+                 << "File:" << __FILE__ << ", Line: " << __LINE__
+                 << ")";
+
+        return -1;  // TODO: Need a better mechanism for reporting failure (valid returns may indeed be -1)
+    }
+
+    return query.value(0).toInt();
 }
 
 QStringList Database::readProfileNames()
