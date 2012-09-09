@@ -5,9 +5,9 @@
 #include "database.h"
 
 
-static QString m_dbFilename = "phoebetria.sqlite";
+QString Database::m_dbFilename = "phoebetria.sqlite";
 
-static QString m_dbConnectionName = "phoebetriaDb";
+QString Database::m_dbConnectionName = "phoebetriaDb";
 
 
 Database::Database()
@@ -114,9 +114,9 @@ int Database::readProfile(const QString name, const QString setting, int channel
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
 
     query.prepare(QLatin1String("select value from Profile where name = :name and setting = :setting and channel = :channel"));
-    query.bindValue(":name", name);
-    query.bindValue(":setting", setting);
-    query.bindValue(":channel", channel);
+    query.bindValue(":name", name, QSql::Out);
+    query.bindValue(":setting", setting, QSql::Out);
+    query.bindValue(":channel", channel, QSql::Out);
 
     m_value = query.exec();
 
