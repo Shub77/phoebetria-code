@@ -114,6 +114,7 @@ QSqlError Database::eraseProfile(const QString name)
     if (!query.prepare(QLatin1String("delete from Profile where name = :name")))
         return query.lastError();
     query.bindValue(":name", name);
+    query.exec();
 
     return QSqlError();
 }
