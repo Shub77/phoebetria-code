@@ -17,7 +17,7 @@
 #include "phoebetriaapp.h"
 #include "database.h"
 
-QTimer PhoebetriaApp::m_fanController_pollTimer;
+QTimer PhoebetriaApp::m_pollTimer;
 FanControllerIO PhoebetriaApp::m_fanControllerIO;
 
 PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
@@ -27,8 +27,8 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
 
     m_fanControllerIO.connect();
 
-    QObject::connect(&m_fanController_pollTimer, SIGNAL(timeout()),
+    QObject::connect(&m_pollTimer, SIGNAL(timeout()),
                      &m_fanControllerIO, SLOT(onPollTimerTriggered()));
 
-    m_fanController_pollTimer.start(200);
+    m_pollTimer.start(200);
 }
