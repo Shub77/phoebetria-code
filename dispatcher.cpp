@@ -20,6 +20,34 @@
 
 #include "phoebetriaapp.h"
 
+
+/*************************************************************************/
+/*!
+    \class  EventDispatcher
+    \brief  Responsible for scheduling all 'timer related' tasks that
+            require undertaking. E.g. polling the fan controller device.
+
+    This class issues signals on a regular basis based on \e Events that
+    (should) require processing. The class itself does nothing but issue
+    signals that other classes monitor and act upon. The minimum interval
+    that signals can be sent is dependendant on the global timer interval
+    (this class connects to the global timer's timeout signal).
+
+    Internally, signals are issued based on timer \e ticks. Each event has
+    a \e tock to indicate when the signal should be issued; i.e. if
+    \e tock (for the event) is set to 5 then the signal will be issued every
+    5 ticks.
+
+    \sa    EventItem, intervalToTick(), tickToInterval()
+ */
+
+/*! \class EventDispatcher::EventItem
+ *  \brief Support class for EventDispatcher. Used to assign an interval
+ *         (in \e ticks) when an event signal should be dispatched.
+ */
+
+
+
 /*-----------------------------------------------------------------------
   Static members
   -----------------------------------------------------------------------*/
@@ -28,31 +56,25 @@ int EventDispatcher::m_minInterval = 100;
 QList<EventDispatcher::EventItem> EventDispatcher::m_events;
 
 
-
 /*************************************************************************/
-/*! @class EventItem
- *  @brief Support class for EventDispatcher. Used to assign an interval
- *         (in \e ticks) when an event signal should be dispatched.
- */
 
 
-/*! @brief Default constructor. Does \e not initalise anything.
+
+/*! Default constructor. Does \e not initalise anything.
  */
 EventDispatcher::EventItem::EventItem()
 {
 }
 
-/*! @brief Initialise to an event \e that will issue a signal every \e tock
- *  intervals.
- *
- * @param e         @see EventDispatcher::Event
- * @param tock      The event e will be dispatched every \i tock ticks.
- *
- * @note            @param tock is a multiple of the timer's base interval.
- *
- * @see EventDispatcher::intervalToTick()
- * @see EventDispatcher::tickToInterval()
- */
+/*! Initialise to an event that will issue a signal every \e tock
+
+    \param e         TODO: Document
+    \param tock      The event e will be dispatched every \e tock ticks.
+
+    \note            \e tock is a multiple of the timer's base interval.
+
+    \sa intervalToTick(), tickToInterval()
+*/
 EventDispatcher::EventItem::EventItem(EventSignal e, int tock)
 {
     m_event = e;
@@ -60,38 +82,15 @@ EventDispatcher::EventItem::EventItem(EventSignal e, int tock)
 }
 
 
+/*! Initialise default values, issuable events and connects to the
+    application's (global) timer.
 
-/*************************************************************************/
-/*! @class  EventDispatcher
- *  @brief  Responsible for scheduling all 'timer related' tasks that
- *          require undertaking. E.g. polling the fan controller device.
- *
- *  This class issues signals on a regular basis based on \e Events that
- *  (should) require processing. The class itself does nothing but issue
- *  signals that other classes monitor and act upon. The minimum interval
- *  that signals can be sent is dependendant on the global timer interval
- *  (this class connects to the global timer's timeout signal).
- *
- *  Internally, signals are issued based on timer \e ticks. Each event has
- *  a \e tock to indicate when the signal should be issued; i.e. if
- *  \e tock (for the event) is set to 5 then the signal will be issued every
- *  5 ticks.
- *
- * @see:    EventItem
- * @see:    EventDispatcher::intervalToTick()
- * @see:    EventDispatcher::tickToInterval()
- */
+    The interval is dependant on the global timer's timout value.
+    Therefore, the minimum interval for the dispatcher is the same as the
+    global timer interval; m_minInterval is set, by default, to match the
+    global timer.
 
-/*!
- * @brief Initialise default values, issuable events and connects to the
- * application's (global) timer.
- *
- * The interval is dependant on the global timer's timout value.
- * Therefore, the minimum interval for the dispatcher is the same as the
- * global timer interval; m_minInterval is set, by default, to match the
- * global timer.
- *
- */
+*/
 EventDispatcher::EventDispatcher(QObject *parent) :
     QObject(parent)
 {
@@ -103,13 +102,11 @@ EventDispatcher::EventDispatcher(QObject *parent) :
 }
 
 
-/*!
- * @brief Populates the list of events that are issuable.
- *
- * Populates the list of (default) events that the EventDispatcher is
- * responsible for issuing. Returns the number of events registered with the
- * dispatcher.
- *
+/*! Populates the list of events that are issuable.
+
+    Populates the list of (default) events that the EventDispatcher is
+    responsible for issuing. Returns the number of events registered with the
+    dispatcher.
  */
 int EventDispatcher::initEvents(void)
 {
@@ -138,7 +135,7 @@ int EventDispatcher::initEvents(void)
 }
 
 
-/*! @brief Add an event to the list of events to dispatch.
+/*! Add an event to the list of events to dispatch.
  */
 void EventDispatcher::addEvent(const EventItem& e)
 {
@@ -146,7 +143,7 @@ void EventDispatcher::addEvent(const EventItem& e)
 
 }
 
-/*! @brief Connect to the global timer signal.
+/*! Connect to the global timer signal.
  */
 void EventDispatcher::connectToTimerSignal(void)
 {
@@ -155,17 +152,16 @@ void EventDispatcher::connectToTimerSignal(void)
 }
 
 
-/*!
- * @brief Convert an interval in milliseconds to timer 'ticks'.
- *
- * @param   interval  The interval in milliseconds
- * @returns The interval converted to timer ticks
- *
- * @note Ticks are a multiple of EventDispatcher::baseInterval(). If the
- * supplied interval is not a multiple of the base interval then it is
- * rounded \e up.
- *
- * @see EventDispatcher::tickToInterval()
+/*! Convert an interval in milliseconds to timer 'ticks'.
+
+    \param   interval  The interval in milliseconds
+    \returns The interval converted to timer ticks
+
+    \note Ticks are a multiple of EventDispatcher::baseInterval(). If the
+    supplied interval is not a multiple of the base interval then it is
+    rounded \e up.
+
+    \sa EventDispatcher::tickToInterval()
  */
 int EventDispatcher::intervalToTick(int interval) const
 {
@@ -173,21 +169,19 @@ int EventDispatcher::intervalToTick(int interval) const
 }
 
 
-/*!
- * @brief Returns a \e tick converted into milliseconds.
- *
- * @see EventDispatcher::intervalToTick()
- */
+/*! Returns a \e tick converted into milliseconds.
+*/
 int EventDispatcher::tickToInterval(int tick) const
 {
     return tick * m_baseInterval;
 }
 
-/*!
- * @brief The main dispatch function. Issues a regular tick event (passes on
- *        the application timer's tick) and issues event signals for those
- *        due to be issued.
- */
+/*! The main dispatch function
+
+    Issues a regular tick event (passes on
+    the application timer's tick) and issues event signals for those
+    due to be issued.
+*/
 void EventDispatcher::onTimer(void)
 {
 

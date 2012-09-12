@@ -48,17 +48,18 @@ class EventDispatcher : public QObject
 {
     Q_OBJECT
 
-    typedef enum
+    typedef enum EventSignal
     {
-        ReqAllDeviceRelated, /**< All channel related reqs */
-        ReqDeviceFlags,      /**< Device flags */
-        ReqAlarmTemps,       /**< Alarm temps (all channels) */
-        ReqMaxRpms,          /**< Max RPM (all channels) */
-        ReqCurrentRpms,      /**< Current RPM (all channels) */
-        ReqProbeTemps,       /**< Probe temp (all "channels") */
+        ReqAllDeviceRelated, //!< All channel related reqs
+        ReqDeviceFlags,      //!< Device flags
+        ReqAlarmTemps,       //!< Alarm temps (all channels)
+        ReqMaxRpms,          //!< Max RPM (all channels)
+        ReqCurrentRpms,      //!< Current RPM (all channels)
+        ReqProbeTemps,       //!< Probe temp (all "channels")
 
-        LogData              /**< Log data */
-    } EventSignal;
+        LogData              //!< Log data
+
+    } EventSignal; //!< Signal "types" that can be issued.
 
     class EventItem
     {
