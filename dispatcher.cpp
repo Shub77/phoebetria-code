@@ -27,16 +27,15 @@
     \brief  Responsible for scheduling all 'timer related' tasks that
             require undertaking. E.g. polling the fan controller device.
 
-    This class issues signals on a regular basis based on \e Events that
+    This class issues signals on a regular basis based on \e Tasks that
     (should) require processing. The class itself does nothing but issue
     signals that other classes monitor and act upon. The minimum interval
-    that signals can be sent is dependendant on the global timer interval
-    (this class connects to the global timer's timeout signal).
+    that signals can be sent is dependendant on minInterval().
 
-    Internally, signals are issued based on timer \e ticks. Each event has
-    a \e tock to indicate when the signal should be issued; i.e. if
-    \e tock (for the event) is set to 5 then the signal will be issued every
-    5 ticks.
+    Internally, signals are issued based on timer \e ticks. Each task has
+    an \e interval (in ticks) to indicate when the signal should be issued;
+    e.g. if the task interval is 5 then a signal will be issued every 5
+    ticks.
 
     \e intervals have milliseconds as their unit
     \e ticks are an integer representation of milliseconds;
@@ -45,11 +44,10 @@
     \sa    EventItem, intervalToTick(), tickToInterval()
  */
 
-/*! \class EventDispatcher::EventItem
- *  \brief Support class for EventDispatcher. Used to assign an interval
- *         (in \e ticks) when an event signal should be dispatched.
+/*! \class EventDispatcher::Task
+ *  \brief Support class for EventDispatcher. Tasks define signals for the
+ *         dispatcher to dispatch based on the task's interval.
  */
-
 
 
 /*-----------------------------------------------------------------------
@@ -75,18 +73,16 @@ EventDispatcher::Task::Task()
 {
 }
 
-/*! Initialise to an event that will issue a signal every interval \e ticks
+/*! Initialise a task that will issue a signal every interval \e ticks
 
-    \param e         TODO: Document
+    \param taskId    The type of signal to emit
     \param interval  Dispatch interval in \e ticks; \sa intervalToTick()
 
-    \note            \e tock is a multiple of the timer's interval.
-
-    \sa intervalToTick(), tickToInterval()
+    \sa TaskId, intervalToTick(), tickToInterval()
 */
-EventDispatcher::Task::Task(EventDispatcher::TaskId e, int interval)
+EventDispatcher::Task::Task(EventDispatcher::TaskId taskId, int interval)
 {
-    m_event = e;
+    m_event = taskId;
     m_interval = interval;
 }
 
@@ -99,18 +95,18 @@ EventDispatcher::EventDispatcher(QObject *parent) :
 {
     m_timer.setInterval(m_minInterval);
     m_elapsedTicks = 0;
-    initEvents();
+    initTasks();
     connectToTimerSignal();
 }
 
 
-/*! Populates the list of events that are issuable.
+/*! Populates the dispatcher schedule.
 
-    Populates the list of (default) events that the EventDispatcher is
-    responsible for issuing. Returns the number of events registered with the
+    Populates the list of (default) tasks that the EventDispatcher is
+    responsible for issuing. Returns the number of tasks registered with the
     dispatcher.
  */
-int EventDispatcher::initEvents(void)
+int EventDispatcher::initTasks(void)
 {
 
     /*
@@ -123,33 +119,33 @@ int EventDispatcher::initEvents(void)
         m_tasks.clear();
     }
 
-    addEvent(Task(ReqAllDeviceRelated, intervalToTick(30000)));
+    addTask(Task(ReqAllDeviceRelated, intervalToTick(30000)));
 
-    addEvent(Task(ReqDeviceFlags, intervalToTick(5000)));
-    addEvent(Task(ReqAlarmTemps, intervalToTick(5000)));
-    addEvent(Task(ReqMaxRpms, intervalToTick(5000)));
-    addEvent(Task(ReqCurrentRpms, intervalToTick(5000)));
-    addEvent(Task(ReqProbeTemps, intervalToTick(5000)));
+    addTask(Task(ReqDeviceFlags, intervalToTick(5000)));
+    addTask(Task(ReqAlarmTemps, intervalToTick(5000)));
+    addTask(Task(ReqMaxRpms, intervalToTick(5000)));
+    addTask(Task(ReqCurrentRpms, intervalToTick(5000)));
+    addTask(Task(ReqProbeTemps, intervalToTick(5000)));
 
-    addEvent(Task(LogData, intervalToTick(30000)));
+    addTask(Task(LogData, intervalToTick(30000)));
 
     return m_tasks.size();
 }
 
 
-/*! Add an event to the list of events to dispatch.
+/*! Add a task to the schedule.
  */
-void EventDispatcher::addEvent(const Task& e)
+void EventDispatcher::addTask(const Task& e)
 {
     m_tasks.append(e);
 
 }
 
-/*! Connect to the global timer signal.
+/*! Connect to the timer signal.
  */
 void EventDispatcher::connectToTimerSignal(void)
 {
-    connect(&(ph_phoebetriaApp()->pollTimer()), SIGNAL(timeout()),
+    connect(&this->m_timer, SIGNAL(timeout()),
             this, SLOT(onTimer()));
 }
 

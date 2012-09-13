@@ -43,7 +43,7 @@ class EventDispatcher : public QObject
     {
     public:
         Task();
-        Task(EventDispatcher::TaskId e, int interval);
+        Task(EventDispatcher::TaskId taskId, int interval);
 
         int tock(void) const { return m_interval; }
 
@@ -64,8 +64,8 @@ public:
 
 protected:
 
-    int initEvents(void);
-    void addEvent(const Task& e);
+    int initTasks(void);
+    void addTask(const Task& e);
     void connectToTimerSignal(void);
 
 private:
