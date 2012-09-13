@@ -39,6 +39,12 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     // Stop resizing
     //this->setFixedSize(this->size());
 
+    // Make sure the "Control" tab is at the front
+    if (ui->tabWidget->currentIndex() != 0)
+    {
+        ui->tabWidget->setCurrentIndex(0);
+    }
+
 #if defined Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
 #elif defined Q_WS_MAC
