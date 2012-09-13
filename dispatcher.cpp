@@ -38,6 +38,10 @@
     \e tock (for the event) is set to 5 then the signal will be issued every
     5 ticks.
 
+    \e intervals have milliseconds as their unit
+    \e ticks are an integer representation of milliseconds;
+       1 tick == minInterval() milleseconds
+
     \sa    EventItem, intervalToTick(), tickToInterval()
  */
 
@@ -51,10 +55,11 @@
 /*-----------------------------------------------------------------------
   Static members
   -----------------------------------------------------------------------*/
-int EventDispatcher::m_minInterval = 100;
+int EventDispatcher::m_minInterval = 200;
 
-QList<EventDispatcher::EventItem> EventDispatcher::m_events;
+QList<EventDispatcher::Task> EventDispatcher::m_tasks;
 
+QTimer EventDispatcher::m_timer;
 
 /*************************************************************************/
 
@@ -62,41 +67,34 @@ QList<EventDispatcher::EventItem> EventDispatcher::m_events;
 
 /*! Default constructor. Does \e not initalise anything.
  */
-EventDispatcher::EventItem::EventItem()
+EventDispatcher::Task::Task()
 {
 }
 
-/*! Initialise to an event that will issue a signal every \e tock
+/*! Initialise to an event that will issue a signal every interval \e ticks
 
     \param e         TODO: Document
-    \param tock      The event e will be dispatched every \e tock ticks.
+    \param interval  Dispatch interval in \e ticks; \sa intervalToTick()
 
-    \note            \e tock is a multiple of the timer's base interval.
+    \note            \e tock is a multiple of the timer's interval.
 
     \sa intervalToTick(), tickToInterval()
 */
-EventDispatcher::EventItem::EventItem(EventSignal e, int tock)
+EventDispatcher::Task::Task(EventDispatcher::TaskId e, int interval)
 {
     m_event = e;
-    m_tock = tock;
+    m_interval = interval;
 }
 
 
 /*! Initialise default values, issuable events and connects to the
-    application's (global) timer.
-
-    The interval is dependant on the global timer's timout value.
-    Therefore, the minimum interval for the dispatcher is the same as the
-    global timer interval; m_minInterval is set, by default, to match the
-    global timer.
-
+    timer. The interval of the timer is set to minInterval()
 */
 EventDispatcher::EventDispatcher(QObject *parent) :
     QObject(parent)
 {
-    m_minInterval = ph_phoebetriaApp()->pollTimerInterval();
-    m_baseInterval = m_minInterval;
-    m_totalTicks = 0;
+    m_timer.setInterval(m_minInterval);
+    m_elapsedTicks = 0;
     initEvents();
     connectToTimerSignal();
 }
@@ -116,30 +114,30 @@ int EventDispatcher::initEvents(void)
      * (e.g. if setBaseInterval() is called) therefore make sure the
      * list is empty
      */
-    if (!m_events.isEmpty())
+    if (!m_tasks.isEmpty())
     {
-        m_events.clear();
+        m_tasks.clear();
     }
 
-    addEvent(EventItem(ReqAllDeviceRelated, intervalToTick(30000)));
+    addEvent(Task(ReqAllDeviceRelated, intervalToTick(30000)));
 
-    addEvent(EventItem(ReqDeviceFlags, intervalToTick(5000)));
-    addEvent(EventItem(ReqAlarmTemps, intervalToTick(5000)));
-    addEvent(EventItem(ReqMaxRpms, intervalToTick(5000)));
-    addEvent(EventItem(ReqCurrentRpms, intervalToTick(5000)));
-    addEvent(EventItem(ReqProbeTemps, intervalToTick(5000)));
+    addEvent(Task(ReqDeviceFlags, intervalToTick(5000)));
+    addEvent(Task(ReqAlarmTemps, intervalToTick(5000)));
+    addEvent(Task(ReqMaxRpms, intervalToTick(5000)));
+    addEvent(Task(ReqCurrentRpms, intervalToTick(5000)));
+    addEvent(Task(ReqProbeTemps, intervalToTick(5000)));
 
-    addEvent(EventItem(LogData, intervalToTick(30000)));
+    addEvent(Task(LogData, intervalToTick(30000)));
 
-    return m_events.size();
+    return m_tasks.size();
 }
 
 
 /*! Add an event to the list of events to dispatch.
  */
-void EventDispatcher::addEvent(const EventItem& e)
+void EventDispatcher::addEvent(const Task& e)
 {
-    m_events.append(e);
+    m_tasks.append(e);
 
 }
 
@@ -165,7 +163,7 @@ void EventDispatcher::connectToTimerSignal(void)
  */
 int EventDispatcher::intervalToTick(int interval) const
 {
-    return ceil((double)interval / m_baseInterval);
+    return ceil((double)interval / m_timer.interval());
 }
 
 
@@ -173,7 +171,7 @@ int EventDispatcher::intervalToTick(int interval) const
 */
 int EventDispatcher::tickToInterval(int tick) const
 {
-    return tick * m_baseInterval;
+    return tick * m_timer.interval();
 }
 
 /*! The main dispatch function
@@ -187,14 +185,14 @@ void EventDispatcher::onTimer(void)
 
     // TODO: Issue "Tick event"
 
-    for (int i = 0; i < m_events.size(); ++i)
+    for (int i = 0; i < m_tasks.size(); ++i)
     {
-        const EventItem& item = m_events.at(i);
-        if (m_totalTicks % item.tock() == 0)
+        const Task& item = m_tasks.at(i);
+        if (m_elapsedTicks % item.tock() == 0)
         {
             // TODO: issue event
         }
     }
 
-    ++m_totalTicks;
+    ++m_elapsedTicks;
 }

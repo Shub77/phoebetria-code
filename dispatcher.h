@@ -19,36 +19,14 @@
 
 #include <QObject>
 #include <QList>
-
-
-// Dispatch/Action types
-// --------------
-//
-// **** These are for scheduled/regular issuing of device requests or other
-// **** actions. No actual request is actually made (or action undergone),
-// **** rather a signal that the action is to undertaken is dispatched and
-// **** the classes watching those signals carry out the actual action(s)
-// ****
-// **** The signals are issued based on a schedule with a minumum
-// **** timeout of minInterval(). Different action types can have different
-// **** schedules that are a multiple of minInterval()
-//
-// AllDeviceRelated         : Issue requests for all channel related reqs
-//
-// Device flags             : Issue request to device for device flags
-// Channels alarm temps     : Issue request to device for alarm temps
-// Channels current RPM     : Issue request to device for current RPMs
-// Channels max RPM         : Issue request to device for max RPMs
-// Probe temps              : Issue request to device for probe temps
-// Log data                 : Issue request that data be logged
-//
+#include <QTimer>
 
 
 class EventDispatcher : public QObject
 {
     Q_OBJECT
 
-    typedef enum EventSignal
+    typedef enum TaskId
     {
         ReqAllDeviceRelated, //!< All channel related reqs
         ReqDeviceFlags,      //!< Device flags
@@ -59,23 +37,27 @@ class EventDispatcher : public QObject
 
         LogData              //!< Log data
 
-    } EventSignal; //!< Signal "types" that can be issued.
+    } TaskId; //!< Signal "types" that can be issued.
 
-    class EventItem
+    class Task
     {
     public:
-        EventItem();
-        EventItem(EventSignal e, int tock);
+        Task();
+        Task(EventDispatcher::TaskId e, int interval);
 
-        int tock(void) const { return m_tock; }
+        int tock(void) const { return m_interval; }
 
     private:
-        EventSignal m_event;
-        int m_tock;         // 'tock' is the tick on which to issue the event
+        TaskId m_event;
+        int m_interval;    // the task dispatch interval, for this task
     };
 
 public:
     explicit EventDispatcher(QObject *parent = 0);
+
+    //! The minumum interval (in milliseconds) that can be set
+    int minInterval(void) const
+        { return m_minInterval; }
 
     int intervalToTick(int interval) const;
     int tickToInterval(int tick) const;
@@ -83,22 +65,17 @@ public:
 protected:
 
     int initEvents(void);
-    void addEvent(const EventItem& e);
+    void addEvent(const Task& e);
     void connectToTimerSignal(void);
 
 private:
 
-    // The mininum interval that can be set
-    static int m_minInterval;
-    static QList<EventItem> m_events;
+    static QTimer m_timer;
 
-    // The interval (in ms) that the signal dispatcher is called
-    int m_baseInterval;
+    static int m_minInterval;       // The mininum interval that can be set
+    static QList<Task> m_tasks;     // Scheduled tasks
 
-    int m_totalTicks;
-
-    // cmd, interval
-
+    int m_elapsedTicks; // The number of ticks elapsed since the timer started
 
 signals:
     
