@@ -56,11 +56,11 @@ public:
     explicit EventDispatcher(QObject *parent = 0);
 
     //! The minumum interval (in milliseconds) that can be set
-    int minInterval(void) const
+    unsigned minInterval(void) const
         { return m_minInterval; }
 
-    int intervalToTick(int interval) const;
-    int tickToInterval(int tick) const;
+    unsigned intervalToTick(unsigned interval) const;
+    unsigned tickToInterval(unsigned tick) const;
 
 protected:
 
@@ -72,13 +72,13 @@ private:
 
     static QTimer m_timer;
 
-    static int m_minInterval;       // The mininum interval that can be set
-    static QList<Task> m_tasks;     // Scheduled tasks
+    static unsigned m_minInterval;
+    static QList<Task> m_tasks;
 
-    int m_elapsedTicks; // The number of ticks elapsed since the timer started
+    unsigned m_elapsedTicks;
 
 signals:
-    
+
 public slots:
 
     void onTimer(void);

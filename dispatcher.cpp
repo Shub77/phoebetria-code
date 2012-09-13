@@ -55,10 +55,14 @@
 /*-----------------------------------------------------------------------
   Static members
   -----------------------------------------------------------------------*/
-int EventDispatcher::m_minInterval = 200;
 
+//! The mininum interval that can be set
+unsigned EventDispatcher::m_minInterval = 200;
+
+//! Scheduled tasks
 QList<EventDispatcher::Task> EventDispatcher::m_tasks;
 
+//! Ticks elapsed since the timer started
 QTimer EventDispatcher::m_timer;
 
 /*************************************************************************/
@@ -157,11 +161,12 @@ void EventDispatcher::connectToTimerSignal(void)
 
     \note Ticks are a multiple of EventDispatcher::baseInterval(). If the
     supplied interval is not a multiple of the base interval then it is
-    rounded \e up.
+    rounded \e up. Related to this is that if \e interval is less than
+    minInterval() the returned \e tick will be 1.
 
     \sa EventDispatcher::tickToInterval()
  */
-int EventDispatcher::intervalToTick(int interval) const
+unsigned EventDispatcher::intervalToTick(unsigned interval) const
 {
     return ceil((double)interval / m_timer.interval());
 }
@@ -169,7 +174,7 @@ int EventDispatcher::intervalToTick(int interval) const
 
 /*! Returns a \e tick converted into milliseconds.
 */
-int EventDispatcher::tickToInterval(int tick) const
+unsigned EventDispatcher::tickToInterval(unsigned tick) const
 {
     return tick * m_timer.interval();
 }
