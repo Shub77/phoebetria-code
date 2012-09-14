@@ -29,10 +29,18 @@ public:
 
     Database();
 
-    QStringList readProfileNames();
-    int readProfile(const QString name, const QString setting, int channel);
-    QSqlError saveProfile(const QString name, const QString setting, int channel, int value);
-    QSqlError eraseProfile(const QString name);
+    static QStringList readProfileNames();
+
+    static int readProfile(const QString& name,
+                           const QString& setting,
+                           int channel);
+
+    static QSqlError saveProfile(const QString& name,
+                                 const QString& setting,
+                                 int channel,
+                                 int value);
+
+    static QSqlError eraseProfile(const QString name);
 
 protected:
 

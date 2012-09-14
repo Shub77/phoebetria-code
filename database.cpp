@@ -93,7 +93,9 @@ QSqlError Database::openDb()
 }
 
 
-QSqlError Database::saveProfile(const QString name, const QString setting, int channel, int value)
+QSqlError Database::saveProfile(const QString &name,
+                                const QString &setting,
+                                int channel, int value)
 {
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
 
@@ -120,7 +122,9 @@ QSqlError Database::eraseProfile(const QString name)
     return QSqlError();
 }
 
-int Database::readProfile(const QString name, const QString setting, int channel)
+int Database::readProfile(const QString &name,
+                          const QString &setting,
+                          int channel)
 {
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
 
