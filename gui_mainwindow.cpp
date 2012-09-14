@@ -185,6 +185,13 @@ void gui_MainWindow::connectCustomSignals(void)
 }
 
 
+void gui_MainWindow::populate_ctrl_PresetName(void)
+{
+    FanControllerProfile fcp;
+    ui->ctrl_PresetName->clear();
+    ui->ctrl_PresetName->addItems(fcp.getProfileNames());
+}
+
 void gui_MainWindow::enableSpeedControls(bool enabled)
 {
     //bool enabled = ui->ctrl_isManual->value() == 1 ? true : false;
@@ -748,13 +755,6 @@ void gui_MainWindow::on_actionAbout_triggered()
 {
     gui_About* aboutDlg = new gui_About(this);
     aboutDlg->exec();
-}
-
-void gui_MainWindow::populate_ctrl_PresetName(void)
-{
-    FanControllerProfile fcp;
-    ui->ctrl_PresetName->clear();
-    ui->ctrl_PresetName->addItems(fcp.getProfileNames());
 }
 
 void gui_MainWindow::on_ctrl_SavePreset_clicked()

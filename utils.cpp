@@ -18,11 +18,13 @@
 
 #include <QDir>
 
+
+/* QByteArray::toHex() can do a similar thing, but as far as I know it cannot
+ * be forced to format the output in the way this function does.
+ */
 QString toHexString(const unsigned char *data, int len)
 {
-    /* QByteArray can do a similar thing, but as far as I know it cannot be
-     * made to format the output in this manner
-     */
+
     static const char* hexDigits = "0123456789ABCDEF";
 
     QString result;

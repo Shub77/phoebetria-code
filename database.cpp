@@ -124,7 +124,9 @@ int Database::readProfile(const QString name, const QString setting, int channel
 {
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
 
-    query.prepare(QLatin1String("select value from Profile where name = :name and setting = :setting and channel = :channel"));
+    query.prepare(QLatin1String(
+        "select value from Profile"
+        "where name = :name and setting = :setting and channel = :channel"));
     query.bindValue(":name", name, QSql::Out);
     query.bindValue(":setting", setting, QSql::Out);
     query.bindValue(":channel", channel, QSql::Out);
@@ -169,23 +171,20 @@ int Database::readProfile(const QString name, const QString setting, int channel
 
 QStringList Database::readProfileNames()
 {
-    //qDebug() << m_dbConnectionName;
-
-    QStringList m_ProfileList;
+    QStringList profileList;
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
 
-    //qDebug() << db.connectionName();
     query.exec(QLatin1String("select distinct name from Profile"));
 
-    while( query.next() )
+    while (query.next())
     {
-        m_ProfileList << query.value(0).toString();
+        profileList << query.value(0).toString();
     }
 
-    if (m_ProfileList.isEmpty())
-    {
+#if 0
+    if (profileList.isEmpty())
         return QStringList("** FAILED **");
-    }
+#endif
 
-    return m_ProfileList;
+    return profileList;
 }

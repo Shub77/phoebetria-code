@@ -51,9 +51,9 @@ QString FanControllerProfile::defualtProfileLocation(void) const
 QStringList FanControllerProfile::getProfileNames()
 {
     Database m_database;
-    QStringList m_Presets = m_database.readProfileNames();
+    QStringList profileNames = m_database.readProfileNames();
 
-    return m_Presets;
+    return profileNames;
 }
 
 /* Set from the current controller settings
