@@ -34,6 +34,9 @@ class EventDispatcher : public QObject
         //!< Emitted every time the timer is triggered
         Tock,
 
+        //!< Check the device for data
+        CheckForDeviceData,
+
         //!< All channel related reqs
         ReqAllDeviceRelated,
 

@@ -209,6 +209,7 @@ void EventDispatcher::onTimer(void)
 {
 
     emit task(Tock);
+    emit task(CheckForDeviceData);
 
     for (int i = 0; i < m_tasks.size(); ++i)
     {
