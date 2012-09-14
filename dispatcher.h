@@ -29,6 +29,7 @@ class EventDispatcher : public QObject
 
     friend class PhoebetriaApp;
 
+public:
     typedef enum TaskId
     {
         //!< Emitted every time the timer is triggered
@@ -69,7 +70,7 @@ class EventDispatcher : public QObject
         int m_interval;    // the task dispatch interval, for this task
     };
 
-public:
+
     explicit EventDispatcher(QObject *parent = 0);
 
     int start(unsigned interval);
@@ -98,7 +99,7 @@ private:
 
 signals:
 
-    void task(TaskId task);
+    void task(EventDispatcher::TaskId task);
 
 public slots:
 

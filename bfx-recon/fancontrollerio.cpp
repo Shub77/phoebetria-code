@@ -304,8 +304,8 @@ void FanControllerIO::connectSignals(void)
     QObject::connect(&m_io_device, SIGNAL(dataRX(QByteArray)),
                      this, SLOT(onRawData(QByteArray)));
 
-    QObject::connect(&ph_phoebetriaApp()->dispatcher(), SIGNAL(task(TaskId)),
-            this, SLOT(onDispatcherSignal()));
+    QObject::connect(&ph_phoebetriaApp()->dispatcher(), SIGNAL(task(EventDispatcher::TaskId)),
+                     this, SLOT(onDispatcherSignal(EventDispatcher::TaskId)));
 
 }
 
@@ -333,45 +333,49 @@ void FanControllerIO::disconnect(void)
 }
 
 
-void FanControllerIO::onDispatcherSignal(void)
+void FanControllerIO::onDispatcherSignal(EventDispatcher::TaskId taskId)
 {
     if (!isConnected()) return;
 
     if (signalsBlocked()) return;
 
-    processRequestQueue();
 
-    // Check for pending data (from device) every time timer is triggered
-    m_io_device.pollForData();
-
-    // Only create new requests if there are none pending processing
-    if (m_requestQueue.isEmpty())
+    if (taskId == EventDispatcher::CheckForDeviceData)
     {
-
-        if ((m_pollNumber % 51 || m_pollNumber == 0))
-        {
-            requestDeviceFlags();
-        }
-
-        /* TODO: Should probably have some kind of timeout for
-         *       waitingForHandshake
-         */
-        if ( (m_pollNumber % 9 || m_pollNumber == 0)
-             && !waitingForHandshake(Request::Set_ChannelSettings))
-        {
-
-            for (int i = 0; i < MAX_FAN_CHANNELS; i++)
-            {
-                requestTempAndSpeed(i);
-            }
-            for (int i = 0; i < MAX_FAN_CHANNELS; i++)
-            {
-                requestAlarmAndSpeed(i);
-            }
-        }
+        m_io_device.pollForData();
+        return;
     }
 
-    m_pollNumber++;
+    if (taskId == EventDispatcher::Tock)
+    {
+        processRequestQueue();
+        return;
+    }
+
+    // Only create new requests if there are none pending processing
+    //if (!m_requestQueue.isEmpty())
+    //    return;
+
+    if (taskId == EventDispatcher::ReqDeviceFlags)
+    {
+        requestDeviceFlags();
+        return;
+    }
+
+    // If waiting for handshake from previous requests, don't make new ones
+    if (waitingForHandshake(Request::Set_ChannelSettings))
+        return;
+
+    if (taskId == EventDispatcher::ReqAlarmTempAndManualRpm)
+    {
+        for (int i = 0; i < MAX_FAN_CHANNELS; ++i)
+            requestAlarmAndSpeed(i);
+    }
+    else if (taskId == EventDispatcher::ReqTempAndCurrRpmAndMaxRpm)
+    {
+        for (int i = 0; i < MAX_FAN_CHANNELS; ++i)
+            requestTempAndSpeed(i);
+    }
 }
 
 

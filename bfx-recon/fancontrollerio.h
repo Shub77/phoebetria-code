@@ -23,6 +23,7 @@
 #include "device-io.h"
 #include "profiles.h"
 #include "fancontrollerdata.h"
+#include "dispatcher.h"
 
 class FanControllerIO : public QObject
 {
@@ -257,7 +258,7 @@ protected:
     void processRequestQueue(void);
 
 public slots:
-    void onDispatcherSignal(void);
+    void onDispatcherSignal(EventDispatcher::TaskId taskId);
     void onRawData(QByteArray rawdata);
 
 private:
