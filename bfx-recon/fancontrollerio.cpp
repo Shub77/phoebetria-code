@@ -14,9 +14,12 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QDebug>
 #include "fancontrollerio.h"
+
+#include <QDebug>
+
 #include "utils.h"
+#include "phoebetriaapp.h"
 
 // Maximum length of the command queue. Set to -1 for no max length
 #define MAX_COMMANDQUEUE_LEN -1
@@ -294,13 +297,16 @@ FanControllerIO::FanControllerIO(QObject *parent) :
 {
     m_pollNumber = 0;
     m_fanControllerData.init();
-    connectSignals();
 }
 
 void FanControllerIO::connectSignals(void)
 {
     QObject::connect(&m_io_device, SIGNAL(dataRX(QByteArray)),
                      this, SLOT(onRawData(QByteArray)));
+
+    QObject::connect(&ph_phoebetriaApp()->dispatcher(), SIGNAL(task(TaskId)),
+            this, SLOT(onDispatcherSignal()));
+
 }
 
 bool FanControllerIO::connect(void)
@@ -327,7 +333,7 @@ void FanControllerIO::disconnect(void)
 }
 
 
-void FanControllerIO::onPollTimerTriggered(void)
+void FanControllerIO::onDispatcherSignal(void)
 {
     if (!isConnected()) return;
 

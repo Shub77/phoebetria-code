@@ -45,6 +45,9 @@ public:
     unsigned int globalTimerInterval(void)
         { return m_globalTimer.interval(); }
 
+    EventDispatcher& dispatcher(void)
+        { return m_dispatcher; }
+
 private:
     static FanControllerIO m_fanControllerIO;
     static EventDispatcher m_dispatcher;

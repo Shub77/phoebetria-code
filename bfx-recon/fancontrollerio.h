@@ -257,7 +257,7 @@ protected:
     void processRequestQueue(void);
 
 public slots:
-    void onPollTimerTriggered(void);
+    void onDispatcherSignal(void);
     void onRawData(QByteArray rawdata);
 
 private:
