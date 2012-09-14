@@ -28,16 +28,23 @@ class EventDispatcher : public QObject
 
     typedef enum TaskId
     {
-        ReqAllDeviceRelated, //!< All channel related reqs
-        ReqDeviceFlags,      //!< Device flags
-        ReqAlarmTemps,       //!< Alarm temps (all channels)
-        ReqMaxRpms,          //!< Max RPM (all channels)
-        ReqCurrentRpms,      //!< Current RPM (all channels)
-        ReqProbeTemps,       //!< Probe temp (all "channels")
+        //!< All channel related reqs
+        ReqAllDeviceRelated,
 
-        LogData              //!< Log data
+        //!< Device flags
+        ReqDeviceFlags,
+
+        //! Alarm temp and manual rpm (all channels)
+        ReqAlarmTempAndManualRpm,
+
+        //! Current temp and rpm (all channels)
+        ReqTempAndCurrRpmAndMaxRpm,
+
+        //!< Log data
+        LogData
 
     } TaskId; //!< Signal "types" that can be issued.
+
 
     class Task
     {

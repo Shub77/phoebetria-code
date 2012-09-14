@@ -122,10 +122,9 @@ int EventDispatcher::initTasks(void)
     addTask(Task(ReqAllDeviceRelated, intervalToTick(30000)));
 
     addTask(Task(ReqDeviceFlags, intervalToTick(5000)));
-    addTask(Task(ReqAlarmTemps, intervalToTick(5000)));
-    addTask(Task(ReqMaxRpms, intervalToTick(5000)));
-    addTask(Task(ReqCurrentRpms, intervalToTick(5000)));
-    addTask(Task(ReqProbeTemps, intervalToTick(5000)));
+
+    addTask(Task(ReqAlarmTempAndManualRpm, intervalToTick(5000)));
+    addTask(Task(ReqTempAndCurrRpmAndMaxRpm, intervalToTick(5000)));
 
     addTask(Task(LogData, intervalToTick(30000)));
 
