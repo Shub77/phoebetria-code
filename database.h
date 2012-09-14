@@ -44,9 +44,7 @@ private:
 
     QSqlDatabase db;
 
-    QString databaseNameAndPath(void) const;
     QString m_dbPathAndName;
-    //QStringList m_ProfileList();
 
     static QString m_dbFilename;
     static QString m_dbConnectionName;

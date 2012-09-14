@@ -42,11 +42,6 @@ void Database::initCommon(void)
 }
 
 
-QString Database::databaseNameAndPath(void) const
-{
-    return m_dbPathAndName;
-}
-
 QSqlError Database::openDb()
 {
     QString dbPath;
