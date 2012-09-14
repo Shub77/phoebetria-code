@@ -54,16 +54,6 @@
  */
 
 
-/*-----------------------------------------------------------------------
-  Static members
-  -----------------------------------------------------------------------*/
-
-//! Scheduled tasks
-QList<EventDispatcher::Task> EventDispatcher::m_tasks;
-
-/*************************************************************************/
-
-
 
 /*! Default constructor. Does \e not initalise anything.
  */
@@ -84,21 +74,34 @@ EventDispatcher::Task::Task(EventDispatcher::TaskId taskId, int interval)
     m_interval = interval;
 }
 
-
+/*! Initialise the object. This does \e not start the "timer".
+    \sa start();
+ */
 EventDispatcher::EventDispatcher(QObject *parent) :
     QObject(parent)
 {
+    m_minInterval = 0;
+    m_elapsedTicks = 0;
+    m_isStarted = false;
 }
 
-/*! Initialise default values, issuable events and connects to the
-    timer. The interval of the timer is set to minInterval()
-*/
-void EventDispatcher::init(void)
+
+int EventDispatcher::start(unsigned interval)
 {
-    m_minInterval = ph_phoebetriaApp()->globalTimerInterval();
-    m_elapsedTicks = 0;
+    unsigned gi = ph_phoebetriaApp()->globalTimerInterval();
+
+    m_minInterval = interval < gi ? gi : interval;
+
+    // Called here because task intervals are based on m_minInterval
     initTasks();
-    connectToTimerSignal();
+
+    if (!m_isStarted)   // Don't need to reconnect signals if done previously
+        connectToTimerSignal();
+
+    m_isStarted = true;
+    m_elapsedTicks = 0;
+
+    return m_minInterval;
 }
 
 /*! Populates the dispatcher schedule.

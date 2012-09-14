@@ -69,7 +69,7 @@ class EventDispatcher : public QObject
 public:
     explicit EventDispatcher(QObject *parent = 0);
 
-    void init(void);
+    int start(unsigned interval);
 
     //! The minumum interval (in milliseconds) that can be set
     unsigned minInterval(void) const
@@ -86,10 +86,12 @@ protected:
 
 private:
 
-    static QList<Task> m_tasks;
+    QList<Task> m_tasks;        //! Scheduled tasks
 
     unsigned m_minInterval;
     unsigned m_elapsedTicks;
+
+    bool m_isStarted;
 
 signals:
 

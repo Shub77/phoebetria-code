@@ -28,7 +28,7 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
 
     m_globalTimer.start(200);
 
-    m_dispatcher.init();
+    m_dispatcher.start(200);
 
     m_fanControllerIO.connect();
 }
