@@ -82,7 +82,7 @@ EventDispatcher::Task::Task()
 */
 EventDispatcher::Task::Task(EventDispatcher::TaskId taskId, int interval)
 {
-    m_event = taskId;
+    m_taskId = taskId;
     m_interval = interval;
 }
 
@@ -151,6 +151,8 @@ void EventDispatcher::connectToTimerSignal(void)
 
 /*! Convert an interval in milliseconds to timer 'ticks'.
 
+    Returns \e interval converted to dispatch timer ticks.
+
     \param   interval  The interval in milliseconds
     \returns The interval converted to timer ticks
 
@@ -168,6 +170,8 @@ unsigned EventDispatcher::intervalToTick(unsigned interval) const
 
 
 /*! Returns a \e tick converted into milliseconds.
+
+    Returns \e tick in milliseconds.
 */
 unsigned EventDispatcher::tickToInterval(unsigned tick) const
 {
@@ -188,7 +192,7 @@ void EventDispatcher::onTimer(void)
     for (int i = 0; i < m_tasks.size(); ++i)
     {
         const Task& item = m_tasks.at(i);
-        if (m_elapsedTicks % item.tock() == 0)
+        if (m_elapsedTicks % item.interval() == 0)
         {
             // TODO: issue event
         }

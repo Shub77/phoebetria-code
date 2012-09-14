@@ -52,10 +52,10 @@ class EventDispatcher : public QObject
         Task();
         Task(EventDispatcher::TaskId taskId, int interval);
 
-        int tock(void) const { return m_interval; }
+        int interval(void) const { return m_interval; }
 
     private:
-        TaskId m_event;
+        TaskId m_taskId;
         int m_interval;    // the task dispatch interval, for this task
     };
 
