@@ -27,7 +27,6 @@ private:
 
     QSqlDatabase db;
 
-    bool checkSettingsPath(const QString& path) const;
     QString databaseNameAndPath(void) const;
     QString m_dbPathAndName;
     //QStringList m_ProfileList();

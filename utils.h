@@ -21,4 +21,6 @@
 
 QString toHexString(const unsigned char *data, int len);
 
+bool checkPath(const QString& path);
+
 #endif // PHOEBETRIA_UTILS_H

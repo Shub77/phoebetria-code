@@ -16,6 +16,8 @@
 
 #include "utils.h"
 
+#include <QDir>
+
 QString toHexString(const unsigned char *data, int len)
 {
     /* QByteArray can do a similar thing, but as far as I know it cannot be
@@ -34,4 +36,21 @@ QString toHexString(const unsigned char *data, int len)
     }
 
     return result;
+}
+
+/*! Check the settings path. If it doesn't exist, create it.
+
+    Checks that the \path exists and creates the path if it doesn't.
+    Returns true if the path exists (or was successfully created), otherwise
+    false.
+ */
+bool checkPath(const QString& path)
+{
+    QDir dir(path);
+    if (!dir.exists())
+    {
+        if (!dir.mkpath(path))
+            return false;
+    }
+    return dir.exists();
 }

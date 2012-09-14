@@ -1,9 +1,12 @@
+
+#include "database.h"
+
 #include <QtSql>
 #include <QString>
 #include <QSettings>
 #include <QDebug>
-#include "database.h"
 
+#include "utils.h"
 
 QString Database::m_dbFilename = "phoebetria.sqlite";
 
@@ -21,18 +24,6 @@ void Database::initCommon(void)
     {
         openDb();
     }
-}
-
-// Check the settings path. If it doesn't exist, create it.
-bool Database::checkSettingsPath(const QString& path) const
-{
-    QDir dir(path);
-    if (!dir.exists())
-    {
-        if (!dir.mkpath(path))
-            return false;
-    }
-    return dir.exists();
 }
 
 
@@ -56,7 +47,7 @@ QSqlError Database::openDb()
     if( !QFile::exists(m_dbPathAndName))
     {
         // Filename doesn't exist? If not, check that at least the path does
-        if (!checkSettingsPath(dbPath))
+        if (!checkPath(dbPath))
         {
             return QSqlError ("Error initialising database. Path does not exist"
                               " and could be created.");
@@ -162,6 +153,7 @@ int Database::readProfile(const QString name, const QString setting, int channel
         return -1;  // TODO: Need a better mechanism for reporting failure (valid returns may indeed be -1)
     }
 
+    // return the value of the first row (there should only be one row)
     return query.value(0).toInt();
 }
 
