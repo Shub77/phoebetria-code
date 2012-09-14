@@ -97,6 +97,7 @@ EventDispatcher::EventDispatcher(QObject *parent) :
     m_elapsedTicks = 0;
     initTasks();
     connectToTimerSignal();
+    m_timer.start();
 }
 
 

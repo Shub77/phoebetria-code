@@ -31,12 +31,6 @@ class PhoebetriaApp : public QApplication
 public:
     PhoebetriaApp(int &argc, char **argv);
 
-    int pollTimerInterval(void) const
-        { return m_pollTimer.interval(); }
-
-    const QTimer& pollTimer(void) const
-        { return m_pollTimer; }
-
     FanControllerIO& fanControllerIO(void)
         { return m_fanControllerIO; }
 
@@ -44,7 +38,6 @@ public:
         { return m_fanControllerIO.fanControllerData(); }
 
 private:
-    static QTimer m_pollTimer;
     static FanControllerIO m_fanControllerIO;
 };
 
