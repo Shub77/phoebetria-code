@@ -30,10 +30,9 @@ QString Database::m_dbConnectionName = "phoebetriaDb";
 
 Database::Database()
 {
-    initCommon();
 }
 
-void Database::initCommon(void)
+void Database::open(void)
 {
     if (!QSqlDatabase::contains(m_dbConnectionName))
     {
@@ -130,7 +129,7 @@ int Database::readProfile(const QString &name,
 
     query.prepare(QLatin1String(
         "select value from Profile"
-        "where name = :name and setting = :setting and channel = :channel"));
+        " where name = :name and setting = :setting and channel = :channel"));
     query.bindValue(":name", name, QSql::Out);
     query.bindValue(":setting", setting, QSql::Out);
     query.bindValue(":channel", channel, QSql::Out);

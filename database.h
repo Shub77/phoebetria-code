@@ -29,6 +29,8 @@ public:
 
     Database();
 
+    void open(void);
+
     static QStringList readProfileNames();
 
     static int readProfile(const QString& name,
@@ -44,7 +46,7 @@ public:
 
 protected:
 
-    void initCommon(void);
+
 
     QSqlError openDb();
 
