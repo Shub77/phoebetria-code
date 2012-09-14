@@ -188,14 +188,14 @@ unsigned EventDispatcher::tickToInterval(unsigned tick) const
 void EventDispatcher::onTimer(void)
 {
 
-    // TODO: Issue "Tick event"
+    emit task(Tock);
 
     for (int i = 0; i < m_tasks.size(); ++i)
     {
         const Task& item = m_tasks.at(i);
         if (m_elapsedTicks % item.interval() == 0)
         {
-            // TODO: issue event
+            emit task(item.taskId());
         }
     }
 

@@ -28,6 +28,9 @@ class EventDispatcher : public QObject
 
     typedef enum TaskId
     {
+        //!< Emitted every time the timer is triggered
+        Tock,
+
         //!< All channel related reqs
         ReqAllDeviceRelated,
 
@@ -52,6 +55,7 @@ class EventDispatcher : public QObject
         Task();
         Task(EventDispatcher::TaskId taskId, int interval);
 
+        TaskId taskId(void) const { return m_taskId; }
         int interval(void) const { return m_interval; }
 
     private:
@@ -85,6 +89,8 @@ private:
     unsigned m_elapsedTicks;
 
 signals:
+
+    void task(TaskId task);
 
 public slots:
 
