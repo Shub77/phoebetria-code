@@ -21,10 +21,13 @@
 #include <QList>
 #include <QTimer>
 
+class PhoebetriaApp;    // fwd decl
 
 class EventDispatcher : public QObject
 {
     Q_OBJECT
+
+    friend class PhoebetriaApp;
 
     typedef enum TaskId
     {
@@ -66,6 +69,8 @@ class EventDispatcher : public QObject
 public:
     explicit EventDispatcher(QObject *parent = 0);
 
+    void init(void);
+
     //! The minumum interval (in milliseconds) that can be set
     unsigned minInterval(void) const
         { return m_minInterval; }
@@ -81,11 +86,9 @@ protected:
 
 private:
 
-    static QTimer m_timer;
-
-    static unsigned m_minInterval;
     static QList<Task> m_tasks;
 
+    unsigned m_minInterval;
     unsigned m_elapsedTicks;
 
 signals:

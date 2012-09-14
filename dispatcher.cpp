@@ -30,7 +30,11 @@
     This class issues signals on a regular basis based on \e Tasks that
     (should) require processing. The class itself does nothing but issue
     signals that other classes monitor and act upon. The minimum interval
-    that signals can be sent is dependendant on minInterval().
+    that signals can be sent is dependendant on minInterval(). Additionally,
+    minInterval() is dependant on PhoebetriaApp::m_globalTimer (the
+    minimum interval for the dispatcher is set to m_globalTimer's interval
+    because the dispatcher is attached to the global timer's timeout()
+    signal).
 
     Internally, signals are issued based on timer \e ticks. Each task has
     an \e interval (in ticks) to indicate when the signal should be issued;
@@ -54,14 +58,8 @@
   Static members
   -----------------------------------------------------------------------*/
 
-//! The mininum interval that can be set
-unsigned EventDispatcher::m_minInterval = 200;
-
 //! Scheduled tasks
 QList<EventDispatcher::Task> EventDispatcher::m_tasks;
-
-//! Ticks elapsed since the timer started
-QTimer EventDispatcher::m_timer;
 
 /*************************************************************************/
 
@@ -87,19 +85,21 @@ EventDispatcher::Task::Task(EventDispatcher::TaskId taskId, int interval)
 }
 
 
-/*! Initialise default values, issuable events and connects to the
-    timer. The interval of the timer is set to minInterval()
-*/
 EventDispatcher::EventDispatcher(QObject *parent) :
     QObject(parent)
 {
-    m_timer.setInterval(m_minInterval);
+}
+
+/*! Initialise default values, issuable events and connects to the
+    timer. The interval of the timer is set to minInterval()
+*/
+void EventDispatcher::init(void)
+{
+    m_minInterval = ph_phoebetriaApp()->globalTimerInterval();
     m_elapsedTicks = 0;
     initTasks();
     connectToTimerSignal();
-    m_timer.start();
 }
-
 
 /*! Populates the dispatcher schedule.
 
@@ -145,7 +145,7 @@ void EventDispatcher::addTask(const Task& e)
  */
 void EventDispatcher::connectToTimerSignal(void)
 {
-    connect(&this->m_timer, SIGNAL(timeout()),
+    connect(&ph_phoebetriaApp()->m_globalTimer, SIGNAL(timeout()),
             this, SLOT(onTimer()));
 }
 
@@ -166,7 +166,7 @@ void EventDispatcher::connectToTimerSignal(void)
  */
 unsigned EventDispatcher::intervalToTick(unsigned interval) const
 {
-    return ceil((double)interval / m_timer.interval());
+    return ceil((double)interval / m_minInterval);
 }
 
 
@@ -176,7 +176,7 @@ unsigned EventDispatcher::intervalToTick(unsigned interval) const
 */
 unsigned EventDispatcher::tickToInterval(unsigned tick) const
 {
-    return tick * m_timer.interval();
+    return tick * m_minInterval;
 }
 
 /*! The main dispatch function

@@ -17,10 +17,12 @@
 #ifndef PHOEBETRIA_APP_H
 #define PHOEBETRIA_APP_H
 
-#include <QApplication>
-#include <QTimer>
 #include "bfx-recon/fancontrollerio.h"
 
+#include <QApplication>
+#include <QTimer>
+
+#include "dispatcher.h"
 
 #define ph_phoebetriaApp() (static_cast<PhoebetriaApp*> qApp)
 #define ph_fanControllerData() (ph_phoebetriaApp()->fcd())
@@ -28,6 +30,9 @@
 
 class PhoebetriaApp : public QApplication
 {
+
+    friend void EventDispatcher::connectToTimerSignal(void);
+
 public:
     PhoebetriaApp(int &argc, char **argv);
 
@@ -37,8 +42,13 @@ public:
     FanControllerData& fcd(void)
         { return m_fanControllerIO.fanControllerData(); }
 
+    unsigned int globalTimerInterval(void)
+        { return m_globalTimer.interval(); }
+
 private:
     static FanControllerIO m_fanControllerIO;
+    static EventDispatcher m_dispatcher;
+    static QTimer m_globalTimer;
 };
 
 
