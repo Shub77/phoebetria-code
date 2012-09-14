@@ -85,7 +85,24 @@ EventDispatcher::EventDispatcher(QObject *parent) :
     m_isStarted = false;
 }
 
+/*! Starts the dispatcher.
 
+    Starts the dispatcher to begin monitoring scheduled tasks at
+    \e interval millesecond intervals. The paramater \e interval must
+    be at least the interval of the global timer; if \e interval is
+    less than that of the global timer then the global timer's interval
+    is used. The internal record of elapsed ticks (intervals) is reset to
+    0.
+
+    This function can be called even if a previous call has been made. The
+    primary reason this is allowed is so that the interval can be changed.
+    If called again, tasks intervals are recalcuated based on the new interval
+    (internally the task intervals are represented as 'ticks' where one tick
+    equals one interval of the timer).
+
+    Returns the actual interval set, which may be different to requested if the
+    requested interval is less than the global timer's interval.
+*/
 int EventDispatcher::start(unsigned interval)
 {
     unsigned gi = ph_phoebetriaApp()->globalTimerInterval();
