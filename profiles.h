@@ -50,15 +50,12 @@ public:
     bool load(const QString& profileName);
     static bool erase(const QString& profileName);
 
-    bool isCelcius(void) const  { return m_isCelcius; }
-    bool isAuto(void) const { return m_isAuto; }
+    bool isCelcius(void) const;
+    bool isAuto(void) const;
 
-    bool isAudibleAlarm(void) const { return m_isAudibleAlarm; }
+    bool isAudibleAlarm(void) const;
 
-    const BasicChannelData& getChannelSettings(int channel) const
-    {
-        return m_channelSettings[channel];
-    }
+    const BasicChannelData& getChannelSettings(int channel) const;
 
 protected:
 
@@ -77,5 +74,19 @@ private:
 
     BasicChannelData m_channelSettings[FC_MAX_CHANNELS];
 };
+
+
+inline bool FanControllerProfile::isCelcius(void) const
+{ return m_isCelcius; }
+
+inline bool FanControllerProfile::isAuto(void) const
+{ return m_isAuto; }
+
+inline bool FanControllerProfile::isAudibleAlarm(void) const
+{ return m_isAudibleAlarm; }
+
+inline const BasicChannelData&
+    FanControllerProfile::getChannelSettings(int channel) const
+        { return m_channelSettings[channel]; }
 
 #endif // PROFILES_H
