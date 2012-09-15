@@ -48,12 +48,16 @@ public:
 protected:
 
     QSqlError openDb();
+
+    bool verifyDbAndPathExist(void) const;
+
     bool openProfile();
 
 private:
 
     QSqlDatabase db;
 
+    QString m_dbPath;
     QString m_dbPathAndName;
     QSqlRelationalTableModel m_Profile;
 

@@ -16,6 +16,9 @@
 
 #include "preferences.h"
 
+#include <QSettings>
+#include <QFileInfo>
+
 /**************************************************************************
  *************************************************************************/
 Preferences::Entry::Entry()
@@ -54,4 +57,13 @@ void Preferences::setDefaults(void)
     set(PrefKey::MinimiseToTray, true);
     set(PrefKey::ShowTooltipOnMinimise, false);
     set(PrefKey::DevicePollTime, 200);
+}
+
+QString Preferences::filepath(void)
+{
+    QSettings settings(QSettings::IniFormat,
+                       QSettings::UserScope,
+                       "Phoebetria",
+                       "Phoebetria");
+    return QFileInfo(settings.fileName()).path();
 }

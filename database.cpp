@@ -21,6 +21,7 @@
 #include <QSettings>
 #include <QDebug>
 
+#include "preferences.h"
 #include "utils.h"
 
 QString Database::m_dbFilename = "phoebetria.sqlite";
@@ -43,31 +44,19 @@ void Database::open(void)
 
 QSqlError Database::openDb()
 {
-    QString dbPath;
+    m_dbPath = Preferences::filepath();
 
+    m_dbPathAndName = m_dbPath;
+    m_dbPathAndName.append(QDir::separator()).append("Phoebetria.sqlite");
+    m_dbPathAndName = QDir::toNativeSeparators(m_dbPathAndName);
 
-    QSettings settings(QSettings::IniFormat,
-                       QSettings::UserScope,
-                       "Phoebetria",
-                       "Phoebetria");
-    dbPath = QFileInfo(settings.fileName()).path();
-
-    // If the database doesn't exist try and create it
-    if( !QFile::exists(m_dbPathAndName))
+    if (!verifyDbAndPathExist())
     {
-        // Filename doesn't exist? If not, check that at least the path does
-        if (!checkPath(dbPath))
-        {
-            return QSqlError ("Error initialising database. Path does not exist"
-                              " and could be created.");
-        }
+        return QSqlError ("Error initialising database. Path does not exist"
+                          " and could be created.");
     }
 
     // At this point at least the path exists
-
-    m_dbPathAndName = dbPath;
-    m_dbPathAndName.append(QDir::separator()).append("Phoebetria.sqlite");
-    m_dbPathAndName = QDir::toNativeSeparators(m_dbPathAndName);
 
     db = QSqlDatabase::addDatabase("QSQLITE", m_dbConnectionName);
     db.setDatabaseName(m_dbPathAndName);
@@ -78,6 +67,16 @@ QSqlError Database::openDb()
     setupDatabaseSchema();
 
     return QSqlError();
+}
+
+/*! Checks if the database file exists. If not, check the path exists and
+ *  create the path if necessary.
+ */
+bool Database::verifyDbAndPathExist(void) const
+{
+    if (QFile::exists(m_dbPathAndName))
+        return true;
+    return checkPath(m_dbPath);
 }
 
 bool Database::openProfile()

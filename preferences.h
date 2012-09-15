@@ -20,6 +20,7 @@
 #include <QObject>
 #include <QVariant>
 #include <QHash>
+#include <QString>
 
 class Preferences : public QObject
 {
@@ -58,6 +59,8 @@ public:
 
     void set(const QString& key, int value);
     void set(const QString& key, bool value);
+
+    static QString filepath(void);
 
 protected:
 
