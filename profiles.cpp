@@ -48,7 +48,7 @@ QString FanControllerProfile::defualtProfileLocation(void) const
     return m_defaultProfileLocation;
 }
 
-QStringList FanControllerProfile::getProfileNames()
+QStringList FanControllerProfile::getProfileNames(void)
 {
     return Database::readProfileNames();
 }

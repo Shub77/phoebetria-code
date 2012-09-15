@@ -39,7 +39,7 @@ public:
     FanControllerProfile();
 
     QString defualtProfileLocation(void) const;
-    QStringList getProfileNames(void);
+    static QStringList getProfileNames(void);
 
     void setProfileName(const QString& name);
     void setFilenameAndPath(const QString& filenameAndPath);
@@ -48,20 +48,12 @@ public:
 
     bool save(const QString& profileName);
     bool load(const QString& profileName);
-    bool erase(const QString& profileName);
+    static bool erase(const QString& profileName);
 
-    bool isCelcius(void) const
-    {
-        return m_isCelcius;
-    }
-    bool isAuto(void) const
-    {
-        return m_isAuto;
-    }
-    bool isAudibleAlarm(void) const
-    {
-        return m_isAudibleAlarm;
-    }
+    bool isCelcius(void) const  { return m_isCelcius; }
+    bool isAuto(void) const { return m_isAuto; }
+
+    bool isAudibleAlarm(void) const { return m_isAudibleAlarm; }
 
     const BasicChannelData& getChannelSettings(int channel) const
     {
