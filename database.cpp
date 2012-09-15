@@ -31,6 +31,11 @@ QString Database::m_dbConnectionName = "phoebetriaDb";
 
 Database::Database()
 {
+    m_dbPath = Preferences::filepath();
+
+    m_dbPathAndName = m_dbPath;
+    m_dbPathAndName.append(QDir::separator()).append("Phoebetria.sqlite");
+    m_dbPathAndName = QDir::toNativeSeparators(m_dbPathAndName);
 }
 
 void Database::open(void)
@@ -44,11 +49,7 @@ void Database::open(void)
 
 QSqlError Database::openDb()
 {
-    m_dbPath = Preferences::filepath();
 
-    m_dbPathAndName = m_dbPath;
-    m_dbPathAndName.append(QDir::separator()).append("Phoebetria.sqlite");
-    m_dbPathAndName = QDir::toNativeSeparators(m_dbPathAndName);
 
     if (!verifyDbAndPathExist())
     {
