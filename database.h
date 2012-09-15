@@ -43,18 +43,19 @@ public:
                                  int value);
 
     static QSqlError eraseProfile(const QString name);
+    bool setupDatabaseSchema();
 
 protected:
 
-
-
     QSqlError openDb();
+    bool openProfile();
 
 private:
 
     QSqlDatabase db;
 
     QString m_dbPathAndName;
+    QSqlRelationalTableModel m_Profile;
 
     static QString m_dbFilename;
     static QString m_dbConnectionName;

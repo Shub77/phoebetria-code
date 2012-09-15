@@ -75,22 +75,25 @@ QSqlError Database::openDb()
     if (!db.open())
         return db.lastError();
 
-    // Check default schema
-
-    QStringList tables = db.tables();
-    if (!tables.contains("Profile", Qt::CaseInsensitive))
-    {
-        QSqlQuery q(db);
-        if (!q.exec(QLatin1String("create table Profile(name varchar, channel integer, setting varchar, value integer, primary key (name, channel, setting))")))
-        {
-            qDebug() << "****" << q.lastError();
-            return q.lastError();
-        }
-    }
+    setupDatabaseSchema();
 
     return QSqlError();
 }
 
+bool Database::openProfile()
+{
+    QSqlRelationalTableModel m_Profile;
+
+    m_Profile.setTable("Profile");
+    m_Profile.setRelation(0,QSqlRelation("ChannelSetting","p_id", "name"));
+
+    if (!m_Profile.select())
+    {
+        qDebug() << m_Profile.lastError();
+    }
+
+    return true;
+}
 
 QSqlError Database::saveProfile(const QString &name,
                                 const QString &setting,
@@ -190,4 +193,99 @@ QStringList Database::readProfileNames()
 #endif
 
     return profileList;
+}
+
+bool Database::setupDatabaseSchema()
+{
+    db = QSqlDatabase::database(m_dbConnectionName);
+    bool ok = true;
+
+    if (!db.open())
+    {
+        qDebug() << "Failed to open database:" << db.lastError();
+        return false;
+    }
+
+    // Setup database schema
+
+    QStringList tables = db.tables();
+
+    if (!tables.contains("Preference"))
+    {
+        QSqlQuery query(db);
+        if (!query.exec(QLatin1String("CREATE TABLE Preference ("
+                                      "     name    VARCHAR(64)     PRIMARY KEY"
+                                      "    ,value   TEXT"
+                                      "    ,dataType    VARCHAR(32));")))
+        {
+            qDebug() << "SQL Query failed:" << query.lastError()
+                     << "("
+                     << "File:" << __FILE__ << ", Line: " << __LINE__
+                     << ")";
+
+            ok = false;
+        }
+
+    }
+
+    if (!tables.contains("DatabaseInfo"))
+    {
+        QSqlQuery query(db);
+        if (!query.exec(QLatin1String("CREATE TABLE DatabaseInfo ("
+                                      "     name    VARCHAR(32)     PRIMARY KEY"
+                                      "    ,value   TEXT);")))
+        {
+            qDebug() << "SQL Query failed:" << query.lastError()
+                     << "("
+                     << "File:" << __FILE__ << ", Line: " << __LINE__
+                     << ")";
+
+            ok = false;
+        }
+
+    }
+
+    if (!tables.contains("Profile"))
+    {
+        QSqlQuery query(db);
+        if (!query.exec(QLatin1String("CREATE TABLE Profile("
+                                      "     p_id           INTEGER        PRIMARY KEY AUTOINCREMENT"
+                                      "    ,name           VARCHAR(32)"
+                                      "    ,isAuto         BOOLEAN        DEFAULT '1'"
+                                      "    ,isCelcius      BOOLEAN        DEFAULT '1'"
+                                      "    ,isAudibleAlarm BOOLEAN        DEFAULT '1'"
+                                      "    ,isSoftwareAuto BOOLEAN        DEFAULT '0' );")))
+        {
+            qDebug() << "SQL Query failed:" << query.lastError()
+                     << "("
+                     << "File:" << __FILE__ << ", Line: " << __LINE__
+                     << ")";
+
+            ok = false;
+        }
+
+    }
+
+    if (!tables.contains("DatabaseInfo"))
+    {
+        QSqlQuery query(db);
+        if (!query.exec(QLatin1String("CREATE TABLE ChannelSetting ("
+                                      "     p_id       INTEGER"
+                                      "    ,channel    INTEGER"
+                                      "    ,manualRpm  INTEGER"
+                                      "    ,alarmTempF INTEGER"
+                                      "    ,FOREIGN KEY ( p_id ) REFERENCES Profile ( p_id )"
+                                      "         ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED);")))
+        {
+            qDebug() << "SQL Query failed:" << query.lastError()
+                     << "("
+                     << "File:" << __FILE__ << ", Line: " << __LINE__
+                     << ")";
+
+            ok = false;
+        }
+
+    }
+
+    return ok;
 }
