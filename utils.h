@@ -19,6 +19,10 @@
 
 #include <QString>
 
+#define PHOEBETRIA_STUB_FUNCTION \
+    qDebug() << "Stub function called. File:" \
+    << __FILE__ << "Line:" << __LINE__;
+
 QString toHexString(const unsigned char *data, int len);
 
 bool checkPath(const QString& path);

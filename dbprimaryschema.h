@@ -22,6 +22,7 @@ public:
 protected:
 
     bool createSchema(void);
+    bool createTables(void);
     bool insertDefaultData(void);
 };
 
