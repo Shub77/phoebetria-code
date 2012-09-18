@@ -19,56 +19,46 @@
 
 #include <QObject>
 #include <QVariant>
-#include <QHash>
-#include <QString>
+#include <QSettings>
 
 class Preferences : public QObject
 {
     Q_OBJECT
 
-    /* At the moment just a wrapper around QVariant. Using a wrapper in case
-     * entries become more complex.
-     */
-    class Entry
-    {
-    public:
-        Entry();
-
-        void set(int value) { m_value = value; }
-
-        void set(bool value) { m_value = value; }
-
-        QVariant value (void) const { return m_value; }
-
-    private:
-
-        QVariant m_value;
-    };
-
-    class PrefKey
-    {
-    public:
-        static const QString MinimiseToTray;
-        static const QString ShowTooltipOnMinimise;
-        static const QString DevicePollTime;
-    };
-
 public:
+
+    typedef enum
+    {
+        PKey_MinimiseToTray,
+        PKey_ShowTooltipOnMinimise,
+        PKey_IntervalMs_GlobalTimer,
+        PKey_IntervalMs_FcCommonSettings,
+        PKey_IntervalMs_FcAlarmTempAndMaxSpeed,
+        PKey_IntervalMs_FcCurrentTempAndSpeed
+    } KeyId;
+
     explicit Preferences(QObject *parent = 0);
-
-
-    void set(const QString& key, int value);
-    void set(const QString& key, bool value);
 
     static QString filepath(void);
 
+    void set(KeyId id, const QVariant& value);
+
+    bool    minimiseToTray(bool defaultValue = true) const;
+    bool    showToolTipOnMinimise(bool defaultValue = false) const;
+    int     intervalMs_globalTimer(int defaultValue = 200);
+    int     intervalMs_FcCommonSettings(int defaultValue = 200);
+    int     intervalMs_FcAlarmTempAndMaxSpeed(int defaultValue = 5000);
+    int     intervalMs_FcCurrentTempAndSpeed(int defaultValue = 5000);
+
 protected:
 
-    void setDefaults(void);
+    QString propertyName(KeyId id) const;
+
+    void read(void);
+    void write(void);
 
 private:
-
-    QHash<QString, QVariant> m_prefs;   // Key, Value
+    static const char* m_userPrefsGroup;
 
 signals:
     

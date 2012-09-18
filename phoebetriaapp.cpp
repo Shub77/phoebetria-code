@@ -24,8 +24,12 @@ QTimer PhoebetriaApp::m_globalTimer;
 PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-    Database db;
 
+    setOrganizationName("Phoebetria");
+    setApplicationName("Phoebetria");
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+
+    Database db;
     db.open();
 
     m_globalTimer.start(200);

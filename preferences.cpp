@@ -19,51 +19,48 @@
 #include <QSettings>
 #include <QFileInfo>
 
-/**************************************************************************
- *************************************************************************/
-Preferences::Entry::Entry()
+
+/*
+ * NOTE: The order (and number) of these strings must correspond with
+ *       Preferences::KeyId
+ */
+const char* preferenceKeyStrings[] =
 {
-}
+    "MinimiseToTray",
+    "ShowToolTipOnMinimise",
+    "Interval_GlobalTimer",
+    "Interval_FcCommonSettings",
+    "Interval_FcAlarmTempAndMaxSpeed",
+    "Interval_FcCurrentTempAndSpeed"
+};
 
 
 /**************************************************************************
  *************************************************************************/
 
-const QString Preferences::PrefKey::MinimiseToTray = "MinimiseToTray";
-const QString Preferences::PrefKey::ShowTooltipOnMinimise = "ShowToolTipOnMinimise";
-const QString Preferences::PrefKey::DevicePollTime = "DevicePollTime";
+const char* Preferences::m_userPrefsGroup = "UserPrefs/";
 
-/**************************************************************************
- *************************************************************************/
 Preferences::Preferences(QObject *parent) :
     QObject(parent)
 {
 }
 
-void Preferences::set(const QString& key, int value)
-{
-    m_prefs.insert(key, value);
-}
-
-
-void Preferences::set(const QString& key, bool value)
-{
-    m_prefs.insert(key, value);
-}
-
-
-void Preferences::setDefaults(void)
-{
-    set(PrefKey::MinimiseToTray, true);
-    set(PrefKey::ShowTooltipOnMinimise, false);
-    set(PrefKey::DevicePollTime, 200);
-}
-
 QString Preferences::filepath(void)
 {
-    QSettings settings(QSettings::IniFormat,
-                       QSettings::UserScope,
-                       "Phoebetria",
-                       "Phoebetria");
+    QSettings settings;
     return QFileInfo(settings.fileName()).path();
+}
+
+void Preferences::set(KeyId id, const QVariant& value)
+{
+    QSettings settings;
+    settings.setProperty(propertyName(id).toAscii().constData(), value);
+}
+
+QString Preferences::propertyName(KeyId id) const
+{
+    // TODO Bounds checking may be wise
+    QString pname(m_userPrefsGroup);
+    pname += preferenceKeyStrings[id];
+    return pname;
 }
