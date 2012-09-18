@@ -17,10 +17,12 @@
 #ifndef FANCONTROLLERDATA_H
 #define FANCONTROLLERDATA_H
 
+#include "fanchanneldata.h"
+
 #include <QObject>
 #include <QString>
-#include "fanchanneldata.h"
-#include "profiles.h"
+
+#include "fanprofiles.h"
 
 class FanControllerData : public QObject
 {

@@ -53,7 +53,6 @@ SOURCES += main.cpp\
         gui_mainwindow.cpp \
     phoebetriaapp.cpp \
     device-io.cpp \
-    profiles.cpp \
     fanchanneldata.cpp \
     fancontrollerdata.cpp \
     gui_about.cpp \
@@ -62,12 +61,12 @@ SOURCES += main.cpp\
     utils.cpp \
     preferences.cpp \
     database.cpp \
-    dispatcher.cpp
+    dispatcher.cpp \
+    fanprofiles.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
     device-io.h \
-    profiles.h \
     fanchanneldata.h \
     fancontrollerdata.h \
     gui_about.h \
@@ -77,7 +76,8 @@ HEADERS  += gui_mainwindow.h \
     preferences.h \
     bfx-recon/bfxrecon.h \
     database.h \
-    dispatcher.h
+    dispatcher.h \
+    fanprofiles.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui

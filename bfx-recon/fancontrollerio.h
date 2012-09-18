@@ -21,7 +21,7 @@
 #include <QQueue>
 
 #include "device-io.h"
-#include "profiles.h"
+#include "fanprofiles.h"
 #include "fancontrollerdata.h"
 #include "dispatcher.h"
 

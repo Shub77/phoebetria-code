@@ -25,7 +25,7 @@
 #include "phoebetriaapp.h"
 #include "bfx-recon/fancontrollerio.h"
 #include "gui_about.h"
-#include "profiles.h"
+#include "fanprofiles.h"
 #include "qglobal.h"
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :

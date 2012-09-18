@@ -14,8 +14,8 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PROFILES_H
-#define PROFILES_H
+#ifndef PHOEBETRIA_FAN_PROFILES_H
+#define PHOEBETRIA_FAN_PROFILES_H
 
 #include <QString>
 #include <QSettings>
@@ -89,4 +89,4 @@ inline const BasicChannelData&
     FanControllerProfile::getChannelSettings(int channel) const
         { return m_channelSettings[channel]; }
 
-#endif // PROFILES_H
+#endif // PHOEBETRIA_FAN_PROFILES_H
