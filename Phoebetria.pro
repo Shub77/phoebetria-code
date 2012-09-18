@@ -62,7 +62,8 @@ SOURCES += main.cpp\
     preferences.cpp \
     database.cpp \
     dispatcher.cpp \
-    fanprofiles.cpp
+    fanprofiles.cpp \
+    dbfanprofileschema.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -77,7 +78,8 @@ HEADERS  += gui_mainwindow.h \
     bfx-recon/bfxrecon.h \
     database.h \
     dispatcher.h \
-    fanprofiles.h
+    fanprofiles.h \
+    dbfanprofileschema.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui
