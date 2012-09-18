@@ -21,6 +21,7 @@
 #include <QSettings>
 #include <QDebug>
 
+#include "dbprimaryschema.h"
 #include "preferences.h"
 #include "utils.h"
 
@@ -41,20 +42,21 @@ Database::Database()
 void Database::connect(void)
 {
     if (!QSqlDatabase::contains(m_dbConnectionName))
-    {
         openDb();
-    }
 }
 
 
 QSqlError Database::openDb()
 {
-
-
     if (!verifyDbAndPathExist())
     {
-        return QSqlError ("Error initialising database. Path does not exist"
-                          " and could be created.");
+        QString customErrorMsg = QObject::tr(
+                "Error initialising database."
+                " Path does not exist"
+                " and path could be created: %1")
+                    .arg(m_dbPathAndName);
+
+        return QSqlError(customErrorMsg);
     }
 
     // At this point at least the path exists
