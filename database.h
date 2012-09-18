@@ -44,8 +44,6 @@ public:
 
     static QSqlError eraseProfile(const QString name);
 
-    bool setupDatabaseSchema();
-
     static const QString& connectionName(void)
         { return m_dbConnectionName; }
 
