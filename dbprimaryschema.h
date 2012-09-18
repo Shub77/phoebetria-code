@@ -9,19 +9,23 @@ public:
 
     typedef struct TableDef
     {
-
         const char* name;
         const char* ddl;
     } TableDef;
 
+    typedef struct DefaultData
+    {
+        const char* sql;
+    } DefaultData;
 
     PrimaryDbSchema();
 
     static bool checkTables(QStringList* missingTablesList);
 
+    static bool createSchema(void);
+
 protected:
 
-    static bool createSchema(void);
     static bool createTables(void);
     static bool insertDefaultData(void);
 };

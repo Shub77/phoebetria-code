@@ -42,8 +42,15 @@ static PrimaryDbSchema::TableDef schema[] =
         ");"
     }
 };
-#define PHOEBETRIA_DB_SCHEMA_TABLE_COUNT \
-    ( sizeof schema / sizeof schema[0] )
+#define PHOEBETRIA_DB_SCHEMA_TABLE_COUNT ( sizeof schema / sizeof schema[0] )
+
+
+static PrimaryDbSchema::DefaultData defaultDataSql[] =
+{
+
+};
+#define PHOEBETRIA_DB_DEFAULT_DATA_COUNT \
+    ( sizeof defaultDataSql / sizeof defaultDataSql[0] )
 
 
 PrimaryDbSchema::PrimaryDbSchema()
