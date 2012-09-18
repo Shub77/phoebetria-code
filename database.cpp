@@ -67,7 +67,17 @@ QSqlError Database::openDb()
     if (!db.open())
         return db.lastError();
 
-    setupDatabaseSchema();
+    //setupDatabaseSchema();
+    QStringList missingTables;
+    if (!PrimaryDbSchema::checkTables(&missingTables))
+    {
+        qDebug() << "Tables are missing from the primary DB schema:";
+        for (int i = 0; i < missingTables.size(); ++i)
+        {
+            qDebug() << "Table:" << missingTables.at(i);
+        }
+
+    }
 
     return QSqlError();
 }

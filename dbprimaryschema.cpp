@@ -29,7 +29,7 @@ static PrimaryDbSchema::TableDef schema[] =
     },
 
     {
-        "DatabaseInfo",
+        "ChannelSetting",
         "CREATE TABLE ChannelSetting ("
         "     p_id       INTEGER"
         "    ,channel    INTEGER"
@@ -66,7 +66,7 @@ PrimaryDbSchema::PrimaryDbSchema()
  */
 bool PrimaryDbSchema::checkTables(QStringList* missingTablesList)
 {
-    bool tableMissing = false;
+    bool ok = true;
     QSqlDatabase db = QSqlDatabase::database(Database::connectionName());
 
     QStringList db_tables = db.tables();
@@ -77,11 +77,11 @@ bool PrimaryDbSchema::checkTables(QStringList* missingTablesList)
     {
         if (db_tables.indexOf(schema[i].name) == -1)
         {
-            tableMissing = true;
+            ok = false;
             if (missingTablesList)
                 missingTablesList->append(schema[i].name);
         }
     }
 
-    return tableMissing;
+    return ok;
 }
