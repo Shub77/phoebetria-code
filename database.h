@@ -29,7 +29,7 @@ public:
 
     Database();
 
-    void open(void);
+    void connect(void);
 
     static QStringList readProfileNames();
 

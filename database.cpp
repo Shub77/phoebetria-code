@@ -38,7 +38,7 @@ Database::Database()
     m_dbPathAndName = QDir::toNativeSeparators(m_dbPathAndName);
 }
 
-void Database::open(void)
+void Database::connect(void)
 {
     if (!QSqlDatabase::contains(m_dbConnectionName))
     {
