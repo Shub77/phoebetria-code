@@ -39,14 +39,14 @@ Database::Database()
     m_dbPathAndName = QDir::toNativeSeparators(m_dbPathAndName);
 }
 
-void Database::connect(void)
+void Database::init(void)
 {
     if (!QSqlDatabase::contains(m_dbConnectionName))
-        openDb();
+        connect();
 }
 
 
-QSqlError Database::openDb()
+QSqlError Database::connect()
 {
     if (!verifyDbAndPathExist())
     {

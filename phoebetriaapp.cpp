@@ -30,7 +30,7 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
     Database db;
-    db.connect();
+    db.init();
 
     m_globalTimer.start(200);
 
