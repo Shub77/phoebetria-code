@@ -135,9 +135,6 @@ bool PrimaryDbSchema::schemaVersionOk(void)
 /*! Create the schema.
 
     Creates the tables and inserts default data.
-
-    \note If tables already exist, they will be deleted (and their data lost)
-          and the table re-created.
  */
 bool PrimaryDbSchema::createSchema(void)
 {
@@ -146,15 +143,11 @@ bool PrimaryDbSchema::createSchema(void)
     return insertDefaultData();
 }
 
+
 /*! Create the tables for the schema.
 
     Creates all the tables for the database. Note that this function does not
-    delete (drop) a table if it's already present. Because of this, if the
-    table is already present but "incorrect" (e.g. wrong columns etc) the
-    database will have the correct tables but remain incorrect/corrupted.
-    Therefore in many cases it may be more appropriate that createSchema() is
-    used rather than calling this function directly.
-
+    delete (drop) a table if it's already present.
 */
 bool PrimaryDbSchema::createTables(void)
 {
