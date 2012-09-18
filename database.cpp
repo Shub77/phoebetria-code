@@ -69,7 +69,7 @@ QSqlError Database::openDb()
 
     //setupDatabaseSchema();
     QStringList missingTables;
-    if (!PrimaryDbSchema::checkTables(&missingTables))
+    if (!PrimaryDbSchema::verify(&m_dbPathAndName, &missingTables))
     {
         qDebug() << "Tables are missing from the primary DB schema:";
         for (int i = 0; i < missingTables.size(); ++i)

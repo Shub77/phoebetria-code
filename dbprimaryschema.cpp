@@ -1,12 +1,13 @@
 #include "dbprimaryschema.h"
 
-#include <stdlib.h>
 #include <QStringList>
 #include <QSqlDatabase>
 
 #include "database.h"
 
 #include "utils.h"
+
+int PrimaryDbSchema::m_schemaVersion = 1;
 
 static PrimaryDbSchema::TableDef schema[] =
 {
@@ -57,11 +58,39 @@ PrimaryDbSchema::PrimaryDbSchema()
 {
 }
 
+/*! Verify the database
+
+    Returns true if the correct tables are present and the schema is the
+    correct version.
+
+    \pre The database referred to by \e dbFilename exists and is a valid
+         database.
+*/
+bool PrimaryDbSchema::verify(const QString* dbFilename,
+                             QStringList* missingTablesList)
+{
+    return checkTables(missingTablesList) && schemaVersionOk();
+}
+
+
+/*! Creates a new database with the default tables and data.
+
+    Creates a new database with the filename \e dbFilename.
+    If \e oldDbFilename != NULL, then migrate the data from the old database
+    to the newly created database.
+*/
+bool PrimaryDbSchema::create(const QString* newDbFilename,
+                             const QString* oldDbFilename)
+{
+    PHOEBETRIA_STUB_FUNCTION
+    return true;   // TODO: Implement
+}
+
 
 /*! Basic schema check: check that the correct tables are present.
 
-    This functions provides a basic check of the database. It only checks that
-    the required tables are present; no other checks are made.
+    This functions provides a \b basic check of the database. It only checks
+    that the required tables are present; no other checks are made.
 
     If the required tables are present in the database, true is returned. If
     false is returned and \e missingTablesList != NULL then missingTablesList
@@ -93,6 +122,13 @@ bool PrimaryDbSchema::checkTables(QStringList* missingTablesList)
     }
 
     return ok;
+}
+
+
+bool PrimaryDbSchema::schemaVersionOk(void)
+{
+    PHOEBETRIA_STUB_FUNCTION
+    return true; // TODO IMPLEMENT
 }
 
 
@@ -146,8 +182,20 @@ bool PrimaryDbSchema::createTables(void)
     return success;
 }
 
+/*! Migrate data from the old database to the new database.
+
+    \pre    newDbFilename != NULL, oldDbFilename != NULL
+*/
+bool PrimaryDbSchema::migrateData(const QString* newDbFilename,
+                                  const QString* oldDbFilename)
+{
+    PHOEBETRIA_STUB_FUNCTION
+    return true;       // TODO: Implement
+}
+
+
 bool PrimaryDbSchema::insertDefaultData(void)
 {
      PHOEBETRIA_STUB_FUNCTION
-     return false;
+     return true;       // TODO: Implement
 }
