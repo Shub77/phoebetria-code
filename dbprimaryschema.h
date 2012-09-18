@@ -21,9 +21,9 @@ public:
 
 protected:
 
-    bool createSchema(void);
-    bool createTables(void);
-    bool insertDefaultData(void);
+    static bool createSchema(void);
+    static bool createTables(void);
+    static bool insertDefaultData(void);
 };
 
 #endif // PHOEBETRIA_DB_PRIMARY_SCHEMA_H

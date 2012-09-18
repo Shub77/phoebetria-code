@@ -77,7 +77,7 @@ bool PrimaryDbSchema::checkTables(QStringList* missingTablesList)
 
     for (unsigned i = 0 ; i < PHOEBETRIA_DB_SCHEMA_TABLE_COUNT; i++)
     {
-        if (db_tables.indexOf(schema[i].name) == -1)
+        if (!db_tables.contains(schema[i].name))
         {
             ok = false;
             if (missingTablesList)
@@ -89,18 +89,18 @@ bool PrimaryDbSchema::checkTables(QStringList* missingTablesList)
 }
 
 
-/*! Create the schema. Any existing tables are deleted (dropped).
+/*! Create the schema.
 
-    Creates the tables and inserts default data. If an error occurs, false
-    will be returned and the current state of the database will remain
-    unchanged.
+    Creates the tables and inserts default data.
 
     \note If tables already exist, they will be deleted (and their data lost)
           and the table re-created.
  */
 bool PrimaryDbSchema::createSchema(void)
 {
-    PHOEBETRIA_STUB_FUNCTION
+    if (!createTables()) return false;
+
+    return insertDefaultData();
 }
 
 /*! Create the tables for the schema.
@@ -115,7 +115,32 @@ bool PrimaryDbSchema::createSchema(void)
 */
 bool PrimaryDbSchema::createTables(void)
 {
-    PHOEBETRIA_STUB_FUNCTION
+
+    bool success = true;
+
+    QSqlDatabase db = QSqlDatabase::database(Database::connectionName());
+    QStringList db_tables = db.tables();
+
+    for (unsigned i = 0 ; i < PHOEBETRIA_DB_SCHEMA_TABLE_COUNT; i++)
+    {
+        // If the table doesn't exist, create it
+        if (!db_tables.contains(schema[i].name))
+        {
+            QSqlQuery qry(Database::connectionName());
+
+            if (!qry.exec(schema[i].ddl))
+            {
+                success = false;
+                break;
+            }
+        }
+    }
+
+    return success;
 }
 
-
+bool PrimaryDbSchema::insertDefaultData(void)
+{
+     PHOEBETRIA_STUB_FUNCTION
+     return false;
+}
