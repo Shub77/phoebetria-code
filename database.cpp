@@ -17,6 +17,7 @@
 #include "database.h"
 
 #include <QtSql>
+#include <QSqlQuery>
 #include <QString>
 #include <QSettings>
 #include <QDebug>
@@ -92,6 +93,13 @@ QSqlError Database::connect()
 
     if (!db.open())
         return db.lastError();
+
+    // Enable foreign key support
+    if (db.driverName() == "QSQLITE")
+    {
+        QSqlQuery q(db);
+        q.exec("PRAGMA foreign_keys = ON");
+    }
 
     return QSqlError();
 }
