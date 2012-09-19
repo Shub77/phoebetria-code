@@ -51,9 +51,14 @@ static PrimaryDbSchema::TableDef schema[] =
 #define PHOEBETRIA_DB_SCHEMA_TABLE_COUNT ( sizeof schema / sizeof schema[0] )
 
 
-static PrimaryDbSchema::DefaultData defaultDataSql[] =
+static const char* defaultDataSql[] =
 {
-
+    "INSERT INTO [Profile] ([p_id], [name], [isAuto], [isCelcius], [isAudibleAlarm], [isSoftwareAuto]) VALUES (1, '__PHOEBETRIA_DEFAULT', 1, 1, 1, 0)",
+    "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 0, 50000, 194)",
+    "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 1, 50000, 194)",
+    "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 2, 50000, 194)",
+    "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 3, 50000, 194)",
+    "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 4, 50000, 194)"
 };
 #define PHOEBETRIA_DB_DEFAULT_DATA_COUNT \
     ( sizeof defaultDataSql / sizeof defaultDataSql[0] )
@@ -217,9 +222,32 @@ bool PrimaryDbSchema::migrateData(const QString* newDbFilename,
     return true;       // TODO: Implement
 }
 
-
+/*!
+    \pre A connection named \e newDbConnectionName (static global in this file)
+         has been established.
+*/
 bool PrimaryDbSchema::insertDefaultData(void)
 {
-     PHOEBETRIA_STUB_FUNCTION
-     return true;       // TODO: Implement
+    bool ok = true;
+
+    QSqlDatabase db = QSqlDatabase::database(newDbConnName);
+    QSqlQuery qry(db);
+
+    db.transaction();
+
+    for (unsigned i = 0 ; i < PHOEBETRIA_DB_DEFAULT_DATA_COUNT; i++)
+    {
+        if (!qry.exec(defaultDataSql[i]))
+        {
+            ok = false;
+            break;
+        }
+    }
+
+    if (ok)
+        db.commit();
+    else
+        db.rollback();
+
+    return ok;
 }

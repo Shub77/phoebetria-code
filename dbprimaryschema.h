@@ -16,11 +16,6 @@ public:
         const char* ddl;
     } TableDef;
 
-    typedef struct DefaultData
-    {
-        const char* sql;
-    } DefaultData;
-
     PrimaryDbSchema();
 
     static bool verify(const QString* dbFilename,
