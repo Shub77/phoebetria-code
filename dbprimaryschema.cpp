@@ -27,7 +27,7 @@ static PrimaryDbSchema::TableDef schema[] =
     {
         "Profile",
         "CREATE TABLE Profile("
-        "     p_id           INTEGER        PRIMARY KEY AUTOINCREMENT"
+        "     p_id           INTEGER        PRIMARY KEY"
         "    ,name           VARCHAR(32)"
         "    ,isAuto         BOOLEAN        DEFAULT '1'"
         "    ,isCelcius      BOOLEAN        DEFAULT '1'"
