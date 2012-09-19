@@ -20,6 +20,7 @@
 #include <QString>
 #include <QSettings>
 #include <QDebug>
+#include <QFile>
 
 #include "dbprimaryschema.h"
 #include "preferences.h"
@@ -61,23 +62,33 @@ QSqlError Database::connect()
 
     // At this point at least the path exists
 
+    // TODO: ADD ERROR CHECKING
+
+    if (!fileExists(m_dbPathAndName))
+        PrimaryDbSchema::create(&m_dbPathAndName);
+    else
+    {
+        if (!PrimaryDbSchema::verify(&m_dbPathAndName))
+        {
+            QString oldDbName(m_dbPathAndName);
+            oldDbName += ".orig";
+            if (fileExists(oldDbName))
+            {
+                if (!QFile::remove(oldDbName))
+                {
+                    return QSqlError(QObject::tr("Failed to delete old db"));
+                }
+            }
+            QFile::rename(m_dbPathAndName, oldDbName);
+            PrimaryDbSchema::create(&m_dbPathAndName, &oldDbName);
+        }
+    }
+
     db = QSqlDatabase::addDatabase("QSQLITE", m_dbConnectionName);
     db.setDatabaseName(m_dbPathAndName);
 
     if (!db.open())
         return db.lastError();
-
-    //setupDatabaseSchema();
-    QStringList missingTables;
-    if (!PrimaryDbSchema::verify(&m_dbPathAndName, &missingTables))
-    {
-        qDebug() << "Tables are missing from the primary DB schema:";
-        for (int i = 0; i < missingTables.size(); ++i)
-        {
-            qDebug() << "Table:" << missingTables.at(i);
-        }
-
-    }
 
     return QSqlError();
 }

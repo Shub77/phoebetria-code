@@ -24,7 +24,7 @@ public:
     PrimaryDbSchema();
 
     static bool verify(const QString* dbFilename,
-                       QStringList *missingTablesList);
+                       QStringList *missingTablesList = NULL);
 
     static bool create(const QString* newDbFilename,
                        const QString* oldDbFilename = NULL);

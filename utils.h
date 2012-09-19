@@ -26,5 +26,6 @@
 QString toHexString(const unsigned char *data, int len);
 
 bool checkPath(const QString& path);
+bool fileExists(const QString& filename);
 
 #endif // PHOEBETRIA_UTILS_H

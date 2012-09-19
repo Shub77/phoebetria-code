@@ -7,6 +7,10 @@
 
 #include "utils.h"
 
+
+static const char* newDbConnName = "tmp_newPrimaryDb";
+
+
 int PrimaryDbSchema::m_schemaVersion = 1;
 
 static PrimaryDbSchema::TableDef schema[] =
@@ -82,8 +86,19 @@ bool PrimaryDbSchema::verify(const QString* dbFilename,
 bool PrimaryDbSchema::create(const QString* newDbFilename,
                              const QString* oldDbFilename)
 {
-    PHOEBETRIA_STUB_FUNCTION
-    return true;   // TODO: Implement
+    QSqlDatabase newDb;
+    newDb = QSqlDatabase::addDatabase("QSQLITE", newDbConnName);
+    newDb.setDatabaseName(*newDbFilename);
+    if (!newDb.open())
+        return false;
+
+    createTables();
+    migrateData(newDbFilename, oldDbFilename);
+    insertDefaultData();
+
+    newDb.close();
+
+    return true;
 }
 
 
@@ -154,7 +169,7 @@ bool PrimaryDbSchema::createTables(void)
 
     bool success = true;
 
-    QSqlDatabase db = QSqlDatabase::database(Database::connectionName());
+    QSqlDatabase db = QSqlDatabase::database(newDbConnName);
     QStringList db_tables = db.tables();
 
     for (unsigned i = 0 ; i < PHOEBETRIA_DB_SCHEMA_TABLE_COUNT; i++)
@@ -162,7 +177,7 @@ bool PrimaryDbSchema::createTables(void)
         // If the table doesn't exist, create it
         if (!db_tables.contains(schema[i].name))
         {
-            QSqlQuery qry(Database::connectionName());
+            QSqlQuery qry(db);
 
             if (!qry.exec(schema[i].ddl))
             {

@@ -29,7 +29,7 @@ public:
 
     Database();
 
-    void connect(void);
+    void init(void);
 
     static QStringList readProfileNames();
 
@@ -49,7 +49,7 @@ public:
 
 protected:
 
-    QSqlError openDb();
+    QSqlError connect();
 
     bool verifyDbAndPathExist(void) const;
 

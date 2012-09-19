@@ -17,6 +17,7 @@
 #include "utils.h"
 
 #include <QDir>
+#include <QFile>
 
 
 /* QByteArray::toHex() can do a similar thing, but as far as I know it cannot
@@ -55,4 +56,12 @@ bool checkPath(const QString& path)
             return false;
     }
     return dir.exists();
+}
+
+
+bool fileExists(const QString& filename)
+{
+    QFile f(filename);
+
+    return f.exists();
 }
