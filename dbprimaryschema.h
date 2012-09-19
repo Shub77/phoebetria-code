@@ -31,7 +31,8 @@ public:
 
 protected:
 
-    static bool checkTables(QStringList* missingTablesList);
+    static bool checkTables(const QString &dbFilename,
+                            QStringList *missingTablesList);
 
     static bool schemaVersionOk(void);
 

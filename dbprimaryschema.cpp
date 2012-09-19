@@ -8,7 +8,8 @@
 #include "utils.h"
 
 
-static const char* newDbConnName = "tmp_newPrimaryDb";
+static const char* newDbConnName = "pdbs_tmp_newPrimaryDb";
+static const char* tmpDbConnName = "pdsb_tmp_pdb";
 
 
 int PrimaryDbSchema::m_schemaVersion = 1;
@@ -73,7 +74,7 @@ PrimaryDbSchema::PrimaryDbSchema()
 bool PrimaryDbSchema::verify(const QString* dbFilename,
                              QStringList* missingTablesList)
 {
-    return checkTables(missingTablesList) && schemaVersionOk();
+    return checkTables(*dbFilename, missingTablesList) && schemaVersionOk();
 }
 
 
@@ -117,10 +118,16 @@ bool PrimaryDbSchema::create(const QString* newDbFilename,
     \post If \e missingTablesList != NULL and the return value == true, then
          missingTablesList->size() == 0
 */
-bool PrimaryDbSchema::checkTables(QStringList* missingTablesList)
+bool PrimaryDbSchema::checkTables(const QString& dbFilename,
+                                  QStringList* missingTablesList)
 {
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE", tmpDbConnName);
+    db.setDatabaseName(dbFilename);
+    if (!db.open())
+        return false;
+
     bool ok = true;
-    QSqlDatabase db = QSqlDatabase::database(Database::connectionName());
 
     QStringList db_tables = db.tables();
 
@@ -136,10 +143,16 @@ bool PrimaryDbSchema::checkTables(QStringList* missingTablesList)
         }
     }
 
+    db.close();
+
     return ok;
 }
 
+/*! Check if the database's schema version matches the internal version.
 
+    \pre A connection named \e newDbConnectionName (static global in this file)
+         has been established.
+*/
 bool PrimaryDbSchema::schemaVersionOk(void)
 {
     PHOEBETRIA_STUB_FUNCTION
@@ -163,6 +176,9 @@ bool PrimaryDbSchema::createSchema(void)
 
     Creates all the tables for the database. Note that this function does not
     delete (drop) a table if it's already present.
+
+    \pre A connection named \e newDbConnectionName (static global in this file)
+         has been established.
 */
 bool PrimaryDbSchema::createTables(void)
 {
