@@ -81,6 +81,10 @@ QSqlError Database::connect()
             }
             QFile::rename(m_dbPathAndName, oldDbName);
             PrimaryDbSchema::create(&m_dbPathAndName, &oldDbName);
+            if (!QFile::remove(oldDbName))
+            {
+                return QSqlError(QObject::tr("Failed to delete old db"));
+            }
         }
     }
 
