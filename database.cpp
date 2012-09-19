@@ -31,6 +31,14 @@ QString Database::m_dbFilename = "phoebetria.sqlite";
 
 QString Database::m_dbConnectionName = "phoebetriaDb";
 
+/**************************************************************************/
+/* TODO:
+
+    Add error checking
+    Use transactions
+ */
+/**************************************************************************/
+
 
 Database::Database()
     : m_dbPath(Preferences::filepath())
@@ -62,7 +70,7 @@ QSqlError Database::connect()
 
     // At this point at least the path exists
 
-    // TODO: ADD ERROR CHECKING
+    // TODO: ADD ERROR CHECKING!!!!!!
 
     if (!fileExists(m_dbPathAndName))
         PrimaryDbSchema::create(&m_dbPathAndName);
