@@ -55,9 +55,9 @@
 
 
 
-/*! Default constructor. Does \e not initalise anything.
- */
 EventDispatcher::Task::Task()
+    : m_taskId(NotSet),
+      m_interval(-1)
 {
 }
 

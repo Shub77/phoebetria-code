@@ -42,7 +42,7 @@ public:
                                  int channel,
                                  int value);
 
-    static QSqlError eraseProfile(const QString name);
+    static QSqlError eraseProfile(const QString &name);
 
     static const QString& connectionName(void)
         { return m_dbConnectionName; }

@@ -40,10 +40,10 @@ static const unsigned short HID_VendorId =  3141;
  *********************************************************************/
 
 FanControllerIO::Input::Input()
+    : m_controlByte(FanControllerIO::NOTSET),
+      m_checksum(0),
+      m_dataLen(0)
 {
-    m_controlByte = FanControllerIO::NOTSET;
-    m_checksum = 0;
-    m_dataLen = 0;
 }
 
 bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)

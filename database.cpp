@@ -32,9 +32,8 @@ QString Database::m_dbConnectionName = "phoebetriaDb";
 
 
 Database::Database()
+    : m_dbPath(Preferences::filepath())
 {
-    m_dbPath = Preferences::filepath();
-
     m_dbPathAndName = m_dbPath;
     m_dbPathAndName.append(QDir::separator()).append("Phoebetria.sqlite");
     m_dbPathAndName = QDir::toNativeSeparators(m_dbPathAndName);
@@ -139,7 +138,7 @@ QSqlError Database::saveProfile(const QString &name,
     return QSqlError();
 }
 
-QSqlError Database::eraseProfile(const QString name)
+QSqlError Database::eraseProfile(const QString& name)
 {
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
 

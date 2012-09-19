@@ -32,6 +32,9 @@ class EventDispatcher : public QObject
 public:
     typedef enum TaskId
     {
+        //!< Task Id isn't set
+        NotSet,
+
         //!< Emitted every time the timer is triggered
         Tock,
 

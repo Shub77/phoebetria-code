@@ -218,8 +218,14 @@ bool PrimaryDbSchema::createTables(void)
 bool PrimaryDbSchema::migrateData(const QString* newDbFilename,
                                   const QString* oldDbFilename)
 {
-    PHOEBETRIA_STUB_FUNCTION
-    return true;       // TODO: Implement
+    /* This is the first version of the schema, so there is nothing to
+     * do here
+     */
+
+    (void)newDbFilename;    // Unused
+    (void)oldDbFilename;    // Unused
+
+    return true;
 }
 
 /*!
