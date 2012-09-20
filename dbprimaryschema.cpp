@@ -46,6 +46,15 @@ static PrimaryDbSchema::TableDef schema[] =
         "    ,FOREIGN KEY ( p_id ) REFERENCES Profile ( p_id )"
         "         ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED"
         ");"
+    },
+
+    {
+        "ChannelName",
+        "CREATE TABLE ChannelName ("
+        "    channel INTEGER"
+        "    ,name    VARCHAR( 32 )"
+        "    ,PRIMARY KEY ( channel, name )"
+        ");"
     }
 };
 #define PHOEBETRIA_DB_SCHEMA_TABLE_COUNT ( sizeof schema / sizeof schema[0] )
@@ -53,6 +62,7 @@ static PrimaryDbSchema::TableDef schema[] =
 
 static const char* defaultDataSql[] =
 {
+        // Note: schema version is inserted by insertDefaultData()
     "INSERT INTO [Profile] ([p_id], [name], [isAuto], [isCelcius], [isAudibleAlarm], [isSoftwareAuto]) VALUES (1, '__PHOEBETRIA_DEFAULT', 1, 1, 1, 0)",
     "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 0, 50000, 194)",
     "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 1, 50000, 194)",
@@ -92,19 +102,24 @@ bool PrimaryDbSchema::verify(const QString* dbFilename,
 bool PrimaryDbSchema::create(const QString* newDbFilename,
                              const QString* oldDbFilename)
 {
+    bool ok;
+
     QSqlDatabase newDb;
     newDb = QSqlDatabase::addDatabase("QSQLITE", newDbConnName);
     newDb.setDatabaseName(*newDbFilename);
     if (!newDb.open())
         return false;
 
-    createTables();
-    migrateData(newDbFilename, oldDbFilename);
-    insertDefaultData();
+    if (!(ok = createTables())) goto abort;
 
+    if (!(ok = migrateData(newDbFilename, oldDbFilename))) goto abort;
+
+    ok = insertDefaultData();
+
+abort:
     newDb.close();
 
-    return true;
+    return ok;
 }
 
 
@@ -251,9 +266,20 @@ bool PrimaryDbSchema::insertDefaultData(void)
     }
 
     if (ok)
+    {
+        qry.prepare("INSERT INTO DatabaseInfo (name, value) "
+                    "VALUES ('schemaVersion', :version)");
+        qry.bindValue(":version", m_schemaVersion);
+        ok = qry.exec();
+    }
+
+
+    if (ok)
         db.commit();
     else
+    {
         db.rollback();
-
+        qDebug() << db.lastError();
+    }
     return ok;
 }
