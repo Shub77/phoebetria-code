@@ -267,8 +267,9 @@ bool PrimaryDbSchema::insertDefaultData(void)
 
     if (ok)
     {
-        qry.prepare("INSERT INTO DatabaseInfo (name, value) "
-                    "VALUES ('schemaVersion', :version)");
+        qry.prepare("INSERT INTO DatabaseInfo (name, value)"
+                    " VALUES (:keyname, :version)");
+        qry.bindValue(":keyname", "schemaVersion");
         qry.bindValue(":version", m_schemaVersion);
         ok = qry.exec();
     }
