@@ -31,7 +31,9 @@ const char* preferenceKeyStrings[] =
     "Interval_GlobalTimer",
     "Interval_FcCommonSettings",
     "Interval_FcAlarmTempAndMaxSpeed",
-    "Interval_FcCurrentTempAndSpeed"
+    "Interval_FcCurrentTempAndSpeed",
+
+    "PrimaryDb_DeleteOnAnyCreateError"
 };
 
 

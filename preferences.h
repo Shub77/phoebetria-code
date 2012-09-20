@@ -34,7 +34,9 @@ public:
         PKey_IntervalMs_GlobalTimer,
         PKey_IntervalMs_FcCommonSettings,
         PKey_IntervalMs_FcAlarmTempAndMaxSpeed,
-        PKey_IntervalMs_FcCurrentTempAndSpeed
+        PKey_IntervalMs_FcCurrentTempAndSpeed,
+
+        PKey_PrimaryDb_DeleteOnAnyCreateError
     } KeyId;
 
     explicit Preferences(QObject *parent = 0);
