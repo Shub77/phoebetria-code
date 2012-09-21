@@ -25,6 +25,7 @@
 #include "phoebetriaapp.h"
 #include "bfx-recon/fancontrollerio.h"
 #include "gui_about.h"
+#include "gui_preferences.h"
 #include "fanprofiles.h"
 #include "qglobal.h"
 #include "gui_simplesqlqry.h"
@@ -736,6 +737,12 @@ void gui_MainWindow::on_actionAbout_triggered()
 {
     gui_About* aboutDlg = new gui_About(this);
     aboutDlg->exec();
+}
+
+void gui_MainWindow::on_actionPreferences_triggered()
+{
+    gui_Preferences* preferencesDlg = new gui_Preferences;
+    preferencesDlg->exec();
 }
 
 void gui_MainWindow::on_ctrl_SavePreset_clicked()

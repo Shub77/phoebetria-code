@@ -3,20 +3,21 @@
 
 #include <QDialog>
 
-namespace Ui {
-class gui_preferences;
+namespace Ui
+{
+class gui_Preferences;
 }
 
-class gui_preferences : public QDialog
+class gui_Preferences : public QDialog
 {
     Q_OBJECT
     
 public:
-    explicit gui_preferences(QWidget *parent = 0);
-    ~gui_preferences();
+    explicit gui_Preferences(QWidget *parent = 0);
+    ~gui_Preferences();
     
 private:
-    Ui::gui_preferences *ui;
+    Ui::gui_Preferences *ui;
 };
 
 #endif // GUI_PREFERENCES_H

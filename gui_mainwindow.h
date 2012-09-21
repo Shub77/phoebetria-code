@@ -96,11 +96,10 @@ private slots:
     void on_ctrl_channel5AlarmTemp_clicked();
 
     void on_actionAbout_triggered();
+    void on_actionPreferences_triggered();
 
     void on_ctrl_SavePreset_clicked();
-
     void on_ctrl_LoadPreset_clicked();
-
     void on_ctrl_ErasePreset_clicked();
 
 private:
