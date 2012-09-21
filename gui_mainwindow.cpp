@@ -72,24 +72,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     {
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
     }
-
-    //updateSpeedControlTooltips();
-
-    /* **** DEBUGGING MENU ***/
-#ifdef QT_DEBUG
-
-    m_debugMenu = ui->menuBar->addMenu("Debug");
-    m_debug_setChannelSpeed = m_debugMenu->addAction("Set channel speed");
-    m_debug_profiles = m_debugMenu->addAction("show profile details");
-
-    connect(m_debug_setChannelSpeed, SIGNAL(triggered()),
-            this, SLOT(onDebugMenu_setChannelSpeed()));
-    connect(m_debug_profiles, SIGNAL(triggered()),
-            this, SLOT(onDebugMenu_profiles()));
-
-#endif
-    /* **** END DEBUGGING MENU ***/
-
 }
 
 gui_MainWindow::~gui_MainWindow()
@@ -384,8 +366,6 @@ void gui_MainWindow::changeEvent(QEvent* e)
             {
                 QTimer::singleShot(0, this, SLOT(hide()));
                 m_trayIcon.show();
-//                m_trayIcon.showMessage("Phoebetria",
-//                                       tr("Minimised to tray"));
             }
         }
 
@@ -811,116 +791,3 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
 
     ui->ctrl_PresetName->removeItem(ui->ctrl_PresetName->currentIndex());
 }
-
-/**************************************************************************
-  Debugging menu
- *************************************************************************/
-#ifdef QT_DEBUG
-
-void gui_MainWindow::onDebugMenu_setChannelSpeed()
-{
-#if 0 // TODO REIMPLEMENT AND REMOVE
-    if (m_fcd.isAuto())
-    {
-        QMessageBox mbox;
-        mbox.setText("Recon must be in manual mode to set channel speed");
-        mbox.exec();
-        return;
-    }
-
-    bool ok;
-    int channel;
-    channel = QInputDialog::getInt(this, tr("Channel (1-5)"), tr("Channel"), 0, 1, 5, 1, &ok);
-    if (!ok)
-    {
-        qDebug() << "onDebugMenu_setChannelSpeed: Channel invalid, or cancelled";
-        return;
-    }
-    --channel;
-    int speed;
-
-    speed = QInputDialog::getInt(this, tr("Speed"), tr("RPM"), 0, 0, 50000, 1, &ok);
-    if (!ok)
-    {
-        qDebug() << "onDebugMenu_setChannelSpeed: Invalid speed, or cancelled";
-        return;
-    }
-
-    int channelMaxRPM = maxRPM(channel);
-
-    if (speed < channelMaxRPM * 0.4 && speed != 0)
-    {
-        qDebug() << "Speed is less than 40%, but not OFF. Setting to 40%";
-        speed = ceil(channelMaxRPM * 0.4);
-    }
-
-#if 0
-    // Speeds must be in multiples of 100 RPM
-
-    double _speed = ((int)(speed / 100.0))*100;
-    speed = _speed;
-#endif
-
-    qDebug() << "reported max speed for channel"
-             << channel+1
-             << "is"
-             << channelMaxRPM
-             ;
-    qDebug() << "attempting to set channel "
-             << channel+1
-             << "to speed "
-             << QString::number(speed)
-             << "RPM"
-             ;
-
-    FanControllerIO* fc = &ph_fanControllerIO();
-
-    int channelAlarmTemp = m_fcd.alarmTemp(channel);
-
-    if (fc->setChannelSettings(channel, channelAlarmTemp, speed))
-    {
-        updateSpeedControl(channel, speed);
-    }
-#endif
-
-    // TODO REIMPLEMENT!
-}
-
-void gui_MainWindow::onDebugMenu_profiles()
-{
-#if 0 // TODO REIMPLEMENT AND REMOVE
-    FanControllerProfile fcp;
-    FanControllerIO* fc = &phoebetriaApp()->fanControllerIO();
-
-    qDebug() << fcp.defualtProfileLocation();
-
-    bool sb1 = this->blockSignals(true);
-    bool sb2 = fc->blockSignals(true);
-
-    fcp.setFromCurrentData(m_fcd);
-
-    this->blockSignals(sb1);
-    this->blockSignals(sb2);
-
-
-    qDebug() << "Is Celcius:" << fcp.isCelcius();
-    qDebug() << "Auto:" << fcp.isAuto();
-    qDebug() << "Audible Alarm:" << fcp.isAudibleAlarm();
-
-    for (int i = 0; i < FC_MAX_CHANNELS; i++)
-    {
-        const BasicChannelData& ch_settings = fcp.getChannelSettings(i);
-        qDebug() << "Channel" << QString::number(i)
-                 << "\n--- Alarm temp:" << QString::number(ch_settings.alarmTemp)
-                 << "\n--- Fan speed:" << QString::number(ch_settings.speed);
-    }
-#endif
-
-    // TODO REIMPLEMENT!
-}
-
-#endif // #ifdef QT_DEBUG
-
-
-
-
