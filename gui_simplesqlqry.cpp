@@ -33,7 +33,7 @@ void gui_SimpleSqlQry::populateTablesList(void)
     tables.sort();
 
     QAbstractItemModel* model = ui->ctrl_tableList->model();
-    QStringListModel* newmodel = new QStringListModel;
+    QStringListModel* newmodel = new QStringListModel(ui->ctrl_tableList);
 
     newmodel->setStringList(tables);
 
