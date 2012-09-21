@@ -71,50 +71,12 @@ QSqlError Database::connect()
         return QSqlError(customErrorMsg);
     }
 
-    // At this point at least the path exists
-
-    // TODO: ADD ERROR CHECKING!!!!!!
-
-    QSqlError createError = QObject::tr("Error creating database.");
     QSqlError err;
 
     if (!fileExists(m_dbPathAndName))
-    {
-        err = PrimaryDbSchema::create(&m_dbPathAndName);
-        if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
-        {
-            if (!QFile::remove(m_dbPathAndName))
-                qDebug() << "Failed to delete db file";
-            return createError;
-        }
-    }
+        err = createNewDb();
     else
-    {
-        if (!PrimaryDbSchema::verify(&m_dbPathAndName))
-        {
-            QString oldDbName(m_dbPathAndName);
-            oldDbName += ".orig";
-            if (fileExists(oldDbName))
-            {
-                if (!QFile::remove(oldDbName))
-                {
-                    return QSqlError(QObject::tr("Failed to delete old db"));
-                }
-            }
-            QFile::rename(m_dbPathAndName, oldDbName);
-
-            err = PrimaryDbSchema::create(&m_dbPathAndName, &oldDbName);
-
-            if (!QFile::remove(oldDbName))
-            {
-                return QSqlError(QObject::tr("Failed to delete old db"));
-            }
-            if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
-            {
-                QFile::remove(m_dbPathAndName);
-            }
-        }
-    }
+        err = checkExistingDb();
 
     if (err.isValid()) return err;
 
@@ -124,15 +86,74 @@ QSqlError Database::connect()
     if (!db.open())
         return db.lastError();
 
+    err = enableFkSupport();
+
+    return err;
+}
+
+QSqlError Database::createNewDb(void)
+{
+    QSqlError err = PrimaryDbSchema::create(&m_dbPathAndName);
+    if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
+    {
+        if (!QFile::remove(m_dbPathAndName))
+            qDebug() << "Failed to delete db file";
+    }
+    return err;
+}
+
+QSqlError Database::checkExistingDb(void)
+{
+    QSqlError err;
+
+    if (!PrimaryDbSchema::verify(&m_dbPathAndName))
+        err = recreateDb();
+
+    return err;
+}
+
+QSqlError Database::recreateDb(void)
+{
+    QSqlError err;
+
+    QString oldDbName(m_dbPathAndName);
+    oldDbName += ".orig";
+    if (fileExists(oldDbName))
+    {
+        if (!QFile::remove(oldDbName))
+            return QSqlError(QObject::tr("Failed to delete old db"));
+    }
+    QFile::rename(m_dbPathAndName, oldDbName);
+
+    err = PrimaryDbSchema::create(&m_dbPathAndName, &oldDbName);
+
+    if (!QFile::remove(oldDbName))
+        qDebug() << "Failed to delete old db";
+
+    if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
+    {
+        if (!QFile::remove(m_dbPathAndName))
+            qDebug() << "Failed to remove partially created db";
+    }
+
+    return err;
+}
+
+// pre: db is open
+QSqlError Database::enableFkSupport(void)
+{
+    QSqlError err;
     // Enable foreign key support
     if (db.driverName() == "QSQLITE")
     {
         QSqlQuery q(db);
-        q.exec("PRAGMA foreign_keys = ON");
+        if (!q.exec("PRAGMA foreign_keys = ON"))
+            err = db.lastError();
     }
 
-    return QSqlError();
+    return err;
 }
+
 
 /*! Checks if the database file exists. If not, check the path exists and
  *  create the path if necessary.

@@ -51,6 +51,11 @@ protected:
 
     QSqlError connect();
 
+    QSqlError createNewDb(void);
+    QSqlError checkExistingDb(void);
+    QSqlError recreateDb(void);
+    QSqlError enableFkSupport(void);
+
     bool verifyDbAndPathExist(void) const;
 
     bool openProfile();
