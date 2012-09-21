@@ -27,6 +27,7 @@
 #include "gui_about.h"
 #include "fanprofiles.h"
 #include "qglobal.h"
+#include "gui_simplesqlqry.h"
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),

@@ -63,7 +63,8 @@ SOURCES += main.cpp\
     database.cpp \
     dispatcher.cpp \
     fanprofiles.cpp \
-    dbprimaryschema.cpp
+    dbprimaryschema.cpp \
+    gui_simplesqlqry.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -79,10 +80,12 @@ HEADERS  += gui_mainwindow.h \
     database.h \
     dispatcher.h \
     fanprofiles.h \
-    dbprimaryschema.h
+    dbprimaryschema.h \
+    gui_simplesqlqry.h
 
 FORMS    += gui_mainwindow.ui \
-    gui_about.ui
+    gui_about.ui \
+    gui_simplesqlqry.ui
 
 #-------------------------------------------------
 # Config for the HID API library
