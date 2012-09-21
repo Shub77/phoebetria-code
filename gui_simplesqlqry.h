@@ -15,6 +15,13 @@ public:
     explicit gui_SimpleSqlQry(QWidget *parent = 0);
     ~gui_SimpleSqlQry();
     
+protected:
+
+    void populateTablesList(void);
+
+private slots:
+
+
 private:
     Ui::gui_SimpleSqlQry *ui;
 };

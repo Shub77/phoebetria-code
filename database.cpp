@@ -209,6 +209,11 @@ QSqlError Database::eraseProfile(const QString& name)
     return QSqlError();
 }
 
+QStringList Database::tables(void)
+{
+    return QSqlDatabase::database(m_dbConnectionName).tables();
+}
+
 int Database::readProfile(const QString &name,
                           const QString &setting,
                           int channel)

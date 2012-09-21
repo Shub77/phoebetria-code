@@ -47,6 +47,8 @@ public:
     static const QString& connectionName(void)
         { return m_dbConnectionName; }
 
+    QStringList tables(void);
+
 protected:
 
     QSqlError connect();
