@@ -102,6 +102,8 @@ private slots:
     void on_ctrl_LoadPreset_clicked();
     void on_ctrl_ErasePreset_clicked();
 
+    void on_actionSQL_Query_triggered();
+
 private:
     void initCtrlArrays(void);
 

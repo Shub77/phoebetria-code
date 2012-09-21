@@ -735,15 +735,22 @@ void gui_MainWindow::on_ctrl_channel5AlarmTemp_clicked()
 
 void gui_MainWindow::on_actionAbout_triggered()
 {
-    gui_About* aboutDlg = new gui_About(this);
-    aboutDlg->exec();
+    gui_About aboutDlg(this);
+    aboutDlg.exec();
 }
 
 void gui_MainWindow::on_actionPreferences_triggered()
 {
-    gui_Preferences* preferencesDlg = new gui_Preferences;
-    preferencesDlg->exec();
+    gui_Preferences preferencesDlg(this);
+    preferencesDlg.exec();
 }
+
+void gui_MainWindow::on_actionSQL_Query_triggered()
+{
+    gui_SimpleSqlQry sqlQryDlg(this);
+    sqlQryDlg.exec();
+}
+
 
 void gui_MainWindow::on_ctrl_SavePreset_clicked()
 {
@@ -799,3 +806,4 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
 
     ui->ctrl_PresetName->removeItem(ui->ctrl_PresetName->currentIndex());
 }
+
