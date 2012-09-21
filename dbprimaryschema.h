@@ -5,6 +5,7 @@
 
 class QStringList;      // Fwd decl
 class QString;          // Fwd decl
+class QSqlError;
 
 class PrimaryDbSchema
 {
@@ -21,8 +22,8 @@ public:
     static bool verify(const QString* dbFilename,
                        QStringList *missingTablesList = NULL);
 
-    static bool create(const QString* newDbFilename,
-                       const QString* oldDbFilename = NULL);
+    static QSqlError create(const QString* newDbFilename,
+                            const QString* oldDbFilename = NULL);
 
 protected:
 
@@ -31,14 +32,14 @@ protected:
 
     static bool schemaVersionOk(void);
 
-    static bool createSchema(void);
+    static QSqlError createSchema(void);
 
-    static bool createTables(void);
+    static QSqlError createTables(void);
 
-    static bool migrateData(const QString* newDbFilename,
-                            const QString* oldDbFilename);
+    static QSqlError migrateData(const QString* newDbFilename,
+                                 const QString* oldDbFilename);
 
-    static bool insertDefaultData(void);
+    static QSqlError insertDefaultData(void);
 
 private:
 

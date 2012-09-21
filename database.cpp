@@ -76,11 +76,12 @@ QSqlError Database::connect()
     // TODO: ADD ERROR CHECKING!!!!!!
 
     QSqlError createError = QObject::tr("Error creating database.");
+    QSqlError err;
 
     if (!fileExists(m_dbPathAndName))
     {
-        bool ok = PrimaryDbSchema::create(&m_dbPathAndName);
-        if (!ok && g_deleteDatabaseOnAnyCreateError)
+        err = PrimaryDbSchema::create(&m_dbPathAndName);
+        if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
         {
             if (!QFile::remove(m_dbPathAndName))
                 qDebug() << "Failed to delete db file";
@@ -102,19 +103,20 @@ QSqlError Database::connect()
             }
             QFile::rename(m_dbPathAndName, oldDbName);
 
-            bool ok = PrimaryDbSchema::create(&m_dbPathAndName, &oldDbName);
+            err = PrimaryDbSchema::create(&m_dbPathAndName, &oldDbName);
 
             if (!QFile::remove(oldDbName))
             {
                 return QSqlError(QObject::tr("Failed to delete old db"));
             }
-            if (!ok && g_deleteDatabaseOnAnyCreateError)
+            if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
             {
                 QFile::remove(m_dbPathAndName);
-                return createError;
             }
         }
     }
+
+    if (err.isValid()) return err;
 
     db = QSqlDatabase::addDatabase("QSQLITE", m_dbConnectionName);
     db.setDatabaseName(m_dbPathAndName);

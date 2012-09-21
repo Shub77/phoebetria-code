@@ -99,27 +99,27 @@ bool PrimaryDbSchema::verify(const QString* dbFilename,
     If \e oldDbFilename != NULL, then migrate the data from the old database
     to the newly created database.
 */
-bool PrimaryDbSchema::create(const QString* newDbFilename,
-                             const QString* oldDbFilename)
+QSqlError PrimaryDbSchema::create(const QString* newDbFilename,
+                                  const QString* oldDbFilename)
 {
-    bool ok;
+    QSqlError err;
 
     QSqlDatabase newDb;
     newDb = QSqlDatabase::addDatabase("QSQLITE", newDbConnName);
     newDb.setDatabaseName(*newDbFilename);
     if (!newDb.open())
-        return false;
+        return newDb.lastError();
 
-    if (!(ok = createTables())) goto abort;
+    if ( (err = createTables()).isValid() ) goto abort;
 
-    if (!(ok = migrateData(newDbFilename, oldDbFilename))) goto abort;
+    if ( (err = migrateData(newDbFilename, oldDbFilename)).isValid()) goto abort;
 
-    ok = insertDefaultData();
+    err = insertDefaultData();
 
 abort:
     newDb.close();
 
-    return ok;
+    return err;
 }
 
 
@@ -184,9 +184,11 @@ bool PrimaryDbSchema::schemaVersionOk(void)
 
     Creates the tables and inserts default data.
  */
-bool PrimaryDbSchema::createSchema(void)
+QSqlError PrimaryDbSchema::createSchema(void)
 {
-    if (!createTables()) return false;
+    QSqlError err;
+
+    if ( (err = createTables()).isValid() ) return err;
 
     return insertDefaultData();
 }
@@ -200,10 +202,9 @@ bool PrimaryDbSchema::createSchema(void)
     \pre A connection named \e newDbConnectionName (static global in this file)
          has been established.
 */
-bool PrimaryDbSchema::createTables(void)
+QSqlError PrimaryDbSchema::createTables(void)
 {
-
-    bool success = true;
+    QSqlError err;
 
     QSqlDatabase db = QSqlDatabase::database(newDbConnName);
     QStringList db_tables = db.tables();
@@ -217,21 +218,21 @@ bool PrimaryDbSchema::createTables(void)
 
             if (!qry.exec(schema[i].ddl))
             {
-                success = false;
+                err = db.lastError();
                 break;
             }
         }
     }
 
-    return success;
+    return err;
 }
 
 /*! Migrate data from the old database to the new database.
 
     \pre    newDbFilename != NULL, oldDbFilename != NULL
 */
-bool PrimaryDbSchema::migrateData(const QString* newDbFilename,
-                                  const QString* oldDbFilename)
+QSqlError PrimaryDbSchema::migrateData(const QString* newDbFilename,
+                                       const QString* oldDbFilename)
 {
     /* This is the first version of the schema, so there is nothing to
      * do here
@@ -240,16 +241,16 @@ bool PrimaryDbSchema::migrateData(const QString* newDbFilename,
     (void)newDbFilename;    // Unused
     (void)oldDbFilename;    // Unused
 
-    return true;
+    return QSqlError(); // no error
 }
 
 /*!
     \pre A connection named \e newDbConnectionName (static global in this file)
          has been established.
 */
-bool PrimaryDbSchema::insertDefaultData(void)
+QSqlError PrimaryDbSchema::insertDefaultData(void)
 {
-    bool ok = true;
+    QSqlError err;
 
     QSqlDatabase db = QSqlDatabase::database(newDbConnName);
     QSqlQuery qry(db);
@@ -260,27 +261,28 @@ bool PrimaryDbSchema::insertDefaultData(void)
     {
         if (!qry.exec(defaultDataSql[i]))
         {
-            ok = false;
+            err = db.lastError();
             break;
         }
     }
 
-    if (ok)
+    if (!err.isValid())
     {
         qry.prepare("INSERT INTO DatabaseInfo (name, value)"
                     " VALUES (:keyname, :version)");
         qry.bindValue(":keyname", "schemaVersion");
         qry.bindValue(":version", m_schemaVersion);
-        ok = qry.exec();
+        if (!qry.exec())
+            err = db.lastError();
     }
 
 
-    if (ok)
+    if (!err.isValid())
         db.commit();
     else
     {
         db.rollback();
         qDebug() << db.lastError();
     }
-    return ok;
+    return err;
 }
