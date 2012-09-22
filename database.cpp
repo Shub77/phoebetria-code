@@ -214,6 +214,20 @@ QStringList Database::tables(void)
     return QSqlDatabase::database(m_dbConnectionName).tables();
 }
 
+
+QStringList Database::tableFields(const QString& tablename)
+{
+    QSqlRecord rec(QSqlDatabase::database(m_dbConnectionName).record(tablename));
+
+    QStringList fields;
+
+    for (int i = 0; i < rec.count(); ++i)
+        fields.append(rec.fieldName(i));
+
+    return fields;
+}
+
+
 int Database::readProfile(const QString &name,
                           const QString &setting,
                           int channel)

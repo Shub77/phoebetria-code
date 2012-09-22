@@ -49,6 +49,8 @@ public:
 
     QStringList tables(void);
 
+    QStringList tableFields(const QString& tablename);
+
 protected:
 
     QSqlError connect();
