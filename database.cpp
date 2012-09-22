@@ -44,7 +44,22 @@ QString PhoebetriaDb::m_dbConnectionName = "phoebetriaDb";
 
 
 PhoebetriaDb::PhoebetriaDb()
-    : m_dbPath(Preferences::filepath())
+    : QSqlDatabase(),
+      m_dbPath(Preferences::filepath())
+
+{
+    initCommonCtorData();
+}
+
+PhoebetriaDb::PhoebetriaDb(const QSqlDatabase& other)
+    : QSqlDatabase(other),
+      m_dbPath(Preferences::filepath())
+{
+    initCommonCtorData();
+}
+
+
+void PhoebetriaDb::initCommonCtorData(void)
 {
     m_dbPathAndName = m_dbPath;
     m_dbPathAndName.append(QDir::separator()).append("Phoebetria.sqlite");
@@ -80,7 +95,7 @@ QSqlError PhoebetriaDb::connect()
 
     if (err.isValid()) return err;
 
-    db = QSqlDatabase::addDatabase("QSQLITE", m_dbConnectionName);
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", m_dbConnectionName);
     db.setDatabaseName(m_dbPathAndName);
 
     if (!db.open())
@@ -139,11 +154,13 @@ QSqlError PhoebetriaDb::recreateDb(void)
     return err;
 }
 
+// Enable foreign key support
 // pre: db is open
 QSqlError PhoebetriaDb::enableFkSupport(void)
 {
     QSqlError err;
-    // Enable foreign key support
+    QSqlDatabase db = QSqlDatabase::database(m_dbConnectionName);
+
     if (db.driverName() == "QSQLITE")
     {
         QSqlQuery q(db);
