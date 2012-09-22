@@ -22,12 +22,12 @@
 #include <QSettings>
 #include <QtSql>
 
-class Database
+class PhoebetriaDb
 {
 
 public:
 
-    Database();
+    PhoebetriaDb();
 
     void init(void);
 

@@ -39,7 +39,7 @@ void gui_SimpleSqlQry::populateTablesList(void)
 
 QAbstractItemModel* gui_SimpleSqlQry::createItemModel(void)
 {
-    Database db;
+    PhoebetriaDb db;
 
     QStringList tables = db.tables();
     tables.sort();
