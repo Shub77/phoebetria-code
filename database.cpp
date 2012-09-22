@@ -30,9 +30,9 @@
 // TODO: Move this to "preferences"
 static const bool g_deleteDatabaseOnAnyCreateError = true;
 
-QString Database::m_dbFilename = "phoebetria.sqlite";
+QString PhoebetriaDb::m_dbFilename = "phoebetria.sqlite";
 
-QString Database::m_dbConnectionName = "phoebetriaDb";
+QString PhoebetriaDb::m_dbConnectionName = "phoebetriaDb";
 
 /**************************************************************************/
 /* TODO:
@@ -43,22 +43,37 @@ QString Database::m_dbConnectionName = "phoebetriaDb";
 /**************************************************************************/
 
 
-Database::Database()
-    : m_dbPath(Preferences::filepath())
+PhoebetriaDb::PhoebetriaDb()
+    : QSqlDatabase(),
+      m_dbPath(Preferences::filepath())
+
+{
+    initCommonCtorData();
+}
+
+PhoebetriaDb::PhoebetriaDb(const QSqlDatabase& other)
+    : QSqlDatabase(other),
+      m_dbPath(Preferences::filepath())
+{
+    initCommonCtorData();
+}
+
+
+void PhoebetriaDb::initCommonCtorData(void)
 {
     m_dbPathAndName = m_dbPath;
     m_dbPathAndName.append(QDir::separator()).append("Phoebetria.sqlite");
     m_dbPathAndName = QDir::toNativeSeparators(m_dbPathAndName);
 }
 
-void Database::init(void)
+void PhoebetriaDb::init(void)
 {
     if (!QSqlDatabase::contains(m_dbConnectionName))
         connect();
 }
 
 
-QSqlError Database::connect()
+QSqlError PhoebetriaDb::connect()
 {
     if (!verifyDbAndPathExist())
     {
@@ -80,7 +95,7 @@ QSqlError Database::connect()
 
     if (err.isValid()) return err;
 
-    db = QSqlDatabase::addDatabase("QSQLITE", m_dbConnectionName);
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", m_dbConnectionName);
     db.setDatabaseName(m_dbPathAndName);
 
     if (!db.open())
@@ -91,7 +106,7 @@ QSqlError Database::connect()
     return err;
 }
 
-QSqlError Database::createNewDb(void)
+QSqlError PhoebetriaDb::createNewDb(void)
 {
     QSqlError err = PrimaryDbSchema::create(&m_dbPathAndName);
     if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
@@ -102,7 +117,7 @@ QSqlError Database::createNewDb(void)
     return err;
 }
 
-QSqlError Database::checkExistingDb(void)
+QSqlError PhoebetriaDb::checkExistingDb(void)
 {
     QSqlError err;
 
@@ -112,7 +127,7 @@ QSqlError Database::checkExistingDb(void)
     return err;
 }
 
-QSqlError Database::recreateDb(void)
+QSqlError PhoebetriaDb::recreateDb(void)
 {
     QSqlError err;
 
@@ -139,11 +154,13 @@ QSqlError Database::recreateDb(void)
     return err;
 }
 
+// Enable foreign key support
 // pre: db is open
-QSqlError Database::enableFkSupport(void)
+QSqlError PhoebetriaDb::enableFkSupport(void)
 {
     QSqlError err;
-    // Enable foreign key support
+    QSqlDatabase db = QSqlDatabase::database(m_dbConnectionName);
+
     if (db.driverName() == "QSQLITE")
     {
         QSqlQuery q(db);
@@ -158,14 +175,14 @@ QSqlError Database::enableFkSupport(void)
 /*! Checks if the database file exists. If not, check the path exists and
  *  create the path if necessary.
  */
-bool Database::verifyDbAndPathExist(void) const
+bool PhoebetriaDb::verifyDbAndPathExist(void) const
 {
     if (QFile::exists(m_dbPathAndName))
         return true;
     return checkPath(m_dbPath);
 }
 
-bool Database::openProfile()
+bool PhoebetriaDb::openProfile()
 {
     QSqlRelationalTableModel m_Profile;
 
@@ -180,7 +197,7 @@ bool Database::openProfile()
     return true;
 }
 
-QSqlError Database::saveProfile(const QString &name,
+QSqlError PhoebetriaDb::saveProfile(const QString &name,
                                 const QString &setting,
                                 int channel, int value)
 {
@@ -197,7 +214,7 @@ QSqlError Database::saveProfile(const QString &name,
     return QSqlError();
 }
 
-QSqlError Database::eraseProfile(const QString& name)
+QSqlError PhoebetriaDb::eraseProfile(const QString& name)
 {
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
 
@@ -209,12 +226,26 @@ QSqlError Database::eraseProfile(const QString& name)
     return QSqlError();
 }
 
-QStringList Database::tables(void)
+QStringList PhoebetriaDb::tables(void)
 {
     return QSqlDatabase::database(m_dbConnectionName).tables();
 }
 
-int Database::readProfile(const QString &name,
+
+QStringList PhoebetriaDb::tableFields(const QString& tablename)
+{
+    QSqlRecord rec(QSqlDatabase::database(m_dbConnectionName).record(tablename));
+
+    QStringList fields;
+
+    for (int i = 0; i < rec.count(); ++i)
+        fields.append(rec.fieldName(i));
+
+    return fields;
+}
+
+
+int PhoebetriaDb::readProfile(const QString &name,
                           const QString &setting,
                           int channel)
 {
@@ -265,7 +296,7 @@ int Database::readProfile(const QString &name,
     return query.value(0).toInt();
 }
 
-QStringList Database::readProfileNames()
+QStringList PhoebetriaDb::readProfileNames()
 {
     QStringList profileList;
     QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));

@@ -17,17 +17,19 @@
 #ifndef PHOEBETRIA_DATABASE_H
 #define PHOEBETRIA_DATABASE_H
 
-
 #include <QString>
 #include <QSettings>
 #include <QtSql>
 
-class Database
+class PhoebetriaDb : public QSqlDatabase
 {
 
 public:
 
-    Database();
+    PhoebetriaDb();
+    PhoebetriaDb(const QSqlDatabase& other);
+
+    void initCommonCtorData(void);
 
     void init(void);
 
@@ -49,6 +51,8 @@ public:
 
     QStringList tables(void);
 
+    QStringList tableFields(const QString& tablename);
+
 protected:
 
     QSqlError connect();
@@ -63,8 +67,6 @@ protected:
     bool openProfile();
 
 private:
-
-    QSqlDatabase db;
 
     QString m_dbPath;
     QString m_dbPathAndName;
