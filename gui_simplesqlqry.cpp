@@ -2,7 +2,6 @@
 #include "ui_gui_simplesqlqry.h"
 
 #include <QListWidgetItem>
-#include <QStringListModel>
 #include <QStandardItemModel>
 
 #include "database.h"
@@ -10,7 +9,8 @@
 
 gui_SimpleSqlQry::gui_SimpleSqlQry(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::gui_SimpleSqlQry)
+    ui(new Ui::gui_SimpleSqlQry),
+    m_itemModel(NULL)
 {
     ui->setupUi(this);
 
@@ -24,6 +24,7 @@ gui_SimpleSqlQry::gui_SimpleSqlQry(QWidget *parent) :
 gui_SimpleSqlQry::~gui_SimpleSqlQry()
 {
     delete ui;
+    if (m_itemModel) delete m_itemModel;
 }
 
 void gui_SimpleSqlQry::populateTablesList(void)
@@ -45,7 +46,8 @@ void gui_SimpleSqlQry::populateTablesList(void)
         columnNames.append(names);
     }
 
-    QStandardItemModel* itemModel = new QStandardItemModel(0, 0, this);
+    if (m_itemModel) delete m_itemModel;
+    m_itemModel = new QStandardItemModel(0, 0, this);
     for (int i = 0; i < tables.count(); ++i)
     {
         QStandardItem* item = new QStandardItem(tables.at(i));
@@ -56,13 +58,11 @@ void gui_SimpleSqlQry::populateTablesList(void)
             child->setEditable(false);
             item->appendRow(child);
         }
-        itemModel->appendRow(item);
+        m_itemModel->appendRow(item);
     }
 
     QAbstractItemModel* model = ui->ctrl_tableList->model();
-
-    ui->ctrl_tableList->setModel(itemModel);
-
+    ui->ctrl_tableList->setModel(m_itemModel);
     if (model) delete model;
 
     ui->ctrl_tableList->header()->hide();

@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+class QStandardItemModel; // Fwd decl
+
 namespace Ui {
 class gui_SimpleSqlQry;
 }
@@ -24,6 +26,8 @@ private slots:
 
 private:
     Ui::gui_SimpleSqlQry *ui;
+
+    QStandardItemModel* m_itemModel;
 };
 
 #endif // GUI_SIMPLESQLQRY_H
