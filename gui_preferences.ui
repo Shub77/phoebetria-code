@@ -29,17 +29,46 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QSlider" name="horizontalSlider">
+  <widget class="QTabWidget" name="tabPreference">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>60</y>
-     <width>71</width>
-     <height>21</height>
+     <x>10</x>
+     <y>20</y>
+     <width>381</width>
+     <height>211</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">QSlider {
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="tabPrefApplication">
+    <attribute name="title">
+     <string>Application</string>
+    </attribute>
+    <widget class="QWidget" name="formLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>361</width>
+       <height>164</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+      </property>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lbl_MinimiseToTray">
+        <property name="text">
+         <string>Minimise to Tray:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSlider" name="ctrl_MinimiseToTray">
+        <property name="styleSheet">
+         <string notr="true">QSlider {
  min-width:71px;
  min-height:21px;
  max-width:71px;
@@ -112,13 +141,262 @@ QSlider::handle:horizontal:disabled {
  padding:0px;
  }
 </string>
-   </property>
-   <property name="maximum">
-    <number>1</number>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
+        </property>
+        <property name="maximum">
+         <number>1</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lbl_ShowTooltipOnMinimise">
+        <property name="text">
+         <string>Show Tooltips while Minimised:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSlider" name="ctrl_ShowTooltipOnMinimise">
+        <property name="styleSheet">
+         <string notr="true">QSlider {
+ min-width:71px;
+ min-height:21px;
+ max-width:71px;
+ max-height:21px;
+ }
+ QSlider::groove:horizontal {
+ background-image: url(:/Images/slider_new_bg.png);
+ background-repeat: no-repeat;
+ background-position:center;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+ 
+QSlider::sub-page:horizontal {
+ background-image: url(:/Images/slider_new_on.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-left:0px;
+ }
+ 
+QSlider::add-page:horizontal {
+ background-image: url(:/Images/slider_new_off.png);
+ background-repeat: no-repeat;
+ background-position:right;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-right:0px;
+ }
+ 
+QSlider::handle:horizontal {
+ background-image: url(:/Images/slider_toggle_new.png);
+ width:35px;
+ height:17px;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+ 
+QSlider::sub-page:horizontal:disabled {
+ background-image: url(:/Images/slider_temp_cel_disabled.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-left:0px;
+ }
+ 
+QSlider::add-page:horizontal:disabled {
+ background-image: url(:/Images/slider_temp_fah_disabled.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-right:0px;
+ }
+ 
+QSlider::handle:horizontal:disabled {
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+</string>
+        </property>
+        <property name="maximum">
+         <number>1</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="ctrl_IntervalMs_GlobalTimer"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lbl_IntervalMs_GlobalTimer">
+        <property name="text">
+         <string>Global Timer:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <zorder>formLayoutWidget</zorder>
+    <zorder>lbl_IntervalMs_GlobalTimer</zorder>
+    <zorder>ctrl_IntervalMs_GlobalTimer</zorder>
+   </widget>
+   <widget class="QWidget" name="tabPrefController">
+    <attribute name="title">
+     <string>Controller</string>
+    </attribute>
+    <widget class="QWidget" name="formLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>9</y>
+       <width>361</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="3" column="0">
+       <widget class="QLabel" name="lbl_IntervalMs_FcAlarmTempAndMaxSpeed">
+        <property name="text">
+         <string>Alarm Temp and Max Speed</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lbl_IntervalMs_FcCurrentTempAndSpeed">
+        <property name="text">
+         <string>Current Temp and Speed</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="lbl_PrimaryDb_DeleteOnAnyCreateError">
+        <property name="text">
+         <string>Delete on any Create Errors</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lbl_IntervalMs_FcCommonSettings">
+        <property name="text">
+         <string>Common Settings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="ctrl_IntervalMs_FcAlarmTempAndMaxSpeed"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="ctrl_IntervalMs_FcCurrentTempAndSpeed"/>
+      </item>
+      <item row="5" column="1">
+       <widget class="QSlider" name="ctrl_PrimaryDb_DeleteOnAnyCreateError">
+        <property name="styleSheet">
+         <string notr="true">QSlider {
+ min-width:71px;
+ min-height:21px;
+ max-width:71px;
+ max-height:21px;
+ }
+ QSlider::groove:horizontal {
+ background-image: url(:/Images/slider_new_bg.png);
+ background-repeat: no-repeat;
+ background-position:center;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+ 
+QSlider::sub-page:horizontal {
+ background-image: url(:/Images/slider_new_on.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-left:0px;
+ }
+ 
+QSlider::add-page:horizontal {
+ background-image: url(:/Images/slider_new_off.png);
+ background-repeat: no-repeat;
+ background-position:right;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-right:0px;
+ }
+ 
+QSlider::handle:horizontal {
+ background-image: url(:/Images/slider_toggle_new.png);
+ width:35px;
+ height:17px;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+ 
+QSlider::sub-page:horizontal:disabled {
+ background-image: url(:/Images/slider_temp_cel_disabled.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-left:0px;
+ }
+ 
+QSlider::add-page:horizontal:disabled {
+ background-image: url(:/Images/slider_temp_fah_disabled.png);
+ background-repeat: no-repeat;
+ background-position:left;
+ background-origin:content;
+ margin:0px;
+ border:0px;
+ padding-right:0px;
+ }
+ 
+QSlider::handle:horizontal:disabled {
+ background-image: url(:/Images/slider_toggle.png);
+ width:35px;
+ height:17px;
+ margin:0px;
+ border:0px;
+ padding:0px;
+ }
+</string>
+        </property>
+        <property name="maximum">
+         <number>1</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="ctrl_IntervalMs_FcCommonSettings"/>
+      </item>
+     </layout>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>
