@@ -79,3 +79,29 @@ QAbstractItemModel* gui_SimpleSqlQry::createItemModel(void)
 
     return m_itemModel;
 }
+
+void gui_SimpleSqlQry::on_ctrl_execute_clicked()
+{
+    QString sql = ui->ctrl_sql->toPlainText().simplified();
+    if (sql.isEmpty())
+    {
+        ui->ctrl_messages->appendPlainText(tr("ERROR: Nothing to execute\n"));
+        return;
+    }
+
+    QSqlQuery qry;
+    bool ok = executeQuery(&qry, sql);
+
+    QString txt;
+    txt = ok ? tr("Success") : tr("Failure: %1").arg(qry.lastError().text());
+    ui->ctrl_messages->appendPlainText(txt);
+
+}
+
+bool gui_SimpleSqlQry::executeQuery(QSqlQuery* qry, const QString& sql)
+{
+    QSqlDatabase db = QSqlDatabase::database(PhoebetriaDb::connectionName());
+
+    *qry = db.exec(sql);
+    return db.lastError().type() == QSqlError::NoError;
+}
