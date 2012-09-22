@@ -19,6 +19,7 @@ gui_SimpleSqlQry::gui_SimpleSqlQry(QWidget *parent) :
     ui->splitter->setSizes(sizes);
 
     populateTablesList();
+    ui->ctrl_tableList->header()->hide();
 }
 
 gui_SimpleSqlQry::~gui_SimpleSqlQry()
@@ -28,6 +29,15 @@ gui_SimpleSqlQry::~gui_SimpleSqlQry()
 }
 
 void gui_SimpleSqlQry::populateTablesList(void)
+{
+    createItemModel();
+
+    QAbstractItemModel* model = ui->ctrl_tableList->model();
+    ui->ctrl_tableList->setModel(m_itemModel);
+    if (model) delete model;
+}
+
+QAbstractItemModel* gui_SimpleSqlQry::createItemModel(void)
 {
     Database db;
 
@@ -58,12 +68,9 @@ void gui_SimpleSqlQry::populateTablesList(void)
             child->setEditable(false);
             item->appendRow(child);
         }
+        item->setEditable(false);
         m_itemModel->appendRow(item);
     }
 
-    QAbstractItemModel* model = ui->ctrl_tableList->model();
-    ui->ctrl_tableList->setModel(m_itemModel);
-    if (model) delete model;
-
-    ui->ctrl_tableList->header()->hide();
+    return m_itemModel;
 }

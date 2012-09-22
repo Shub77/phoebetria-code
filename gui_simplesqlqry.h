@@ -3,7 +3,9 @@
 
 #include <QDialog>
 
-class QStandardItemModel; // Fwd decl
+// Fwd declarations
+class QStandardItemModel;
+class QAbstractItemModel;
 
 namespace Ui {
 class gui_SimpleSqlQry;
@@ -21,6 +23,7 @@ protected:
 
     void populateTablesList(void);
 
+    QAbstractItemModel* createItemModel(void);
 private slots:
 
 
