@@ -11,47 +11,57 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Simple SQL Query</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <widget class="QSplitter" name="splitter">
+    <widget class="QSplitter" name="verticalSplitter">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QWidget" name="layoutWidget">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="sqlLabel">
-         <property name="text">
-          <string>Tables</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTreeView" name="ctrl_tableList"/>
-       </item>
-      </layout>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="sqlLabel">
+          <property name="text">
+           <string>Tables</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTreeView" name="ctrl_tableList"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>SQL</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPlainTextEdit" name="ctrl_sql">
+          <property name="font">
+           <font>
+            <family>Courier New</family>
+           </font>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>SQL</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPlainTextEdit" name="ctrl_sql">
-         <property name="font">
-          <font>
-           <family>Courier New</family>
-          </font>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <widget class="QPlainTextEdit" name="ctrl_messages">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
      </widget>
     </widget>
    </item>
@@ -80,6 +90,9 @@
     </layout>
    </item>
   </layout>
+  <zorder>splitter</zorder>
+  <zorder>ctrl_messages</zorder>
+  <zorder>ctrl_execute</zorder>
  </widget>
  <resources/>
  <connections/>

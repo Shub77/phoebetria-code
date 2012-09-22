@@ -15,8 +15,13 @@ gui_SimpleSqlQry::gui_SimpleSqlQry(QWidget *parent) :
     ui->setupUi(this);
 
     QList<int> sizes;
+
     sizes << 100 << 300;
     ui->splitter->setSizes(sizes);
+
+    sizes.clear();
+    sizes << 400 << 100;
+    ui->verticalSplitter->setSizes(sizes);
 
     populateTablesList();
     ui->ctrl_tableList->header()->hide();
