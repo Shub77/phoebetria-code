@@ -94,7 +94,7 @@
          </size>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -176,7 +176,7 @@
  max-height:21px;
  }
  QSlider::groove:horizontal {
- background-image: url(:/Images/slider_temp_bg.png);
+ background-image: url(:/Images/slider_newtemp_bg.png);
  background-repeat: no-repeat;
  background-position:center;
  margin:0px;
@@ -185,7 +185,7 @@
  }
  
 QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_temp_cel.png);
+ background-image: url(:/Images/slider_newtemp_cel.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -195,7 +195,7 @@ QSlider::sub-page:horizontal {
  }
  
 QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_temp_fah.png);
+ background-image: url(:/Images/slider_newtemp_fah.png);
  background-repeat: no-repeat;
  background-position:right;
  background-origin:content;
@@ -205,7 +205,7 @@ QSlider::add-page:horizontal {
  }
  
 QSlider::handle:horizontal {
- background-image: url(:/Images/slider_toggle.png);
+ background-image: url(:/Images/slider_toggle_new.png);
  width:35px;
  height:17px;
  margin:0px;
@@ -291,7 +291,7 @@ QSlider::handle:horizontal:disabled {
  max-height:21px;
  }
  QSlider::groove:horizontal {
- background-image: url(:/Images/slider_onoff_bg.png);
+ background-image: url(:/Images/slider_new_bg.png);
  background-repeat: no-repeat;
  background-position:center;
  margin:0px;
@@ -300,7 +300,7 @@ QSlider::handle:horizontal:disabled {
  }
  
 QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_onoff_on.png);
+ background-image: url(:/Images/slider_new_on.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -310,7 +310,7 @@ QSlider::sub-page:horizontal {
  }
  
 QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_onoff_off.png);
+ background-image: url(:/Images/slider_new_off.png);
  background-repeat: no-repeat;
  background-position:right;
  background-origin:content;
@@ -320,7 +320,7 @@ QSlider::add-page:horizontal {
  }
  
 QSlider::handle:horizontal {
- background-image: url(:/Images/slider_toggle.png);
+ background-image: url(:/Images/slider_toggle_new.png);
  width:35px;
  height:17px;
  margin:0px;
@@ -400,7 +400,7 @@ QSlider::handle:horizontal:disabled {
  max-height:21px;
  }
  QSlider::groove:horizontal {
- background-image: url(:/Images/slider_onoff_bg.png);
+ background-image: url(:/Images/slider_new_bg.png);
  background-repeat: no-repeat;
  background-position:center;
  margin:0px;
@@ -409,7 +409,7 @@ QSlider::handle:horizontal:disabled {
  }
  
 QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_onoff_on.png);
+ background-image: url(:/Images/slider_new_on.png);
  background-repeat: no-repeat;
  background-position:left;
  background-origin:content;
@@ -419,7 +419,7 @@ QSlider::sub-page:horizontal {
  }
  
 QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_onoff_off.png);
+ background-image: url(:/Images/slider_new_off.png);
  background-repeat: no-repeat;
  background-position:right;
  background-origin:content;
@@ -429,7 +429,7 @@ QSlider::add-page:horizontal {
  }
  
 QSlider::handle:horizontal {
- background-image: url(:/Images/slider_toggle.png);
+ background-image: url(:/Images/slider_toggle_new.png);
  width:35px;
  height:17px;
  margin:0px;
