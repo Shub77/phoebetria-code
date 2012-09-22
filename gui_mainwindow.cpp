@@ -747,8 +747,12 @@ void gui_MainWindow::on_actionPreferences_triggered()
 
 void gui_MainWindow::on_actionSQL_Query_triggered()
 {
-    gui_SimpleSqlQry sqlQryDlg(this);
-    sqlQryDlg.exec();
+    gui_SimpleSqlQry* sqlQryDlg = new gui_SimpleSqlQry(this);
+    sqlQryDlg->setAttribute(Qt::WA_DeleteOnClose);
+    sqlQryDlg->setWindowModality(Qt::NonModal);
+    sqlQryDlg->show();
+    sqlQryDlg->raise();
+    sqlQryDlg->activateWindow();
 }
 
 
