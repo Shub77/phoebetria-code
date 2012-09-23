@@ -3,6 +3,8 @@
 
 #include <QListWidgetItem>
 #include <QStandardItemModel>
+#include <QTableView>
+#include <QSqlQueryModel>
 
 #include "database.h"
 
@@ -89,12 +91,28 @@ void gui_SimpleSqlQry::on_ctrl_execute_clicked()
         return;
     }
 
-    QSqlQuery qry;
-    bool ok = executeQuery(&qry, sql);
+    QSqlDatabase db = QSqlDatabase::database(PhoebetriaDb::connectionName());
+
+    //QSqlQuery qry(sql, db);
+
+    //bool ok = executeQuery(&qry, sql);
+    //bool ok = db.exec(qry)
+
+    QSqlQuery qry = db.exec(sql);
+    bool ok = !qry.isValid() && qry.lastError().type() == QSqlError::NoError;
 
     QString txt;
     txt = ok ? tr("Success") : tr("Failure: %1").arg(qry.lastError().text());
     ui->ctrl_messages->appendPlainText(txt);
+
+    qDebug() << qry.size();
+    qDebug() << "Query is:" << (qry.isActive() ? "Active" : "Not active");
+
+
+    if (ok && qry.isSelect())
+    {
+        displayResult(sql, db);
+    }
 
 }
 
@@ -102,6 +120,23 @@ bool gui_SimpleSqlQry::executeQuery(QSqlQuery* qry, const QString& sql)
 {
     QSqlDatabase db = QSqlDatabase::database(PhoebetriaDb::connectionName());
 
-    *qry = db.exec(sql);
-    return db.lastError().type() == QSqlError::NoError;
+    qry->exec();
+
+    return qry->lastError().type() == QSqlError::NoError;
 }
+
+void gui_SimpleSqlQry::displayResult(const QString& qry, QSqlDatabase& db)
+{
+    QSqlQueryModel* model;
+
+    model = new QSqlQueryModel();
+
+    model->setQuery(qry, db);
+
+    QTableView* view = new QTableView;
+    view->setModel(model);
+    view->setAttribute(Qt::WA_DeleteOnClose);
+    view->show();
+
+}
+

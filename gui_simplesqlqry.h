@@ -7,6 +7,7 @@
 class QStandardItemModel;
 class QAbstractItemModel;
 class QSqlQuery;
+class QSqlDatabase;
 
 namespace Ui {
 class gui_SimpleSqlQry;
@@ -27,6 +28,7 @@ protected:
     QAbstractItemModel* createItemModel(void);
 
     bool executeQuery(QSqlQuery* qry, const QString& sql);
+    void displayResult(const QString &qry, QSqlDatabase& db);
 
 private slots:
 
