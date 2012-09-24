@@ -53,13 +53,19 @@ Fedora:
   launch your terminal application of choice and execute the following
   commands as desired.
 
-  To Install: 
+  To Install:
+  sudo yum localinstall /{pathtodownload}/Phoebetria-{version}.fc17.x86_64.rpm --nogpg
+  or
   sudo rpm --install /{pathtodownload}/Phoebetria-{version}.fc17.x86_64.rpm
 
   To Upgrade:
+  sudo yum update /{pathtodownload}/Phoebetria-{version}.fc17.x86_64.rpm
+  or
   sudo rpm --upgrade /{pathtodownload}/Phoebetria-{version}.fc17.x86_64.rpm
 
   To Remove:
+  sudo yum remove phoebetria
+  or
   sudo rpm --erase phoebetria
 
   The settings and profiles are stored in your $HOME/.config/Phoebetria 
