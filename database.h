@@ -21,13 +21,13 @@
 #include <QSettings>
 #include <QtSql>
 
-class PhoebetriaDb : public QSqlDatabase
+class PhoebetriaDbMgr : public QSqlDatabase
 {
 
 public:
 
-    PhoebetriaDb();
-    PhoebetriaDb(const QSqlDatabase& other);
+    PhoebetriaDbMgr();
+    PhoebetriaDbMgr(const QSqlDatabase& other);
 
     void initCommonCtorData(void);
 
@@ -49,9 +49,10 @@ public:
     static const QString& connectionName(void)
         { return m_dbConnectionName; }
 
-    QStringList tables(void);
+    QStringList tables(const QString& dbConnectionName);
 
-    QStringList tableFields(const QString& tablename);
+    QStringList tableFields(const QString &dbConnectionName,
+                            const QString& tablename);
 
 protected:
 

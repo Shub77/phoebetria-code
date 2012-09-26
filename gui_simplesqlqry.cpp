@@ -48,9 +48,9 @@ void gui_SimpleSqlQry::populateTablesList(void)
 
 QAbstractItemModel* gui_SimpleSqlQry::createItemModel(void)
 {
-    PhoebetriaDb db;
+    PhoebetriaDbMgr db;
 
-    QStringList tables = db.tables();
+    QStringList tables = db.tables(db.connectionName());
     tables.sort();
 
     QList<QStringList> columnNames;
@@ -58,7 +58,7 @@ QAbstractItemModel* gui_SimpleSqlQry::createItemModel(void)
     QStringList names;
     for (int i = 0; i < tables.count(); ++i)
     {
-        names = db.tableFields(tables.at(i));
+        names = db.tableFields(db.connectionName(), tables.at(i));
         /* Append even if the result is empty because the column names
          * list needs to be in the same order as tables.
          */
@@ -93,7 +93,7 @@ void gui_SimpleSqlQry::on_ctrl_execute_clicked()
         return;
     }
 
-    QSqlDatabase db = QSqlDatabase::database(PhoebetriaDb::connectionName());
+    QSqlDatabase db = QSqlDatabase::database(PhoebetriaDbMgr::connectionName());
 
     //QSqlQuery qry(sql, db);
 
@@ -120,7 +120,7 @@ void gui_SimpleSqlQry::on_ctrl_execute_clicked()
 
 bool gui_SimpleSqlQry::executeQuery(QSqlQuery* qry, const QString& sql)
 {
-    QSqlDatabase db = QSqlDatabase::database(PhoebetriaDb::connectionName());
+    QSqlDatabase db = QSqlDatabase::database(PhoebetriaDbMgr::connectionName());
 
     qry->exec();
 

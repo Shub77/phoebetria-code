@@ -53,7 +53,7 @@ QString FanControllerProfile::defualtProfileLocation(void) const
 
 QStringList FanControllerProfile::getProfileNames(void)
 {
-    return PhoebetriaDb::readProfileNames();
+    return PhoebetriaDbMgr::readProfileNames();
 }
 
 /* Set from the current controller settings
@@ -80,14 +80,14 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
 
 bool FanControllerProfile::save(const QString& profileName)
 {
-    PhoebetriaDb::saveProfile(profileName, "isAuto", 0, m_isAuto);
-    PhoebetriaDb::saveProfile(profileName, "isCelcius", 0, m_isCelcius);
-    PhoebetriaDb::saveProfile(profileName, "isAudibleAlarm", 0, m_isAudibleAlarm);
+    PhoebetriaDbMgr::saveProfile(profileName, "isAuto", 0, m_isAuto);
+    PhoebetriaDbMgr::saveProfile(profileName, "isCelcius", 0, m_isCelcius);
+    PhoebetriaDbMgr::saveProfile(profileName, "isAudibleAlarm", 0, m_isAudibleAlarm);
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
-        PhoebetriaDb::saveProfile(profileName, "FanRPM", i, m_channelSettings[i].speed);
-        PhoebetriaDb::saveProfile(profileName, "AlarmTempF", i, m_channelSettings[i].alarmTemp);
+        PhoebetriaDbMgr::saveProfile(profileName, "FanRPM", i, m_channelSettings[i].speed);
+        PhoebetriaDbMgr::saveProfile(profileName, "AlarmTempF", i, m_channelSettings[i].alarmTemp);
     }
 
     return true;
@@ -96,14 +96,14 @@ bool FanControllerProfile::save(const QString& profileName)
 
 bool FanControllerProfile::load(const QString& profileName)
 {
-    m_isAuto = PhoebetriaDb::readProfile(profileName, "isAuto", 0);
-    m_isCelcius = PhoebetriaDb::readProfile(profileName, "isCelcius", 0);
-    m_isAudibleAlarm = PhoebetriaDb::readProfile(profileName, "isAudibleAlarm", 0);
+    m_isAuto = PhoebetriaDbMgr::readProfile(profileName, "isAuto", 0);
+    m_isCelcius = PhoebetriaDbMgr::readProfile(profileName, "isCelcius", 0);
+    m_isAudibleAlarm = PhoebetriaDbMgr::readProfile(profileName, "isAudibleAlarm", 0);
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
-        m_channelSettings[i].alarmTemp = PhoebetriaDb::readProfile(profileName, "AlarmTempF", i);
-        m_channelSettings[i].speed = PhoebetriaDb::readProfile(profileName, "FanRPM", i);
+        m_channelSettings[i].alarmTemp = PhoebetriaDbMgr::readProfile(profileName, "AlarmTempF", i);
+        m_channelSettings[i].speed = PhoebetriaDbMgr::readProfile(profileName, "FanRPM", i);
     }
 
     return true;
@@ -112,6 +112,6 @@ bool FanControllerProfile::load(const QString& profileName)
 bool FanControllerProfile::erase(const QString& profileName)
 {
     QSqlError err;
-    err = PhoebetriaDb::eraseProfile(profileName);
+    err = PhoebetriaDbMgr::eraseProfile(profileName);
     return err.type() == QSqlError::NoError;
 }
