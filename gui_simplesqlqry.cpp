@@ -5,6 +5,8 @@
 #include <QStandardItemModel>
 #include <QTableView>
 #include <QSqlQueryModel>
+#include <QDialog>
+#include <QLayout>
 
 #include "database.h"
 
@@ -129,14 +131,32 @@ void gui_SimpleSqlQry::displayResult(const QString& qry, QSqlDatabase& db)
 {
     QSqlQueryModel* model;
 
-    model = new QSqlQueryModel();
+    QDialog *dlg = new QDialog(this);
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
 
+
+    QLabel* sqlText = new QLabel();
+    sqlText->setText(qry);
+
+
+    QTableView* view = new QTableView();
+    QFont font = view->font();
+    font.setFamily("Arial");
+    font.setPointSize(8);
+    view->setFont(font);
+
+    QVBoxLayout *layout = new QVBoxLayout;;
+    dlg->setLayout(layout);
+    layout->addWidget(sqlText);
+    layout->addWidget(view);
+    //layout->setContentsMargins(0,0,0,0);
+
+    model = new QSqlQueryModel(view);
     model->setQuery(qry, db);
-
-    QTableView* view = new QTableView;
     view->setModel(model);
-    view->setAttribute(Qt::WA_DeleteOnClose);
-    view->show();
 
+    dlg->resize(800, 400);
+    dlg->show();
 }
+
 
