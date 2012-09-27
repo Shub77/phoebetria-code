@@ -21,6 +21,9 @@
 #include "dbmanager.h"
 #include "maindb_schema.h"
 #include "utils.h"
+#include "fanprofiles.h"
+
+#include "utils.h"
 
 // TODO: Move this to "preferences"
 static const bool g_deleteDatabaseOnAnyCreateError = true;
@@ -41,12 +44,41 @@ QStringList MainDb::profileNames()
     QStringList profileList;
     QSqlQuery query(QSqlDatabase::database(dbConnectionName()));
 
-    query.exec(QLatin1String("select name from Profile"));
+    if (!query.exec(QLatin1String("select name from Profile")))
+    {
+        m_lastSqlError = query.lastError();
+        return profileList;   // return empty list
+    }
 
     while (query.next())
         profileList << query.value(0).toString();
 
     return profileList;
+}
+
+bool MainDb::writeProfile(const FanControllerProfile& profile)
+{
+    PHOEBETRIA_STUB_FUNCTION
+}
+
+// Returns the primary key of the updated or inserted record on success
+// -1 on failure
+int MainDb::writeProfileCommonSettings(const QString& profileName,
+                                       bool isAuto,
+                                       bool isCelcius,
+                                       bool isAudibleAlarm,
+                                       bool isSoftwareAuto)
+{
+    PHOEBETRIA_STUB_FUNCTION
+}
+
+// ProfileId is the primary key (p_id) for the profile
+bool MainDb::writeProfileChannelSettings(int profileId,
+                                         int channel,
+                                         int rpm,
+                                         int alarmTempInF)
+{
+    PHOEBETRIA_STUB_FUNCTION
 }
 
 QSqlError MainDb::connect(const QString& connectionName)

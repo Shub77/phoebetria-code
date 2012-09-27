@@ -53,7 +53,16 @@ QString FanControllerProfile::defualtProfileLocation(void) const
 
 QStringList FanControllerProfile::getProfileNames(void)
 {
-    return MainDb::profileNames();
+    MainDb mdb;
+    QStringList result = mdb.profileNames();
+    if (mdb.lastSqlError().type() != QSqlError::NoError)
+    {
+        qDebug() << "Error reading profile names."
+                 << __FILE__ << ":" << __LINE__;
+
+        // TODO: Implement mechanism for passing error back to caller
+    }
+    return result;
 }
 
 /* Set from the current controller settings
@@ -192,6 +201,7 @@ bool FanControllerProfile::erase(const QString& profileName)
     err = DatabaseManager::eraseProfile(profileName);
     return err.type() == QSqlError::NoError;
 #endif
+    return true;
 }
 
 

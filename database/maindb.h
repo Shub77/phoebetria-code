@@ -21,18 +21,37 @@
 #include <QtSql>
 #include "dbmanager.h"
 
+/* Fwd Decls
+ */
+class FanControllerProfile;
+
 class MainDb
 {
 public:
     MainDb();
 
     inline static QString dbConnectionName(void);
+    inline QSqlError lastSqlError(void) const;
 
     static void init(void);
 
-    static QStringList profileNames();
+    QStringList profileNames();
+
+
+    bool writeProfile(const FanControllerProfile& profile);
 
 protected:
+    int writeProfileCommonSettings(const QString& profileName,
+                                   bool isAuto,
+                                   bool isCelcius,
+                                   bool isAudibleAlarm,
+                                   bool isSoftwareAuto);
+
+    bool writeProfileChannelSettings(int profileId,
+                                     int channel,
+                                     int rpm,
+                                     int alarmTempInF);
+
     static QSqlError connect(const QString &connectionName);
 
     static QSqlError createNewDb(const QString &connectionName);
@@ -42,8 +61,9 @@ protected:
 
     static bool verifyDbAndPathExist(void);
 
-    bool openProfile();
+private:
 
+    QSqlError m_lastSqlError;
 };
 
 
@@ -52,5 +72,9 @@ QString MainDb::dbConnectionName(void)
     return QString(*DatabaseManager::primaryDbConnName());
 }
 
+QSqlError MainDb::lastSqlError(void) const
+{
+    return m_lastSqlError;
+}
 
 #endif // PHOEBETRIA_PRIMARYDB_H
