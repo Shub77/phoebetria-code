@@ -80,6 +80,7 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
 
 bool FanControllerProfile::save(const QString& profileName)
 {
+#if 0
     PhoebetriaDbMgr::saveProfile(profileName, "isAuto", 0, m_isAuto);
     PhoebetriaDbMgr::saveProfile(profileName, "isCelcius", 0, m_isCelcius);
     PhoebetriaDbMgr::saveProfile(profileName, "isAudibleAlarm", 0, m_isAudibleAlarm);
@@ -91,6 +92,80 @@ bool FanControllerProfile::save(const QString& profileName)
     }
 
     return true;
+#endif
+
+
+    PhoebetriaDbMgr db;
+
+    QSqlQuery qry(QSqlDatabase::database(db.connectionName()));
+
+    bool ok;
+
+
+    ok = qry.exec("select p_id from Profile where name = 'doe';");
+
+    int p_id = ok ? qry.value(0).toInt() : -1;
+
+    if (p_id == -1)
+    ok = qry.prepare("insert or replace into Profile "
+                     " (name, isAuto, isCelcius, isAudibleAlarm, isSoftwareAuto)"
+                     " values (:name, :isCelcius, :isAuto, :isAudibleAlarm, :isSoftwareAuto)"
+                    );
+    if (!ok)
+    {
+        qDebug() << qry.lastError().databaseText();
+        return false;
+    }
+
+    qry.bindValue(":name", profileName);
+    qry.bindValue(":isAuto", m_isAuto);
+    qry.bindValue(":isCelcius", m_isCelcius);
+    qry.bindValue(":isAudibleAlarm", m_isAudibleAlarm);
+    qry.bindValue(":isSoftwareAuto", 0);        // TODO: Implement
+
+    // TODO: If error, log actual database error
+
+    if (!qry.exec())
+    {
+        qDebug() << qry.lastError().databaseText();
+        return false;
+    }
+
+    //qry.clear();
+    qry.exec("select p_id from Profile where name = 'blah';");
+    //qry.bindValue(":name", profileName);
+    if (!qry.exec())
+    {
+        qDebug() << qry.lastError().databaseText();
+        return false;
+    }
+    qry.first();
+
+    qDebug() << qry.size();
+
+    p_id = qry.value(0).toInt();
+
+    qDebug() << p_id;
+
+
+
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+    {
+        qry.clear();
+        qry.prepare("insert or replace into ChannelSetting"
+                    " (p_id, channel, manualRpm, alarmTempF)"
+                    " values (:p_id, :channel, :rpm, :alarmTempF)"
+                    );
+        qry.bindValue(":p_id", p_id);
+        qry.bindValue(":channel", i);
+        qry.bindValue(":rpm", m_channelSettings[i].speed);
+        qry.bindValue(":alarmTempF", m_channelSettings[i].alarmTemp);
+        qry.exec();
+    }
+
+
+    return true;
+
 }
 
 
@@ -114,4 +189,16 @@ bool FanControllerProfile::erase(const QString& profileName)
     QSqlError err;
     err = PhoebetriaDbMgr::eraseProfile(profileName);
     return err.type() == QSqlError::NoError;
+}
+
+
+bool FanControllerProfile::importFromIni(void)
+{
+    // Get all ini filenames
+
+    // Read each profile
+
+    // Check if in database; if not, add the profile
+
+    return true;
 }

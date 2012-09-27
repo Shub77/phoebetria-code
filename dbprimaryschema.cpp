@@ -28,7 +28,7 @@ static PrimaryDbSchema::TableDef schema[] =
         "Profile",
         "CREATE TABLE Profile("
         "     p_id           INTEGER        PRIMARY KEY"
-        "    ,name           VARCHAR(32)"
+        "    ,name           VARCHAR(32)    UNIQUE"
         "    ,isAuto         BOOLEAN        DEFAULT '1'"
         "    ,isCelcius      BOOLEAN        DEFAULT '1'"
         "    ,isAudibleAlarm BOOLEAN        DEFAULT '1'"

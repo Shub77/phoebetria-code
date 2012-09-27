@@ -48,6 +48,9 @@ public:
 
     bool save(const QString& profileName);
     bool load(const QString& profileName);
+
+    bool importFromIni(void);
+
     static bool erase(const QString& profileName);
 
     bool isCelcius(void) const;
