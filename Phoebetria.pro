@@ -49,8 +49,8 @@ pixmap.path = $${DATADIR}/pixmaps
 pixmap.files += Images/icons/48x48/phoebetria.png
 
 
-SOURCES += main.cpp\
-        gui_mainwindow.cpp \
+SOURCES += main.cpp \
+    gui_mainwindow.cpp \
     phoebetriaapp.cpp \
     device-io.cpp \
     fanchanneldata.cpp \
@@ -60,12 +60,12 @@ SOURCES += main.cpp\
     bfx-recon/fancontrollerio.cpp \
     utils.cpp \
     preferences.cpp \
-    database.cpp \
     dispatcher.cpp \
     fanprofiles.cpp \
-    dbprimaryschema.cpp \
     gui_simplesqlqry.cpp \
-    gui_preferences.cpp
+    gui_preferences.cpp \
+    database/database.cpp \
+    database/dbprimaryschema.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -78,12 +78,12 @@ HEADERS  += gui_mainwindow.h \
     utils.h \
     preferences.h \
     bfx-recon/bfxrecon.h \
-    database.h \
     dispatcher.h \
     fanprofiles.h \
-    dbprimaryschema.h \
     gui_simplesqlqry.h \
-    gui_preferences.h
+    gui_preferences.h \
+    database/database.h \
+    database/dbprimaryschema.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
@@ -94,7 +94,9 @@ FORMS    += gui_mainwindow.ui \
 # Config for the HID API library
 #-------------------------------------------------
 
-INCLUDEPATH += hidapi-0.7.0/hidapi
+INCLUDEPATH += hidapi-0.7.0/hidapi \
+               database/
+               
 HEADERS += hidapi-0.7.0/hidapi/hidapi.h
 win32 {
     SOURCES += hidapi-0.7.0/windows/hid.c
