@@ -64,8 +64,8 @@ SOURCES += main.cpp \
     fanprofiles.cpp \
     gui_simplesqlqry.cpp \
     gui_preferences.cpp \
-    database/database.cpp \
-    database/dbprimaryschema.cpp
+    database/dbmanager.cpp \
+    database/primarydb_schema.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -82,8 +82,8 @@ HEADERS  += gui_mainwindow.h \
     fanprofiles.h \
     gui_simplesqlqry.h \
     gui_preferences.h \
-    database/database.h \
-    database/dbprimaryschema.h
+    database/dbmanager.h \
+    database/primarydb_schema.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
@@ -98,13 +98,14 @@ INCLUDEPATH += hidapi-0.7.0/hidapi \
                database/
                
 HEADERS += hidapi-0.7.0/hidapi/hidapi.h
+
+#-------------------------------------------------
+# Platform specific
+#-------------------------------------------------
+
 win32 {
     SOURCES += hidapi-0.7.0/windows/hid.c
     LIBS += -lsetupapi
-}
-
-# Windows Icons
-win32 {
     RC_FILE = Windows/Phoebetria.rc
 }
 

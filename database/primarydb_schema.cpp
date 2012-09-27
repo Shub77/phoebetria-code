@@ -1,9 +1,9 @@
-#include "dbprimaryschema.h"
+#include "primarydb_schema.h"
 
 #include <QStringList>
 #include <QSqlDatabase>
 
-#include "database.h"
+#include "dbmanager.h"
 
 #include "utils.h"
 

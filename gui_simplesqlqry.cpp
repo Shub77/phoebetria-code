@@ -8,7 +8,7 @@
 #include <QDialog>
 #include <QLayout>
 
-#include "database.h"
+#include "dbmanager.h"
 
 
 gui_SimpleSqlQry::gui_SimpleSqlQry(QWidget *parent) :

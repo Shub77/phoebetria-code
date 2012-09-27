@@ -22,7 +22,7 @@
 #include <QDir>
 
 #include "fancontrollerdata.h"
-#include "database.h"
+#include "dbmanager.h"
 
 FanControllerProfile::FanControllerProfile()
 {

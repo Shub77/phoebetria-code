@@ -15,7 +15,7 @@
 */
 
 #include "phoebetriaapp.h"
-#include "database.h"
+#include "dbmanager.h"
 
 FanControllerIO PhoebetriaApp::m_fanControllerIO;
 EventDispatcher PhoebetriaApp::m_dispatcher;

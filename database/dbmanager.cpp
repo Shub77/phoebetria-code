@@ -14,7 +14,7 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "database.h"
+#include "dbmanager.h"
 
 #include <QtSql>
 #include <QSqlQuery>
@@ -23,7 +23,7 @@
 #include <QDebug>
 #include <QFile>
 
-#include "dbprimaryschema.h"
+#include "primarydb_schema.h"
 #include "preferences.h"
 #include "utils.h"
 
