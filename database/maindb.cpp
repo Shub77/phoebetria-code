@@ -56,9 +56,49 @@ QStringList MainDb::profileNames()
     return profileList;
 }
 
-bool MainDb::writeProfile(const FanControllerProfile& profile)
+bool MainDb::writeProfile(const QString& name,
+                          const FanControllerProfile& profile)
 {
-    PHOEBETRIA_STUB_FUNCTION
+    QSqlDatabase db = QSqlDatabase::database(dbConnectionName());
+
+    bool ok = true;
+
+    db.transaction();
+
+    int p_id = writeProfileCommonSettings(
+                name,
+                profile.isAuto(),
+                profile.isCelcius(),
+                profile.isAudibleAlarm(),
+                false       // FIXME: TODO: set to real val when s/ware auto done
+                );
+
+    if (p_id == -1)
+    {
+        db.rollback();
+        return false;
+    }
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
+        BasicChannelData bcd = profile.getChannelSettings(i);
+
+        ok = writeProfileChannelSettings(
+                    p_id,
+                    i,
+                    bcd.speed,
+                    bcd.alarmTemp
+                    );
+
+        if (!ok) break;
+    }
+
+    if (!ok)
+        db.rollback();
+    else
+        db.commit();
+
+    return ok;
 }
 
 // Returns the primary key of the updated or inserted record on success
@@ -69,8 +109,70 @@ int MainDb::writeProfileCommonSettings(const QString& profileName,
                                        bool isAudibleAlarm,
                                        bool isSoftwareAuto)
 {
-    PHOEBETRIA_STUB_FUNCTION
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    /* Why am I updating/inserting like this when C++ is at disposal?
+       Because it's fun! Because I feel like it? Because I can?
+       I actually can't remember why. */
+
+    bool ok = qry.prepare("update Profile"
+          " set isAuto = :isAuto, isCelcius = :isCelcius,"
+          " isAudibleAlarm = :isAudibleAlarm, isSoftwareAuto = :isSwareAuto"
+          " where exists (select 1 from Profile where name = :pName)"
+          " and name = :pName2;"
+          );
+    qry.bindValue(":isAuto",            isAuto);
+    qry.bindValue(":isCelcius",         isCelcius);
+    qry.bindValue(":isAudibleAlarm",    isAudibleAlarm);
+    qry.bindValue(":isSwareAuto",       isSoftwareAuto);
+    qry.bindValue(":pName",             profileName);
+    qry.bindValue(":pName2",            profileName);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
+
+    ok = qry.exec();
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
+
+
+    ok = qry.prepare("insert into Profile"
+          " (name, isAuto, isCelcius, isAudibleAlarm, isSoftwareAuto)"
+          " select :pName, :isAuto, :isCelcius, :isAudibleAlarm, :isSwareAuto"
+          " where not exists (select 1 from Profile where name = :pName2)"
+          );
+    qry.bindValue(":pName",             profileName);
+    qry.bindValue(":isAuto",            isAuto);
+    qry.bindValue(":isCelcius",         isCelcius);
+    qry.bindValue(":isAudibleAlarm",    isAudibleAlarm);
+    qry.bindValue(":isSwareAuto",       isSoftwareAuto);
+    qry.bindValue(":pName2",            profileName);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
+
+    ok = qry.exec();
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
+
+    return getProfileId(profileName);
 }
+
+int MainDb::getProfileId(const QString& name)
+{
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    bool ok = qry.prepare("select p_id from profile where name = :pName");
+    qry.bindValue(":pName", name);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
+
+    ok = qry.exec();
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
+
+    qry.first();
+    return qry.value(0).toInt();
+}
+
 
 // ProfileId is the primary key (p_id) for the profile
 bool MainDb::writeProfileChannelSettings(int profileId,
@@ -78,8 +180,35 @@ bool MainDb::writeProfileChannelSettings(int profileId,
                                          int rpm,
                                          int alarmTempInF)
 {
-    PHOEBETRIA_STUB_FUNCTION
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    bool ok = qry.prepare("delete from ChannelSetting"
+                          " where p_id = :profileId and channel = :channel");
+    qry.bindValue(":profileId", profileId);
+    qry.bindValue(":channel", channel);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    ok = qry.exec();
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    qry.prepare("insert into ChannelSetting"
+                " values (:profileId, :channel, :manualRpm, :alarmTempF)");
+    qry.bindValue(":profileId",  profileId);
+    qry.bindValue(":channel",    channel);
+    qry.bindValue(":manualRpm",  rpm);
+    qry.bindValue(":alarmTempF", alarmTempInF);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    ok = qry.exec();
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    return true;
 }
+
 
 QSqlError MainDb::connect(const QString& connectionName)
 {
