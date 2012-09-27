@@ -25,21 +25,21 @@
 // TODO: Move this to "preferences"
 static const bool g_deleteDatabaseOnAnyCreateError = true;
 
-PrimaryDb::PrimaryDb()
+MainDb::MainDb()
 {
 }
 
-void PrimaryDb::init(void)
+void MainDb::init(void)
 {
-    QString dbConnName = connectionName();
+    QString dbConnName = dbConnectionName();
     if (!QSqlDatabase::contains(dbConnName))
         connect(dbConnName);
 }
 
-QStringList PrimaryDb::profileNames()
+QStringList MainDb::profileNames()
 {
     QStringList profileList;
-    QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
+    QSqlQuery query(dbConnectionName());
 
     query.exec(QLatin1String("select distinct name from Profile"));
 
@@ -56,30 +56,33 @@ QStringList PrimaryDb::profileNames()
     return profileList;
 }
 
-QSqlError PrimaryDb::connect(const QString& connectionName)
+QSqlError MainDb::connect(const QString& connectionName)
 {
-    if (!verifyDbAndPathExist(connectionName))
+    QString dbPathAndName
+            = DatabaseManager::dbFilenameWithPath(DatabaseManager::PrimaryDb);
+
+    if (!verifyDbAndPathExist())
     {
         QString customErrorMsg = QObject::tr(
                 "Error initialising database."
                 " Path does not exist"
                 " and path could be created: %1")
-                    .arg(m_dbPathAndName);
+                    .arg(dbPathAndName);
 
         return QSqlError(customErrorMsg);
     }
 
     QSqlError err;
 
-    if (!fileExists(m_dbPathAndName))
+    if (!fileExists(dbPathAndName))
         err = createNewDb(connectionName);
     else
         err = checkExistingDb(connectionName);
 
     if (err.isValid()) return err;
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", m_dbConnectionName);
-    db.setDatabaseName(m_dbPathAndName);
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", connectionName);
+    db.setDatabaseName(dbPathAndName);
 
     if (!db.open())
         return db.lastError();
@@ -89,48 +92,57 @@ QSqlError PrimaryDb::connect(const QString& connectionName)
     return err;
 }
 
-QSqlError PrimaryDb::createNewDb(const QString &connectionName)
+QSqlError MainDb::createNewDb(const QString &connectionName)
 {
-    QSqlError err = PrimaryDbSchema::create(&m_dbPathAndName);
+    QString dbPathAndName
+            = DatabaseManager::dbFilenameWithPath(DatabaseManager::PrimaryDb);
+
+    QSqlError err = MainDbSchema::create(&dbPathAndName);
     if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
     {
-        if (!QFile::remove(m_dbPathAndName))
+        if (!QFile::remove(dbPathAndName))
             qDebug() << "Failed to delete db file";
     }
     return err;
 }
 
-QSqlError PrimaryDb::checkExistingDb(const QString &connectionName)
+QSqlError MainDb::checkExistingDb(const QString &connectionName)
 {
     QSqlError err;
 
-    if (!PrimaryDbSchema::verify(&m_dbPathAndName))
-        err = recreateDb(connectionName);
+    QString dbPathAndName
+            = DatabaseManager::dbFilenameWithPath(DatabaseManager::PrimaryDb);
+
+    if (!MainDbSchema::verify(&dbPathAndName))
+        err = recreateDb(dbConnectionName());
 
     return err;
 }
 
-QSqlError PrimaryDb::recreateDb(const QString &connectionName)
+QSqlError MainDb::recreateDb(const QString &connectionName)
 {
     QSqlError err;
 
-    QString oldDbName(m_dbPathAndName);
+    QString dbPathAndName
+            = DatabaseManager::dbFilenameWithPath(DatabaseManager::PrimaryDb);
+
+    QString oldDbName(dbPathAndName);
     oldDbName += ".orig";
     if (fileExists(oldDbName))
     {
         if (!QFile::remove(oldDbName))
             return QSqlError(QObject::tr("Failed to delete old db"));
     }
-    QFile::rename(m_dbPathAndName, oldDbName);
+    QFile::rename(dbPathAndName, oldDbName);
 
-    err = PrimaryDbSchema::create(&m_dbPathAndName, &oldDbName);
+    err = MainDbSchema::create(&dbPathAndName, &oldDbName);
 
     if (!QFile::remove(oldDbName))
         qDebug() << "Failed to delete old db";
 
     if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
     {
-        if (!QFile::remove(m_dbPathAndName))
+        if (!QFile::remove(dbPathAndName))
             qDebug() << "Failed to remove partially created db";
     }
 
@@ -139,10 +151,10 @@ QSqlError PrimaryDb::recreateDb(const QString &connectionName)
 
 // Enable foreign key support
 // pre: db is open
-QSqlError PrimaryDb::enableFkSupport(const QString &connectionName)
+QSqlError MainDb::enableFkSupport(const QString &connectionName)
 {
     QSqlError err;
-    QSqlDatabase db = QSqlDatabase::database(m_dbConnectionName);
+    QSqlDatabase db = QSqlDatabase::database(dbConnectionName());
 
     if (db.driverName() == "QSQLITE")
     {
@@ -158,11 +170,14 @@ QSqlError PrimaryDb::enableFkSupport(const QString &connectionName)
 /*! Checks if the database file exists. If not, check the path exists and
  *  create the path if necessary.
  */
-bool PrimaryDb::verifyDbAndPathExist(const QString &connectionName) const
+bool MainDb::verifyDbAndPathExist(void)
 {
-    if (QFile::exists(m_dbPathAndName))
+    QString dbPathAndName
+            = DatabaseManager::dbFilenameWithPath(DatabaseManager::PrimaryDb);
+
+    if (QFile::exists(dbPathAndName))
         return true;
-    return checkPath(m_dbPath);
+    return checkPath(DatabaseManager::pathToDatabases());
 }
 
 

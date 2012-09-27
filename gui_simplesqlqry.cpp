@@ -93,7 +93,7 @@ void gui_SimpleSqlQry::on_ctrl_execute_clicked()
         return;
     }
 
-    QSqlDatabase db = QSqlDatabase::database(PrimaryDb::connectionName());
+    QSqlDatabase db = QSqlDatabase::database(MainDb::dbConnectionName());
 
     //QSqlQuery qry(sql, db);
 
@@ -120,7 +120,7 @@ void gui_SimpleSqlQry::on_ctrl_execute_clicked()
 
 bool gui_SimpleSqlQry::executeQuery(QSqlQuery* qry, const QString& sql)
 {
-    QSqlDatabase db = QSqlDatabase::database(PrimaryDb::connectionName());
+    QSqlDatabase db = QSqlDatabase::database(MainDb::dbConnectionName());
 
     qry->exec();
 

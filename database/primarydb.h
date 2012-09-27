@@ -21,33 +21,33 @@
 #include <QtSql>
 #include "dbmanager.h"
 
-class PrimaryDb
+class MainDb
 {
 public:
-    PrimaryDb();
+    MainDb();
 
-    inline static QString connectionName(void);
+    inline static QString dbConnectionName(void);
 
-    void init(void);
+    static void init(void);
 
     static QStringList profileNames();
 
 protected:
-    QSqlError connect(const QString &connectionName);
+    static QSqlError connect(const QString &connectionName);
 
-    QSqlError createNewDb(const QString &connectionName);
-    QSqlError checkExistingDb(const QString &connectionName);
-    QSqlError recreateDb(const QString &connectionName);
-    QSqlError enableFkSupport(const QString &connectionName);
+    static QSqlError createNewDb(const QString &connectionName);
+    static QSqlError checkExistingDb(const QString &connectionName);
+    static QSqlError recreateDb(const QString &connectionName);
+    static QSqlError enableFkSupport(const QString &connectionName);
 
-    bool verifyDbAndPathExist(const QString &connectionName) const;
+    static bool verifyDbAndPathExist(void);
 
     bool openProfile();
 
 };
 
 
-QString PrimaryDb::connectionName(void)
+QString MainDb::dbConnectionName(void)
 {
     return QString(*DatabaseManager::primaryDbConnName());
 }

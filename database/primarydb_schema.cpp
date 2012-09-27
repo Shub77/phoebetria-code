@@ -28,9 +28,9 @@ static const char* newDbConnName = "pdbs_tmp_newPrimaryDb";
 static const char* tmpDbConnName = "pdsb_tmp_pdb";
 
 
-int PrimaryDbSchema::m_schemaVersion = 1;
+int MainDbSchema::m_schemaVersion = 1;
 
-static PrimaryDbSchema::TableDef schema[] =
+static MainDbSchema::TableDef schema[] =
 {
     {
         "DatabaseInfo",
@@ -90,7 +90,7 @@ static const char* defaultDataSql[] =
     ( sizeof defaultDataSql / sizeof defaultDataSql[0] )
 
 
-PrimaryDbSchema::PrimaryDbSchema()
+MainDbSchema::MainDbSchema()
 {
 }
 
@@ -102,7 +102,7 @@ PrimaryDbSchema::PrimaryDbSchema()
     \pre The database referred to by \e dbFilename exists and is a valid
          database.
 */
-bool PrimaryDbSchema::verify(const QString* dbFilename,
+bool MainDbSchema::verify(const QString* dbFilename,
                              QStringList* missingTablesList)
 {
     return checkTables(*dbFilename, missingTablesList) && schemaVersionOk();
@@ -115,7 +115,7 @@ bool PrimaryDbSchema::verify(const QString* dbFilename,
     If \e oldDbFilename != NULL, then migrate the data from the old database
     to the newly created database.
 */
-QSqlError PrimaryDbSchema::create(const QString* newDbFilename,
+QSqlError MainDbSchema::create(const QString* newDbFilename,
                                   const QString* oldDbFilename)
 {
     QSqlError err;
@@ -154,7 +154,7 @@ abort:
     \post If \e missingTablesList != NULL and the return value == true, then
          missingTablesList->size() == 0
 */
-bool PrimaryDbSchema::checkTables(const QString& dbFilename,
+bool MainDbSchema::checkTables(const QString& dbFilename,
                                   QStringList* missingTablesList)
 {
     QSqlDatabase db;
@@ -189,7 +189,7 @@ bool PrimaryDbSchema::checkTables(const QString& dbFilename,
     \pre A connection named \e newDbConnectionName (static global in this file)
          has been established.
 */
-bool PrimaryDbSchema::schemaVersionOk(void)
+bool MainDbSchema::schemaVersionOk(void)
 {
     PHOEBETRIA_STUB_FUNCTION
     return true; // TODO IMPLEMENT
@@ -200,7 +200,7 @@ bool PrimaryDbSchema::schemaVersionOk(void)
 
     Creates the tables and inserts default data.
  */
-QSqlError PrimaryDbSchema::createSchema(void)
+QSqlError MainDbSchema::createSchema(void)
 {
     QSqlError err;
 
@@ -218,7 +218,7 @@ QSqlError PrimaryDbSchema::createSchema(void)
     \pre A connection named \e newDbConnectionName (static global in this file)
          has been established.
 */
-QSqlError PrimaryDbSchema::createTables(void)
+QSqlError MainDbSchema::createTables(void)
 {
     QSqlError err;
 
@@ -247,7 +247,7 @@ QSqlError PrimaryDbSchema::createTables(void)
 
     \pre    newDbFilename != NULL, oldDbFilename != NULL
 */
-QSqlError PrimaryDbSchema::migrateData(const QString* newDbFilename,
+QSqlError MainDbSchema::migrateData(const QString* newDbFilename,
                                        const QString* oldDbFilename)
 {
     /* This is the first version of the schema, so there is nothing to
@@ -264,7 +264,7 @@ QSqlError PrimaryDbSchema::migrateData(const QString* newDbFilename,
     \pre A connection named \e newDbConnectionName (static global in this file)
          has been established.
 */
-QSqlError PrimaryDbSchema::insertDefaultData(void)
+QSqlError MainDbSchema::insertDefaultData(void)
 {
     QSqlError err;
 

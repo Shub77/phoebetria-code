@@ -45,14 +45,18 @@ public:
     inline static const QString *dbConnectionName(DatabaseId dbId);
     inline static const QString *primaryDbConnName(void);
 
+    inline static QString dbFilenameWithPath(DatabaseId dbId);
+
     static QStringList tables(const QString& dbConnectionName);
 
     static QStringList tableFields(const QString &dbConnectionName,
                                    const QString& tablename);
 
+    inline static QString pathToDatabases(void);
+
 protected:
 
-    QString prependDbPath(const QString& filename) const;
+    static QString prependDbPath(const QString& filename);
 
 private:
 
@@ -73,5 +77,15 @@ const QString* DatabaseManager::primaryDbConnName(void)
     return dbConnectionName(PrimaryDb);
 }
 
+QString DatabaseManager::dbFilenameWithPath(DatabaseId dbId)
+{
+    QString fnwp(m_dbConnectionDetails[dbId].filename);
+    return prependDbPath(fnwp);
+}
+
+QString DatabaseManager::pathToDatabases(void)
+{
+    return m_dbPath;
+}
 
 #endif // PHOEBETRIA_DATABASE_H

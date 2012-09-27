@@ -23,11 +23,9 @@
 #include <QDebug>
 #include <QFile>
 
-#include "primarydb_schema.h"
+#include "primarydb.h"
 #include "preferences.h"
 #include "utils.h"
-
-
 
 QString DatabaseManager::m_dbPath = Preferences::filepath();
 
@@ -53,10 +51,10 @@ DatabaseManager::DatabaseManager(const QSqlDatabase& other)
 
 void DatabaseManager::initAllDatabases(void)
 {
-
+    MainDb::init();
 }
 
-QString DatabaseManager::prependDbPath(const QString& filename) const
+QString DatabaseManager::prependDbPath(const QString& filename)
 {
     QString result(m_dbPath);
     result.append(QDir::separator());

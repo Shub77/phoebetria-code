@@ -53,7 +53,7 @@ QString FanControllerProfile::defualtProfileLocation(void) const
 
 QStringList FanControllerProfile::getProfileNames(void)
 {
-    return PrimaryDb::profileNames();
+    return MainDb::profileNames();
 }
 
 /* Set from the current controller settings

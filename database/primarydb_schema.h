@@ -23,7 +23,7 @@ class QStringList;      // Fwd decl
 class QString;          // Fwd decl
 class QSqlError;
 
-class PrimaryDbSchema
+class MainDbSchema
 {
 public:
 
@@ -33,7 +33,7 @@ public:
         const char* ddl;
     } TableDef;
 
-    PrimaryDbSchema();
+    MainDbSchema();
 
     static bool verify(const QString* dbFilename,
                        QStringList *missingTablesList = NULL);
