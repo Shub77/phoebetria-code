@@ -39,19 +39,12 @@ void MainDb::init(void)
 QStringList MainDb::profileNames()
 {
     QStringList profileList;
-    QSqlQuery query(dbConnectionName());
+    QSqlQuery query(QSqlDatabase::database(dbConnectionName()));
 
-    query.exec(QLatin1String("select distinct name from Profile"));
+    query.exec(QLatin1String("select name from Profile"));
 
     while (query.next())
-    {
         profileList << query.value(0).toString();
-    }
-
-#if 0
-    if (profileList.isEmpty())
-        return QStringList("** FAILED **");
-#endif
 
     return profileList;
 }
