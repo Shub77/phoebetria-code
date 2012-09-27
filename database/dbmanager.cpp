@@ -27,212 +27,52 @@
 #include "preferences.h"
 #include "utils.h"
 
-// TODO: Move this to "preferences"
-static const bool g_deleteDatabaseOnAnyCreateError = true;
 
-QString PhoebetriaDbMgr::m_dbFilename = "phoebetria.sqlite";
 
-QString PhoebetriaDbMgr::m_dbConnectionName = "phoebetriaDb";
+QString DatabaseManager::m_dbPath = Preferences::filepath();
 
-/**************************************************************************/
-/* TODO:
 
-    Add error checking
-    Use transactions
+/* These *MUST* be in the same order as PhoebetriaDbMgr::DatabaseId
  */
-/**************************************************************************/
-
-
-PhoebetriaDbMgr::PhoebetriaDbMgr()
-    : QSqlDatabase(),
-      m_dbPath(Preferences::filepath())
-
+const DatabaseManager::DbDetails DatabaseManager::m_dbConnectionDetails[]  =
 {
-    initCommonCtorData();
+    { QString("primaryDb"), "phoebetria.sqlite" },
+    { QString("logDb"), "sessionlog.sqlite" }
+};
+
+
+DatabaseManager::DatabaseManager()
+    : QSqlDatabase()
+{
 }
 
-PhoebetriaDbMgr::PhoebetriaDbMgr(const QSqlDatabase& other)
-    : QSqlDatabase(other),
-      m_dbPath(Preferences::filepath())
+DatabaseManager::DatabaseManager(const QSqlDatabase& other)
+    : QSqlDatabase(other)
 {
-    initCommonCtorData();
 }
 
-
-void PhoebetriaDbMgr::initCommonCtorData(void)
+void DatabaseManager::initAllDatabases(void)
 {
-    m_dbPathAndName = m_dbPath;
-    m_dbPathAndName.append(QDir::separator()).append("Phoebetria.sqlite");
-    m_dbPathAndName = QDir::toNativeSeparators(m_dbPathAndName);
+
 }
 
-void PhoebetriaDbMgr::init(void)
+QString DatabaseManager::prependDbPath(const QString& filename) const
 {
-    if (!QSqlDatabase::contains(m_dbConnectionName))
-        connect();
-}
-
-
-QSqlError PhoebetriaDbMgr::connect()
-{
-    if (!verifyDbAndPathExist())
-    {
-        QString customErrorMsg = QObject::tr(
-                "Error initialising database."
-                " Path does not exist"
-                " and path could be created: %1")
-                    .arg(m_dbPathAndName);
-
-        return QSqlError(customErrorMsg);
-    }
-
-    QSqlError err;
-
-    if (!fileExists(m_dbPathAndName))
-        err = createNewDb();
-    else
-        err = checkExistingDb();
-
-    if (err.isValid()) return err;
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", m_dbConnectionName);
-    db.setDatabaseName(m_dbPathAndName);
-
-    if (!db.open())
-        return db.lastError();
-
-    err = enableFkSupport();
-
-    return err;
-}
-
-QSqlError PhoebetriaDbMgr::createNewDb(void)
-{
-    QSqlError err = PrimaryDbSchema::create(&m_dbPathAndName);
-    if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
-    {
-        if (!QFile::remove(m_dbPathAndName))
-            qDebug() << "Failed to delete db file";
-    }
-    return err;
-}
-
-QSqlError PhoebetriaDbMgr::checkExistingDb(void)
-{
-    QSqlError err;
-
-    if (!PrimaryDbSchema::verify(&m_dbPathAndName))
-        err = recreateDb();
-
-    return err;
-}
-
-QSqlError PhoebetriaDbMgr::recreateDb(void)
-{
-    QSqlError err;
-
-    QString oldDbName(m_dbPathAndName);
-    oldDbName += ".orig";
-    if (fileExists(oldDbName))
-    {
-        if (!QFile::remove(oldDbName))
-            return QSqlError(QObject::tr("Failed to delete old db"));
-    }
-    QFile::rename(m_dbPathAndName, oldDbName);
-
-    err = PrimaryDbSchema::create(&m_dbPathAndName, &oldDbName);
-
-    if (!QFile::remove(oldDbName))
-        qDebug() << "Failed to delete old db";
-
-    if (err.isValid() && g_deleteDatabaseOnAnyCreateError)
-    {
-        if (!QFile::remove(m_dbPathAndName))
-            qDebug() << "Failed to remove partially created db";
-    }
-
-    return err;
-}
-
-// Enable foreign key support
-// pre: db is open
-QSqlError PhoebetriaDbMgr::enableFkSupport(void)
-{
-    QSqlError err;
-    QSqlDatabase db = QSqlDatabase::database(m_dbConnectionName);
-
-    if (db.driverName() == "QSQLITE")
-    {
-        QSqlQuery q(db);
-        if (!q.exec("PRAGMA foreign_keys = ON"))
-            err = db.lastError();
-    }
-
-    return err;
+    QString result(m_dbPath);
+    result.append(QDir::separator());
+    result.append(filename);
+    return result;
 }
 
 
-/*! Checks if the database file exists. If not, check the path exists and
- *  create the path if necessary.
- */
-bool PhoebetriaDbMgr::verifyDbAndPathExist(void) const
-{
-    if (QFile::exists(m_dbPathAndName))
-        return true;
-    return checkPath(m_dbPath);
-}
 
-bool PhoebetriaDbMgr::openProfile()
-{
-    QSqlRelationalTableModel m_Profile;
-
-    m_Profile.setTable("Profile");
-    m_Profile.setRelation(0,QSqlRelation("ChannelSetting","p_id", "name"));
-
-    if (!m_Profile.select())
-    {
-        qDebug() << m_Profile.lastError();
-    }
-
-    return true;
-}
-
-QSqlError PhoebetriaDbMgr::saveProfile(const QString &name,
-                                const QString &setting,
-                                int channel, int value)
-{
-    QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
-
-    if (!query.prepare(QLatin1String("insert or replace into Profile(name, setting, channel, value) values(:name, :setting, :channel, :value)")))
-        return query.lastError();
-    query.bindValue(":name", name);
-    query.bindValue(":setting", setting);
-    query.bindValue(":channel", channel);
-    query.bindValue(":value", value);
-    query.exec();
-
-    return QSqlError();
-}
-
-QSqlError PhoebetriaDbMgr::eraseProfile(const QString& name)
-{
-    QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
-
-    if (!query.prepare(QLatin1String("delete from Profile where name = :name")))
-        return query.lastError();
-    query.bindValue(":name", name);
-    query.exec();
-
-    return QSqlError();
-}
-
-QStringList PhoebetriaDbMgr::tables(const QString &dbConnectionName)
+QStringList DatabaseManager::tables(const QString &dbConnectionName)
 {
     return QSqlDatabase::database(dbConnectionName).tables();
 }
 
 
-QStringList PhoebetriaDbMgr::tableFields(const QString &dbConnectionName,
+QStringList DatabaseManager::tableFields(const QString &dbConnectionName,
                                          const QString& tablename)
 {
     QSqlRecord rec(QSqlDatabase::database(dbConnectionName).record(tablename));
@@ -246,75 +86,6 @@ QStringList PhoebetriaDbMgr::tableFields(const QString &dbConnectionName,
 }
 
 
-int PhoebetriaDbMgr::readProfile(const QString &name,
-                          const QString &setting,
-                          int channel)
-{
-    QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
 
-    query.prepare(QLatin1String(
-        "select value from Profile"
-        " where name = :name and setting = :setting and channel = :channel"));
-    query.bindValue(":name", name, QSql::Out);
-    query.bindValue(":setting", setting, QSql::Out);
-    query.bindValue(":channel", channel, QSql::Out);
-
-    if (!query.exec())
-    {
-#ifdef QT_DEBUG
-        qDebug() << "SQL Query failed:" << query.lastError()
-                 << "("
-                 << "File:" << __FILE__ << ", Line: " << __LINE__
-                 << ")";
-#endif
-        return -1;  // TODO: Need a better mechanism for reporting failure (valid returns may indeed be -1)
-    }
-
-    // Check number of rows selected
-    if (query.size() > 0 && query.size() > 1)
-    {
-#ifdef QT_DEBUG
-        qDebug() << "SQL Query returned wrong number of results:"
-                 << query.lastError()
-                 << "("
-                 << "File:" << __FILE__ << ", Line: " << __LINE__
-                 << ")";
-#endif
-        return -1;  // TODO: Need a better mechanism for reporting failure (valid returns may indeed be -1)
-    }
-
-    if (!query.first())
-    {
-        qDebug() << "Could not position on first query result!"
-                 << "("
-                 << "File:" << __FILE__ << ", Line: " << __LINE__
-                 << ")";
-
-        return -1;  // TODO: Need a better mechanism for reporting failure (valid returns may indeed be -1)
-    }
-
-    // return the value of the first row (there should only be one row)
-    return query.value(0).toInt();
-}
-
-QStringList PhoebetriaDbMgr::readProfileNames()
-{
-    QStringList profileList;
-    QSqlQuery query(QSqlDatabase::database(m_dbConnectionName));
-
-    query.exec(QLatin1String("select distinct name from Profile"));
-
-    while (query.next())
-    {
-        profileList << query.value(0).toString();
-    }
-
-#if 0
-    if (profileList.isEmpty())
-        return QStringList("** FAILED **");
-#endif
-
-    return profileList;
-}
 
 

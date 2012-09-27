@@ -29,8 +29,8 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     setApplicationName("Phoebetria");
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
-    PhoebetriaDbMgr db;
-    db.init();
+    DatabaseManager db;
+    db.initAllDatabases();
 
     m_globalTimer.start(200);
 

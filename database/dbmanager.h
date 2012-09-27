@@ -17,64 +17,61 @@
 #ifndef PHOEBETRIA_DATABASE_H
 #define PHOEBETRIA_DATABASE_H
 
-#include <QString>
-#include <QSettings>
+#include <QStringList>
 #include <QtSql>
 
-class PhoebetriaDbMgr : public QSqlDatabase
+class DatabaseManager : public QSqlDatabase
 {
 
 public:
 
-    PhoebetriaDbMgr();
-    PhoebetriaDbMgr(const QSqlDatabase& other);
+    typedef enum
+    {
+        PrimaryDb,
+        LoggingDb
+    } DatabaseId;
 
-    void initCommonCtorData(void);
+    typedef struct
+    {
+        const QString connName;
+        const char* filename;
+    } DbDetails;
 
-    void init(void);
+    DatabaseManager();
+    DatabaseManager(const QSqlDatabase& other);
 
-    static QStringList readProfileNames();
+    static void initAllDatabases(void);
 
-    static int readProfile(const QString& name,
-                           const QString& setting,
-                           int channel);
+    inline static const QString *dbConnectionName(DatabaseId dbId);
+    inline static const QString *primaryDbConnName(void);
 
-    static QSqlError saveProfile(const QString& name,
-                                 const QString& setting,
-                                 int channel,
-                                 int value);
+    static QStringList tables(const QString& dbConnectionName);
 
-    static QSqlError eraseProfile(const QString &name);
-
-    static const QString& connectionName(void)
-        { return m_dbConnectionName; }
-
-    QStringList tables(const QString& dbConnectionName);
-
-    QStringList tableFields(const QString &dbConnectionName,
-                            const QString& tablename);
+    static QStringList tableFields(const QString &dbConnectionName,
+                                   const QString& tablename);
 
 protected:
 
-    QSqlError connect();
-
-    QSqlError createNewDb(void);
-    QSqlError checkExistingDb(void);
-    QSqlError recreateDb(void);
-    QSqlError enableFkSupport(void);
-
-    bool verifyDbAndPathExist(void) const;
-
-    bool openProfile();
+    QString prependDbPath(const QString& filename) const;
 
 private:
 
-    QString m_dbPath;
-    QString m_dbPathAndName;
-    QSqlRelationalTableModel m_Profile;
+    static QString m_dbPath;
 
-    static QString m_dbFilename;
-    static QString m_dbConnectionName;
+    static const DbDetails m_dbConnectionDetails[];
 };
+
+
+
+const QString* DatabaseManager::dbConnectionName(DatabaseId dbId)
+{
+    return &m_dbConnectionDetails[dbId].connName;
+}
+
+const QString* DatabaseManager::primaryDbConnName(void)
+{
+    return dbConnectionName(PrimaryDb);
+}
+
 
 #endif // PHOEBETRIA_DATABASE_H

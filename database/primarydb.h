@@ -17,10 +17,40 @@
 #ifndef PHOEBETRIA_PRIMARYDB_H
 #define PHOEBETRIA_PRIMARYDB_H
 
-class primarydb
+#include <QStringList>
+#include <QtSql>
+#include "dbmanager.h"
+
+class PrimaryDb
 {
 public:
-    primarydb();
+    PrimaryDb();
+
+    inline static QString connectionName(void);
+
+    void init(void);
+
+    static QStringList profileNames();
+
+protected:
+    QSqlError connect(const QString &connectionName);
+
+    QSqlError createNewDb(const QString &connectionName);
+    QSqlError checkExistingDb(const QString &connectionName);
+    QSqlError recreateDb(const QString &connectionName);
+    QSqlError enableFkSupport(const QString &connectionName);
+
+    bool verifyDbAndPathExist(const QString &connectionName) const;
+
+    bool openProfile();
+
 };
+
+
+QString PrimaryDb::connectionName(void)
+{
+    return QString(*DatabaseManager::primaryDbConnName());
+}
+
 
 #endif // PHOEBETRIA_PRIMARYDB_H

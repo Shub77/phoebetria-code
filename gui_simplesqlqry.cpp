@@ -8,7 +8,7 @@
 #include <QDialog>
 #include <QLayout>
 
-#include "dbmanager.h"
+#include "primarydb.h"
 
 
 gui_SimpleSqlQry::gui_SimpleSqlQry(QWidget *parent) :
@@ -48,7 +48,7 @@ void gui_SimpleSqlQry::populateTablesList(void)
 
 QAbstractItemModel* gui_SimpleSqlQry::createItemModel(void)
 {
-    PhoebetriaDbMgr db;
+    DatabaseManager db;
 
     QStringList tables = db.tables(db.connectionName());
     tables.sort();
@@ -93,7 +93,7 @@ void gui_SimpleSqlQry::on_ctrl_execute_clicked()
         return;
     }
 
-    QSqlDatabase db = QSqlDatabase::database(PhoebetriaDbMgr::connectionName());
+    QSqlDatabase db = QSqlDatabase::database(PrimaryDb::connectionName());
 
     //QSqlQuery qry(sql, db);
 
@@ -120,7 +120,7 @@ void gui_SimpleSqlQry::on_ctrl_execute_clicked()
 
 bool gui_SimpleSqlQry::executeQuery(QSqlQuery* qry, const QString& sql)
 {
-    QSqlDatabase db = QSqlDatabase::database(PhoebetriaDbMgr::connectionName());
+    QSqlDatabase db = QSqlDatabase::database(PrimaryDb::connectionName());
 
     qry->exec();
 
