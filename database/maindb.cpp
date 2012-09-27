@@ -14,12 +14,12 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "primarydb.h"
+#include "maindb.h"
 
 #include <QSettings>
 
 #include "dbmanager.h"
-#include "primarydb_schema.h"
+#include "maindb_schema.h"
 #include "utils.h"
 
 // TODO: Move this to "preferences"

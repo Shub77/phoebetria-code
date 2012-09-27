@@ -14,7 +14,7 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "primarydb_schema.h"
+#include "maindb_schema.h"
 
 #include <QStringList>
 #include <QSqlDatabase>

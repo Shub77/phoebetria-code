@@ -23,7 +23,7 @@
 #include <QDebug>
 #include <QFile>
 
-#include "primarydb.h"
+#include "maindb.h"
 #include "preferences.h"
 #include "utils.h"
 

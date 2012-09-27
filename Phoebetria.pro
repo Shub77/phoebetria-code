@@ -65,8 +65,8 @@ SOURCES += main.cpp \
     gui_simplesqlqry.cpp \
     gui_preferences.cpp \
     database/dbmanager.cpp \
-    database/primarydb_schema.cpp \
-    database/primarydb.cpp
+    database/maindb.cpp \
+    database/maindb_schema.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -84,8 +84,8 @@ HEADERS  += gui_mainwindow.h \
     gui_simplesqlqry.h \
     gui_preferences.h \
     database/dbmanager.h \
-    database/primarydb_schema.h \
-    database/primarydb.h
+    database/maindb.h \
+    database/maindb_schema.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
