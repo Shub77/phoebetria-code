@@ -49,7 +49,10 @@ Preferences::Preferences(QObject *parent) :
 
 QString Preferences::filepath(void)
 {
-    QSettings settings;
+    QSettings settings(QSettings::IniFormat,
+                       QSettings::UserScope,
+                       "Phoebetria",
+                       "Phoebetria");
     return QFileInfo(settings.fileName()).path();
 }
 
