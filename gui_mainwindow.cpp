@@ -792,9 +792,11 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
     this->blockSignals(bs1);
     fcdata().blockSignals(bs2);
 
-    fcp.save(m_profileName);
-
-    ui->ctrl_PresetName->addItem(m_profileName);
+    if (fcp.save(m_profileName))
+    {
+        if (ui->ctrl_PresetName->findText(m_profileName) == -1)
+            ui->ctrl_PresetName->addItem(m_profileName);
+    }
 }
 
 void gui_MainWindow::on_ctrl_LoadPreset_clicked()
@@ -840,8 +842,14 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
         return;
     }
 
-    fcp.erase(m_profileName);
+    if (fcp.erase(m_profileName))
+    {
+        ui->ctrl_PresetName->removeItem(ui->ctrl_PresetName->currentIndex());
+        if (ui->ctrl_PresetName->currentText() == m_profileName)
+        {
+            ui->ctrl_PresetName->setEditText("");
+        }
 
-    ui->ctrl_PresetName->removeItem(ui->ctrl_PresetName->currentIndex());
+    }
 }
 
