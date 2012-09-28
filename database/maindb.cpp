@@ -232,10 +232,18 @@ bool MainDb::deleteProfile(const QString& profileName)
 
     if (!ok) { m_lastSqlError = qry.lastError(); return false; }
 
+    QSqlDatabase db = QSqlDatabase::database(dbConnectionName());
+    db.transaction();
     ok = qry.exec();
 
-    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+    if (!ok)
+    {
+        db.rollback();
+        m_lastSqlError = qry.lastError();
+        return false;
+    }
 
+    db.commit();
     return true;
 }
 
