@@ -773,7 +773,14 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
 
     if (FanControllerProfile::isReservedProfileName(m_profileName))
     {
-        // TODO: Show ERROR
+        QMessageBox::critical(
+                    this,
+                    tr("Invalid profile name"),
+                    tr("Profile names beginning with %1"
+                       " are reserved.\nThe profile has not been saved!")
+                    .arg(FanControllerProfile::reservedProfileNameStartChars())
+                    );
+
         return;
     }
 
@@ -822,7 +829,14 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
 
     if (FanControllerProfile::isReservedProfileName(m_profileName))
     {
-        // TODO: Show ERROR
+        QMessageBox::critical(
+                    this,
+                    tr("Invalid profile name"),
+                    tr("Profile names beginning with %1"
+                       " are reserved.\nThe profile has not been erased!")
+                    .arg(FanControllerProfile::reservedProfileNameStartChars())
+                    );
+
         return;
     }
 

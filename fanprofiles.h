@@ -64,6 +64,8 @@ public:
 
     inline static bool isReservedProfileName(const QString& name);
 
+    inline static const QString& reservedProfileNameStartChars(void);
+
 protected:
 
     void initCommon(void);
@@ -98,7 +100,15 @@ inline const BasicChannelData&
 
 inline bool FanControllerProfile::isReservedProfileName(const QString& name)
 {
-    return name.left(2) == "__";
+    return name.left(reservedProfileNameStartChars().length())
+                == reservedProfileNameStartChars();
 }
+
+inline const QString& FanControllerProfile::reservedProfileNameStartChars(void)
+{
+    static QString chrs = "__";
+    return chrs;
+}
+
 
 #endif // PHOEBETRIA_FAN_PROFILES_H
