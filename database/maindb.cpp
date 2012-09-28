@@ -244,7 +244,8 @@ bool MainDb::deleteProfile(const QString& profileName)
     }
 
     db.commit();
-    return true;
+    int rowsDeleted = qry.numRowsAffected();
+    return rowsDeleted == -1 || rowsDeleted == 0 ? false : true;
 }
 
 // returns -1 if no match found

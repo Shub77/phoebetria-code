@@ -844,12 +844,12 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
 
     if (fcp.erase(m_profileName))
     {
-        ui->ctrl_PresetName->removeItem(ui->ctrl_PresetName->currentIndex());
-        if (ui->ctrl_PresetName->currentText() == m_profileName)
-        {
-            ui->ctrl_PresetName->setEditText("");
-        }
+        int idx = ui->ctrl_PresetName->findText(m_profileName);
+        if (idx != -1)
+            ui->ctrl_PresetName->removeItem(idx);
 
+        if (ui->ctrl_PresetName->currentText() == m_profileName)
+            ui->ctrl_PresetName->setEditText("");
     }
 }
 
