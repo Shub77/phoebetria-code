@@ -62,6 +62,8 @@ public:
 
     const BasicChannelData& getChannelSettings(int channel) const;
 
+    inline static bool isReservedProfileName(const QString& name);
+
 protected:
 
     void initCommon(void);
@@ -93,5 +95,10 @@ inline bool FanControllerProfile::isAudibleAlarm(void) const
 inline const BasicChannelData&
     FanControllerProfile::getChannelSettings(int channel) const
         { return m_channelSettings[channel]; }
+
+inline bool FanControllerProfile::isReservedProfileName(const QString& name)
+{
+    return name.left(2) == "__";
+}
 
 #endif // PHOEBETRIA_FAN_PROFILES_H

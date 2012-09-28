@@ -177,11 +177,11 @@ void gui_MainWindow::populate_ctrl_PresetName(void)
     QStringList items = fcp.getProfileNames();
     for (int i = 0; i < items.count(); ++i)
     {
-        // Skip profile names beginning with "__" these are reserved
-        if (items.at(i).left(2) == "__") continue;
-        ui->ctrl_PresetName->addItem(items.at(i));
+        const QString& item = items.at(i);
+        // Skip reserved profile names
+        if (FanControllerProfile::isReservedProfileName(item)) continue;
+        ui->ctrl_PresetName->addItem(item);
     }
-
 }
 
 void gui_MainWindow::enableSpeedControls(bool enabled)
@@ -771,6 +771,12 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
     QString m_profileName = ui->ctrl_PresetName->currentText();
     if (m_profileName.isEmpty()) return;
 
+    if (FanControllerProfile::isReservedProfileName(m_profileName))
+    {
+        // TODO: Show ERROR
+        return;
+    }
+
     bool bs1 = this->blockSignals(true);
     bool bs2 = fcdata().blockSignals(true);
 
@@ -813,6 +819,12 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
     QString m_profileName = ui->ctrl_PresetName->currentText();
 
     if (m_profileName.isEmpty()) return;
+
+    if (FanControllerProfile::isReservedProfileName(m_profileName))
+    {
+        // TODO: Show ERROR
+        return;
+    }
 
     fcp.erase(m_profileName);
 
