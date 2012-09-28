@@ -97,18 +97,9 @@ bool FanControllerProfile::save(const QString& profileName)
 
 bool FanControllerProfile::load(const QString& profileName)
 {
-#if 0
-    m_isAuto = DatabaseManager::readProfile(profileName, "isAuto", 0);
-    m_isCelcius = DatabaseManager::readProfile(profileName, "isCelcius", 0);
-    m_isAudibleAlarm = DatabaseManager::readProfile(profileName, "isAudibleAlarm", 0);
+    MainDb mdb;
 
-    for (int i = 0; i < FC_MAX_CHANNELS; i++)
-    {
-        m_channelSettings[i].alarmTemp = DatabaseManager::readProfile(profileName, "AlarmTempF", i);
-        m_channelSettings[i].speed = DatabaseManager::readProfile(profileName, "FanRPM", i);
-    }
-#endif
-    return true;
+    return mdb.readProfile(profileName, *this);
 }
 
 bool FanControllerProfile::erase(const QString& profileName)

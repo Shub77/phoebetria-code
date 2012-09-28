@@ -36,6 +36,8 @@ class FanControllerProfile
 {
 public:
 
+    friend class MainDb;
+
     FanControllerProfile();
 
     QString defualtProfileLocation(void) const;

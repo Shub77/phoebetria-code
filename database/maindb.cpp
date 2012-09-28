@@ -160,6 +160,67 @@ int MainDb::writeProfileCommonSettings(const QString& profileName,
     return getProfileId(profileName);
 }
 
+bool MainDb::readProfile(const QString&name, FanControllerProfile& profile)
+{
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    /* Could probably use QSqlQuery::bind(), but &val in that function is
+     * const???
+     */
+    bool ok = qry.prepare(
+                  "select "
+                  "     isAuto,"
+                  "     isCelcius,"
+                  "     isAudibleAlarm,"
+                  "     isSoftwareAuto,"
+                  "     channel,"
+                  "     manualRpm,"
+                  "     alarmTempF"
+                  " from Profile"
+                  " join ChannelSetting on ChannelSetting.p_id = Profile.p_id"
+                " where Profile.name = :pName"
+                );
+
+    qry.bindValue(":pName", name);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    ok = qry.exec();
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    if (!qry.first())
+    {
+        // Empty result
+        m_lastSqlError = QSqlError();
+        return false;
+    }
+
+    // Get the common settings from the first result
+    profile.m_name =             name;
+    profile.m_isAuto =           qry.value(0).isNull() ? true : qry.value(0).toBool();
+    profile.m_isCelcius =        qry.value(1).isNull() ? true : qry.value(1).toBool();;
+    profile.m_isAudibleAlarm =   qry.value(2).isNull() ? true : qry.value(2).toBool();;
+
+    for ( ; qry.isValid(); qry.next())
+    {
+        int channel = qry.value(4).isNull() ? -1 : qry.value(4).toInt();
+
+        if (channel < 0 || channel > FC_MAX_CHANNELS-1)
+        {
+            qDebug() << "Invalid channel read from profile:" << channel;
+            continue;
+        }
+
+        int manualRpm       = qry.value(5).toInt();
+        int alarmTempF      = qry.value(6).toInt();
+
+        profile.m_channelSettings[channel].speed        = manualRpm;
+        profile.m_channelSettings[channel].alarmTemp    = alarmTempF;
+    }
+
+    return true;
+}
+
 int MainDb::getProfileId(const QString& name)
 {
     QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));

@@ -40,6 +40,8 @@ public:
 
     bool writeProfile(const QString &name, const FanControllerProfile &profile);
 
+    bool readProfile(const QString&name, FanControllerProfile& profile);
+
     int getProfileId(const QString& name);
 
 protected:
