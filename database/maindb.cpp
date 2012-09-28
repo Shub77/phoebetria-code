@@ -247,6 +247,7 @@ bool MainDb::deleteProfile(const QString& profileName)
     return true;
 }
 
+// returns -1 if no match found
 int MainDb::getProfileId(const QString& name)
 {
     QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
@@ -260,8 +261,8 @@ int MainDb::getProfileId(const QString& name)
 
     if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
 
-    qry.first();
-    return qry.value(0).toInt();
+    // return the p_id if qry has results, otherwise -1
+    return qry.first() ? qry.value(0).toInt() : -1;
 }
 
 // ProfileId is the primary key (p_id) for the profile
