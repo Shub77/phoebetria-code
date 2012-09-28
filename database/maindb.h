@@ -42,6 +42,8 @@ public:
 
     bool readProfile(const QString&name, FanControllerProfile& profile);
 
+    bool deleteProfile(const QString& profileName);
+
     int getProfileId(const QString& name);
 
 protected:

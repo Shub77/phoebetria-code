@@ -104,12 +104,9 @@ bool FanControllerProfile::load(const QString& profileName)
 
 bool FanControllerProfile::erase(const QString& profileName)
 {
-#if 0
-    QSqlError err;
-    err = DatabaseManager::eraseProfile(profileName);
-    return err.type() == QSqlError::NoError;
-#endif
-    return true;
+    MainDb mdb;
+
+    return mdb.deleteProfile(profileName);
 }
 
 

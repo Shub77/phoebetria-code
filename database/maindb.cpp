@@ -221,6 +221,24 @@ bool MainDb::readProfile(const QString&name, FanControllerProfile& profile)
     return true;
 }
 
+
+bool MainDb::deleteProfile(const QString& profileName)
+{
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    bool ok = qry.prepare("delete from Profile"
+                          " where name = :profileName");
+    qry.bindValue(":profileName", profileName);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    ok = qry.exec();
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    return true;
+}
+
 int MainDb::getProfileId(const QString& name)
 {
     QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
