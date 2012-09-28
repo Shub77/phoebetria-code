@@ -158,7 +158,6 @@ int MainDb::writeProfileCommonSettings(const QString& profileName,
     if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
 
     return getProfileId(profileName);
-<<<<<<< HEAD
 }
 
 bool MainDb::readProfile(const QString&name, FanControllerProfile& profile)
@@ -238,28 +237,6 @@ int MainDb::getProfileId(const QString& name)
     qry.first();
     return qry.value(0).toInt();
 }
-
-=======
-}
-
-int MainDb::getProfileId(const QString& name)
-{
-    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
-
-    bool ok = qry.prepare("select p_id from profile where name = :pName");
-    qry.bindValue(":pName", name);
-
-    if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
-
-    ok = qry.exec();
-
-    if (!ok) { m_lastSqlError = qry.lastError(); return -1; }
-
-    qry.first();
-    return qry.value(0).toInt();
-}
-
->>>>>>> origin/dbwork
 
 // ProfileId is the primary key (p_id) for the profile
 bool MainDb::writeProfileChannelSettings(int profileId,
