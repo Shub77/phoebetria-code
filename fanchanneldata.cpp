@@ -19,8 +19,8 @@
 
 
 const int FanChannelData::m_RpmNotSetValue = -1;
-const int FanChannelData::m_TemperatureNotSetValue = -65535;
-const int FanChannelData::m_maxLoggedTempNotSetValue = -65535;
+const int FanChannelData::m_TemperatureNotSetValue = 65535;
+const int FanChannelData::m_maxLoggedTempNotSetValue = 65535;
 const int FanChannelData::m_minLoggedTempNotSetValue = 63335;
 const int FanChannelData::m_manualRPMNotSetValue = -1;
 // Keeping -1 so that V1.0.0-Beta profiles do not break.
