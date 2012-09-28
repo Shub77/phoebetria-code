@@ -173,7 +173,15 @@ void gui_MainWindow::populate_ctrl_PresetName(void)
 {
     FanControllerProfile fcp;
     ui->ctrl_PresetName->clear();
-    ui->ctrl_PresetName->addItems(fcp.getProfileNames());
+
+    QStringList items = fcp.getProfileNames();
+    for (int i = 0; i < items.count(); ++i)
+    {
+        // Skip profile names beginning with "__" these are reserved
+        if (items.at(i).left(2) == "__") continue;
+        ui->ctrl_PresetName->addItem(items.at(i));
+    }
+
 }
 
 void gui_MainWindow::enableSpeedControls(bool enabled)
