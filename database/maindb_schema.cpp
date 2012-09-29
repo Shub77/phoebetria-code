@@ -67,8 +67,8 @@ static MainDbSchema::TableDef schema[] =
     },
 
     {
-        "FanSpeedRamp",
-        "create table BasicFanSpeedRamp ("
+        "BezierFanCurve",
+        "create table BezierFanCurve ("
         "    p_id                   INTEGER"
         "   ,channel                INTEGER"
         "   ,temperatureF_fanOn     INTEGER"
@@ -76,6 +76,10 @@ static MainDbSchema::TableDef schema[] =
         "   ,temperatureF_rampEnd   INTEGER"
         "   ,speed_rampStart        INTEGER"
         "   ,speed_rampEnd          INTEGER"
+        "   ,cp1_x                  INTEGER"
+        "   ,cp1_y                  INTEGER"
+        "   ,cp2_x                  INTEGER"
+        "   ,cp2_y                  INTEGER"
         "   ,rampType               VARCHAR(16) DEFAULT 'linear'"
         "   ,temperatureHysteresis  INTEGER     DEFAULT 1"
         "   ,adjustSpeedDelay       INTEGER     DEFAULT 15000 /* ms */"
