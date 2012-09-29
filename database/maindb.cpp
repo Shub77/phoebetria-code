@@ -17,6 +17,7 @@
 #include "maindb.h"
 
 #include <QSettings>
+#include <QMessageBox>
 
 #include "dbmanager.h"
 #include "maindb_schema.h"
@@ -37,8 +38,6 @@ void MainDb::init(void)
     QString dbConnName = dbConnectionName();
     if (!QSqlDatabase::contains(dbConnName))
         connect(dbConnName);
-
-    FanControllerProfile::importFromIni();
 }
 
 QStringList MainDb::profileNames()
@@ -322,8 +321,15 @@ QSqlError MainDb::connect(const QString& connectionName)
 
     QSqlError err;
 
+    bool newDatabase = false;
     if (!fileExists(dbPathAndName))
+    {
         err = createNewDb(connectionName);
+        if (err.type() == QSqlError::NoError)
+        {
+            newDatabase = true;
+        }
+    }
     else
         err = checkExistingDb(connectionName);
 
@@ -336,6 +342,9 @@ QSqlError MainDb::connect(const QString& connectionName)
         return db.lastError();
 
     err = enableFkSupport(connectionName);
+
+    if (newDatabase && err.type() == QSqlError::NoError)
+        importOldStyleProfiles();
 
     return err;
 }
@@ -426,4 +435,31 @@ bool MainDb::verifyDbAndPathExist(void)
     if (QFile::exists(dbPathAndName))
         return true;
     return checkPath(DatabaseManager::pathToDatabases());
+}
+
+int MainDb::importOldStyleProfiles(void)
+{
+    QSettings settings(QSettings::IniFormat,
+                       QSettings::UserScope,
+                       "Phoebetria",
+                       "Phoebetria");
+
+    QFileInfo path = QFileInfo(settings.fileName()).path() + "/Presets/";
+
+    QDir dir(path.absoluteFilePath());
+
+    if (!dir.exists()) return 0;
+
+    int uc = QMessageBox::information(
+                NULL,
+                QObject::tr("Import old-style (.ini) profiles?"),
+                QObject::tr("Phoebetria has changed the way it stores fan profiles."
+                            " Would you like to import existing saved profiles?"),
+                QMessageBox::Yes | QMessageBox::No
+                );
+
+    if (uc == QMessageBox::Yes)
+        return FanControllerProfile::importFromIni(dir);
+    else
+        return 0;
 }

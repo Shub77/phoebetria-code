@@ -110,17 +110,9 @@ bool FanControllerProfile::erase(const QString& profileName)
 }
 
 // returns the number of files imported
-int FanControllerProfile::importFromIni(void)
+// pre dir.exists() == true
+int FanControllerProfile::importFromIni(QDir& dir)
 {
-    QSettings settings(QSettings::IniFormat,
-                       QSettings::UserScope,
-                       "Phoebetria",
-                       "Phoebetria");
-
-    QFileInfo path = QFileInfo(settings.fileName()).path() + "/Presets/";
-
-    QDir dir(path.absoluteFilePath());
-
     QFileInfoList files = dir.entryInfoList(QDir::Files);
 
     MainDb mdb;

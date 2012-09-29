@@ -24,6 +24,7 @@
 #include "fanchanneldata.h"
 
 class FanControllerData;
+class QDir;
 
 typedef struct
 {
@@ -51,7 +52,7 @@ public:
     bool save(const QString& profileName);
     bool load(const QString& profileName);
 
-    static int importFromIni(void);
+    static int importFromIni(QDir &dir);
 
     static bool erase(const QString& profileName);
 

@@ -67,6 +67,8 @@ protected:
 
     static bool verifyDbAndPathExist(void);
 
+    static int importOldStyleProfiles(void);
+
 private:
 
     QSqlError m_lastSqlError;
