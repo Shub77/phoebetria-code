@@ -109,14 +109,87 @@ bool FanControllerProfile::erase(const QString& profileName)
     return mdb.deleteProfile(profileName);
 }
 
-
-bool FanControllerProfile::importFromIni(void)
+// returns the number of files imported
+int FanControllerProfile::importFromIni(void)
 {
-    // Get all ini filenames
+    QSettings settings(QSettings::IniFormat,
+                       QSettings::UserScope,
+                       "Phoebetria",
+                       "Phoebetria");
 
-    // Read each profile
+    QFileInfo path = QFileInfo(settings.fileName()).path() + "/Presets/";
 
-    // Check if in database; if not, add the profile
+    QDir dir(path.absoluteFilePath());
 
-    return true;
+    QFileInfoList files = dir.entryInfoList(QDir::Files);
+
+    MainDb mdb;
+    int count = files.count();
+    int filesImported = 0;
+
+    for (int i = 0; i < count; ++i)
+    {
+        FanControllerProfile tmp;
+        if (loadFromIni(files.at(i).filePath(), tmp))
+        {
+            QString profileName(files.at(i).fileName());
+            if (profileName.endsWith(".ini"))
+                profileName.chop(4);
+
+            if (profileName.isEmpty())  // Paranoia probabaly
+                continue;
+
+            if (mdb.writeProfile(profileName, tmp))
+                filesImported++;
+        }
+    }
+
+    return filesImported;
+}
+
+
+bool FanControllerProfile::loadFromIni(const QString& filenameAndPath,
+                                       FanControllerProfile& dest)
+{
+    bool r = true;
+
+    QFile file;
+    file.setFileName(filenameAndPath);
+    if (!file.exists())
+    {
+        return false;
+    }
+
+    QSettings settings (filenameAndPath, QSettings::IniFormat);
+
+    dest.m_isAuto = settings.value("common/auto", true).toBool();
+    dest.m_isCelcius = settings.value("common/celcius", true).toBool();
+    dest.m_isAudibleAlarm = settings.value("common/alarm", true).toBool();
+
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
+        QString group = "fan_" + QString::number(i);
+        settings.beginGroup(group);
+
+        int value;
+        bool ok;
+
+        value = settings.value("alarm_temperature_F",
+                               dest.m_channelSettings[i].alarmTemp).toInt(&ok);
+        if (ok)
+            dest.m_channelSettings[i].alarmTemp = value;
+        else
+            r = false;
+
+        value = settings.value("rpm",
+                               dest.m_channelSettings[i].speed).toInt(&ok);
+        if (ok)
+            dest.m_channelSettings[i].speed = value;
+        else
+            r = false;
+
+        settings.endGroup();
+    }
+
+    return r && (settings.status() == QSettings::NoError);
 }

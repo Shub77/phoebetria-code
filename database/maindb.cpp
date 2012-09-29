@@ -37,6 +37,8 @@ void MainDb::init(void)
     QString dbConnName = dbConnectionName();
     if (!QSqlDatabase::contains(dbConnName))
         connect(dbConnName);
+
+    FanControllerProfile::importFromIni();
 }
 
 QStringList MainDb::profileNames()

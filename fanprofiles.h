@@ -51,7 +51,7 @@ public:
     bool save(const QString& profileName);
     bool load(const QString& profileName);
 
-    bool importFromIni(void);
+    static int importFromIni(void);
 
     static bool erase(const QString& profileName);
 
@@ -69,6 +69,8 @@ public:
 protected:
 
     void initCommon(void);
+
+    static bool loadFromIni(const QString& filenameAndPath, FanControllerProfile &dest);
 
 private:
 
