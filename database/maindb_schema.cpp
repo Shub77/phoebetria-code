@@ -45,10 +45,12 @@ static MainDbSchema::TableDef schema[] =
         "CREATE TABLE Profile("
         "     p_id           INTEGER        PRIMARY KEY"
         "    ,name           VARCHAR(32)    UNIQUE"
-        "    ,isAuto         BOOLEAN        DEFAULT '1'"
-        "    ,isCelcius      BOOLEAN        DEFAULT '1'"
-        "    ,isAudibleAlarm BOOLEAN        DEFAULT '1'"
-        "    ,isSoftwareAuto BOOLEAN        DEFAULT '0'"
+        "    ,label          VARCHAR(32)    UNIQUE"
+        "    ,description    VARCHAR(255)"
+        "    ,isAuto         BOOLEAN        DEFAULT 'true'"
+        "    ,isCelcius      BOOLEAN        DEFAULT 'true'"
+        "    ,isAudibleAlarm BOOLEAN        DEFAULT 'true'"
+        "    ,isSoftwareAuto BOOLEAN        DEFAULT 'false'"
         ");"
     },
 
@@ -65,11 +67,18 @@ static MainDbSchema::TableDef schema[] =
     },
 
     {
-        "ChannelName",
-        "CREATE TABLE ChannelName ("
-        "    channel INTEGER"
-        "    ,name    VARCHAR( 32 )"
-        "    ,PRIMARY KEY ( channel, name )"
+        "BasicFanSpeedRamp",
+        "CREATE TABLE BasicFanSpeedRamp ("
+        "    p_id                   INTEGER"
+        "   ,channel                INTEGER"
+        "   ,temperatureF_fanOn     INTEGER"
+        "   ,temperatureF_rampStart INTEGER"
+        "   ,temperatureF_rampEnd   INTEGER"
+        "   ,linear                 BOOLEAN     DEFAULT 'true'"
+        "   ,temperatureHysteresis  INTEGER     DEFAULT 1"
+        "   ,adjustSpeedDelay       INTEGER     DEFAULT 5000"
+        "   ,FOREIGN KEY ( p_id ) REFERENCES Profile ( p_id )"
+        "       ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED"
         ");"
     }
 };
@@ -79,7 +88,7 @@ static MainDbSchema::TableDef schema[] =
 static const char* defaultDataSql[] =
 {
         // Note: schema version is inserted by insertDefaultData()
-    "INSERT INTO [Profile] ([p_id], [name], [isAuto], [isCelcius], [isAudibleAlarm], [isSoftwareAuto]) VALUES (1, '__PHOEBETRIA_DEFAULT', 1, 1, 1, 0)",
+    "INSERT INTO [Profile] ([p_id], [name], [isAuto], [isCelcius], [isAudibleAlarm], [isSoftwareAuto]) VALUES (1, '__PHOEBETRIA_DEFAULT', 'true', 'true', 'true', 'false')",
     "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 0, 50000, 194)",
     "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 1, 50000, 194)",
     "INSERT INTO ChannelSetting (p_id, channel, manualRpm, alarmTempF) VALUES (1, 2, 50000, 194)",
