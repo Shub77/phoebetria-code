@@ -42,7 +42,7 @@ static MainDbSchema::TableDef schema[] =
 
     {
         "Profile",
-        "CREATE TABLE Profile("
+        "create table Profile("
         "     p_id           INTEGER        PRIMARY KEY"
         "    ,name           VARCHAR(32)    UNIQUE"
         "    ,label          VARCHAR(32)    UNIQUE"
@@ -56,29 +56,32 @@ static MainDbSchema::TableDef schema[] =
 
     {
         "ChannelSetting",
-        "CREATE TABLE ChannelSetting ("
+        "create table ChannelSetting ("
         "     p_id       INTEGER"
         "    ,channel    INTEGER"
         "    ,manualRpm  INTEGER"
         "    ,alarmTempF INTEGER"
-        "    ,FOREIGN KEY ( p_id ) REFERENCES Profile ( p_id )"
-        "         ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED"
+        "    ,foreign key ( p_id ) references Profile ( p_id )"
+        "         on delete cascade deferrable initially deferred"
         ");"
     },
 
     {
-        "BasicFanSpeedRamp",
-        "CREATE TABLE BasicFanSpeedRamp ("
+        "FanSpeedRamp",
+        "create table BasicFanSpeedRamp ("
         "    p_id                   INTEGER"
         "   ,channel                INTEGER"
         "   ,temperatureF_fanOn     INTEGER"
         "   ,temperatureF_rampStart INTEGER"
         "   ,temperatureF_rampEnd   INTEGER"
-        "   ,linear                 BOOLEAN     DEFAULT 'true'"
+        "   ,speed_rampStart        INTEGER"
+        "   ,speed_rampEnd          INTEGER"
+        "   ,rampType               VARCHAR(16) DEFAULT 'linear'"
         "   ,temperatureHysteresis  INTEGER     DEFAULT 1"
-        "   ,adjustSpeedDelay       INTEGER     DEFAULT 5000"
-        "   ,FOREIGN KEY ( p_id ) REFERENCES Profile ( p_id )"
-        "       ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED"
+        "   ,adjustSpeedDelay       INTEGER     DEFAULT 15000 /* ms */"
+        "   ,primary key ( p_id, channel )"
+        "   ,foreign key ( p_id ) references Profile ( p_id )"
+        "       on delete cascade deferrable initially deferred"
         ");"
     }
 };
