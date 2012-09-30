@@ -16,6 +16,6 @@
 
 #include "bezierfancurve.h"
 
-FanSpeedCurve::FanSpeedCurve()
+BezierFanCurve::BezierFanCurve()
 {
 }
