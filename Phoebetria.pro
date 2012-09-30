@@ -66,7 +66,8 @@ SOURCES += main.cpp \
     gui_preferences.cpp \
     database/dbmanager.cpp \
     database/maindb.cpp \
-    database/maindb_schema.cpp
+    database/maindb_schema.cpp \
+    softwareauto/bezierfancurve.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -85,7 +86,8 @@ HEADERS  += gui_mainwindow.h \
     gui_preferences.h \
     database/dbmanager.h \
     database/maindb.h \
-    database/maindb_schema.h
+    database/maindb_schema.h \
+    softwareauto/bezierfancurve.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
