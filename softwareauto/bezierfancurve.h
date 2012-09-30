@@ -22,7 +22,7 @@ class BezierFanCurve
 public:
     BezierFanCurve();
 
-    int cubicInt(int t, int start, int co1, int co2, int end);
+    int cubicInt(double t, int start, int co1, int co2, int end);
 
 protected:
 

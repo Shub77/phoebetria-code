@@ -18,11 +18,13 @@
 
 #include <QDebug>
 
+#include "math.h"
+
 BezierFanCurve::BezierFanCurve()
 {
 }
 
-int BezierFanCurve::cubicInt(int t, int start, int co1, int co2, int end)
+int BezierFanCurve::cubicInt(double t, int start, int co1, int co2, int end)
 {
     // pre: t <= start; start < end;
 
@@ -30,13 +32,20 @@ int BezierFanCurve::cubicInt(int t, int start, int co1, int co2, int end)
        Calculate cubic ordinate
        Convert back to "reference" frame
      */
-    int shift = 0-start;
-    return cubic( (double)(t+shift)/(end+shift),
-                  (double)(start+shift)/(end+shift),
-                  (double)(co1+shift)/(end+shift),
-                  (double)(co2+shift)/(end+shift),
-                  (double)(end+shift)/(end+shift)
-                ) * (end+shift) - shift;
+//    return cubic( (double)(t+shift)/(end+shift),
+//                  (double)(start+shift)/(end+shift),
+//                  (double)(co1+shift)/(end+shift),
+//                  (double)(co2+shift)/(end+shift),
+//                  (double)(end+shift)/(end+shift)
+//                ) * (end+shift) - shift;
+//            ;
+
+    return cubic( t,
+                  start,
+                  co1,
+                  co2,
+                  end
+                );
             ;
 }
 
@@ -48,11 +57,15 @@ void BezierFanCurve::test1(void)
     int speedRampEnd = 1400; // end at 1400 RPM (y)
 
     // Arbitrary values
-    int cp1_x = rampEnd;
+    int cp2_x = rampEnd;
+    int cp2_y = speedRampEnd;
+
+    int cp1_x = rampStart;
     int cp1_y = speedRampStart;
 
-    int cp2_x = rampStart;
-    int cp2_y = speedRampEnd;
+
+//    cp1_x = cp2_x;
+//    cp1_y = cp2_y;
 
     struct coord {int x; int y;};
 
@@ -66,8 +79,9 @@ void BezierFanCurve::test1(void)
     }
     for ( ; i <= rampEnd; ++i)
     {
-        curve[i].x = cubicInt(i, rampStart, cp1_x, cp2_x, rampEnd);
-        curve[i].y = cubicInt(i, speedRampStart, cp1_y, cp2_y, speedRampEnd);
+        curve[i].x = cubicInt((double)i/rampEnd, rampStart, cp1_x, cp2_x, rampEnd);
+        //qDebug() << (double)i/rampEnd;
+        curve[i].y = cubicInt((double)i/rampEnd, speedRampStart, cp1_y, cp2_y, speedRampEnd);
     }
     for (; i < 256; ++i)
     {
@@ -77,6 +91,6 @@ void BezierFanCurve::test1(void)
 
     for (i = 0; i < 256; ++i)
     {
-        qDebug() << curve[i].x << curve[i].y;
+        qDebug() << curve[i].x << floor(curve[i].y / 100.0)*100;
     }
 }

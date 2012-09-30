@@ -3,6 +3,8 @@
 
 #include "builddetails.h"
 
+#include "softwareauto/bezierfancurve.h"
+
 gui_About::gui_About(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::gui_About)
@@ -11,6 +13,9 @@ gui_About::gui_About(QWidget *parent) :
     this->setFixedSize(this->size());   // Disable resizing
     ui->ctrl_version->setText("Version " + BuildDetails::versionStr());
     ui->ctrl_build->setText("Build date: " + BuildDetails::buildDateTimeStr());
+
+    BezierFanCurve bc;
+    bc.test1();
 }
 
 gui_About::~gui_About()
