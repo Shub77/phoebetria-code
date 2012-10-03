@@ -22,19 +22,11 @@ class BezierFanCurve
 public:
     BezierFanCurve();
 
-    int cubicInt(double t, int start, int co1, int co2, int end);
-
-protected:
-
     inline double cubic(double t,
                         double start,
                         double co1,
                         double co2,
                         double end);
-
-
-public:
-    void test1(void);
 };
 
 
@@ -44,9 +36,8 @@ double BezierFanCurve::cubic(double t,
                              double co2,
                              double end)
 {
-    double mt = 1.0-t;       // "mirror" of t
+    double mt = 1 - t;
     return mt*mt*mt*start + 3*mt*mt*t*co1 + 3*mt*t*t*co2 + t*t*t*end;
-
 }
 
 #endif // BEZIERFANCURVE_H
