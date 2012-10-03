@@ -3,8 +3,6 @@
 
 #include "builddetails.h"
 
-#include "softwareauto/bezierfancurve.h"
-
 gui_About::gui_About(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::gui_About)

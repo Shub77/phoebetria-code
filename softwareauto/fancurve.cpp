@@ -14,30 +14,12 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BEZIERFANCURVE_H
-#define BEZIERFANCURVE_H
+#include "fancurve.h"
 
-class BezierFanCurve
+#include <QDebug>
+
+#include "math.h"
+
+FanCurve::FanCurve()
 {
-public:
-    BezierFanCurve();
-
-    inline double cubic(double t,
-                        double start,
-                        double co1,
-                        double co2,
-                        double end);
-};
-
-
-double BezierFanCurve::cubic(double t,
-                             double start,
-                             double co1,
-                             double co2,
-                             double end)
-{
-    double mt = 1 - t;
-    return mt*mt*mt*start + 3*mt*mt*t*co1 + 3*mt*t*t*co2 + t*t*t*end;
 }
-
-#endif // BEZIERFANCURVE_H
