@@ -22,22 +22,7 @@ class FanCurve
 public:
     FanCurve();
 
-    inline double bezierCubic(double t,
-                              double start,
-                              double cp1,
-                              double cp2,
-                              double end);
 };
 
-
-double FanCurve::bezierCubic(double t,
-                             double start,
-                             double cp1,
-                             double cp2,
-                             double end)
-{
-    double mt = 1 - t;
-    return mt*mt*mt*start + 3*mt*mt*t*cp1 + 3*mt*t*t*cp2 + t*t*t*end;
-}
 
 #endif // PHOEBETRIA_FANCURVE_H
