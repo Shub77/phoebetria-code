@@ -67,9 +67,7 @@ SOURCES += main.cpp \
     database/dbmanager.cpp \
     database/maindb.cpp \
     database/maindb_schema.cpp \
-    softwareauto/fancurve.cpp \
-    realrectangle.cpp \
-    realpoint.cpp
+    softwareauto/fancurve.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -89,9 +87,7 @@ HEADERS  += gui_mainwindow.h \
     database/dbmanager.h \
     database/maindb.h \
     database/maindb_schema.h \
-    softwareauto/fancurve.h \
-    realrectangle.h \
-    realpoint.h
+    softwareauto/fancurve.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
