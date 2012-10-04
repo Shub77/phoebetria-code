@@ -67,6 +67,12 @@ static MainDbSchema::TableDef schema[] =
     },
 
     {
+        /* Note: cp1_x, cp1_y, cp2_x, and cp2_y are not currently used.
+                 They are control points for (up to cubic) Bezier curves
+                 and although Bezier curve support has been dropped for the
+                 current version and foreseeable future there is no harm in
+                 leaving them in the schema
+        */
         "SoftwareAutoSetting",
         "create table SoftwareAutoSetting ("
         "    p_id                   INTEGER"
@@ -74,6 +80,7 @@ static MainDbSchema::TableDef schema[] =
         "   ,temperatureF_fanOn     INTEGER"
         "   ,temperatureF_rampStart INTEGER"
         "   ,temperatureF_rampEnd   INTEGER"
+        "   ,temperatureF_fanToMax  INTEGER"
         "   ,speed_rampStart        INTEGER"
         "   ,speed_rampEnd          INTEGER"
         "   ,cp1_x                  INTEGER"
