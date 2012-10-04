@@ -68,7 +68,8 @@ int FanCurveData::speedFromTemperatureLinear(int temperatureF,
 
     int speed;
 
-    speed =  floor( (double)temperatureTemp / speedStepSize );
+    speed +=  a.y();
+    speed +=  floor( (double)temperatureTemp / speedStepSize );
     speed *= speedStepSize;
 
     return speed;
