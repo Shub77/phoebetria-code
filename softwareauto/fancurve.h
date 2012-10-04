@@ -39,8 +39,9 @@ public:
     int speed_rampEnd;
 
     int minUsableRpm;
-
     int speedStepSize;
+    bool fixedRpm;
+    int probeAffinity;
 
 protected:
 

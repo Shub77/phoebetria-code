@@ -107,6 +107,7 @@ bool FanCurve::generateCurve(const FanCurveData& fanCurveData,
             else
                 rpm = fanCurveData.minUsableRpm;
         }
+
         if (fanCurveData.allowFanToTurnOff
                 && i == fanCurveData.temperatureF_fanOn - 1)
         {
