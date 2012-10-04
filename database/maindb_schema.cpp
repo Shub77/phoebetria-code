@@ -67,8 +67,8 @@ static MainDbSchema::TableDef schema[] =
     },
 
     {
-        "BezierFanCurve",
-        "create table BezierFanCurve ("
+        "SoftwareAutoSetting",
+        "create table SoftwareAutoSetting ("
         "    p_id                   INTEGER"
         "   ,channel                INTEGER"
         "   ,temperatureF_fanOn     INTEGER"
