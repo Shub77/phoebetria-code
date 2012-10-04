@@ -77,6 +77,7 @@ static MainDbSchema::TableDef schema[] =
         "create table SoftwareAutoSetting ("
         "    p_id                   INTEGER"
         "   ,channel                INTEGER"
+        "   ,allowFanToTurnOff      BOOLEAN"
         "   ,temperatureF_fanOn     INTEGER"
         "   ,temperatureF_rampStart INTEGER"
         "   ,temperatureF_rampMid   INTEGER"
