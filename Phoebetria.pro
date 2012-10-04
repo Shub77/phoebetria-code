@@ -105,7 +105,8 @@ FORMS    += gui_mainwindow.ui \
 
 INCLUDEPATH += hidapi-0.7.0/hidapi \
                database/ \
-               softwareauto/
+               softwareauto/ \
+               QCustomPlot/
                
 HEADERS += hidapi-0.7.0/hidapi/hidapi.h
 
