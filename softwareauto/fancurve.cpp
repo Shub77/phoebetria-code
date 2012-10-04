@@ -20,6 +20,8 @@
 
 #include "math.h"
 
+FanCurveData::FanCurveData()
+{}
 
 int FanCurveData::temperatureToRpm(int temperatureF, int maxRpm) const
 {
@@ -31,19 +33,28 @@ int FanCurveData::temperatureToRpm(int temperatureF, int maxRpm) const
             return minUsableRpm;
     }
 
+    if (temperatureF < temperatureF_rampStart)
+    {
+        return minUsableRpm;
+    }
+
     if (temperatureF <= temperatureF_rampMid)
     {
-        QPoint a(temperatureF_rampStart, temperatureF_rampMid);
-        QPoint b(speed_rampStart, speed_rampMid);
+        if (temperatureF == temperatureF_rampStart)
+            return speed_rampStart;
+        if (temperatureF == temperatureF_rampMid)
+            return speed_rampMid;
+
+        QPoint a(temperatureF_rampStart, speed_rampStart);
+        QPoint b(temperatureF_rampMid, speed_rampMid);
+
         return speedFromTemperatureLinear(temperatureF, a, b);
     }
 
-    if (temperatureF <= temperatureF_rampEnd
-            && temperatureF < temperatureF_fanToMax)
+    if (temperatureF < temperatureF_fanToMax)
     {
-
-        QPoint a(temperatureF_rampMid, temperatureF_rampEnd);
-        QPoint b(speed_rampMid, speed_rampEnd);
+        QPoint a(temperatureF_rampMid, speed_rampMid);
+        QPoint b(temperatureF_rampEnd, speed_rampEnd);
 
         if (temperatureF > temperatureF_rampEnd)
         {
@@ -59,17 +70,16 @@ int FanCurveData::speedFromTemperatureLinear(int temperatureF,
                                          const QPoint& a,
                                          const QPoint& b) const
 {
-    int temperatureTemp;
+    double speed;
 
     int deltax = b.x() - a.x();
     int deltay = b.y() - a.y();
+    double m = (double)deltay/deltax;
+    double yi = a.y() - m*a.x();
 
-    temperatureTemp =  floor( (double)deltax/deltay * temperatureF );
+    speed = m * temperatureF + yi;
 
-    int speed;
-
-    speed +=  a.y();
-    speed +=  floor( (double)temperatureTemp / speedStepSize );
+    speed  =  ceil( (double)speed / speedStepSize );
     speed *= speedStepSize;
 
     return speed;
@@ -79,3 +89,43 @@ FanCurve::FanCurve()
 {
 }
 
+bool FanCurve::generateCurve(const FanCurveData& fanCurveData,
+                             int maxRpm,
+                             int tempRangeMin,
+                             int tempRangeMax,
+                             QList<QPoint>* dest)
+{
+    int lastRpm = -1;
+
+    for (int i = tempRangeMin; i < tempRangeMax; ++i)
+    {
+        int rpm = fanCurveData.temperatureToRpm(i, maxRpm);
+        if (rpm < fanCurveData.minUsableRpm)
+        {
+            if (fanCurveData.allowFanToTurnOff)
+                rpm = 0;
+            else
+                rpm = fanCurveData.minUsableRpm;
+        }
+        if (fanCurveData.allowFanToTurnOff
+                && i == fanCurveData.temperatureF_fanOn - 1)
+        {
+            dest->append(QPoint(i, 0));
+        }
+        else if (i == fanCurveData.temperatureF_rampStart)
+        {
+            if (i != 0)
+                dest->append(QPoint(i-1, lastRpm));
+            dest->append(QPoint(i, rpm));
+        }
+        else if (rpm != lastRpm
+                || i == tempRangeMax-1)
+        {
+            dest->append(QPoint(i, rpm));
+        }
+
+        lastRpm = rpm;
+    }
+
+    return true;
+}

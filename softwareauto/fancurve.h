@@ -17,15 +17,16 @@
 #ifndef PHOEBETRIA_FANCURVE_H
 #define PHOEBETRIA_FANCURVE_H
 
+#include <QList>
 #include <QPoint>
 
 class FanCurveData
 {
 public:
 
-    FanCurveData();
+    friend class FanCurve;
 
-    int temperatureToRpm(int temperatureF, int maxRpm) const;
+    FanCurveData();
 
     bool allowFanToTurnOff;
     int temperatureF_fanOn;
@@ -43,6 +44,9 @@ public:
 
 protected:
 
+
+    int temperatureToRpm(int temperatureF, int maxRpm) const;
+
     int speedFromTemperatureLinear(int temperatureF,
                                    const QPoint& a,
                                    const QPoint& b) const;
@@ -54,6 +58,11 @@ public:
 
     FanCurve();
 
+    bool generateCurve(const FanCurveData &fanCurveData,
+                       int maxRpm,
+                       int tempRangeMin,
+                       int tempRangeMax,
+                       QList<QPoint> *dest);
 };
 
 
