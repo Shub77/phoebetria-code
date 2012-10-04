@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>530</width>
-    <height>474</height>
+    <width>551</width>
+    <height>554</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,6 +37,7 @@
      <property name="styleSheet">
       <string notr="true"/>
      </property>
+     <zorder></zorder>
     </widget>
    </item>
    <item>
@@ -49,11 +50,57 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="2">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Probe affinity</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="spinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Channel</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="buddy">
+          <cstring>spinBox</cstring>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="2">
         <widget class="QCheckBox" name="checkBox">
          <property name="text">
-          <string>Allow fan to turn off</string>
+          <string>Always on</string>
          </property>
         </widget>
        </item>
@@ -142,7 +189,7 @@
        <item row="7" column="0">
         <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>Fan to Max RPM</string>
+          <string>Fan to max RPM</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -152,17 +199,7 @@
        <item row="4" column="2">
         <widget class="QSpinBox" name="spinBox_10"/>
        </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="spinBox">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>5</number>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="label_7">
          <property name="text">
           <string>Minimum settable RPM</string>
@@ -171,6 +208,9 @@
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="spinBox_4"/>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_6">
@@ -182,48 +222,16 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Channel</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="buddy">
-          <cstring>spinBox</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QSpinBox" name="spinBox_4"/>
-       </item>
        <item row="5" column="1">
         <widget class="QSpinBox" name="spinBox_3"/>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QSpinBox" name="spinBox_7"/>
        </item>
-       <item row="5" column="3">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLabel" name="label_10">
+       <item row="4" column="3">
+        <widget class="QCheckBox" name="checkBox_2">
          <property name="text">
-          <string>Probe Affinity</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <string>Constant speed</string>
          </property>
         </widget>
        </item>
@@ -234,13 +242,6 @@
          </property>
          <property name="maximum">
           <number>5</number>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="3">
-        <widget class="QCheckBox" name="checkBox_2">
-         <property name="text">
-          <string>Keep speed constant</string>
          </property>
         </widget>
        </item>
