@@ -19,7 +19,6 @@
 #include <QDebug>
 
 #include "fancontrollerdata.h"
-#include "math.h"
 
 FanCurveData::FanCurveData()
 {}
@@ -74,18 +73,19 @@ int FanCurveData::speedFromTemperatureLinear(int temperatureF,
     double speed;
 
     int deltax = b.x() - a.x();
-    int deltay = b.y() - a.y();
+
+    /* Adding speedStepSize/2 to deltay to ensure the ramp ends at ramp end
+       ; i.e. we are using floor() to round the calcs and also rounding to
+         closest "step size" (e.g. 100) and this can mean that ramp end speed
+         may not be reached... adding speedStepSize/2 to make sure it does.
+     */
+    int deltay = b.y() - a.y() + speedStepSize/2;
     double m = (double)deltay/deltax;
     double yi = a.y() - m*a.x();
 
     speed = m * temperatureF + yi;
 
-    if (temperatureF > deltay / 2)
-        speed  = ceil( (double)speed / speedStepSize );
-    else
-        speed  = floor( (double)speed / speedStepSize );
-
-    speed *= speedStepSize;
+    speed  =  FanCurve::snapToStepSize(speed, speedStepSize);
 
     return speed;
 }
@@ -106,21 +106,20 @@ bool FanCurve::initWithDefaultData(const FanControllerData& fcd, int channel)
 {
 
     // Setup to be roughly equivalent to the Recon's built-in Auto
+
+    m_setup.speedStepSize           = 100;
     m_setup.allowFanToTurnOff       = false;
-    m_setup.temperatureF_fanOn      = floor(fcd.maxRPM(channel) * 0.50 / 100) * 100;
-    m_setup.minUsableRpm            = floor(fcd.maxRPM(channel) * 0.50 / 100) * 100;
+    m_setup.temperatureF_fanOn      = 0;
+    m_setup.minUsableRpm            = snapToStepSize(fcd.maxRPM(channel) * 0.40, m_setup.speedStepSize);
     m_setup.temperatureF_rampStart  = 0;
     m_setup.temperatureF_rampMid    = fcd.alarmTemp(channel)/2;
     m_setup.temperatureF_rampEnd    = fcd.alarmTemp(channel);
     m_setup.temperatureF_fanToMax   = fcd.alarmTemp(channel);
-    m_setup.speed_rampStart         = floor(fcd.maxRPM(channel) * 0.50 / 100) * 100;
+    m_setup.speed_rampStart         = m_setup.minUsableRpm;
     m_setup.speed_rampEnd           = fcd.maxRPM(channel);
     m_setup.speed_rampMid           = (m_setup.minUsableRpm + m_setup.speed_rampEnd) / 2;
-    m_setup.speed_rampMid = round(m_setup.speed_rampMid / 100.0) *100;
+    m_setup.speed_rampMid           = snapToStepSize(m_setup.speed_rampMid, m_setup.speedStepSize);
 
-
-
-    m_setup.speedStepSize           = 100;
     m_setup.fixedRpm                = false;
     m_setup.probeAffinity           = channel;
 
