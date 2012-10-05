@@ -39,6 +39,7 @@ public:
     int temperatureF_rampMid;
     int temperatureF_rampEnd;
     int temperatureF_fanToMax;
+    int speed_fanOn;
     int speed_rampStart;
     int speed_rampMid;
     int speed_rampEnd;
