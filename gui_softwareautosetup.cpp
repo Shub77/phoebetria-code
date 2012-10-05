@@ -26,6 +26,9 @@ void gui_SoftwareAutoSetup::init(void)
     m_fanCurve.init(fcdata, channel);
 
     setupAxes(fcdata, channel);
+
+    setupChannelComboBox();
+
     xferSettings_toGui(channel);
 
     const QList<QPoint> ramp = m_fanCurve.ramp();
@@ -57,25 +60,31 @@ void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(const FanControllerData&)
 
 }
 
+void gui_SoftwareAutoSetup::setupChannelComboBox(void)
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+        ui->ctrl_channel->insertItem(i, tr("Channel %1").arg(i+1), i);
+}
+
 void gui_SoftwareAutoSetup::xferSettings_toGui(int channel)
 {
     const FanCurveData* setup = m_fanCurve.setup();
 
-    ui->ctrl_channel->setValue                 (channel);
-    ui->ctrl_minRpm->setValue                  (setup->minUsableRpm);
-    ui->ctrl_fanOnTemp->setValue               (setup->temperatureF_fanOn);
-    ui->ctrl_rampStartTemp->setValue           (setup->temperatureF_rampStart);
-    ui->ctrl_rampMidTemp->setValue             (setup->temperatureF_rampMid);
-    ui->ctrl_rampEndTemp->setValue             (setup->temperatureF_rampEnd);
-    ui->fan_fanToMaxTemp->setValue             (setup->temperatureF_fanToMax);
-    ui->ctrl_rampStartSpeed->setValue          (setup->speed_rampStart);
-    ui->ctrl_rampMidSpeed->setValue            (setup->speed_rampMid);
-    ui->ctrl_rampEndSpeed->setValue            (setup->speed_rampEnd);
+    ui->ctrl_channel->setCurrentIndex           (channel);
+    ui->ctrl_minRpm->setValue                   (setup->minUsableRpm);
+    ui->ctrl_fanOnTemp->setValue                (setup->temperatureF_fanOn);
+    ui->ctrl_rampStartTemp->setValue            (setup->temperatureF_rampStart);
+    ui->ctrl_rampMidTemp->setValue              (setup->temperatureF_rampMid);
+    ui->ctrl_rampEndTemp->setValue              (setup->temperatureF_rampEnd);
+    ui->fan_fanToMaxTemp->setValue              (setup->temperatureF_fanToMax);
+    ui->ctrl_rampStartSpeed->setValue           (setup->speed_rampStart);
+    ui->ctrl_rampMidSpeed->setValue             (setup->speed_rampMid);
+    ui->ctrl_rampEndSpeed->setValue             (setup->speed_rampEnd);
 
-    ui->ctrl_isFanConstantSpeed->setChecked    (setup->fixedRpm);
-    ui->ctrl_probeAffinity->setValue           (setup->probeAffinity);
-    ui->ctrl_isFanAlwaysOn->setChecked         (!setup->allowFanToTurnOff);
-    ui->ctrl_fanOnSpeed->setValue              (setup->temperatureF_fanOn);
+    ui->ctrl_isFanConstantSpeed->setChecked     (setup->fixedRpm);
+    ui->ctrl_probeAffinity->setValue            (setup->probeAffinity);
+    ui->ctrl_isFanAlwaysOn->setChecked          (!setup->allowFanToTurnOff);
+    ui->ctrl_fanOnSpeed->setValue               (setup->temperatureF_fanOn);
 
 }
 

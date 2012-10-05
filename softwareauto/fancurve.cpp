@@ -110,7 +110,7 @@ bool FanCurve::initWithDefaultData(const FanControllerData& fcd, int channel)
     m_setup.speedStepSize           = 100;
     m_setup.allowFanToTurnOff       = false;
     m_setup.temperatureF_fanOn      = 0;
-    m_setup.minUsableRpm            = snapToStepSize(fcd.maxRPM(channel) * 0.40, m_setup.speedStepSize);
+    m_setup.minUsableRpm            = snapToStepSize(fcd.maxRPM(channel) * 0.50, m_setup.speedStepSize);
     m_setup.temperatureF_rampStart  = 0;
     m_setup.temperatureF_rampMid    = fcd.alarmTemp(channel)/2;
     m_setup.temperatureF_rampEnd    = fcd.alarmTemp(channel);
