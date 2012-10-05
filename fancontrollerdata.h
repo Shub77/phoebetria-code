@@ -23,6 +23,7 @@
 #include <QString>
 
 #include "fanprofiles.h"
+#include "fanramp.h"
 
 class FanControllerData : public QObject
 {
@@ -122,6 +123,7 @@ private:
     short m_isAudibleAlarm;
 
     FanChannelData m_channelSettings[FC_MAX_CHANNELS];
+    FanSpeedRamp m_channelSpeedRamps[FC_MAX_CHANNELS];
 
 signals:
     void deviceConnected(void);
