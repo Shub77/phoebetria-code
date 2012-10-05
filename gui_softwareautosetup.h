@@ -22,11 +22,11 @@ public:
 protected:
 
     void setupAxes(const FanControllerData & fcdata, int channel);
-    void setupTemperatureCtrlLimits(const FanControllerData &);
+    void setupTemperatureCtrlLimits(const FanControllerData & fcdata);
 
     void setupChannelComboBox(void);
 
-    void xferSettings_toGui(int channel);
+    void xferSettings_toGui(const FanControllerData &fcdata, int channel);
     void xferSettings_fromGui(void);
 
     void drawPlot(void);

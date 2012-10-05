@@ -112,6 +112,8 @@ public:
     static int toCelcius(int tempInF);
     static int toFahrenheit(int tempInC);
 
+    inline int toCurrTempScale(int tF) const;
+
 private:
 
     // Common data
@@ -139,6 +141,10 @@ signals:
     void alarmIsAudible_changed (bool isAudibleAlarm);
 };
 
+int FanControllerData::toCurrTempScale(int tF) const
+{
+    return isCelcius() ? toCelcius(tF) : tF;
+}
 
 
 #endif // FANCONTROLLERDATA_H
