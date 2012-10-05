@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "fancurve.h"
+#include "fanramp.h"
 
 namespace Ui {
 class gui_SoftwareAutoSetup;

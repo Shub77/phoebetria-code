@@ -14,7 +14,7 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "fancurve.h"
+#include "fanramp.h"
 
 #include <QDebug>
 

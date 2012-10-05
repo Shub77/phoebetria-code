@@ -67,9 +67,9 @@ SOURCES += main.cpp \
     database/dbmanager.cpp \
     database/maindb.cpp \
     database/maindb_schema.cpp \
-    softwareauto/fancurve.cpp \
     QCustomPlot/qcustomplot.cpp \
-    gui_softwareautosetup.cpp
+    gui_softwareautosetup.cpp \
+    softwareauto/fanramp.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -89,9 +89,9 @@ HEADERS  += gui_mainwindow.h \
     database/dbmanager.h \
     database/maindb.h \
     database/maindb_schema.h \
-    softwareauto/fancurve.h \
     QCustomPlot/qcustomplot.h \
-    gui_softwareautosetup.h
+    gui_softwareautosetup.h \
+    softwareauto/fanramp.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
