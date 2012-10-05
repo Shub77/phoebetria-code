@@ -19,6 +19,16 @@ public:
     
     void init(void);
 
+protected:
+
+    void setupAxes(const FanControllerData & fcdata, int channel);
+    void setupTemperatureCtrlLimits(const FanControllerData &);
+
+    void xferSettings_toGui(int channel);
+    void xferSettings_fromGui(void);
+
+    void drawPlot(void);
+
 private:
     Ui::gui_SoftwareAutoSetup *ui;
 

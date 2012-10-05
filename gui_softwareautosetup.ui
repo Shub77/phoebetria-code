@@ -21,7 +21,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QCustomPlot" name="widget" native="true">
+    <widget class="QCustomPlot" name="ctrl_plot" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -37,7 +37,6 @@
      <property name="styleSheet">
       <string notr="true"/>
      </property>
-     <zorder></zorder>
     </widget>
    </item>
    <item>
@@ -75,7 +74,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QSpinBox" name="spinBox">
+        <widget class="QSpinBox" name="ctrl_channel">
          <property name="minimum">
           <number>1</number>
          </property>
@@ -93,7 +92,7 @@
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="buddy">
-          <cstring>spinBox</cstring>
+          <cstring>ctrl_channel</cstring>
          </property>
         </widget>
        </item>
@@ -124,7 +123,14 @@
         </widget>
        </item>
        <item row="5" column="2">
-        <widget class="QSpinBox" name="spinBox_12"/>
+        <widget class="QSpinBox" name="ctrl_rampMidSpeed">
+         <property name="maximum">
+          <number>65500</number>
+         </property>
+         <property name="singleStep">
+          <number>100</number>
+         </property>
+        </widget>
        </item>
        <item row="4" column="0">
         <widget class="QLabel" name="label_2">
@@ -147,25 +153,51 @@
         </widget>
        </item>
        <item row="6" column="2">
-        <widget class="QSpinBox" name="spinBox_9"/>
+        <widget class="QSpinBox" name="ctrl_rampEndSpeed">
+         <property name="maximum">
+          <number>65500</number>
+         </property>
+         <property name="singleStep">
+          <number>100</number>
+         </property>
+        </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QSpinBox" name="spinBox_6">
+        <widget class="QSpinBox" name="ctrl_fanOnTemp">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
          </property>
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QSpinBox" name="spinBox_2"/>
+        <widget class="QSpinBox" name="ctrl_rampStartTemp">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
+         </property>
+        </widget>
        </item>
        <item row="7" column="1">
-        <widget class="QSpinBox" name="spinBox_5">
+        <widget class="QSpinBox" name="fan_fanToMaxTemp">
          <property name="minimumSize">
           <size>
            <width>120</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
          </property>
         </widget>
        </item>
@@ -190,7 +222,14 @@
         </widget>
        </item>
        <item row="4" column="2">
-        <widget class="QSpinBox" name="spinBox_10"/>
+        <widget class="QSpinBox" name="ctrl_rampStartSpeed">
+         <property name="maximum">
+          <number>65500</number>
+         </property>
+         <property name="singleStep">
+          <number>100</number>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_7">
@@ -203,7 +242,14 @@
         </widget>
        </item>
        <item row="6" column="1">
-        <widget class="QSpinBox" name="spinBox_4"/>
+        <widget class="QSpinBox" name="ctrl_rampEndTemp">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
+         </property>
+        </widget>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_6">
@@ -216,20 +262,37 @@
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QSpinBox" name="spinBox_3"/>
+        <widget class="QSpinBox" name="ctrl_rampMidTemp">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
+         </property>
+        </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QSpinBox" name="spinBox_7"/>
+        <widget class="QSpinBox" name="ctrl_minRpm">
+         <property name="maximum">
+          <number>65500</number>
+         </property>
+         <property name="singleStep">
+          <number>100</number>
+         </property>
+        </widget>
        </item>
        <item row="4" column="3">
-        <widget class="QCheckBox" name="checkBox_2">
+        <widget class="QCheckBox" name="ctrl_isFanConstantSpeed">
          <property name="text">
           <string>Constant speed</string>
          </property>
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QSpinBox" name="spinBox_8">
+        <widget class="QSpinBox" name="ctrl_probeAffinity">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimum">
           <number>1</number>
          </property>
@@ -239,9 +302,25 @@
         </widget>
        </item>
        <item row="3" column="3">
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="ctrl_isFanAlwaysOn">
          <property name="text">
           <string>Always on</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QSpinBox" name="ctrl_fanOnSpeed">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="maximum">
+          <number>65500</number>
+         </property>
+         <property name="singleStep">
+          <number>100</number>
          </property>
         </widget>
        </item>
