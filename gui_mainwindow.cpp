@@ -29,6 +29,7 @@
 #include "fanprofiles.h"
 #include "qglobal.h"
 #include "gui_simplesqlqry.h"
+#include "gui_softwareautosetup.h"
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -856,5 +857,9 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
 
 void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
 {
+    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
 
+    dlg->init();
+
+    dlg->exec();
 }

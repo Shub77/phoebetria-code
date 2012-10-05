@@ -18,6 +18,7 @@
 
 #include <QDebug>
 
+#include "fancontrollerdata.h"
 #include "math.h"
 
 FanCurveData::FanCurveData()
@@ -79,7 +80,11 @@ int FanCurveData::speedFromTemperatureLinear(int temperatureF,
 
     speed = m * temperatureF + yi;
 
-    speed  =  ceil( (double)speed / speedStepSize );
+    if (temperatureF > deltay / 2)
+        speed  = ceil( (double)speed / speedStepSize );
+    else
+        speed  = floor( (double)speed / speedStepSize );
+
     speed *= speedStepSize;
 
     return speed;
@@ -88,6 +93,42 @@ int FanCurveData::speedFromTemperatureLinear(int temperatureF,
 FanCurve::FanCurve()
 {
 }
+
+bool FanCurve::init(const FanControllerData& fcd, int channel)
+{
+    // TODO: load from database if exists
+
+    return initWithDefaultData(fcd, channel);
+}
+
+
+bool FanCurve::initWithDefaultData(const FanControllerData& fcd, int channel)
+{
+
+    // Setup to be roughly equivalent to the Recon's built-in Auto
+    m_setup.allowFanToTurnOff       = false;
+    m_setup.temperatureF_fanOn      = floor(fcd.maxRPM(channel) * 0.50 / 100) * 100;
+    m_setup.minUsableRpm            = floor(fcd.maxRPM(channel) * 0.50 / 100) * 100;
+    m_setup.temperatureF_rampStart  = 0;
+    m_setup.temperatureF_rampMid    = fcd.alarmTemp(channel)/2;
+    m_setup.temperatureF_rampEnd    = fcd.alarmTemp(channel);
+    m_setup.temperatureF_fanToMax   = fcd.alarmTemp(channel);
+    m_setup.speed_rampStart         = floor(fcd.maxRPM(channel) * 0.50 / 100) * 100;
+    m_setup.speed_rampEnd           = fcd.maxRPM(channel);
+    m_setup.speed_rampMid           = (m_setup.minUsableRpm + m_setup.speed_rampEnd) / 2;
+    m_setup.speed_rampMid = round(m_setup.speed_rampMid / 100.0) *100;
+
+
+
+    m_setup.speedStepSize           = 100;
+    m_setup.fixedRpm                = false;
+    m_setup.probeAffinity           = channel;
+
+    generateCurve(m_setup, fcd.maxRPM(channel), 0, 255, &m_ramp);
+
+    return true;
+}
+
 
 bool FanCurve::generateCurve(const FanCurveData& fanCurveData,
                              int maxRpm,
@@ -127,6 +168,9 @@ bool FanCurve::generateCurve(const FanCurveData& fanCurveData,
 
         lastRpm = rpm;
     }
+
+    if (lastRpm != maxRpm)
+        dest->append(QPoint(tempRangeMax, maxRpm));
 
     return true;
 }

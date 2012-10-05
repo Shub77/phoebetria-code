@@ -20,6 +20,9 @@
 #include <QList>
 #include <QPoint>
 
+// Fwd decls
+class FanControllerData;
+
 class FanCurveData
 {
 public:
@@ -59,12 +62,29 @@ public:
 
     FanCurve();
 
+    bool init(const FanControllerData& fcd, int channel);
+
+    inline QList<QPoint> ramp(void);
+
+protected:
+
+    bool initWithDefaultData(const FanControllerData& fcd, int channel);
+
     bool generateCurve(const FanCurveData &fanCurveData,
                        int maxRpm,
                        int tempRangeMin,
                        int tempRangeMax,
                        QList<QPoint> *dest);
+
+private:
+    FanCurveData m_setup;
+    QList<QPoint> m_ramp;
 };
 
+
+QList<QPoint> FanCurve::ramp(void)
+{
+    return m_ramp;
+}
 
 #endif // PHOEBETRIA_FANCURVE_H
