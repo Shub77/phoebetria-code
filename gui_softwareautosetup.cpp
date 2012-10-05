@@ -88,7 +88,7 @@ void gui_SoftwareAutoSetup::setupChannelComboBox(void)
 void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
                                                int channel)
 {
-    const FanCurveData* setup = m_fanCurve.setup();
+    const FanSpeedRampData* setup = m_fanCurve.setup();
 
     int t_fanOn         = fcdata.toCurrTempScale(setup->temperatureF_fanOn);
     int t_rampStart     = fcdata.toCurrTempScale(setup->temperatureF_rampStart);
@@ -119,7 +119,7 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
 
 void gui_SoftwareAutoSetup::xferSettings_fromGui(const FanControllerData& fcdata)
 {
-    FanCurveData* setup = m_fanCurve.setup();
+    FanSpeedRampData* setup = m_fanCurve.setup();
 
     int t_fanOn     = fcdata.toCurrTempScale(ui->ctrl_fanOnTemp->value());
     int t_rampStart = fcdata.toCurrTempScale(ui->ctrl_rampStartTemp->value());

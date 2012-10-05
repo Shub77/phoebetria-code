@@ -35,7 +35,7 @@ protected:
 private:
     Ui::gui_SoftwareAutoSetup *ui;
 
-    FanCurve m_fanCurve;
+    FanSpeedRamp m_fanCurve;
 };
 
 #endif // GUI_SOFTWAREAUTOSETUP_H

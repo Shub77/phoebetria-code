@@ -14,8 +14,8 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PHOEBETRIA_FANCURVE_H
-#define PHOEBETRIA_FANCURVE_H
+#ifndef PHOEBETRIA_FANSPEEDRAMP_H
+#define PHOEBETRIA_FANSPEEDRAMP_H
 
 #include <QList>
 #include <QPoint>
@@ -25,13 +25,13 @@
 // Fwd decls
 class FanControllerData;
 
-class FanCurveData
+class FanSpeedRampData
 {
 public:
 
-    friend class FanCurve;
+    friend class FanSpeedRamp;
 
-    FanCurveData();
+    FanSpeedRampData();
 
     bool allowFanToTurnOff;
     int temperatureF_fanOn;
@@ -59,17 +59,17 @@ protected:
                                    const QPoint& b) const;
 };
 
-class FanCurve
+class FanSpeedRamp
 {
 public:
 
-    FanCurve();
+    FanSpeedRamp();
 
     bool init(const FanControllerData& fcd, int channel);
 
-    inline FanCurveData* setup(void);
+    inline FanSpeedRampData* setup(void);
 
-    inline QList<QPoint> ramp(void);
+    inline const QList<QPoint>& ramp(void);
 
     inline static int snapToStepSize(int rpm, int stepSize);
 
@@ -77,7 +77,7 @@ protected:
 
     bool initWithDefaultData(const FanControllerData& fcd, int channel);
 
-    bool generateCurve(const FanCurveData &fanCurveData,
+    bool generateCurve(const FanSpeedRampData &fanCurveData,
                        int maxRpm,
                        int tempRangeMin,
                        int tempRangeMax,
@@ -86,24 +86,27 @@ protected:
 
 
 private:
-    FanCurveData m_setup;
+
+    bool m_rampIsInitialised;
+
+    FanSpeedRampData m_setup;
     QList<QPoint> m_ramp;
 };
 
 
-FanCurveData* FanCurve::setup(void)
+FanSpeedRampData* FanSpeedRamp::setup(void)
 {
     return &m_setup;
 }
 
-QList<QPoint> FanCurve::ramp(void)
+const QList<QPoint> &FanSpeedRamp::ramp(void)
 {
     return m_ramp;
 }
 
-int FanCurve::snapToStepSize(int rpm, int stepSize)
+int FanSpeedRamp::snapToStepSize(int rpm, int stepSize)
 {
     return floor((double)rpm / stepSize) * stepSize;
 }
 
-#endif // PHOEBETRIA_FANCURVE_H
+#endif // PHOEBETRIA_FANSPEEDRAMP_H
