@@ -27,7 +27,7 @@ protected:
     void setupChannelComboBox(void);
 
     void xferSettings_toGui(const FanControllerData &fcdata, int channel);
-    void xferSettings_fromGui(void);
+    void xferSettings_fromGui(const FanControllerData &fcdata);
 
     void drawPlot(void);
 

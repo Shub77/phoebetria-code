@@ -98,11 +98,14 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
 
     ui->ctrl_channel->setCurrentIndex           (channel);
     ui->ctrl_minRpm->setValue                   (setup->minUsableRpm);
+
     ui->ctrl_fanOnTemp->setValue                (t_fanOn);
     ui->ctrl_rampStartTemp->setValue            (t_rampStart);
     ui->ctrl_rampMidTemp->setValue              (t_rampMid);
     ui->ctrl_rampEndTemp->setValue              (t_rampEnd);
     ui->fan_fanToMaxTemp->setValue              (t_fanToMax);
+
+    ui->ctrl_fanOnSpeed->setValue               (setup->speed_fanOn);
     ui->ctrl_rampStartSpeed->setValue           (setup->speed_rampStart);
     ui->ctrl_rampMidSpeed->setValue             (setup->speed_rampMid);
     ui->ctrl_rampEndSpeed->setValue             (setup->speed_rampEnd);
@@ -110,11 +113,36 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
     ui->ctrl_isFanConstantSpeed->setChecked     (setup->fixedRpm);
     ui->ctrl_probeAffinity->setValue            (setup->probeAffinity);
     ui->ctrl_isFanAlwaysOn->setChecked          (!setup->allowFanToTurnOff);
-    ui->ctrl_fanOnSpeed->setValue               (setup->temperatureF_fanOn);
+
+
 }
 
-void gui_SoftwareAutoSetup::xferSettings_fromGui(void)
+void gui_SoftwareAutoSetup::xferSettings_fromGui(const FanControllerData& fcdata)
 {
+    FanCurveData* setup = m_fanCurve.setup();
+
+    int t_fanOn     = fcdata.toCurrTempScale(ui->ctrl_fanOnTemp->value());
+    int t_rampStart = fcdata.toCurrTempScale(ui->ctrl_rampStartTemp->value());
+    int t_rampMid   = fcdata.toCurrTempScale(ui->ctrl_rampMidTemp->value());
+    int t_rampEnd   = fcdata.toCurrTempScale(ui->ctrl_rampEndTemp->value());
+    int t_fanToMax  = fcdata.toCurrTempScale(ui->fan_fanToMaxTemp->value());
+
+    setup->minUsableRpm             = ui->ctrl_minRpm->value();
+
+    setup->temperatureF_fanOn       = t_fanOn;
+    setup->temperatureF_rampStart   = t_rampStart;
+    setup->temperatureF_rampMid     = t_rampMid;
+    setup->temperatureF_rampEnd     = t_rampEnd;
+    setup->temperatureF_fanToMax    = t_fanToMax;
+
+    setup->speed_fanOn              = ui->ctrl_fanOnSpeed->value();
+    setup->speed_rampStart          = ui->ctrl_rampStartSpeed->value();
+    setup->speed_rampMid            = ui->ctrl_rampMidSpeed->value();
+    setup->speed_rampEnd            = ui->ctrl_rampEndSpeed->value();
+
+    setup->fixedRpm                 = ui->ctrl_isFanConstantSpeed->isChecked();
+    setup->probeAffinity            = ui->ctrl_probeAffinity->value();
+    setup->allowFanToTurnOff        = !ui->ctrl_isFanAlwaysOn->isChecked();
 
 }
 
