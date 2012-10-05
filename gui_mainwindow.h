@@ -104,6 +104,8 @@ private slots:
 
     void on_actionSQL_Query_triggered();
 
+    void on_ctrl_configSoftwareAuto_clicked();
+
 private:
     void initCtrlArrays(void);
 

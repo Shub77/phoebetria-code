@@ -654,6 +654,13 @@ QSlider::handle:horizontal:disabled {
                 </item>
                </layout>
               </item>
+              <item>
+               <widget class="QPushButton" name="ctrl_configSoftwareAuto">
+                <property name="text">
+                 <string>Configure</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
@@ -2359,7 +2366,7 @@ margin:-2px;</string>
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">

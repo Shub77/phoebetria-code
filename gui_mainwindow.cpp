@@ -853,3 +853,8 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
     }
 }
 
+
+void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
+{
+
+}
