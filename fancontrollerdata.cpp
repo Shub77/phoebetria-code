@@ -285,5 +285,5 @@ int FanControllerData::toCelcius(int tempInF)
  */
 int FanControllerData::toFahrenheit(int tempInC)
 {
-    return tempInC * 9/5.0 + 32;
+    return ceil(tempInC * 9/5.0 + 32);
 }

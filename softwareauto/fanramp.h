@@ -73,6 +73,8 @@ public:
 
     inline static int snapToStepSize(int rpm, int stepSize);
 
+    inline bool generateCurve(int maxRpm);
+
 protected:
 
     bool initWithDefaultData(const FanControllerData& fcd, int channel);
@@ -107,6 +109,11 @@ const QList<QPoint> &FanSpeedRamp::ramp(void)
 int FanSpeedRamp::snapToStepSize(int rpm, int stepSize)
 {
     return floor((double)rpm / stepSize) * stepSize;
+}
+
+bool FanSpeedRamp::generateCurve(int maxRpm)
+{
+    return generateCurve(m_setup, maxRpm, 0, 255, &m_ramp);
 }
 
 #endif // PHOEBETRIA_FANSPEEDRAMP_H

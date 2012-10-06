@@ -5,6 +5,9 @@
 
 #include "fanramp.h"
 
+// Fwd decls
+class FanControllerData;
+
 namespace Ui {
 class gui_SoftwareAutoSetup;
 }
@@ -31,11 +34,37 @@ protected:
 
     void drawPlot(void);
 
+    void regenerateCurve(void);
+
+    int tempInF(int t) const;
+
+private slots:
+
+    void on_ctrl_rampStartTemp_valueChanged(int arg1);
+
+    void on_ctrl_rampMidTemp_valueChanged(int arg1);
+
+    void on_ctrl_rampEndTemp_valueChanged(int arg1);
+
+    void on_fan_fanToMaxTemp_valueChanged(int arg1);
+
+    void on_ctrl_rampStartSpeed_valueChanged(int arg1);
+
+    void on_ctrl_rampMidSpeed_valueChanged(int arg1);
+
+    void on_ctrl_rampEndSpeed_valueChanged(int arg1);
 
 private:
     Ui::gui_SoftwareAutoSetup *ui;
 
     FanSpeedRamp m_fanCurve;
+
+    bool m_isCelcius;
+
+    const FanControllerData* m_fcdata;
 };
+
+
+
 
 #endif // GUI_SOFTWAREAUTOSETUP_H

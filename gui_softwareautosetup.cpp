@@ -23,6 +23,10 @@ void gui_SoftwareAutoSetup::init(void)
 
     int channel = 0;
 
+    m_fcdata = &fcdata;
+
+    m_isCelcius = fcdata.isCelcius();
+
     m_fanCurve.init(fcdata, channel);
 
     setupAxes(fcdata, channel);
@@ -32,17 +36,8 @@ void gui_SoftwareAutoSetup::init(void)
 
     xferSettings_toGui(fcdata, channel);
 
-    const QList<QPoint> ramp = m_fanCurve.ramp();
+    drawPlot();
 
-    QCPGraph* gr = new QCPGraph(ui->ctrl_plot->xAxis, ui->ctrl_plot->yAxis);
-    gr->setScatterStyle(QCP::ssDisc);
-
-    for (int i = 0; i < ramp.count(); ++i)
-    {
-        int t;
-        t = fcdata.toCurrTempScale(ramp.at(i).x());
-        gr->addData(t, ramp.at(i).y());
-    }
 }
 
 void gui_SoftwareAutoSetup::setupAxes(const FanControllerData& fcdata, int channel)
@@ -96,6 +91,8 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
     int t_rampEnd       = fcdata.toCurrTempScale(setup->temperatureF_rampEnd);
     int t_fanToMax      = fcdata.toCurrTempScale(setup->temperatureF_fanToMax);
 
+    bool bs = blockSignals(true);
+
     ui->ctrl_channel->setCurrentIndex           (channel);
     ui->ctrl_minRpm->setValue                   (setup->minUsableRpm);
 
@@ -114,6 +111,7 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
     ui->ctrl_probeAffinity->setValue            (setup->probeAffinity);
     ui->ctrl_isFanAlwaysOn->setChecked          (!setup->allowFanToTurnOff);
 
+    blockSignals(bs);
 
 }
 
@@ -148,5 +146,79 @@ void gui_SoftwareAutoSetup::xferSettings_fromGui(const FanControllerData& fcdata
 
 void gui_SoftwareAutoSetup::drawPlot(void)
 {
+    const QList<QPoint> ramp = m_fanCurve.ramp();
 
+    //ui->ctrl_plot->clearGraphs();
+    ui->ctrl_plot->removeGraph(0);
+
+    QCPGraph* gr = ui->ctrl_plot->addGraph();
+
+    gr->setScatterStyle(QCP::ssDisc);
+
+    for (int i = 0; i < ramp.count(); ++i)
+    {
+        int t;
+        t = m_fcdata->toCurrTempScale(ramp.at(i).x());
+        gr->addData(t, ramp.at(i).y());
+    }
+
+    ui->ctrl_plot->replot();
+}
+
+
+void gui_SoftwareAutoSetup::regenerateCurve(void)
+{
+    int channel = 0;        // FIXME
+
+    m_fanCurve.generateCurve(m_fcdata->fanChannelSettings(channel).maxRPM());
+    drawPlot();
+}
+
+int gui_SoftwareAutoSetup::tempInF(int t) const
+{
+    return m_isCelcius ? m_fcdata->toFahrenheit(t) : t;
+}
+
+
+void gui_SoftwareAutoSetup::on_ctrl_rampStartTemp_valueChanged(int arg1)
+{
+    m_fanCurve.setup()->temperatureF_rampStart = tempInF(arg1);
+    regenerateCurve();
+
+}
+
+void gui_SoftwareAutoSetup::on_ctrl_rampMidTemp_valueChanged(int arg1)
+{
+    m_fanCurve.setup()->temperatureF_rampMid = tempInF(arg1);
+    regenerateCurve();
+}
+
+void gui_SoftwareAutoSetup::on_ctrl_rampEndTemp_valueChanged(int arg1)
+{
+    m_fanCurve.setup()->temperatureF_rampEnd = tempInF(arg1);
+    regenerateCurve();
+}
+
+void gui_SoftwareAutoSetup::on_fan_fanToMaxTemp_valueChanged(int arg1)
+{
+    m_fanCurve.setup()->temperatureF_fanToMax = tempInF(arg1);
+    regenerateCurve();
+}
+
+void gui_SoftwareAutoSetup::on_ctrl_rampStartSpeed_valueChanged(int arg1)
+{
+    m_fanCurve.setup()->speed_rampStart = arg1;
+    regenerateCurve();
+}
+
+void gui_SoftwareAutoSetup::on_ctrl_rampMidSpeed_valueChanged(int arg1)
+{
+    m_fanCurve.setup()->speed_rampMid = arg1;
+    regenerateCurve();
+}
+
+void gui_SoftwareAutoSetup::on_ctrl_rampEndSpeed_valueChanged(int arg1)
+{
+    m_fanCurve.setup()->speed_rampEnd = arg1;
+    regenerateCurve();
 }
