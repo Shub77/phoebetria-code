@@ -20,37 +20,25 @@ gui_SoftwareAutoSetup::~gui_SoftwareAutoSetup()
 void gui_SoftwareAutoSetup::init(FanControllerData& fcdata)
 {
 
-    int channel = 0;
+    m_currChannel = 0;
+
+    /* Use m_ramp internally and copy to/from fcdata when required */
+    m_ramp.init(fcdata, 0, -1);
 
     m_fcdata = &fcdata;
 
     m_isCelcius = fcdata.isCelcius();
 
-    m_fanCurve.init(fcdata, channel);
-
-    setupAxes(fcdata, channel);
+    setupAxes(fcdata, m_currChannel);
     setupTemperatureCtrlLimits(fcdata);
-    setupSpeedCtrlLimits(fcdata.maxRPM(channel));
+    setupSpeedCtrlLimits(fcdata.maxRPM(m_currChannel));
 
     setupChannelComboBox();
 
-    xferSettings_toGui(fcdata, channel);
+    xferSettings_toGui(fcdata, m_currChannel);
 
     drawPlot();
 
-}
-
-void gui_SoftwareAutoSetup::initFanRamps(void)
-{
-    int channelCount = m_fcdata->channelCount();
-
-    for (int i = 0; i < channelCount; ++i)
-    {
-        if (!m_fcdata->fanChannelSettings(i).isRampInitialised())
-        {
-            m_fcdata->initRamp(i);
-        }
-    }
 }
 
 void gui_SoftwareAutoSetup::setupAxes(const FanControllerData& fcdata, int channel)
@@ -89,7 +77,7 @@ void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(
 
 void gui_SoftwareAutoSetup::setupSpeedCtrlLimits(int maxRpm)
 {
-    int min = m_fanCurve.snapToStepSize(maxRpm * 2/3);
+    int min = m_ramp.snapToStepSize(maxRpm * 2/3);
     ui->ctrl_minRpm->setMaximum(min);
 
     ui->ctrl_rampStartSpeed->setMaximum(maxRpm);
@@ -108,18 +96,18 @@ void gui_SoftwareAutoSetup::setupChannelComboBox(void)
 void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
                                                int channel)
 {
-    const FanSpeedRampData* setup = m_fanCurve.setup();
+    const FanSpeedRampParameters& setup = m_ramp.rampParameters();
 
-    int t_fanOn         = fcdata.toCurrTempScale(setup->temperatureF_fanOn);
-    int t_rampStart     = fcdata.toCurrTempScale(setup->temperatureF_rampStart);
-    int t_rampMid       = fcdata.toCurrTempScale(setup->temperatureF_rampMid);
-    int t_rampEnd       = fcdata.toCurrTempScale(setup->temperatureF_rampEnd);
-    int t_fanToMax      = fcdata.toCurrTempScale(setup->temperatureF_fanToMax);
+    int t_fanOn         = fcdata.toCurrTempScale(setup.temperatureF_fanOn);
+    int t_rampStart     = fcdata.toCurrTempScale(setup.temperatureF_rampStart);
+    int t_rampMid       = fcdata.toCurrTempScale(setup.temperatureF_rampMid);
+    int t_rampEnd       = fcdata.toCurrTempScale(setup.temperatureF_rampEnd);
+    int t_fanToMax      = fcdata.toCurrTempScale(setup.temperatureF_fanToMax);
 
     bool bs = blockSignals(true);
 
     ui->ctrl_channel->setCurrentIndex           (channel);
-    ui->ctrl_minRpm->setValue                   (setup->minUsableRpm);
+    ui->ctrl_minRpm->setValue                   (setup.minUsableRpm);
 
     ui->ctrl_fanOnTemp->setValue                (t_fanOn);
     ui->ctrl_rampStartTemp->setValue            (t_rampStart);
@@ -127,14 +115,14 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
     ui->ctrl_rampEndTemp->setValue              (t_rampEnd);
     ui->fan_fanToMaxTemp->setValue              (t_fanToMax);
 
-    ui->ctrl_fanOnSpeed->setValue               (setup->speed_fanOn);
-    ui->ctrl_rampStartSpeed->setValue           (setup->speed_rampStart);
-    ui->ctrl_rampMidSpeed->setValue             (setup->speed_rampMid);
-    ui->ctrl_rampEndSpeed->setValue             (setup->speed_rampEnd);
+    ui->ctrl_fanOnSpeed->setValue               (setup.speed_fanOn);
+    ui->ctrl_rampStartSpeed->setValue           (setup.speed_rampStart);
+    ui->ctrl_rampMidSpeed->setValue             (setup.speed_rampMid);
+    ui->ctrl_rampEndSpeed->setValue             (setup.speed_rampEnd);
 
-    ui->ctrl_isFanConstantSpeed->setChecked     (setup->fixedRpm);
-    ui->ctrl_probeAffinity->setValue            (setup->probeAffinity);
-    ui->ctrl_isFanAlwaysOn->setChecked          (!setup->allowFanToTurnOff);
+    ui->ctrl_isFanConstantSpeed->setChecked     (setup.fixedRpm);
+    ui->ctrl_probeAffinity->setValue            (setup.probeAffinity);
+    ui->ctrl_isFanAlwaysOn->setChecked          (!setup.allowFanToTurnOff);
 
     blockSignals(bs);
 
@@ -142,7 +130,8 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
 
 void gui_SoftwareAutoSetup::xferSettings_fromGui(const FanControllerData& fcdata)
 {
-    FanSpeedRampData* setup = m_fanCurve.setup();
+#if 0
+    FanSpeedRampParameters* setup = m_ramp.setup();
 
     int t_fanOn     = fcdata.toCurrTempScale(ui->ctrl_fanOnTemp->value());
     int t_rampStart = fcdata.toCurrTempScale(ui->ctrl_rampStartTemp->value());
@@ -166,12 +155,12 @@ void gui_SoftwareAutoSetup::xferSettings_fromGui(const FanControllerData& fcdata
     setup->fixedRpm                 = ui->ctrl_isFanConstantSpeed->isChecked();
     setup->probeAffinity            = ui->ctrl_probeAffinity->value();
     setup->allowFanToTurnOff        = !ui->ctrl_isFanAlwaysOn->isChecked();
-
+#endif
 }
 
 void gui_SoftwareAutoSetup::drawPlot(void)
 {
-    const QList<QPoint> ramp = m_fanCurve.ramp();
+    const QList<QPoint> ramp = m_ramp.ramp();
 
     //ui->ctrl_plot->clearGraphs();
     ui->ctrl_plot->removeGraph(0);
@@ -194,9 +183,7 @@ void gui_SoftwareAutoSetup::drawPlot(void)
 
 void gui_SoftwareAutoSetup::regenerateCurve(void)
 {
-    int channel = 0;        // FIXME
-
-    m_fanCurve.generateCurve(m_fcdata->fanChannelSettings(channel).maxRPM());
+    m_ramp.generateCurve(m_fcdata->fanChannelSettings(m_currChannel).maxRPM());
     drawPlot();
 }
 
@@ -208,50 +195,50 @@ int gui_SoftwareAutoSetup::tempInF(int t) const
 
 void gui_SoftwareAutoSetup::on_ctrl_rampStartTemp_valueChanged(int arg1)
 {
-    m_fanCurve.setup()->temperatureF_rampStart = tempInF(arg1);
+    m_ramp.setSpeedRampStart(tempInF(arg1));
     regenerateCurve();
 
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_rampMidTemp_valueChanged(int arg1)
 {
-    m_fanCurve.setup()->temperatureF_rampMid = tempInF(arg1);
+    m_ramp.setTemperatureRampMid(tempInF(arg1));
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_rampEndTemp_valueChanged(int arg1)
 {
-    m_fanCurve.setup()->temperatureF_rampEnd = tempInF(arg1);
+    m_ramp.setTemperatureRampEnd(tempInF(arg1));
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_fan_fanToMaxTemp_valueChanged(int arg1)
 {
-    m_fanCurve.setup()->temperatureF_fanToMax = tempInF(arg1);
+    m_ramp.setTemperatureFanToMax(tempInF(arg1));
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_rampStartSpeed_valueChanged(int arg1)
 {
-    m_fanCurve.setup()->speed_rampStart = arg1;
+    m_ramp.setSpeedRampStart(arg1);
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_rampMidSpeed_valueChanged(int arg1)
 {
-    m_fanCurve.setup()->speed_rampMid = arg1;
+    m_ramp.setSpeedRampMid(arg1);
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_rampEndSpeed_valueChanged(int arg1)
 {
-    m_fanCurve.setup()->speed_rampEnd = arg1;
+    m_ramp.setSpeedRampEnd(arg1);
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_minRpm_valueChanged(int arg1)
 {
-    m_fanCurve.setup()->minUsableRpm = arg1;
+    m_ramp.setMinUsableRpm(arg1);
 
     // TODO possibly check all speed values
 
@@ -259,16 +246,16 @@ void gui_SoftwareAutoSetup::on_ctrl_minRpm_valueChanged(int arg1)
        User is probably expecting to have to change the other values
        anyway if they are wrong.
      */
-    if (m_fanCurve.setup()->speed_fanOn < arg1)
+    if (m_ramp.rampParameters().speed_fanOn < arg1)
     {
-        m_fanCurve.setup()->speed_fanOn = arg1;
+        m_ramp.setSpeedFanOn(arg1);
         bool bs = blockSignals(true);
         ui->ctrl_fanOnSpeed->setValue(arg1);
         blockSignals(bs);
     }
-    if (m_fanCurve.setup()->speed_rampStart < arg1)
+    if (m_ramp.rampParameters().speed_rampStart < arg1)
     {
-        m_fanCurve.setup()->speed_rampStart = arg1;
+        m_ramp.setSpeedRampStart(arg1);
         bool bs = blockSignals(true);
         ui->ctrl_rampStartSpeed->setValue(arg1);
         blockSignals(bs);

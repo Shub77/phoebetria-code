@@ -20,10 +20,10 @@
 
 #include "fancontrollerdata.h"
 
-FanSpeedRampData::FanSpeedRampData()
+FanSpeedRampParameters::FanSpeedRampParameters()
 {}
 
-int FanSpeedRampData::temperatureToRpm(int temperatureF, int maxRpm) const
+int FanSpeedRampParameters::temperatureToRpm(int temperatureF, int maxRpm) const
 {
     if (temperatureF < temperatureF_fanOn)
     {
@@ -77,7 +77,7 @@ int FanSpeedRampData::temperatureToRpm(int temperatureF, int maxRpm) const
     return maxRpm;
 }
 
-int FanSpeedRampData::speedFromTemperatureLinear(int temperatureF,
+int FanSpeedRampParameters::speedFromTemperatureLinear(int temperatureF,
                                          const QPoint& a,
                                          const QPoint& b) const
 {
@@ -103,15 +103,21 @@ int FanSpeedRampData::speedFromTemperatureLinear(int temperatureF,
 
 FanSpeedRamp::FanSpeedRamp()
     : m_rampIsInitialised(false),
+      m_isModified(false),
+      m_profileId(-1),
       m_channel(-1)
 {
 
 }
 
-bool FanSpeedRamp::init(const FanControllerData& fcd, int channel)
+bool FanSpeedRamp::init(const FanControllerData& fcd,
+                        int channel,
+                        int profileId)
 {
-    // TODO: load from database if exists
-
+    if (profileId != -1)
+    {
+        // TODO: load from database if exists
+    }
     return initWithDefaultData(fcd, channel);
 }
 
@@ -123,30 +129,33 @@ bool FanSpeedRamp::initWithDefaultData(const FanControllerData& fcd, int channel
 
     m_channel                       = channel;
 
-    m_setup.speedStepSize           = 100;
-    m_setup.allowFanToTurnOff       = false;
-    m_setup.temperatureF_fanOn      = 0;
-    m_setup.minUsableRpm            = snapToStepSize(fcd.maxRPM(channel) * 0.50, m_setup.speedStepSize);
-    m_setup.temperatureF_rampStart  = 0;
-    m_setup.temperatureF_rampMid    = fcd.alarmTemp(channel)/2;
-    m_setup.temperatureF_rampEnd    = fcd.alarmTemp(channel);
-    m_setup.temperatureF_fanToMax   = fcd.alarmTemp(channel);
-    m_setup.speed_fanOn             = m_setup.minUsableRpm;
-    m_setup.speed_rampStart         = m_setup.minUsableRpm;
-    m_setup.speed_rampEnd           = fcd.maxRPM(channel);
-    m_setup.speed_rampMid           = (m_setup.minUsableRpm + m_setup.speed_rampEnd) / 2;
-    m_setup.speed_rampMid           = snapToStepSize(m_setup.speed_rampMid, m_setup.speedStepSize);
+    m_rampParameters.speedStepSize           = 100;
+    m_rampParameters.allowFanToTurnOff       = false;
+    m_rampParameters.temperatureF_fanOn      = 0;
+    m_rampParameters.minUsableRpm            = snapToStepSize(fcd.maxRPM(channel) * 0.50, m_rampParameters.speedStepSize);
+    m_rampParameters.maxUsableRpm            = fcd.maxRPM(channel);
+    m_rampParameters.temperatureF_rampStart  = 0;
+    m_rampParameters.temperatureF_rampMid    = fcd.alarmTemp(channel)/2;
+    m_rampParameters.temperatureF_rampEnd    = fcd.alarmTemp(channel);
+    m_rampParameters.temperatureF_fanToMax   = fcd.alarmTemp(channel);
+    m_rampParameters.speed_fanOn             = m_rampParameters.minUsableRpm;
+    m_rampParameters.speed_rampStart         = m_rampParameters.minUsableRpm;
+    m_rampParameters.speed_rampEnd           = fcd.maxRPM(channel);
+    m_rampParameters.speed_rampMid           = (m_rampParameters.minUsableRpm + m_rampParameters.speed_rampEnd) / 2;
+    m_rampParameters.speed_rampMid           = snapToStepSize(m_rampParameters.speed_rampMid, m_rampParameters.speedStepSize);
 
-    m_setup.fixedRpm                = false;
-    m_setup.probeAffinity           = channel;
+    m_rampParameters.fixedRpm                = false;
+    m_rampParameters.probeAffinity           = channel;
 
-    generateCurve(m_setup, fcd.maxRPM(channel), 0, 255, &m_ramp);
+    generateCurve(m_rampParameters, fcd.maxRPM(channel), 0, 255, &m_ramp);
+
+    m_isModified = false;
 
     return true;
 }
 
 
-bool FanSpeedRamp::generateCurve(const FanSpeedRampData& fanCurveData,
+bool FanSpeedRamp::generateCurve(const FanSpeedRampParameters& fanCurveData,
                              int maxRpm,
                              int tempRangeMin,
                              int tempRangeMax,

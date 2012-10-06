@@ -34,15 +34,10 @@ public:
 
     const QString& name(void) const;
 
-    void init(void);
-
     void syncWithProfile(const FanControllerProfile& fcp);
 
     const FanChannelData& fanChannelSettings(int channel) const
         { return m_channelSettings[channel]; }
-
-    bool initRamp(int channel)
-        { return m_channelSettings[channel].initRamp(*this, channel); }
 
     int channelCount(void) const
         { return sizeof(m_channelSettings) / sizeof(m_channelSettings[0]); }
@@ -97,6 +92,17 @@ public:
     void updateIsAuto(bool isAuto, bool emitSignal = true);
     void updateIsAudibleAlarm(bool isAudible, bool emitSignal = true);
 
+    bool initRamp(int channel)
+        { return m_ramp[channel].init(*this, channel, m_lastProfileId); }
+
+    bool initRamp(int channel, int profileId)
+        { return m_ramp[channel].init(*this, channel, profileId); }
+
+    bool isRampInitialised(int channel)
+        { return m_ramp[channel].isInitialised(); }
+
+    void initAllRamps(void);
+
     // Set channel settings
     // TODO: make these protected or even private
     void setMaxRPM(int channel, int to);
@@ -131,6 +137,9 @@ private:
     short m_isAudibleAlarm;
 
     FanChannelData m_channelSettings[FC_MAX_CHANNELS];
+    FanSpeedRamp m_ramp[FC_MAX_CHANNELS];
+
+    int m_lastProfileId;
 
 signals:
     void deviceConnected(void);

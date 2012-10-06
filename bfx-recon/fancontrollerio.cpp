@@ -293,10 +293,10 @@ unsigned char FanControllerIO::calcChecksum(
 //---------------------------------------------------------------------
 
 FanControllerIO::FanControllerIO(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_pollNumber(0),
+    m_fanControllerData()
 {
-    m_pollNumber = 0;
-    m_fanControllerData.init();
 }
 
 void FanControllerIO::connectSignals(void)

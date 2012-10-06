@@ -19,17 +19,14 @@
 #include <cmath>
 
 
-FanControllerData::FanControllerData(QObject *parent) :
-    QObject(parent)
+FanControllerData::FanControllerData(QObject *parent)
+    : QObject(parent),
+      m_isCelcius(-1),
+      m_isAuto(-1),
+      m_isAudibleAlarm(-1),
+      m_lastProfileId(-1)
 {
-    init();
-}
-
-void FanControllerData::init(void)
-{
-    m_isCelcius = -1;
-    m_isAuto = -1;
-    m_isAudibleAlarm = -1;
+    initAllRamps();
 }
 
 void FanControllerData::syncWithProfile(const FanControllerProfile& fcp)
@@ -291,4 +288,15 @@ double FanControllerData::toCelciusReal(int tempInF)
 int FanControllerData::toFahrenheit(int tempInC)
 {
     return ceil(tempInC * 9/5.0 + 32);
+}
+
+void FanControllerData::initAllRamps(void)
+{
+    int cc = channelCount();
+
+    for (int i = 0; i < cc; ++i)
+    {
+        if (!isRampInitialised(i))
+            initRamp(i);
+    }
 }

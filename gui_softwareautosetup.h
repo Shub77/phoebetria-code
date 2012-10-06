@@ -24,8 +24,6 @@ public:
 
 protected:
 
-    void initFanRamps(void);
-
     void setupAxes(const FanControllerData & fcdata, int channel);
     void setupTemperatureCtrlLimits(const FanControllerData & fcdata);
     void setupSpeedCtrlLimits(int maxRpm);
@@ -61,9 +59,11 @@ private slots:
 private:
     Ui::gui_SoftwareAutoSetup *ui;
 
-    FanSpeedRamp m_fanCurve;
-
     bool m_isCelcius;
+
+    int m_currChannel;
+
+    FanSpeedRamp m_ramp;
 
     FanControllerData* m_fcdata;
 };

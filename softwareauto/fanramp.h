@@ -25,13 +25,13 @@
 // Fwd decls
 class FanControllerData;
 
-class FanSpeedRampData
+class FanSpeedRampParameters
 {
 public:
 
     friend class FanSpeedRamp;
 
-    FanSpeedRampData();
+    FanSpeedRampParameters();
 
     bool allowFanToTurnOff;
     int temperatureF_fanOn;
@@ -45,6 +45,7 @@ public:
     int speed_rampEnd;
 
     int minUsableRpm;
+    int maxUsableRpm;
     int speedStepSize;
     bool fixedRpm;
     int probeAffinity;
@@ -65,11 +66,11 @@ public:
 
     FanSpeedRamp();
 
-    inline bool isInitalised(void) const;
+    inline bool isInitialised(void) const;
 
-    bool init(const FanControllerData& fcd, int channel);
+    inline bool isModified(void) const;
 
-    inline FanSpeedRampData* setup(void);
+    bool init(const FanControllerData& fcd, int channel, int profileId);
 
     inline const QList<QPoint>& ramp(void);
 
@@ -79,35 +80,60 @@ public:
 
     inline bool generateCurve(int maxRpm);
 
+    inline const FanSpeedRampParameters& rampParameters(void) const;
+
+    // ----------- Set functions for setup data
+
+    inline void    setAllowFanToTurnOff(bool allow);
+    inline void    setTemperatureFanOn(int t);
+    inline void    setTemperatureRampStart(int t);
+    inline void    setTemperatureRampMid(int t);
+    inline void    setTemperatureRampEnd(int t);
+    inline void    setTemperatureFanToMax(int t);
+    inline void    setSpeedFanOn(int rpm);
+    inline void    setSpeedRampStart(int rpm);
+    inline void    setSpeedRampMid(int rpm);
+    inline void    setSpeedRampEnd(int rpm);
+
+    inline void    setMinUsableRpm(int rpm);
+    inline void    setMaxUsableRpm(int rpm);
+
+    inline void    setSpeedStepSize(int step);
+
+    inline void    setIsFixedRpm (bool isFixed);
+
+    inline void    setProbeAffinity(int probeNumber);
+
+    // ----------- END Set functions for setup data
+
 protected:
 
     bool initWithDefaultData(const FanControllerData& fcd, int channel);
 
-    bool generateCurve(const FanSpeedRampData &fanCurveData,
+    bool generateCurve(const FanSpeedRampParameters &fanCurveData,
                        int maxRpm,
                        int tempRangeMin,
                        int tempRangeMax,
                        QList<QPoint> *dest);
 
-
-
 private:
 
     bool m_rampIsInitialised;
-
+    bool m_isModified;
+    int m_profileId;        // profile that was used to init
     int m_channel;
-    FanSpeedRampData m_setup;
+    FanSpeedRampParameters m_rampParameters;
     QList<QPoint> m_ramp;
 };
 
-bool FanSpeedRamp::isInitalised(void) const
+bool FanSpeedRamp::isInitialised(void) const
 {
     return m_rampIsInitialised;
 }
 
-FanSpeedRampData* FanSpeedRamp::setup(void)
+bool FanSpeedRamp::isModified(void) const
 {
-    return &m_setup;
+    return m_isModified;
 }
 
 const QList<QPoint> &FanSpeedRamp::ramp(void)
@@ -117,7 +143,7 @@ const QList<QPoint> &FanSpeedRamp::ramp(void)
 
 int FanSpeedRamp::snapToStepSize(int rpm) const
 {
-    return snapToStepSize(rpm, m_setup.speedStepSize);
+    return snapToStepSize(rpm, m_rampParameters.speedStepSize);
 }
 
 int FanSpeedRamp::snapToStepSize(int rpm, int stepSize)
@@ -127,7 +153,109 @@ int FanSpeedRamp::snapToStepSize(int rpm, int stepSize)
 
 bool FanSpeedRamp::generateCurve(int maxRpm)
 {
-    return generateCurve(m_setup, maxRpm, 0, 255, &m_ramp);
+    return generateCurve(m_rampParameters, maxRpm, 0, 255, &m_ramp);
 }
+
+const FanSpeedRampParameters& FanSpeedRamp::rampParameters(void) const
+{
+    return m_rampParameters;
+}
+
+/*------------------------------------------------------------------------
+  Set functions for setup data
+  -----------------------------------------------------------------------*/
+void FanSpeedRamp::setAllowFanToTurnOff(bool allow)
+{
+    m_isModified = true;
+    m_rampParameters.allowFanToTurnOff = allow;
+}
+
+void FanSpeedRamp::setTemperatureFanOn(int t)
+{
+    m_isModified = true;
+    m_rampParameters.temperatureF_fanOn = t;
+}
+
+void FanSpeedRamp::setTemperatureRampStart(int t)
+{
+    m_isModified = true;
+    m_rampParameters.temperatureF_rampStart = t;
+}
+
+void FanSpeedRamp::setTemperatureRampMid(int t)
+{
+    m_isModified = true;
+    m_rampParameters.temperatureF_rampMid = t;
+}
+
+void FanSpeedRamp::setTemperatureRampEnd(int t)
+{
+    m_isModified = true;
+    m_rampParameters.temperatureF_rampEnd = t;
+}
+
+void FanSpeedRamp::setTemperatureFanToMax(int t)
+{
+    m_isModified = true;
+    m_rampParameters.temperatureF_fanToMax = t;
+}
+
+void    FanSpeedRamp::setSpeedFanOn(int rpm)
+{
+    m_isModified = true;
+    m_rampParameters.speed_fanOn = rpm;
+}
+
+void FanSpeedRamp::setSpeedRampStart(int rpm)
+{
+    m_isModified = true;
+    m_rampParameters.speed_rampStart = rpm;
+}
+
+void FanSpeedRamp::setSpeedRampMid(int rpm)
+{
+    m_isModified = true;
+    m_rampParameters.speed_rampMid = rpm;
+}
+
+void FanSpeedRamp::setSpeedRampEnd(int rpm)
+{
+    m_isModified = true;
+    m_rampParameters.speed_rampEnd = rpm;
+}
+
+void FanSpeedRamp::setMinUsableRpm(int rpm)
+{
+    m_isModified = true;
+    m_rampParameters.minUsableRpm = rpm;
+}
+
+void FanSpeedRamp::setMaxUsableRpm(int rpm)
+{
+    m_isModified = true;
+    m_rampParameters.maxUsableRpm = rpm;
+}
+
+void FanSpeedRamp::setSpeedStepSize(int step)
+{
+    m_isModified = true;
+    m_rampParameters.speedStepSize = step;
+}
+
+void FanSpeedRamp::setIsFixedRpm (bool isFixed)
+{
+    m_isModified = true;
+    m_rampParameters.fixedRpm = isFixed;
+}
+
+void FanSpeedRamp::setProbeAffinity(int probeNumber)
+{
+    m_isModified = true;
+    m_rampParameters.probeAffinity = probeNumber;
+}
+
+/*------------------------------------------------------------------------
+  END Set functions for setup data
+  -----------------------------------------------------------------------*/
 
 #endif // PHOEBETRIA_FANSPEEDRAMP_H
