@@ -31,6 +31,7 @@ void gui_SoftwareAutoSetup::init(void)
 
     setupAxes(fcdata, channel);
     setupTemperatureCtrlLimits(fcdata);
+    setupSpeedCtrlLimits(fcdata.maxRPM(channel));
 
     setupChannelComboBox();
 
@@ -72,6 +73,14 @@ void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(
 
     ui->fan_fanToMaxTemp->setMinimum(t_lowerLimit);
     ui->fan_fanToMaxTemp->setMaximum(t_upperLimit);
+}
+
+void gui_SoftwareAutoSetup::setupSpeedCtrlLimits(int maxRpm)
+{
+    ui->ctrl_minRpm->setMaximum(maxRpm);
+    ui->ctrl_rampStartSpeed->setMaximum(maxRpm);
+    ui->ctrl_rampMidSpeed->setMaximum(maxRpm);
+    ui->ctrl_rampEndSpeed->setMaximum(maxRpm);
 }
 
 void gui_SoftwareAutoSetup::setupChannelComboBox(void)
