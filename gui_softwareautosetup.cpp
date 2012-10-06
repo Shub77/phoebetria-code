@@ -163,6 +163,7 @@ void gui_SoftwareAutoSetup::drawPlot(void)
     QCPGraph* gr = ui->ctrl_plot->addGraph();
 
     gr->setScatterStyle(QCP::ssDisc);
+    gr->setLineStyle(QCPGraph::lsStepLeft);
 
     for (int i = 0; i < ramp.count(); ++i)
     {

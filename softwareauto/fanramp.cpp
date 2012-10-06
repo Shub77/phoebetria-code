@@ -53,13 +53,24 @@ int FanSpeedRampData::temperatureToRpm(int temperatureF, int maxRpm) const
 
     if (temperatureF < temperatureF_fanToMax)
     {
-        QPoint a(temperatureF_rampMid, speed_rampMid);
-        QPoint b(temperatureF_rampEnd, speed_rampEnd);
+        QPoint a;
+        QPoint b;
 
         if (temperatureF > temperatureF_rampEnd)
         {
-            return speedFromTemperatureLinear(temperatureF_rampEnd, a, b);
+            a.setX(temperatureF_rampEnd);
+            a.setY(speed_rampEnd);
+            b.setX(temperatureF_fanToMax);
+            b.setY(maxRpm);
         }
+        else
+        {
+            a.setX(temperatureF_rampMid);
+            a.setY(speed_rampMid);
+            b.setX(temperatureF_rampEnd);
+            b.setY(speed_rampEnd);
+        }
+
         return speedFromTemperatureLinear(temperatureF, a, b);
     }
 
