@@ -19,6 +19,8 @@
 
 #include <QString>
 
+#include "fanramp.h"
+
 class FanChannelData
 {
 public:
@@ -149,6 +151,11 @@ public:
         return m_maxLoggedRPM != m_RpmNotSetValue;
     }
 
+    bool isRampInitialised(void) const
+        { return m_ramp.isInitalised(); }
+
+    bool initRamp(const FanControllerData& fcd, int channel)
+        { return m_ramp.init(fcd, channel); }
 
     static bool isUndefinedValue_manualRPM(int value)
     {
@@ -169,6 +176,8 @@ private:
     int m_maxLoggedRPM;
 
     int m_manualRPM;
+
+    FanSpeedRamp m_ramp;
 
     static const int m_RpmNotSetValue;
     static const int m_TemperatureNotSetValue;

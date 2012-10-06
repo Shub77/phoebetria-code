@@ -859,7 +859,7 @@ void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
 {
     gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
 
-    dlg->init();
+    dlg->init(fcdata());
 
     dlg->exec();
 }

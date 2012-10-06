@@ -41,6 +41,12 @@ public:
     const FanChannelData& fanChannelSettings(int channel) const
         { return m_channelSettings[channel]; }
 
+    bool initRamp(int channel)
+        { return m_channelSettings[channel].initRamp(*this, channel); }
+
+    int channelCount(void) const
+        { return sizeof(m_channelSettings) / sizeof(m_channelSettings[0]); }
+
     // Access functions for common settings
     bool isCelcius(void) const
         { return m_isCelcius != -1 ? m_isCelcius : false; }
@@ -125,7 +131,6 @@ private:
     short m_isAudibleAlarm;
 
     FanChannelData m_channelSettings[FC_MAX_CHANNELS];
-    FanSpeedRamp m_channelSpeedRamps[FC_MAX_CHANNELS];
 
 signals:
     void deviceConnected(void);

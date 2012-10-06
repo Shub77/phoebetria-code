@@ -17,9 +17,8 @@ gui_SoftwareAutoSetup::~gui_SoftwareAutoSetup()
     delete ui;
 }
 
-void gui_SoftwareAutoSetup::init(void)
+void gui_SoftwareAutoSetup::init(FanControllerData& fcdata)
 {
-    const FanControllerData& fcdata = ph_fanControllerData();
 
     int channel = 0;
 
@@ -39,6 +38,19 @@ void gui_SoftwareAutoSetup::init(void)
 
     drawPlot();
 
+}
+
+void gui_SoftwareAutoSetup::initFanRamps(void)
+{
+    int channelCount = m_fcdata->channelCount();
+
+    for (int i = 0; i < channelCount; ++i)
+    {
+        if (!m_fcdata->fanChannelSettings(i).isRampInitialised())
+        {
+            m_fcdata->initRamp(i);
+        }
+    }
 }
 
 void gui_SoftwareAutoSetup::setupAxes(const FanControllerData& fcdata, int channel)
@@ -87,7 +99,9 @@ void gui_SoftwareAutoSetup::setupSpeedCtrlLimits(int maxRpm)
 
 void gui_SoftwareAutoSetup::setupChannelComboBox(void)
 {
-    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+    int channelCount = m_fcdata->channelCount();
+
+    for (int i = 0; i < channelCount; ++i)
         ui->ctrl_channel->insertItem(i, tr("Channel %1").arg(i+1), i);
 }
 

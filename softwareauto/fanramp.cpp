@@ -102,8 +102,10 @@ int FanSpeedRampData::speedFromTemperatureLinear(int temperatureF,
 }
 
 FanSpeedRamp::FanSpeedRamp()
-    : m_rampIsInitialised(false)
+    : m_rampIsInitialised(false),
+      m_channel(-1)
 {
+
 }
 
 bool FanSpeedRamp::init(const FanControllerData& fcd, int channel)
@@ -118,6 +120,8 @@ bool FanSpeedRamp::initWithDefaultData(const FanControllerData& fcd, int channel
 {
 
     // Setup to be roughly equivalent to the Recon's built-in Auto
+
+    m_channel                       = channel;
 
     m_setup.speedStepSize           = 100;
     m_setup.allowFanToTurnOff       = false;

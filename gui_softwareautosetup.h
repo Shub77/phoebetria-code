@@ -20,9 +20,11 @@ public:
     explicit gui_SoftwareAutoSetup(QWidget *parent = 0);
     ~gui_SoftwareAutoSetup();
     
-    void init(void);
+    void init(FanControllerData& fcdata);
 
 protected:
+
+    void initFanRamps(void);
 
     void setupAxes(const FanControllerData & fcdata, int channel);
     void setupTemperatureCtrlLimits(const FanControllerData & fcdata);
@@ -63,7 +65,7 @@ private:
 
     bool m_isCelcius;
 
-    const FanControllerData* m_fcdata;
+    FanControllerData* m_fcdata;
 };
 
 

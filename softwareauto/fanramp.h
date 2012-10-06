@@ -65,6 +65,8 @@ public:
 
     FanSpeedRamp();
 
+    inline bool isInitalised(void) const;
+
     bool init(const FanControllerData& fcd, int channel);
 
     inline FanSpeedRampData* setup(void);
@@ -93,10 +95,15 @@ private:
 
     bool m_rampIsInitialised;
 
+    int m_channel;
     FanSpeedRampData m_setup;
     QList<QPoint> m_ramp;
 };
 
+bool FanSpeedRamp::isInitalised(void) const
+{
+    return m_rampIsInitialised;
+}
 
 FanSpeedRampData* FanSpeedRamp::setup(void)
 {
