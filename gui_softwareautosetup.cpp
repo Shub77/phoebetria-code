@@ -77,7 +77,9 @@ void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(
 
 void gui_SoftwareAutoSetup::setupSpeedCtrlLimits(int maxRpm)
 {
-    ui->ctrl_minRpm->setMaximum(maxRpm);
+    int min = m_fanCurve.snapToStepSize(maxRpm * 2/3);
+    ui->ctrl_minRpm->setMaximum(min);
+
     ui->ctrl_rampStartSpeed->setMaximum(maxRpm);
     ui->ctrl_rampMidSpeed->setMaximum(maxRpm);
     ui->ctrl_rampEndSpeed->setMaximum(maxRpm);
@@ -230,5 +232,33 @@ void gui_SoftwareAutoSetup::on_ctrl_rampMidSpeed_valueChanged(int arg1)
 void gui_SoftwareAutoSetup::on_ctrl_rampEndSpeed_valueChanged(int arg1)
 {
     m_fanCurve.setup()->speed_rampEnd = arg1;
+    regenerateCurve();
+}
+
+void gui_SoftwareAutoSetup::on_ctrl_minRpm_valueChanged(int arg1)
+{
+    m_fanCurve.setup()->minUsableRpm = arg1;
+
+    // TODO possibly check all speed values
+
+    /* Could check other values here, but maybe not worth it...
+       User is probably expecting to have to change the other values
+       anyway if they are wrong.
+     */
+    if (m_fanCurve.setup()->speed_fanOn < arg1)
+    {
+        m_fanCurve.setup()->speed_fanOn = arg1;
+        bool bs = blockSignals(true);
+        ui->ctrl_fanOnSpeed->setValue(arg1);
+        blockSignals(bs);
+    }
+    if (m_fanCurve.setup()->speed_rampStart < arg1)
+    {
+        m_fanCurve.setup()->speed_rampStart = arg1;
+        bool bs = blockSignals(true);
+        ui->ctrl_rampStartSpeed->setValue(arg1);
+        blockSignals(bs);
+    }
+
     regenerateCurve();
 }

@@ -71,6 +71,8 @@ public:
 
     inline const QList<QPoint>& ramp(void);
 
+    inline int snapToStepSize(int rpm) const;
+
     inline static int snapToStepSize(int rpm, int stepSize);
 
     inline bool generateCurve(int maxRpm);
@@ -104,6 +106,11 @@ FanSpeedRampData* FanSpeedRamp::setup(void)
 const QList<QPoint> &FanSpeedRamp::ramp(void)
 {
     return m_ramp;
+}
+
+int FanSpeedRamp::snapToStepSize(int rpm) const
+{
+    return snapToStepSize(rpm, m_setup.speedStepSize);
 }
 
 int FanSpeedRamp::snapToStepSize(int rpm, int stepSize)

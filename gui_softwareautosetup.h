@@ -54,6 +54,8 @@ private slots:
 
     void on_ctrl_rampEndSpeed_valueChanged(int arg1);
 
+    void on_ctrl_minRpm_valueChanged(int arg1);
+
 private:
     Ui::gui_SoftwareAutoSetup *ui;
 
