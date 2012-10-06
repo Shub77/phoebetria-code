@@ -278,6 +278,11 @@ int FanControllerData::toCelcius(int tempInF)
     return ceil((tempInF-32)*5.0/9);
 }
 
+double FanControllerData::toCelciusReal(int tempInF)
+{
+    return (tempInF-32)*5.0/9;
+}
+
 /* Note:    Due to the conversion being somewhat specific for the fan controller
  *          device this should not be made a general (global) function; i.e.
  *          the rounding (or potential rounding) etc. make the function

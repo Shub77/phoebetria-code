@@ -157,8 +157,8 @@ void gui_SoftwareAutoSetup::drawPlot(void)
 
     for (int i = 0; i < ramp.count(); ++i)
     {
-        int t;
-        t = m_fcdata->toCurrTempScale(ramp.at(i).x());
+        double t;
+        t = m_fcdata->toCurrTempScaleReal(ramp.at(i).x());
         gr->addData(t, ramp.at(i).y());
     }
 

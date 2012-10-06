@@ -111,9 +111,11 @@ public:
     QString temperatureString(int temperature, bool addScaleSymbol);
 
     static int toCelcius(int tempInF);
+    static double toCelciusReal(int tempInF);
     static int toFahrenheit(int tempInC);
 
     inline int toCurrTempScale(int tF) const;
+    inline double toCurrTempScaleReal(int tF) const;
 
 private:
 
@@ -148,5 +150,9 @@ int FanControllerData::toCurrTempScale(int tF) const
     return isCelcius() ? toCelcius(tF) : tF;
 }
 
+double FanControllerData::toCurrTempScaleReal(int tF) const
+{
+    return isCelcius() ? toCelciusReal(tF) : tF;
+}
 
 #endif // FANCONTROLLERDATA_H
