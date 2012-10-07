@@ -99,14 +99,18 @@ private slots:
     void on_actionPreferences_triggered();
 
     void on_ctrl_SavePreset_clicked();
-    void on_ctrl_LoadPreset_clicked();
     void on_ctrl_ErasePreset_clicked();
 
     void on_actionSQL_Query_triggered();
 
     void on_ctrl_configSoftwareAuto_clicked();
 
+    void on_ctrl_PresetName_currentIndexChanged(int index);
+
 private:
+
+    bool loadProfile(void);
+
     void initCtrlArrays(void);
 
     FanControllerData& fcdata(void) const;

@@ -94,7 +94,7 @@
          </size>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab_Settings">
          <attribute name="title">
@@ -550,7 +550,7 @@ QSlider::handle:horizontal:disabled {
                    </size>
                   </property>
                   <property name="text">
-                   <string>Auto Mode</string>
+                   <string>Custom auto</string>
                   </property>
                  </widget>
                 </item>
@@ -801,42 +801,7 @@ QSlider::handle:horizontal:disabled {
                  </size>
                 </property>
                 <property name="editable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1" colspan="2">
-               <widget class="QPushButton" name="ctrl_LoadPreset">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Load Preset</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>Load</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="gui_resources.qrc">
-                  <normaloff>:/Images/profile_play.png</normaloff>:/Images/profile_play.png</iconset>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -2366,7 +2331,7 @@ margin:-2px;</string>
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">

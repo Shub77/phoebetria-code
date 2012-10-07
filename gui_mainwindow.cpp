@@ -176,6 +176,9 @@ void gui_MainWindow::populate_ctrl_PresetName(void)
     ui->ctrl_PresetName->clear();
 
     QStringList items = fcp.getProfileNames();
+
+    bool bs = ui->ctrl_PresetName->blockSignals(true);
+
     for (int i = 0; i < items.count(); ++i)
     {
         const QString& item = items.at(i);
@@ -183,6 +186,8 @@ void gui_MainWindow::populate_ctrl_PresetName(void)
         if (FanControllerProfile::isReservedProfileName(item)) continue;
         ui->ctrl_PresetName->addItem(item);
     }
+
+    ui->ctrl_PresetName->blockSignals(bs);
 }
 
 void gui_MainWindow::enableSpeedControls(bool enabled)
@@ -800,27 +805,32 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
     }
 }
 
-void gui_MainWindow::on_ctrl_LoadPreset_clicked()
+bool gui_MainWindow::loadProfile(void)
 {
     FanControllerProfile fcp;
     QString m_profileName = ui->ctrl_PresetName->currentText();
-    if (m_profileName.isEmpty()) return;
+    if (m_profileName.isEmpty()) return false;
+
+    bool success = false;
 
     if (fcp.load(m_profileName))
     {
         FanControllerIO* fc = &ph_fanControllerIO();
 
-        if (fc->setFromProfile(fcp)) 
-		{
-
+        if (fc->setFromProfile(fcp))
+        {
             fcdata().syncWithProfile(fcp);
             updateSpeedControlTooltips();
             updateAllSpeedCtrls();
             updateAllAlarmCtrls(fcdata().isCelcius());
             updateToggleControls();
             enableSpeedControls(!fcp.isAuto());
+
+            success = true;
         }
     }
+
+    return success;
 }
 
 void gui_MainWindow::on_ctrl_ErasePreset_clicked()
@@ -864,4 +874,11 @@ void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
     dlg->init(fcdata());
 
     dlg->exec();
+}
+
+void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
+{
+    (void)index;    //unused
+    loadProfile();
+
 }

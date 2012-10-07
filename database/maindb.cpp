@@ -450,16 +450,15 @@ int MainDb::importOldStyleProfiles(void)
 
     if (!dir.exists()) return 0;
 
-    int uc = QMessageBox::information(
+    QMessageBox::information(
                 NULL,
-                QObject::tr("Import old-style (.ini) profiles?"),
-                QObject::tr("Phoebetria has changed the way it stores fan profiles."
-                            " Would you like to import existing saved profiles?"),
-                QMessageBox::Yes | QMessageBox::No
+                QObject::tr("Importing old-style (.ini) profiles."),
+                QObject::tr("Phoebetria has changed the way it stores fan profiles.\n"
+                            "Your existing profiles will now be imported."),
+                QMessageBox::Ok
                 );
 
-    if (uc == QMessageBox::Yes)
-        return FanControllerProfile::importFromIni(dir);
-    else
-        return 0;
+
+    return FanControllerProfile::importFromIni(dir);
+
 }
