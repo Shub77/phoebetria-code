@@ -26,7 +26,6 @@ FanControllerData::FanControllerData(QObject *parent)
       m_isAudibleAlarm(-1),
       m_lastProfileId(-1)
 {
-    initAllRamps();
 }
 
 void FanControllerData::syncWithProfile(const FanControllerProfile& fcp)

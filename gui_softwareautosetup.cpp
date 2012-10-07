@@ -20,12 +20,12 @@ gui_SoftwareAutoSetup::~gui_SoftwareAutoSetup()
 void gui_SoftwareAutoSetup::init(FanControllerData& fcdata)
 {
 
+    m_fcdata = &fcdata;
+
     m_currChannel = 0;
 
     /* Use m_ramp internally and copy to/from fcdata when required */
-    m_ramp.init(fcdata, 0, -1);
-
-    m_fcdata = &fcdata;
+    m_ramp = fcdata.ramp(m_currChannel);
 
     m_isCelcius = fcdata.isCelcius();
 
@@ -48,7 +48,7 @@ void gui_SoftwareAutoSetup::setupAxes(const FanControllerData& fcdata, int chann
     int maxProbeTemp = fc->maxProbeTemp(fcdata.isCelcius())+10;
 
     ui->ctrl_plot->xAxis->setRange(minProbeTemp, maxProbeTemp);
-    ui->ctrl_plot->yAxis->setRange(0, fcdata.maxRPM(channel) + 100);
+    ui->ctrl_plot->yAxis->setRange(0, fcdata.maxRPM(channel) + 200);
 }
 
 void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(
@@ -262,4 +262,17 @@ void gui_SoftwareAutoSetup::on_ctrl_minRpm_valueChanged(int arg1)
     }
 
     regenerateCurve();
+}
+
+void gui_SoftwareAutoSetup::on_ctrl_channel_currentIndexChanged(int index)
+{
+//    bool bs = blockSignals(true);
+//    m_currChannel = index;
+//    m_ramp = m_fcdata->ramp(index);
+//    setupAxes(*m_fcdata, index);
+//    setupTemperatureCtrlLimits(*m_fcdata);
+//    setupSpeedCtrlLimits(m_fcdata->maxRPM(m_currChannel));
+//    regenerateCurve();
+//    xferSettings_toGui(*m_fcdata, index);
+//    blockSignals(bs);
 }

@@ -859,6 +859,8 @@ void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
 {
     gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
 
+    fcdata().initAllRamps();
+
     dlg->init(fcdata());
 
     dlg->exec();

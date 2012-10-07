@@ -56,6 +56,8 @@ private slots:
 
     void on_ctrl_minRpm_valueChanged(int arg1);
 
+    void on_ctrl_channel_currentIndexChanged(int index);
+
 private:
     Ui::gui_SoftwareAutoSetup *ui;
 

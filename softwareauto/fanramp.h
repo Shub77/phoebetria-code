@@ -72,7 +72,7 @@ public:
 
     bool init(const FanControllerData& fcd, int channel, int profileId);
 
-    inline const QList<QPoint>& ramp(void);
+    inline const QList<QPoint>& ramp(void) const;
 
     inline int snapToStepSize(int rpm) const;
 
@@ -136,7 +136,7 @@ bool FanSpeedRamp::isModified(void) const
     return m_isModified;
 }
 
-const QList<QPoint> &FanSpeedRamp::ramp(void)
+const QList<QPoint>& FanSpeedRamp::ramp(void) const
 {
     return m_ramp;
 }

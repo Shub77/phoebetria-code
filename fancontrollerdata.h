@@ -92,6 +92,9 @@ public:
     void updateIsAuto(bool isAuto, bool emitSignal = true);
     void updateIsAudibleAlarm(bool isAudible, bool emitSignal = true);
 
+    FanSpeedRamp ramp(int channel)
+        { return m_ramp[channel]; }
+
     bool initRamp(int channel)
         { return m_ramp[channel].init(*this, channel, m_lastProfileId); }
 
