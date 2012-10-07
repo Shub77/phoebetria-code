@@ -21,19 +21,17 @@ void gui_SoftwareAutoSetup::init(FanControllerData& fcdata)
 {
 
     m_fcdata = &fcdata;
-
+    m_isCelcius = fcdata.isCelcius();
     m_currChannel = 0;
 
-    /* Use m_ramp internally and copy to/from fcdata when required */
-    m_ramp = fcdata.ramp(m_currChannel);
-
-    m_isCelcius = fcdata.isCelcius();
+    setupChannelComboBox();
 
     setupAxes(fcdata, m_currChannel);
     setupTemperatureCtrlLimits(fcdata);
     setupSpeedCtrlLimits(fcdata.maxRPM(m_currChannel));
 
-    setupChannelComboBox();
+    /* Use m_ramp internally and copy to/from fcdata when required */
+    m_ramp = fcdata.ramp(m_currChannel);
 
     xferSettings_toGui(fcdata, m_currChannel);
 
@@ -48,7 +46,7 @@ void gui_SoftwareAutoSetup::setupAxes(const FanControllerData& fcdata, int chann
     int maxProbeTemp = fc->maxProbeTemp(fcdata.isCelcius())+10;
 
     ui->ctrl_plot->xAxis->setRange(minProbeTemp, maxProbeTemp);
-    ui->ctrl_plot->yAxis->setRange(0, fcdata.maxRPM(channel) + 200);
+    ui->ctrl_plot->yAxis->setRange(0, fcdata.maxRPM(channel) + 100);
 }
 
 void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(
@@ -89,8 +87,12 @@ void gui_SoftwareAutoSetup::setupChannelComboBox(void)
 {
     int channelCount = m_fcdata->channelCount();
 
+    bool bs = blockSignals(true);
+
     for (int i = 0; i < channelCount; ++i)
         ui->ctrl_channel->insertItem(i, tr("Channel %1").arg(i+1), i);
+
+    blockSignals(bs);
 }
 
 void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
@@ -266,13 +268,13 @@ void gui_SoftwareAutoSetup::on_ctrl_minRpm_valueChanged(int arg1)
 
 void gui_SoftwareAutoSetup::on_ctrl_channel_currentIndexChanged(int index)
 {
-//    bool bs = blockSignals(true);
-//    m_currChannel = index;
-//    m_ramp = m_fcdata->ramp(index);
-//    setupAxes(*m_fcdata, index);
-//    setupTemperatureCtrlLimits(*m_fcdata);
-//    setupSpeedCtrlLimits(m_fcdata->maxRPM(m_currChannel));
-//    regenerateCurve();
-//    xferSettings_toGui(*m_fcdata, index);
-//    blockSignals(bs);
+    bool bs = blockSignals(true);
+    m_currChannel = index;
+    m_ramp = m_fcdata->ramp(index);
+    setupAxes(*m_fcdata, index);
+    setupTemperatureCtrlLimits(*m_fcdata);
+    setupSpeedCtrlLimits(m_fcdata->maxRPM(m_currChannel));
+    regenerateCurve();
+    xferSettings_toGui(*m_fcdata, index);
+    blockSignals(bs);
 }
