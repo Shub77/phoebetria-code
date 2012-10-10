@@ -103,10 +103,12 @@ void gui_MainWindow::checkForReqChannelParems(void)
         EventDispatcher& ed = ph_phoebetriaApp()->dispatcher();
 
         disconnect(&ed, SIGNAL(tick()));
+
+        fcdata().initAllRamps();
     }
 }
 
-bool gui_MainWindow::requiredChannelParemsAreSet(void) const
+bool gui_MainWindow::customAutoAvailable(void) const
 {
     return m_reqChannelParamsAreSet;
 }

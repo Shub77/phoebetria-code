@@ -117,7 +117,7 @@ private:
 
     void initWaitForReqChannelParams(void);
 
-    bool requiredChannelParemsAreSet(void) const;
+    bool customAutoAvailable(void) const;
 
     FanControllerData& fcdata(void) const;
 
