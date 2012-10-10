@@ -60,6 +60,8 @@ private slots:
 
     void on_ctrl_channel_currentIndexChanged(int index);
 
+    void on_ctrl_probeAffinity_valueChanged(int arg1);
+
 private:
     Ui::gui_SoftwareAutoSetup *ui;
 

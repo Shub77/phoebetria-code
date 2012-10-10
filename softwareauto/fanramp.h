@@ -82,7 +82,10 @@ public:
 
     inline const FanSpeedRampParameters& rampParameters(void) const;
 
+    inline int probeAffinity(void) const;
+
     int temperatureToRpm(int tF) const;
+
 
     // ----------- Set functions for setup data
 
@@ -163,6 +166,10 @@ const FanSpeedRampParameters& FanSpeedRamp::rampParameters(void) const
     return m_rampParameters;
 }
 
+int FanSpeedRamp::probeAffinity(void) const
+{
+    return m_rampParameters.probeAffinity;
+}
 
 /*------------------------------------------------------------------------
   Set functions for setup data

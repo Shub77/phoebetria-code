@@ -278,7 +278,7 @@
        <item row="1" column="3">
         <widget class="QSpinBox" name="ctrl_probeAffinity">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="minimum">
           <number>1</number>

@@ -157,15 +157,21 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 
     /* ####### DEBUG FOR S/WARE AUTO */
 
-    if (channel == 4)
+    if (requiredChannelParemsAreSet())
     {
-        qDebug() << "Software Auto (Channel"
-                    << channel
-                    << ")"
-                    << "Temp:"
-                    << (m_isCelcius ? toCelcius(to) : to)
-                    << "RPM:"
-                    << m_ramp[channel].temperatureToRpm(to);
+        for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+        {
+            if (m_ramp[i].probeAffinity() == channel)
+            {
+                qDebug() << "Software Auto (Channel"
+                            << channel
+                            << ")"
+                            << "Temp:"
+                            << (m_isCelcius ? toCelcius(to) : to)
+                            << "RPM:"
+                            << m_ramp[i].temperatureToRpm(to);
+            }
+        }
     }
 
     /* ####### END DEBUG FOR S/WARE AUTO */

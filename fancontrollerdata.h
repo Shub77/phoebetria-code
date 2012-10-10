@@ -74,6 +74,8 @@ public:
     bool isManualRpmSet(int channel) const
         { return m_channelSettings[channel].isSet_manualRPM(); }
 
+    inline int probeTemp(int probe) const;
+
     int lastTemp(int channel) const;
     int maxTemp(int channel) const;
     int minTemp(int channel) const;
@@ -163,6 +165,11 @@ signals:
     void controlMode_changed (bool isAuto);
     void alarmIsAudible_changed (bool isAudibleAlarm);
 };
+
+int FanControllerData::probeTemp(int probe) const
+{
+    return m_channelSettings[probe].lastTemp();
+}
 
 int FanControllerData::toCurrTempScale(int tF) const
 {

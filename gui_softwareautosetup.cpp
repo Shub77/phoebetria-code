@@ -289,3 +289,8 @@ void gui_SoftwareAutoSetup::on_ctrl_channel_currentIndexChanged(int index)
     xferSettings_toGui(*m_fcdata, index);
     ignoreSignals(bs);
 }
+
+void gui_SoftwareAutoSetup::on_ctrl_probeAffinity_valueChanged(int arg1)
+{
+    m_ramp.setProbeAffinity(arg1);
+}
