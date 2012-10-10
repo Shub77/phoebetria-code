@@ -346,7 +346,7 @@ void FanControllerIO::onDispatcherSignal(EventDispatcher::TaskId taskId)
         return;
     }
 
-    if (taskId == EventDispatcher::Tock)
+    if (taskId == EventDispatcher::Tick)
     {
         processRequestQueue();
         return;

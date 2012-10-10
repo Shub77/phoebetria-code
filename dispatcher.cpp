@@ -208,7 +208,8 @@ unsigned EventDispatcher::tickToInterval(unsigned tick) const
 void EventDispatcher::onTimer(void)
 {
 
-    emit task(Tock);
+    emit tick();        // Alternative signal to task(Tick)
+    emit task(Tick);
     emit task(CheckForDeviceData);
 
     for (int i = 0; i < m_tasks.size(); ++i)

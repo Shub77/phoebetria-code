@@ -36,7 +36,7 @@ public:
         NotSet,
 
         //!< Emitted every time the timer is triggered
-        Tock,
+        Tick,
 
         //!< Check the device for data
         CheckForDeviceData,
@@ -103,6 +103,7 @@ private:
 signals:
 
     void task(EventDispatcher::TaskId task);
+    void tick(void);
 
 public slots:
 
