@@ -154,6 +154,21 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
         cd.setLastTemp(to);
         if (emitSignal) emit temperature_changed(channel, to);
     }
+
+    /* ####### DEBUG FOR S/WARE AUTO */
+
+    if (channel == 4)
+    {
+        qDebug() << "Software Auto (Channel"
+                    << channel
+                    << ")"
+                    << "Temp:"
+                    << (m_isCelcius ? toCelcius(to) : to)
+                    << "RPM:"
+                    << m_ramp[channel].temperatureToRpm(to);
+    }
+
+    /* ####### END DEBUG FOR S/WARE AUTO */
 }
 
 void FanControllerData::updateRPM(int channel, int to, bool emitSignal)

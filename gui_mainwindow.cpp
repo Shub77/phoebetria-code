@@ -908,7 +908,7 @@ void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
 
     fcdata().initAllRamps();
 
-    dlg->init(fcdata());
+    dlg->init(&fcdata());
 
     dlg->exec();
 }

@@ -7,7 +7,8 @@
 
 gui_SoftwareAutoSetup::gui_SoftwareAutoSetup(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::gui_SoftwareAutoSetup)
+    ui(new Ui::gui_SoftwareAutoSetup),
+    m_ignoreSignals(false)
 {
     ui->setupUi(this);
 }
@@ -17,23 +18,23 @@ gui_SoftwareAutoSetup::~gui_SoftwareAutoSetup()
     delete ui;
 }
 
-void gui_SoftwareAutoSetup::init(FanControllerData& fcdata)
+void gui_SoftwareAutoSetup::init(FanControllerData *fcdata)
 {
 
-    m_fcdata = &fcdata;
-    m_isCelcius = fcdata.isCelcius();
+    m_fcdata = fcdata;
+    m_isCelcius = fcdata->isCelcius();
     m_currChannel = 0;
 
     setupChannelComboBox();
 
-    setupAxes(fcdata, m_currChannel);
-    setupTemperatureCtrlLimits(fcdata);
-    setupSpeedCtrlLimits(fcdata.maxRPM(m_currChannel));
+    setupAxes(*fcdata, m_currChannel);
+    setupTemperatureCtrlLimits(*fcdata);
+    setupSpeedCtrlLimits(fcdata->maxRPM(m_currChannel));
 
     /* Use m_ramp internally and copy to/from fcdata when required */
-    m_ramp = fcdata.ramp(m_currChannel);
+    m_ramp = fcdata->ramp(m_currChannel);
 
-    xferSettings_toGui(fcdata, m_currChannel);
+    xferSettings_toGui(*fcdata, m_currChannel);
 
     drawPlot();
 
@@ -106,7 +107,7 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
     int t_rampEnd       = fcdata.toCurrTempScale(setup.temperatureF_rampEnd);
     int t_fanToMax      = fcdata.toCurrTempScale(setup.temperatureF_fanToMax);
 
-    bool bs = blockSignals(true);
+    bool bs = ignoreSignals(true);
 
     ui->ctrl_channel->setCurrentIndex           (channel);
     ui->ctrl_minRpm->setValue                   (setup.minUsableRpm);
@@ -126,7 +127,7 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
     ui->ctrl_probeAffinity->setValue            (setup.probeAffinity);
     ui->ctrl_isFanAlwaysOn->setChecked          (!setup.allowFanToTurnOff);
 
-    blockSignals(bs);
+    ignoreSignals(bs);
 
 }
 
@@ -197,6 +198,7 @@ int gui_SoftwareAutoSetup::tempInF(int t) const
 
 void gui_SoftwareAutoSetup::on_ctrl_rampStartTemp_valueChanged(int arg1)
 {
+    if (m_ignoreSignals) return;
     m_ramp.setSpeedRampStart(tempInF(arg1));
     regenerateCurve();
 
@@ -204,42 +206,50 @@ void gui_SoftwareAutoSetup::on_ctrl_rampStartTemp_valueChanged(int arg1)
 
 void gui_SoftwareAutoSetup::on_ctrl_rampMidTemp_valueChanged(int arg1)
 {
+    if (m_ignoreSignals) return;
     m_ramp.setTemperatureRampMid(tempInF(arg1));
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_rampEndTemp_valueChanged(int arg1)
 {
+    if (m_ignoreSignals) return;
     m_ramp.setTemperatureRampEnd(tempInF(arg1));
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_fan_fanToMaxTemp_valueChanged(int arg1)
 {
+    if (m_ignoreSignals) return;
     m_ramp.setTemperatureFanToMax(tempInF(arg1));
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_rampStartSpeed_valueChanged(int arg1)
 {
+    if (m_ignoreSignals) return;
     m_ramp.setSpeedRampStart(arg1);
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_rampMidSpeed_valueChanged(int arg1)
 {
+    if (m_ignoreSignals) return;
     m_ramp.setSpeedRampMid(arg1);
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_rampEndSpeed_valueChanged(int arg1)
 {
+    if (m_ignoreSignals) return;
     m_ramp.setSpeedRampEnd(arg1);
     regenerateCurve();
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_minRpm_valueChanged(int arg1)
 {
+    if (m_ignoreSignals) return;
+
     m_ramp.setMinUsableRpm(arg1);
 
     // TODO possibly check all speed values
@@ -251,16 +261,16 @@ void gui_SoftwareAutoSetup::on_ctrl_minRpm_valueChanged(int arg1)
     if (m_ramp.rampParameters().speed_fanOn < arg1)
     {
         m_ramp.setSpeedFanOn(arg1);
-        bool bs = blockSignals(true);
+        bool bs = ui->ctrl_fanOnSpeed->blockSignals(true);
         ui->ctrl_fanOnSpeed->setValue(arg1);
-        blockSignals(bs);
+        ui->ctrl_fanOnSpeed->blockSignals(bs);
     }
     if (m_ramp.rampParameters().speed_rampStart < arg1)
     {
         m_ramp.setSpeedRampStart(arg1);
-        bool bs = blockSignals(true);
+        bool bs = ui->ctrl_rampStartSpeed->blockSignals(true);
         ui->ctrl_rampStartSpeed->setValue(arg1);
-        blockSignals(bs);
+        ui->ctrl_rampStartSpeed->blockSignals(bs);
     }
 
     regenerateCurve();
@@ -268,13 +278,14 @@ void gui_SoftwareAutoSetup::on_ctrl_minRpm_valueChanged(int arg1)
 
 void gui_SoftwareAutoSetup::on_ctrl_channel_currentIndexChanged(int index)
 {
-    bool bs = blockSignals(true);
+    bool bs = ignoreSignals(true);
+
     m_currChannel = index;
     m_ramp = m_fcdata->ramp(index);
     setupAxes(*m_fcdata, index);
     setupTemperatureCtrlLimits(*m_fcdata);
     setupSpeedCtrlLimits(m_fcdata->maxRPM(m_currChannel));
-    regenerateCurve();
+    drawPlot();
     xferSettings_toGui(*m_fcdata, index);
-    blockSignals(bs);
+    ignoreSignals(bs);
 }

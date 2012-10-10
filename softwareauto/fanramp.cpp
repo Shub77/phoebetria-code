@@ -131,12 +131,12 @@ bool FanSpeedRamp::initWithDefaultData(const FanControllerData& fcd, int channel
 
     m_rampParameters.speedStepSize           = 100;
     m_rampParameters.allowFanToTurnOff       = false;
-    m_rampParameters.temperatureF_fanOn      = 0;
+    m_rampParameters.temperatureF_fanOn      = 68; // 68F = 20C;
     m_rampParameters.minUsableRpm            = snapToStepSize(fcd.maxRPM(channel) * 0.50, m_rampParameters.speedStepSize);
     m_rampParameters.maxUsableRpm            = fcd.maxRPM(channel);
-    m_rampParameters.temperatureF_rampStart  = 0;
-    m_rampParameters.temperatureF_rampMid    = fcd.alarmTemp(channel)/2;
-    m_rampParameters.temperatureF_rampEnd    = fcd.alarmTemp(channel);
+    m_rampParameters.temperatureF_rampStart  = 68; // 68F = 20C;
+    m_rampParameters.temperatureF_rampMid    = 122; // 104F = 50C
+    m_rampParameters.temperatureF_rampEnd    = 140; // 140F = 60C
     m_rampParameters.temperatureF_fanToMax   = fcd.alarmTemp(channel);
     m_rampParameters.speed_fanOn             = m_rampParameters.minUsableRpm;
     m_rampParameters.speed_rampStart         = m_rampParameters.minUsableRpm;
@@ -164,12 +164,12 @@ int FanSpeedRamp::temperatureToRpm(int tF) const
 
     for (int i = 0; i < c; ++i)
     {
-        if (m_ramp.at(i).y() > rpm)
-        {
-            rpm = m_ramp.at(i).y();
-        }
         if (m_ramp.at(i).x() > tF)
         {
+            if (i == 0)
+                rpm = m_ramp.at(0).y();
+            else
+                rpm = m_ramp.at(i-1).y();
             break;
         }
     }

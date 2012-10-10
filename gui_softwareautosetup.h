@@ -20,7 +20,7 @@ public:
     explicit gui_SoftwareAutoSetup(QWidget *parent = 0);
     ~gui_SoftwareAutoSetup();
     
-    void init(FanControllerData& fcdata);
+    void init(FanControllerData* fcdata);
 
 protected:
 
@@ -37,6 +37,8 @@ protected:
     void regenerateCurve(void);
 
     int tempInF(int t) const;
+
+    inline bool ignoreSignals(bool ignore = true);
 
 private slots:
 
@@ -65,11 +67,19 @@ private:
 
     int m_currChannel;
 
+    bool m_ignoreSignals;
+
     FanSpeedRamp m_ramp;
 
     FanControllerData* m_fcdata;
 };
 
+bool gui_SoftwareAutoSetup::ignoreSignals(bool ignore)
+{
+    bool r = m_ignoreSignals;
+    m_ignoreSignals = ignore;
+    return r;
+}
 
 
 
