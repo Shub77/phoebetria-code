@@ -82,6 +82,8 @@ public:
 
     inline const FanSpeedRampParameters& rampParameters(void) const;
 
+    int temperatureToRpm(int tF) const;
+
     // ----------- Set functions for setup data
 
     inline void    setAllowFanToTurnOff(bool allow);
@@ -160,6 +162,7 @@ const FanSpeedRampParameters& FanSpeedRamp::rampParameters(void) const
 {
     return m_rampParameters;
 }
+
 
 /*------------------------------------------------------------------------
   Set functions for setup data

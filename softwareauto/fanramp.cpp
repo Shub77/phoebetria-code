@@ -155,6 +155,27 @@ bool FanSpeedRamp::initWithDefaultData(const FanControllerData& fcd, int channel
 }
 
 
+// pre: isInitialised() == true
+int FanSpeedRamp::temperatureToRpm(int tF) const
+{
+    int c = m_ramp.count();
+
+    int rpm = 0;
+
+    for (int i = 0; i < c; ++i)
+    {
+        if (m_ramp.at(i).y() > rpm)
+        {
+            rpm = m_ramp.at(i).y();
+        }
+        if (m_ramp.at(i).x() > tF)
+        {
+            break;
+        }
+    }
+    return rpm;
+}
+
 bool FanSpeedRamp::generateCurve(const FanSpeedRampParameters& fanCurveData,
                              int maxRpm,
                              int tempRangeMin,
