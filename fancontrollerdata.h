@@ -92,6 +92,8 @@ public:
     void updateIsAuto(bool isAuto, bool emitSignal = true);
     void updateIsAudibleAlarm(bool isAudible, bool emitSignal = true);
 
+    bool requiredChannelParemsAreSet(void) const;
+
     FanSpeedRamp ramp(int channel)
         { return m_ramp[channel]; }
 

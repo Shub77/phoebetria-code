@@ -29,17 +29,14 @@ const int FanChannelData::m_manualRPMNotSetValue_Preferred = 65535;
 
 FanChannelData::FanChannelData()
 {
-
-    m_maxLoggedRPM = m_RpmNotSetValue;
-    m_lastRPM = m_RpmNotSetValue;
-    m_minLoggedRPM = m_RpmNotSetValue;
-    m_lastTemp = m_TemperatureNotSetValue;
-    m_maxTemp = m_maxLoggedTempNotSetValue;
-    m_minTemp = m_minLoggedTempNotSetValue;
-
-    m_alarmTemp = m_TemperatureNotSetValue;
-    m_maxRPM = m_RpmNotSetValue;
-
-    m_manualRPM = m_manualRPMNotSetValue_Preferred;
+    m_maxLoggedRPM  = m_RpmNotSetValue;
+    m_lastRPM       = m_RpmNotSetValue;
+    m_minLoggedRPM  = m_RpmNotSetValue;
+    m_lastTemp      = m_TemperatureNotSetValue;
+    m_maxTemp       = m_maxLoggedTempNotSetValue;
+    m_minTemp       = m_minLoggedTempNotSetValue;
+    m_alarmTemp     = m_TemperatureNotSetValue;
+    m_maxRPM        = m_RpmNotSetValue;
+    m_manualRPM     = m_manualRPMNotSetValue_Preferred;
 }
 

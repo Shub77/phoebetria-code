@@ -289,6 +289,22 @@ int FanControllerData::toFahrenheit(int tempInC)
     return ceil(tempInC * 9/5.0 + 32);
 }
 
+bool FanControllerData::requiredChannelParemsAreSet(void) const
+{
+    int cc = channelCount();
+    bool r = true;
+
+    for (int i = 0; i < cc; ++i)
+    {
+        if (!m_channelSettings[i].requiredParamsAreSet())
+        {
+            r = false;
+            break;
+        }
+    }
+    return r;
+}
+
 void FanControllerData::initAllRamps(void)
 {
     int cc = channelCount();
