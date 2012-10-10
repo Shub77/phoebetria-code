@@ -63,6 +63,8 @@ public slots:
 
 private slots:
 
+    void checkForReqChannelParems(void);
+
     void on_ctrl_isManual_valueChanged(int value);
 
     void on_ctrl_isAudibleAlarm_valueChanged(int value);
@@ -113,6 +115,10 @@ private:
 
     void initCtrlArrays(void);
 
+    void initWaitForReqChannelParams(void);
+
+    bool requiredChannelParemsAreSet(void) const;
+
     FanControllerData& fcdata(void) const;
 
     void connectCustomSignals(void);
@@ -156,6 +162,8 @@ private:
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
     QSystemTrayIcon m_trayIcon;
+
+    bool m_reqChannelParamsAreSet;
 
 };
 

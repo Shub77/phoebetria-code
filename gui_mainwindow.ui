@@ -94,7 +94,7 @@
          </size>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab_Settings">
          <attribute name="title">
@@ -656,6 +656,9 @@ QSlider::handle:horizontal:disabled {
               </item>
               <item>
                <widget class="QPushButton" name="ctrl_configSoftwareAuto">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Configure</string>
                 </property>

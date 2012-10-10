@@ -75,7 +75,42 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     {
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
     }
+
+    initWaitForReqChannelParams();
+
 }
+
+
+void gui_MainWindow::initWaitForReqChannelParams(void)
+{
+    m_reqChannelParamsAreSet = false;
+
+    EventDispatcher& ed = ph_phoebetriaApp()->dispatcher();
+
+    connect(&ed, SIGNAL(tick()),
+            this, SLOT(checkForReqChannelParems()));
+
+    checkForReqChannelParems();
+}
+
+void gui_MainWindow::checkForReqChannelParems(void)
+{
+    if (fcdata().requiredChannelParemsAreSet())
+    {
+        m_reqChannelParamsAreSet = true;
+        ui->ctrl_configSoftwareAuto->setEnabled(true);
+
+        EventDispatcher& ed = ph_phoebetriaApp()->dispatcher();
+
+        disconnect(&ed, SIGNAL(tick()));
+    }
+}
+
+bool gui_MainWindow::requiredChannelParemsAreSet(void) const
+{
+    return m_reqChannelParamsAreSet;
+}
+
 
 gui_MainWindow::~gui_MainWindow()
 {
