@@ -89,6 +89,7 @@ public:
 
     // ----------- Set functions for setup data
 
+    inline void    setIsCustom(bool isCustom = true);
     inline void    setAllowFanToTurnOff(bool allow);
     inline void    setTemperatureFanOn(int t);
     inline void    setTemperatureRampStart(int t);
@@ -124,6 +125,7 @@ protected:
 private:
 
     bool m_rampIsInitialised;
+    bool m_isCustom;
     bool m_isModified;
     int m_profileId;        // profile that was used to init
     int m_channel;
@@ -174,6 +176,12 @@ int FanSpeedRamp::probeAffinity(void) const
 /*------------------------------------------------------------------------
   Set functions for setup data
   -----------------------------------------------------------------------*/
+
+void FanSpeedRamp::setIsCustom(bool isCustom)
+{
+    m_isCustom = isCustom;
+}
+
 void FanSpeedRamp::setAllowFanToTurnOff(bool allow)
 {
     m_isModified = true;

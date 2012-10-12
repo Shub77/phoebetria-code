@@ -103,6 +103,7 @@ int FanSpeedRampParameters::speedFromTemperatureLinear(int temperatureF,
 
 FanSpeedRamp::FanSpeedRamp()
     : m_rampIsInitialised(false),
+      m_isCustom(false),
       m_isModified(false),
       m_profileId(-1),
       m_channel(-1)
@@ -150,6 +151,7 @@ bool FanSpeedRamp::initWithDefaultData(const FanControllerData& fcd, int channel
     generateCurve(m_rampParameters, fcd.maxRPM(channel), 0, 255, &m_ramp);
 
     m_isModified = false;
+    m_isCustom = false;
 
     return true;
 }
