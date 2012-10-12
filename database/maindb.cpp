@@ -71,7 +71,7 @@ bool MainDb::writeProfile(const QString& name,
                 profile.isAuto(),
                 profile.isCelcius(),
                 profile.isAudibleAlarm(),
-                false       // FIXME: TODO: set to real val when s/ware auto done
+                profile.isSoftwareAuto()
                 );
 
     if (p_id == -1)
@@ -92,6 +92,12 @@ bool MainDb::writeProfile(const QString& name,
                     );
 
         if (!ok) break;
+
+        if (profile.isSoftwareAuto())
+        {
+            /* TODO: Write ramp */
+            //if (!ok) break;
+        }
     }
 
     if (!ok)
