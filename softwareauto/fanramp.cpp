@@ -164,17 +164,17 @@ int FanSpeedRamp::temperatureToRpm(int tF) const
 
     int rpm = 0;
 
-    for (int i = 0; i < c; ++i)
+    for (int i = 1; i < c; ++i)
     {
-        if (m_ramp.at(i).x() > tF)
+        if (m_ramp.at(i).x() >= tF)
         {
-            if (i == 0)
-                rpm = m_ramp.at(0).y();
-            else
-                rpm = m_ramp.at(i-1).y();
+            rpm = m_ramp.at(i-1).y();
             break;
         }
     }
+    if (i == c)
+        rpm = m_ramp.at(i-1);
+
     return rpm;
 }
 
