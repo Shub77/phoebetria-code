@@ -199,8 +199,9 @@ bool MainDb::readProfile(const QString&name, FanControllerProfile& profile)
     // Get the common settings from the first result
     profile.m_name =             name;
     profile.m_isAuto =           qry.value(0).isNull() ? true : qry.value(0).toBool();
-    profile.m_isCelcius =        qry.value(1).isNull() ? true : qry.value(1).toBool();;
-    profile.m_isAudibleAlarm =   qry.value(2).isNull() ? true : qry.value(2).toBool();;
+    profile.m_isCelcius =        qry.value(1).isNull() ? true : qry.value(1).toBool();
+    profile.m_isAudibleAlarm =   qry.value(2).isNull() ? true : qry.value(2).toBool();
+    profile.m_isSoftwareAuto =   qry.value(3).isNull() ? false : qry.value(3).toBool();
 
     for ( ; qry.isValid(); qry.next())
     {

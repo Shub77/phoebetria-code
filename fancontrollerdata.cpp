@@ -25,6 +25,7 @@ FanControllerData::FanControllerData(QObject *parent)
       m_isAuto(-1),
       m_isAudibleAlarm(-1),
       m_rampsReady(false),
+      m_isSoftwareAuto(false),
       m_lastProfileId(-1)
 {
 }
@@ -158,7 +159,7 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 
     /* ####### DEBUG FOR S/WARE AUTO */
 
-    if (ramp_reqParamsForInitAreSet())
+    if (rampsReady())
     {
         for (int i = 0; i < FC_MAX_CHANNELS; ++i)
         {

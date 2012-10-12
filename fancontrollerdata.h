@@ -52,6 +52,8 @@ public:
     bool isAudibleAlarm(void) const
         { return m_isAudibleAlarm != -1 ? m_isAudibleAlarm : false; }
 
+    bool isSoftwareAuto(void) const
+        { return m_isSoftwareAuto; }
 
     bool isAutoSet(void) const
         { return m_isAuto != -1; }
@@ -150,6 +152,8 @@ private:
     FanSpeedRamp m_ramp[FC_MAX_CHANNELS];
 
     bool m_rampsReady;
+
+    bool m_isSoftwareAuto;
 
     int m_lastProfileId;
 

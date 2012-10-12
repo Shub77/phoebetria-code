@@ -58,8 +58,8 @@ public:
 
     bool isCelcius(void) const;
     bool isAuto(void) const;
-
     bool isAudibleAlarm(void) const;
+    bool isSoftwareAuto(void) const;
 
     const BasicChannelData& getChannelSettings(int channel) const;
 
@@ -83,23 +83,37 @@ private:
     bool m_isCelcius;
     bool m_isAuto;
     bool m_isAudibleAlarm;
+    bool m_isSoftwareAuto;
 
     BasicChannelData m_channelSettings[FC_MAX_CHANNELS];
 };
 
 
 inline bool FanControllerProfile::isCelcius(void) const
-{ return m_isCelcius; }
+{
+    return m_isCelcius;
+}
 
 inline bool FanControllerProfile::isAuto(void) const
-{ return m_isAuto; }
+{
+    return m_isAuto;
+}
 
 inline bool FanControllerProfile::isAudibleAlarm(void) const
-{ return m_isAudibleAlarm; }
+{
+    return m_isAudibleAlarm;
+}
+
+inline bool FanControllerProfile::isSoftwareAuto(void) const
+{
+    return m_isSoftwareAuto;
+}
 
 inline const BasicChannelData&
     FanControllerProfile::getChannelSettings(int channel) const
-        { return m_channelSettings[channel]; }
+{
+    return m_channelSettings[channel];
+}
 
 inline bool FanControllerProfile::isReservedProfileName(const QString& name)
 {

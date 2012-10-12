@@ -43,6 +43,7 @@ void FanControllerProfile::initCommon(void)
     m_isCelcius = false;
     m_isAuto = true;
     m_isAudibleAlarm = true;
+    m_isSoftwareAuto = false;
 }
 
 
@@ -72,6 +73,7 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
     m_isCelcius = data.isCelcius();
     m_isAuto = data.isAuto();
     m_isAudibleAlarm = data.isAudibleAlarm();
+    m_isSoftwareAuto = data.isSoftwareAuto();
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
