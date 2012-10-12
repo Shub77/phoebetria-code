@@ -61,7 +61,7 @@ public:
     inline bool isSet_maxLoggedRPM(void) const;
     inline static bool isUndefinedValue_manualRPM(int value);
 
-    inline bool requiredParamsAreSet(void) const;
+    inline bool reqRampParamsAreSet(void) const;
 
 private:
     int m_maxRPM;
@@ -231,7 +231,7 @@ bool FanChannelData::isUndefinedValue_manualRPM(int value)
               || value == m_manualRPMNotSetValue_Preferred );
 }
 
-bool FanChannelData::requiredParamsAreSet(void) const
+bool FanChannelData::reqRampParamsAreSet(void) const
 {
     return isSet_alarmTemp() && isSet_maxRpm();
 }

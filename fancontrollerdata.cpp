@@ -24,6 +24,7 @@ FanControllerData::FanControllerData(QObject *parent)
       m_isCelcius(-1),
       m_isAuto(-1),
       m_isAudibleAlarm(-1),
+      m_rampsReady(false),
       m_lastProfileId(-1)
 {
 }
@@ -157,7 +158,7 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 
     /* ####### DEBUG FOR S/WARE AUTO */
 
-    if (requiredChannelParemsAreSet())
+    if (ramp_reqParamsForInitAreSet())
     {
         for (int i = 0; i < FC_MAX_CHANNELS; ++i)
         {
@@ -310,14 +311,14 @@ int FanControllerData::toFahrenheit(int tempInC)
     return ceil(tempInC * 9/5.0 + 32);
 }
 
-bool FanControllerData::requiredChannelParemsAreSet(void) const
+bool FanControllerData::ramp_reqParamsForInitAreSet(void) const
 {
     int cc = channelCount();
     bool r = true;
 
     for (int i = 0; i < cc; ++i)
     {
-        if (!m_channelSettings[i].requiredParamsAreSet())
+        if (!m_channelSettings[i].reqRampParamsAreSet())
         {
             r = false;
             break;
@@ -335,4 +336,6 @@ void FanControllerData::initAllRamps(void)
         if (!isRampInitialised(i))
             initRamp(i);
     }
+
+    m_rampsReady = true;
 }

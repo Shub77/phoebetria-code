@@ -95,7 +95,7 @@ void gui_MainWindow::initWaitForReqChannelParams(void)
 
 void gui_MainWindow::checkForReqChannelParems(void)
 {
-    if (fcdata().requiredChannelParemsAreSet())
+    if (fcdata().ramp_reqParamsForInitAreSet())
     {
         m_reqChannelParamsAreSet = true;
         ui->ctrl_configSoftwareAuto->setEnabled(true);

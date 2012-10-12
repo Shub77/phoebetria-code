@@ -94,7 +94,7 @@ public:
     void updateIsAuto(bool isAuto, bool emitSignal = true);
     void updateIsAudibleAlarm(bool isAudible, bool emitSignal = true);
 
-    bool requiredChannelParemsAreSet(void) const;
+    bool ramp_reqParamsForInitAreSet(void) const;
 
     FanSpeedRamp ramp(int channel)
         { return m_ramp[channel]; }
@@ -109,6 +109,9 @@ public:
         { return m_ramp[channel].isInitialised(); }
 
     void initAllRamps(void);
+
+    bool rampsReady(void) const
+        { return m_rampsReady; }
 
     // Set channel settings
     // TODO: make these protected or even private
@@ -145,6 +148,8 @@ private:
 
     FanChannelData m_channelSettings[FC_MAX_CHANNELS];
     FanSpeedRamp m_ramp[FC_MAX_CHANNELS];
+
+    bool m_rampsReady;
 
     int m_lastProfileId;
 
