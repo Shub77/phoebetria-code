@@ -66,6 +66,15 @@ QStringList FanControllerProfile::getProfileNames(void)
     return result;
 }
 
+QString FanControllerProfile::profileDescription(const QString& profileName)
+{
+    MainDb mdb;
+
+    qDebug() << "FCP" << profileName;
+
+    return mdb.getProfileDescription(profileName);
+}
+
 /* Set from the current controller settings
  */
 void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
@@ -103,6 +112,7 @@ bool FanControllerProfile::load(const QString& profileName)
 
     return mdb.readProfile(profileName, *this);
 }
+
 
 bool FanControllerProfile::erase(const QString& profileName)
 {

@@ -69,7 +69,8 @@ SOURCES += main.cpp \
     database/maindb_schema.cpp \
     QCustomPlot/qcustomplot.cpp \
     gui_softwareautosetup.cpp \
-    softwareauto/fanramp.cpp
+    softwareauto/fanramp.cpp \
+    gui_profiles.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -91,13 +92,15 @@ HEADERS  += gui_mainwindow.h \
     database/maindb_schema.h \
     QCustomPlot/qcustomplot.h \
     gui_softwareautosetup.h \
-    softwareauto/fanramp.h
+    softwareauto/fanramp.h \
+    gui_profiles.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
     gui_simplesqlqry.ui \
     gui_preferences.ui \
-    gui_softwareautosetup.ui
+    gui_softwareautosetup.ui \
+    gui_profiles.ui
 
 #-------------------------------------------------
 # Config for the HID API library

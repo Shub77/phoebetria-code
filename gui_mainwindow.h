@@ -109,6 +109,8 @@ private slots:
 
     void on_ctrl_PresetName_currentIndexChanged(int index);
 
+    void on_ctrl_ModifyProfile_clicked();
+
 private:
 
     bool loadProfile(void);

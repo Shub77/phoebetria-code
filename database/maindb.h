@@ -37,6 +37,7 @@ public:
 
     QStringList profileNames();
 
+    QString getProfileDescription(const QString& name);
 
     bool writeProfile(const QString &name, const FanControllerProfile &profile);
 
@@ -72,6 +73,8 @@ protected:
 private:
 
     QSqlError m_lastSqlError;
+
+    QString m_profileDesc();
 };
 
 

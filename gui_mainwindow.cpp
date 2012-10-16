@@ -30,6 +30,7 @@
 #include "qglobal.h"
 #include "gui_simplesqlqry.h"
 #include "gui_softwareautosetup.h"
+#include "gui_profiles.h"
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -806,10 +807,88 @@ void gui_MainWindow::on_actionSQL_Query_triggered()
     sqlQryDlg->activateWindow();
 }
 
+bool gui_MainWindow::loadProfile(void)
+{
+    /*FanControllerProfile fcp;
+    QString m_profileName = ui->ctrl_PresetName->currentText();
+    if (m_profileName.isEmpty()) return false;
+
+    bool success = false;
+
+    if (fcp.load(m_profileName))
+    {
+        FanControllerIO* fc = &ph_fanControllerIO();
+
+        if (fc->setFromProfile(fcp))
+        {
+            fcdata().syncWithProfile(fcp);
+            updateSpeedControlTooltips();
+            updateAllSpeedCtrls();
+            updateAllAlarmCtrls(fcdata().isCelcius());
+            updateToggleControls();
+            enableSpeedControls(!fcp.isAuto());
+
+            success = true;
+        }
+    }
+
+    return success;*/
+}
+
+void gui_MainWindow::on_ctrl_ErasePreset_clicked()
+{
+    /*FanControllerProfile fcp;
+    QString m_profileName = ui->ctrl_PresetName->currentText();
+
+    if (m_profileName.isEmpty()) return;
+
+    if (FanControllerProfile::isReservedProfileName(m_profileName))
+    {
+        QMessageBox::critical(
+                    this,
+                    tr("Invalid profile name"),
+                    tr("Profile names beginning with %1"
+                       " are reserved.\nThe profile has not been erased!")
+                    .arg(FanControllerProfile::reservedProfileNameStartChars())
+                    );
+
+        return;
+    }
+
+    if (fcp.erase(m_profileName))
+    {
+        int idx = ui->ctrl_PresetName->findText(m_profileName);
+        if (idx != -1)
+            ui->ctrl_PresetName->removeItem(idx);
+
+        if (ui->ctrl_PresetName->currentText() == m_profileName)
+            ui->ctrl_PresetName->setEditText("");
+    }*/
+}
+
+
+void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
+{
+    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
+
+    fcdata().initAllRamps();
+
+    dlg->init(&fcdata());
+
+    dlg->exec();
+}
+
+void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
+{
+    (void)index;    //unused
+    loadProfile();
+
+}
 
 void gui_MainWindow::on_ctrl_SavePreset_clicked()
 {
-    FanControllerProfile fcp;
+
+    /*FanControllerProfile fcp;
 
     QString m_profileName = ui->ctrl_PresetName->currentText();
     if (m_profileName.isEmpty()) return;
@@ -839,83 +918,14 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
     {
         if (ui->ctrl_PresetName->findText(m_profileName) == -1)
             ui->ctrl_PresetName->addItem(m_profileName);
-    }
+    }*/
+
 }
 
-bool gui_MainWindow::loadProfile(void)
+void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 {
-    FanControllerProfile fcp;
-    QString m_profileName = ui->ctrl_PresetName->currentText();
-    if (m_profileName.isEmpty()) return false;
+    gui_Profiles* profileDlg = new gui_Profiles(this);
 
-    bool success = false;
-
-    if (fcp.load(m_profileName))
-    {
-        FanControllerIO* fc = &ph_fanControllerIO();
-
-        if (fc->setFromProfile(fcp))
-        {
-            fcdata().syncWithProfile(fcp);
-            updateSpeedControlTooltips();
-            updateAllSpeedCtrls();
-            updateAllAlarmCtrls(fcdata().isCelcius());
-            updateToggleControls();
-            enableSpeedControls(!fcp.isAuto());
-
-            success = true;
-        }
-    }
-
-    return success;
-}
-
-void gui_MainWindow::on_ctrl_ErasePreset_clicked()
-{
-    FanControllerProfile fcp;
-    QString m_profileName = ui->ctrl_PresetName->currentText();
-
-    if (m_profileName.isEmpty()) return;
-
-    if (FanControllerProfile::isReservedProfileName(m_profileName))
-    {
-        QMessageBox::critical(
-                    this,
-                    tr("Invalid profile name"),
-                    tr("Profile names beginning with %1"
-                       " are reserved.\nThe profile has not been erased!")
-                    .arg(FanControllerProfile::reservedProfileNameStartChars())
-                    );
-
-        return;
-    }
-
-    if (fcp.erase(m_profileName))
-    {
-        int idx = ui->ctrl_PresetName->findText(m_profileName);
-        if (idx != -1)
-            ui->ctrl_PresetName->removeItem(idx);
-
-        if (ui->ctrl_PresetName->currentText() == m_profileName)
-            ui->ctrl_PresetName->setEditText("");
-    }
-}
-
-
-void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
-{
-    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
-
-    fcdata().initAllRamps();
-
-    dlg->init(&fcdata());
-
-    dlg->exec();
-}
-
-void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
-{
-    (void)index;    //unused
-    loadProfile();
+    profileDlg->exec();
 
 }
