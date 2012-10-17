@@ -44,7 +44,7 @@ public:
     QString defualtProfileLocation(void) const;
     static QStringList getProfileNames(void);
 
-    QString profileDescription(const QString& profileName);
+    //QString profileDescription(const QString& profileName);
 
     void setProfileName(const QString& name);
     void setFilenameAndPath(const QString& filenameAndPath);
@@ -53,6 +53,7 @@ public:
 
     bool save(const QString& profileName);
     bool load(const QString& profileName);
+    bool read(const QString& profileName);
 
     static int importFromIni(QDir &dir);
 
@@ -80,6 +81,7 @@ private:
     QString m_defaultProfileLocation;
 
     QString m_name;
+    QString m_description;
     QString m_fileNameAndPath;
 
     bool m_isCelcius;

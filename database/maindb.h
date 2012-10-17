@@ -37,8 +37,6 @@ public:
 
     QStringList profileNames();
 
-    QString getProfileDescription(const QString& name);
-
     bool writeProfile(const QString &name, const FanControllerProfile &profile);
 
     bool readProfile(const QString&name, FanControllerProfile& profile);

@@ -66,14 +66,12 @@ QStringList FanControllerProfile::getProfileNames(void)
     return result;
 }
 
-QString FanControllerProfile::profileDescription(const QString& profileName)
+/*QString FanControllerProfile::profileDescription(const QString& profileName)
 {
     MainDb mdb;
 
-    qDebug() << "FCP" << profileName;
-
-    return mdb.getProfileDescription(profileName);
-}
+    return mdb.readProfile(profileName, *this);
+}*/
 
 /* Set from the current controller settings
  */
@@ -113,6 +111,12 @@ bool FanControllerProfile::load(const QString& profileName)
     return mdb.readProfile(profileName, *this);
 }
 
+bool FanControllerProfile::read(const QString& profileName)
+{
+    MainDb mdb;
+
+    return mdb.readProfile(profileName, *this);
+}
 
 bool FanControllerProfile::erase(const QString& profileName)
 {

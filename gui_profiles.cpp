@@ -25,12 +25,12 @@ bool gui_Profiles::init(void)
 
 bool gui_Profiles::saveProfile(void)
 {
-
+    return true;
 }
 
 bool gui_Profiles::eraseProfile(void)
 {
-
+    return true;
 }
 
 
@@ -61,10 +61,13 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
         FanControllerProfile fcp;
 
         QString m_profileName = ui->ctrl_profileList->currentItem()->text();
-        QString m_profileDescription = fcp.profileDescription(m_profileName);
 
-        qDebug() << m_profileDescription;
+        if (fcp.read(m_profileName))
+        {
+            QString m_profileDescription = fcp.m_description;
 
-        ui->ctrl_profileName->setText(m_profileName);
-        ui->ctrl_profileDescription->setPlainText(m_profileDescription);
+            ui->ctrl_profileName->setText(m_profileName);
+            ui->ctrl_profileDescription->setPlainText(m_profileDescription);
+        }
+
 }

@@ -161,10 +161,9 @@ bool FanSpeedRamp::initWithDefaultData(const FanControllerData& fcd, int channel
 int FanSpeedRamp::temperatureToRpm(int tF) const
 {
     int c = m_ramp.count();
-
     int rpm = 0;
-
-    for (int i = 1; i < c; ++i)
+    int i;
+    for (i = 1; i < c; ++i)
     {
         if (m_ramp.at(i).x() >= tF)
         {
@@ -173,8 +172,7 @@ int FanSpeedRamp::temperatureToRpm(int tF) const
         }
     }
     if (i == c)
-        rpm = m_ramp.at(i-1);
-
+        rpm = m_ramp.at(i-1).y();
     return rpm;
 }
 

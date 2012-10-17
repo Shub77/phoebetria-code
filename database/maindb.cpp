@@ -57,32 +57,6 @@ QStringList MainDb::profileNames()
     return profileList;
 }
 
-QString MainDb::getProfileDescription(const QString& name)
-{
-    QString m_profileDesc;
-    QSqlQuery query(QSqlDatabase::database(dbConnectionName()));
-
-    qDebug() << "NAME: " << name;
-
-    bool ok = query.prepare(QLatin1String("select description from Profile where name = :pName"));
-
-    query.bindValue(":pName", name);
-
-    if (!ok) { m_lastSqlError = query.lastError(); return m_profileDesc; }
-
-    ok = query.exec();
-
-    if (!ok) { m_lastSqlError = query.lastError(); return m_profileDesc; }
-
-    ok = query.next();
-
-    if (!ok) { m_lastSqlError = query.lastError(); return m_profileDesc; }
-
-    m_profileDesc = query.value(0).toString();
-
-    return m_profileDesc;
-}
-
 bool MainDb::writeProfile(const QString& name,
                           const FanControllerProfile& profile)
 {
@@ -202,6 +176,7 @@ bool MainDb::readProfile(const QString&name, FanControllerProfile& profile)
      */
     bool ok = qry.prepare(
                   "select "
+                  "     description,"
                   "     isAuto,"
                   "     isCelcius,"
                   "     isAudibleAlarm,"
@@ -230,14 +205,15 @@ bool MainDb::readProfile(const QString&name, FanControllerProfile& profile)
 
     // Get the common settings from the first result
     profile.m_name =             name;
-    profile.m_isAuto =           qry.value(0).isNull() ? true : qry.value(0).toBool();
-    profile.m_isCelcius =        qry.value(1).isNull() ? true : qry.value(1).toBool();
-    profile.m_isAudibleAlarm =   qry.value(2).isNull() ? true : qry.value(2).toBool();
-    profile.m_isSoftwareAuto =   qry.value(3).isNull() ? false : qry.value(3).toBool();
+    profile.m_description =      qry.value(0).toString();
+    profile.m_isAuto =           qry.value(1).isNull() ? true : qry.value(1).toBool();
+    profile.m_isCelcius =        qry.value(2).isNull() ? true : qry.value(2).toBool();
+    profile.m_isAudibleAlarm =   qry.value(3).isNull() ? true : qry.value(3).toBool();
+    profile.m_isSoftwareAuto =   qry.value(4).isNull() ? false : qry.value(4).toBool();
 
     for ( ; qry.isValid(); qry.next())
     {
-        int channel = qry.value(4).isNull() ? -1 : qry.value(4).toInt();
+        int channel = qry.value(5).isNull() ? -1 : qry.value(5).toInt();
 
         if (channel < 0 || channel > FC_MAX_CHANNELS-1)
         {
@@ -245,8 +221,8 @@ bool MainDb::readProfile(const QString&name, FanControllerProfile& profile)
             continue;
         }
 
-        int manualRpm       = qry.value(5).toInt();
-        int alarmTempF      = qry.value(6).toInt();
+        int manualRpm       = qry.value(6).toInt();
+        int alarmTempF      = qry.value(7).toInt();
 
         profile.m_channelSettings[channel].speed        = manualRpm;
         profile.m_channelSettings[channel].alarmTemp    = alarmTempF;
