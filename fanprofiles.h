@@ -70,6 +70,9 @@ public:
 
     inline static const QString& reservedProfileNameStartChars(void);
 
+    const QString& profileName(void) const;
+    const QString& description(void) const;
+
 protected:
 
     void initCommon(void);
@@ -129,6 +132,16 @@ inline const QString& FanControllerProfile::reservedProfileNameStartChars(void)
 {
     static QString chrs = "__";
     return chrs;
+}
+
+inline const QString& FanControllerProfile::profileName(void) const
+{
+    return m_name;
+}
+
+inline const QString& FanControllerProfile::description(void) const
+{
+    return m_description;
 }
 
 

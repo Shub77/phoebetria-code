@@ -64,7 +64,7 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
 
         if (fcp.read(m_profileName))
         {
-            QString m_profileDescription = fcp.m_description;
+            QString m_profileDescription = fcp.description();
 
             ui->ctrl_profileName->setText(m_profileName);
             ui->ctrl_profileDescription->setPlainText(m_profileDescription);
