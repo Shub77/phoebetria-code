@@ -23,17 +23,6 @@ bool gui_Profiles::init(void)
     return true;
 }
 
-bool gui_Profiles::saveProfile(void)
-{
-    return true;
-}
-
-bool gui_Profiles::eraseProfile(void)
-{
-    return true;
-}
-
-
 bool gui_Profiles::getProfileList(void)
 {
     FanControllerProfile fcp;
@@ -69,5 +58,16 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
             ui->ctrl_profileName->setText(m_profileName);
             ui->ctrl_profileDescription->setPlainText(m_profileDescription);
         }
+}
 
+void gui_Profiles::on_buttonBox_accepted()
+{
+    m_profileName = ui->ctrl_profileName->text();
+    m_profileDescription = ui->ctrl_profileDescription->toPlainText();
+}
+
+void gui_Profiles::on_buttonBox_rejected()
+{
+    m_profileName = "";
+    m_profileDescription = "";
 }

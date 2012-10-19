@@ -837,10 +837,21 @@ bool gui_MainWindow::loadProfile(void)
 
 void gui_MainWindow::on_ctrl_ErasePreset_clicked()
 {
-    /*FanControllerProfile fcp;
-    QString m_profileName = ui->ctrl_PresetName->currentText();
+    gui_Profiles* profileDlg = new gui_Profiles(this);
+
+    profileDlg->exec();
+
+    QString m_profileName = profileDlg->selectedName();
+
+    FanControllerProfile fcp;
 
     if (m_profileName.isEmpty()) return;
+
+    if (m_profileName == ui->ctrl_PresetName->currentText())
+    {
+        //TODO: Error while trying to delete Profile being used?
+        return;
+    }
 
     if (FanControllerProfile::isReservedProfileName(m_profileName))
     {
@@ -863,7 +874,7 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
 
         if (ui->ctrl_PresetName->currentText() == m_profileName)
             ui->ctrl_PresetName->setEditText("");
-    }*/
+    }
 }
 
 
@@ -887,11 +898,19 @@ void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
 
 void gui_MainWindow::on_ctrl_SavePreset_clicked()
 {
+    gui_Profiles* profileDlg = new gui_Profiles(this);
 
-    /*FanControllerProfile fcp;
+    profileDlg->exec();
 
-    QString m_profileName = ui->ctrl_PresetName->currentText();
-    if (m_profileName.isEmpty()) return;
+    QString m_profileName = profileDlg->selectedName();
+    QString m_profileDescription = profileDlg->selectedDescription();
+
+    FanControllerProfile fcp;
+
+    if (m_profileName.isEmpty())
+    {
+        return;
+    }
 
     if (FanControllerProfile::isReservedProfileName(m_profileName))
     {
@@ -917,15 +936,25 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
     if (fcp.save(m_profileName))
     {
         if (ui->ctrl_PresetName->findText(m_profileName) == -1)
+        {
             ui->ctrl_PresetName->addItem(m_profileName);
-    }*/
+            int idx = ui->ctrl_PresetName->findText(m_profileName);
+            ui->ctrl_PresetName->setCurrentIndex(idx);
+        }
+    }
 
 }
 
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 {
-    gui_Profiles* profileDlg = new gui_Profiles(this);
+//    gui_Profiles* profileDlg = new gui_Profiles(this);
 
-    profileDlg->exec();
+//    profileDlg->exec();
+
+//    QString m_profileName = profileDlg->selectedName();
+//    QString m_profileDescription = profileDlg->selectedDescription();
+
+//    qDebug() << "Name: " << m_profileName;
+//    qDebug() << "Description: " << m_profileDescription;
 
 }
