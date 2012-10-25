@@ -1,5 +1,8 @@
 #include "gui_profiles.h"
 #include "ui_gui_profiles.h"
+
+#include <QMessageBox>
+
 #include "fanprofiles.h"
 
 gui_Profiles::gui_Profiles(QWidget *parent) :
@@ -55,10 +58,45 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
     ui->ctrl_profileDescription->setPlainText(m_profileDescription);
 }
 
+// TODO: FIXME: Replace accepted() rejected() with custom functions
+//              So abort/error can be handled more gracefully
+
 void gui_Profiles::on_buttonBox_accepted()
 {
-    m_profileName = ui->ctrl_profileName->text();
-    m_profileDescription = ui->ctrl_profileDescription->toPlainText();
+    bool overwrite = true;
+
+    QString pName = ui->ctrl_profileName->text();
+
+    // TODO: FIXME: Also need to check for reserved profile names
+
+    if (pName.isEmpty())
+    {
+        QMessageBox::warning(this,
+                             tr("File not saved."),
+                             tr("Invalid filename."));
+        on_buttonBox_rejected();
+    }
+
+    if (!ui->ctrl_profileList->findItems(pName,
+                                        Qt::MatchExactly).isEmpty())
+    {
+        if (QMessageBox::question(this,
+                                  tr("Replace file?"),
+                                  tr("Overwrite existing profile %1?")
+                                    .arg(pName),
+                                  QMessageBox::Yes,
+                                  QMessageBox::No) == QMessageBox::No)
+        {
+            overwrite = false;
+        }
+    }
+    if (overwrite)
+    {
+        m_profileName = pName;
+        m_profileDescription = ui->ctrl_profileDescription->toPlainText();
+    }
+    else
+        on_buttonBox_rejected();
 }
 
 void gui_Profiles::on_buttonBox_rejected()
