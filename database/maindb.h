@@ -49,10 +49,10 @@ public:
 
 protected:
     int writeProfileCommonSettings(const QString& profileName,
+                                   const QString &profileDescription,
                                    bool isAuto,
                                    bool isCelcius,
-                                   bool isAudibleAlarm,
-                                   bool isSoftwareAuto);
+                                   bool isAudibleAlarm, bool isSoftwareAuto);
 
     bool writeProfileChannelSettings(int profileId,
                                      int channel,

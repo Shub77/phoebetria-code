@@ -86,6 +86,7 @@ bool MainDb::writeProfile(const QString& name,
 
     int p_id = writeProfileCommonSettings(
                 name,
+                profile.description(),
                 profile.isAuto(),
                 profile.isCelcius(),
                 profile.isAudibleAlarm(),
@@ -129,6 +130,7 @@ bool MainDb::writeProfile(const QString& name,
 // Returns the primary key of the updated or inserted record on success
 // -1 on failure
 int MainDb::writeProfileCommonSettings(const QString& profileName,
+                                       const QString& profileDescription,
                                        bool isAuto,
                                        bool isCelcius,
                                        bool isAudibleAlarm,
@@ -145,11 +147,12 @@ int MainDb::writeProfileCommonSettings(const QString& profileName,
     */
 
     bool ok = qry.prepare("update Profile"
-          " set isAuto = :isAuto, isCelcius = :isCelcius,"
+          " set description = :desc, isAuto = :isAuto, isCelcius = :isCelcius,"
           " isAudibleAlarm = :isAudibleAlarm, isSoftwareAuto = :isSwareAuto"
           " where exists (select 1 from Profile where name = :pName)"
           " and name = :pName2;"
           );
+    qry.bindValue(":desc",              profileDescription);
     qry.bindValue(":isAuto",            isAuto);
     qry.bindValue(":isCelcius",         isCelcius);
     qry.bindValue(":isAudibleAlarm",    isAudibleAlarm);
@@ -165,11 +168,12 @@ int MainDb::writeProfileCommonSettings(const QString& profileName,
 
 
     ok = qry.prepare("insert into Profile"
-          " (name, isAuto, isCelcius, isAudibleAlarm, isSoftwareAuto)"
-          " select :pName, :isAuto, :isCelcius, :isAudibleAlarm, :isSwareAuto"
+          " (name, description, isAuto, isCelcius, isAudibleAlarm, isSoftwareAuto)"
+          " select :pName, :desc, :isAuto, :isCelcius, :isAudibleAlarm, :isSwareAuto"
           " where not exists (select 1 from Profile where name = :pName2)"
           );
     qry.bindValue(":pName",             profileName);
+    qry.bindValue(":desc",              profileDescription);
     qry.bindValue(":isAuto",            isAuto);
     qry.bindValue(":isCelcius",         isCelcius);
     qry.bindValue(":isAudibleAlarm",    isAudibleAlarm);
