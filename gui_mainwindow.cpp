@@ -905,12 +905,10 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
     QString profileName = profileDlg.selectedName();
     QString profileDescription = profileDlg.selectedDescription();
 
-    FanControllerProfile fcp;
-
     if (profileName.isEmpty())
-    {
         return;
-    }
+
+    // TODO: FIXME: Reserved names should be checked in the dlg
 
     if (FanControllerProfile::isReservedProfileName(profileName))
     {
@@ -928,12 +926,13 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
     bool bs1 = this->blockSignals(true);
     bool bs2 = fcdata().blockSignals(true);
 
+    FanControllerProfile fcp(profileName, profileDescription);
     fcp.setFromCurrentData(fcdata());
 
     this->blockSignals(bs1);
     fcdata().blockSignals(bs2);
 
-    if (fcp.save(profileName))
+    if (fcp.save())
     {
         if (ui->ctrl_PresetName->findText(profileName) == -1)
         {

@@ -40,6 +40,7 @@ public:
     friend class MainDb;
 
     FanControllerProfile();
+    FanControllerProfile(const QString& name, const QString& desc);
 
     QString defualtProfileLocation(void) const;
     static QStringList getProfileNames(void);
@@ -51,7 +52,7 @@ public:
 
     void setFromCurrentData(const FanControllerData& data);
 
-    bool save(const QString& profileName);
+    bool save(void);
     bool load(const QString& profileName);
     bool read(const QString& profileName);
 
@@ -72,6 +73,8 @@ public:
 
     const QString& profileName(void) const;
     const QString& description(void) const;
+
+    void setDescription(const QString& desc);
 
 protected:
 
@@ -144,5 +147,9 @@ inline const QString& FanControllerProfile::description(void) const
     return m_description;
 }
 
+inline void FanControllerProfile::setDescription(const QString& desc)
+{
+    m_description = desc;
+}
 
 #endif // PHOEBETRIA_FAN_PROFILES_H

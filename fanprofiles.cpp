@@ -29,6 +29,14 @@ FanControllerProfile::FanControllerProfile()
     initCommon();
 }
 
+FanControllerProfile::FanControllerProfile(const QString& name,
+                                           const QString& desc)
+{
+    initCommon();
+    m_name = name;
+    m_description = desc;
+}
+
 
 void FanControllerProfile::initCommon(void)
 {
@@ -89,11 +97,11 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
 }
 
 
-bool FanControllerProfile::save(const QString& profileName)
+bool FanControllerProfile::save(void)
 {
     MainDb mdb;
 
-    return mdb.writeProfile(profileName, *this);
+    return mdb.writeProfile(m_name, *this);
 }
 
 // Redundant load and read functions, load function is inaccuratly named for it's use, Chris will resolve...
