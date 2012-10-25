@@ -96,7 +96,7 @@ public:
 
     bool ramp_reqParamsForInitAreSet(void) const;
 
-    FanSpeedRamp ramp(int channel)
+    FanSpeedRamp ramp(int channel) const
         { return m_ramp[channel]; }
 
     bool initRamp(int channel)
@@ -107,6 +107,9 @@ public:
 
     bool isRampInitialised(int channel)
         { return m_ramp[channel].isInitialised(); }
+
+    bool isRampCustom(int channel)
+        { return m_ramp[channel].isCustom(); }
 
     void initAllRamps(void);
 

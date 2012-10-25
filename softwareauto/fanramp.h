@@ -49,6 +49,7 @@ public:
     int speedStepSize;
     bool fixedRpm;
     int probeAffinity;
+    int temperatureHysteresis;
 
 protected:
 
@@ -70,6 +71,8 @@ public:
 
     inline bool isModified(void) const;
 
+    inline bool isCustom(void) const;
+
     bool init(const FanControllerData& fcd, int channel, int profileId);
 
     inline const QList<QPoint>& ramp(void) const;
@@ -82,7 +85,22 @@ public:
 
     inline const FanSpeedRampParameters& rampParameters(void) const;
 
-    inline int probeAffinity(void) const;
+    inline bool allowFanToTurnOff(void) const;
+    inline int  temperatureF_fanOn(void) const;
+    inline int  temperatureF_rampStart(void) const;
+    inline int  temperatureF_rampMid(void) const;
+    inline int  temperatureF_rampEnd(void) const;
+    inline int  temperatureF_fanToMax(void) const;
+    inline int  speed_fanOn(void) const;
+    inline int  speed_rampStart(void) const;
+    inline int  speed_rampMid(void) const;
+    inline int  speed_rampEnd(void) const;
+    inline int  minUsableRpm(void) const;
+    inline int  maxUsableRpm(void) const;
+    inline int  speedStepSize(void) const;
+    inline bool isFixedRpm(void) const;
+    inline int  probeAffinity(void) const;
+    inline int  temperature_hysteresis(void) const;
 
     int temperatureToRpm(int tF) const;
 
@@ -109,6 +127,8 @@ public:
     inline void    setIsFixedRpm (bool isFixed);
 
     inline void    setProbeAffinity(int probeNumber);
+
+    inline void    setTemperatureHysteresis(int tempInF);
 
     // ----------- END Set functions for setup data
 
@@ -143,6 +163,11 @@ bool FanSpeedRamp::isModified(void) const
     return m_isModified;
 }
 
+bool FanSpeedRamp::isCustom(void) const
+{
+    return m_isCustom;
+}
+
 const QList<QPoint>& FanSpeedRamp::ramp(void) const
 {
     return m_ramp;
@@ -167,11 +192,86 @@ const FanSpeedRampParameters& FanSpeedRamp::rampParameters(void) const
 {
     return m_rampParameters;
 }
+bool FanSpeedRamp::allowFanToTurnOff(void) const
+{
+    return m_rampParameters.allowFanToTurnOff;
+}
 
-int FanSpeedRamp::probeAffinity(void) const
+int  FanSpeedRamp::temperatureF_fanOn(void) const
+{
+    return m_rampParameters.temperatureF_fanOn;
+}
+
+int  FanSpeedRamp::temperatureF_rampStart(void) const
+{
+    return m_rampParameters.temperatureF_rampStart;
+}
+
+int  FanSpeedRamp::temperatureF_rampMid(void) const
+{
+    return m_rampParameters.temperatureF_rampMid;
+}
+
+int  FanSpeedRamp::temperatureF_rampEnd(void) const
+{
+    return m_rampParameters.temperatureF_rampEnd;
+}
+
+int  FanSpeedRamp::temperatureF_fanToMax(void) const
+{
+    return m_rampParameters.temperatureF_fanToMax;
+}
+
+int  FanSpeedRamp::speed_fanOn(void) const
+{
+    return m_rampParameters.speed_fanOn;
+}
+
+int  FanSpeedRamp::speed_rampStart(void) const
+{
+    return m_rampParameters.speed_rampStart;
+}
+
+int  FanSpeedRamp::speed_rampMid(void) const
+{
+    return m_rampParameters.speed_rampMid;
+}
+
+int  FanSpeedRamp::speed_rampEnd(void) const
+{
+    return m_rampParameters.speed_rampEnd;
+}
+
+int  FanSpeedRamp::minUsableRpm(void) const
+{
+    return m_rampParameters.minUsableRpm;
+}
+
+int  FanSpeedRamp::maxUsableRpm(void) const
+{
+    return m_rampParameters.maxUsableRpm;
+}
+
+int  FanSpeedRamp::speedStepSize(void) const
+{
+    return m_rampParameters.speedStepSize;
+}
+
+bool FanSpeedRamp::isFixedRpm(void) const
+{
+    return m_rampParameters.fixedRpm;
+}
+
+int  FanSpeedRamp::probeAffinity(void) const
 {
     return m_rampParameters.probeAffinity;
 }
+
+int  FanSpeedRamp::temperature_hysteresis(void) const
+{
+    return m_rampParameters.temperatureHysteresis;
+}
+
 
 /*------------------------------------------------------------------------
   Set functions for setup data

@@ -148,6 +148,8 @@ bool FanSpeedRamp::initWithDefaultData(const FanControllerData& fcd, int channel
     m_rampParameters.fixedRpm                = false;
     m_rampParameters.probeAffinity           = channel;
 
+    m_rampParameters.temperatureHysteresis   = 1;   // 1 degree F
+
     generateCurve(m_rampParameters, fcd.maxRPM(channel), 0, 255, &m_ramp);
 
     m_isModified = false;

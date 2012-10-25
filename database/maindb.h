@@ -24,6 +24,7 @@
 /* Fwd Decls
  */
 class FanControllerProfile;
+class FanSpeedRamp;
 
 class MainDb
 {
@@ -58,6 +59,16 @@ protected:
                                      int channel,
                                      int rpm,
                                      int alarmTempInF);
+
+    bool writeChannelSpeedRamps(int profileId,
+                                 const FanControllerProfile &profile);
+
+    bool writeChannelSpeedRamp(int profileId,
+                               int channel,
+                               const FanSpeedRamp& ramp);
+
+
+    bool deleteChannelSpeedRamps(int profileId);
 
     static QSqlError connect(const QString &connectionName);
 

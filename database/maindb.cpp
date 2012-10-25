@@ -111,13 +111,10 @@ bool MainDb::writeProfile(const QString& name,
                     );
 
         if (!ok) break;
-
-        if (profile.isSoftwareAuto())
-        {
-            /* TODO: Write ramp */
-            //if (!ok) break;
-        }
     }
+
+    if (ok)// && profile.isSoftwareAuto())
+        ok = writeChannelSpeedRamps(p_id, profile);
 
     if (!ok)
         db.rollback();
@@ -333,6 +330,119 @@ bool MainDb::writeProfileChannelSettings(int profileId,
     return true;
 }
 
+
+bool MainDb::writeChannelSpeedRamps(int profileId,
+                                    const FanControllerProfile &profile)
+{
+    if (!deleteChannelSpeedRamps(profileId))
+        return false;
+
+    bool ok = true;
+
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+    {
+        if (profile.ramp(i).isCustom())
+            ok = writeChannelSpeedRamp(profileId, i, profile.ramp(i));
+        if (!ok)
+            break;
+    }
+
+    return ok;
+}
+
+bool MainDb::writeChannelSpeedRamp(int profileId,
+                                   int channel,
+                                   const FanSpeedRamp& ramp)
+{
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    bool ok;
+
+    ok = qry.prepare("insert into SoftwareAutoSetting"
+                "        ("
+                "             p_id"
+                "           ,channel"
+                "           ,probeAffinity"
+                "           ,allowFanToTurnOff"
+                "           ,speed_minUsable"
+                "           ,temperatureF_fanOn"
+                "           ,temperatureF_rampStart"
+                "           ,temperatureF_rampMid"
+                "           ,temperatureF_rampEnd"
+                "           ,temperatureF_fanToMax"
+                "           ,speed_fanOn"
+                "           ,speed_rampStart"
+                "           ,speed_rampMid"
+                "           ,speed_rampEnd"
+                "           ,speed_stepSize"
+                "           ,temperatureHysteresis"
+                "           ,rampType"
+                "        )"
+
+                " values ("
+                "            :pid"
+                "           ,:channel"
+                "           ,:probeAffinity"
+                "           ,:allowFanToTurnOff"
+                "           ,:speed_minUsable"
+                "           ,:temperature_fanOn"
+                "           ,:temperature_rampStart"
+                "           ,:temperature_rampMid"
+                "           ,:temperature_rampEnd"
+                "           ,:temperature_fanToMax"
+                "           ,:speed_fanOn"
+                "           ,:speed_rampStart"
+                "           ,:speed_rampMid"
+                "           ,:speed_rampEnd"
+                "           ,:speed_stepSize"
+                "           ,:temperatureHysteresis"
+                "           ,:rampType"
+                "        )"
+        );
+
+    qry.bindValue(":pid",                   profileId);
+    qry.bindValue(":channel",               channel);
+    qry.bindValue(":probeAffinity",         ramp.probeAffinity());
+    qry.bindValue(":allowFanToTurnOff",     ramp.allowFanToTurnOff());
+    qry.bindValue(":speed_minUsable",       ramp.minUsableRpm());
+    qry.bindValue(":temperature_fanOn",     ramp.temperatureF_fanOn());
+    qry.bindValue(":temperature_rampStart", ramp.temperatureF_rampStart());
+    qry.bindValue(":temperature_rampMid",   ramp.temperatureF_rampEnd());
+    qry.bindValue(":temperature_rampEnd",   ramp.temperatureF_rampEnd());
+    qry.bindValue(":temperature_fanToMax",  ramp.temperatureF_fanToMax());
+    qry.bindValue(":speed_fanOn",           ramp.speed_fanOn());
+    qry.bindValue(":speed_rampStart",       ramp.speed_rampStart());
+    qry.bindValue(":speed_rampMid",         ramp.speed_rampMid());
+    qry.bindValue(":speed_rampEnd",         ramp.speed_rampEnd());
+    qry.bindValue(":speed_stepSize",        ramp.speedStepSize());
+    qry.bindValue(":temperatureHysteresis", ramp.temperature_hysteresis());
+    qry.bindValue(":rampType", ramp.isFixedRpm() ? "fixedRPM" : "linear");
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    ok = qry.exec();
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    return true;
+}
+
+bool MainDb::deleteChannelSpeedRamps(int profileId)
+{
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    bool ok = qry.prepare("delete from SoftwareAutoSetting"
+                          " where p_id = :profileId");
+    qry.bindValue(":profileId", profileId);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    ok = qry.exec();
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    return true;
+}
 
 QSqlError MainDb::connect(const QString& connectionName)
 {

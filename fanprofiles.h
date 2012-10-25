@@ -72,6 +72,7 @@ public:
 
     const QString& profileName(void) const;
     const QString& description(void) const;
+    const FanSpeedRamp& ramp(int channel) const;
 
     void setDescription(const QString& desc);
 
@@ -95,6 +96,8 @@ private:
     bool m_isSoftwareAuto;
 
     BasicChannelData m_channelSettings[FC_MAX_CHANNELS];
+    FanSpeedRamp m_ramp[FC_MAX_CHANNELS];
+
 };
 
 
@@ -144,6 +147,11 @@ inline const QString& FanControllerProfile::profileName(void) const
 inline const QString& FanControllerProfile::description(void) const
 {
     return m_description;
+}
+
+inline const FanSpeedRamp& FanControllerProfile::ramp(int channel) const
+{
+    return m_ramp[channel];
 }
 
 inline void FanControllerProfile::setDescription(const QString& desc)

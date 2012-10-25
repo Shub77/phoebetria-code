@@ -93,6 +93,8 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
                                              : data.lastRPM(i);
 
         m_channelSettings[i].speed = speedToSave;
+
+        m_ramp[i] = data.ramp(i);
     }
 }
 
