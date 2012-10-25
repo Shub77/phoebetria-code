@@ -898,21 +898,21 @@ void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
 
 void gui_MainWindow::on_ctrl_SavePreset_clicked()
 {
-    gui_Profiles* profileDlg = new gui_Profiles(this);
+    gui_Profiles profileDlg(this);// = new gui_Profiles(this);
 
-    profileDlg->exec();
+    profileDlg.exec();
 
-    QString m_profileName = profileDlg->selectedName();
-    QString m_profileDescription = profileDlg->selectedDescription();
+    QString profileName = profileDlg.selectedName();
+    QString profileDescription = profileDlg.selectedDescription();
 
     FanControllerProfile fcp;
 
-    if (m_profileName.isEmpty())
+    if (profileName.isEmpty())
     {
         return;
     }
 
-    if (FanControllerProfile::isReservedProfileName(m_profileName))
+    if (FanControllerProfile::isReservedProfileName(profileName))
     {
         QMessageBox::critical(
                     this,
@@ -933,12 +933,12 @@ void gui_MainWindow::on_ctrl_SavePreset_clicked()
     this->blockSignals(bs1);
     fcdata().blockSignals(bs2);
 
-    if (fcp.save(m_profileName))
+    if (fcp.save(profileName))
     {
-        if (ui->ctrl_PresetName->findText(m_profileName) == -1)
+        if (ui->ctrl_PresetName->findText(profileName) == -1)
         {
-            ui->ctrl_PresetName->addItem(m_profileName);
-            int idx = ui->ctrl_PresetName->findText(m_profileName);
+            ui->ctrl_PresetName->addItem(profileName);
+            int idx = ui->ctrl_PresetName->findText(profileName);
             ui->ctrl_PresetName->setCurrentIndex(idx);
         }
     }

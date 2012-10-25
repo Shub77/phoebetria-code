@@ -66,13 +66,6 @@ QStringList FanControllerProfile::getProfileNames(void)
     return result;
 }
 
-/*QString FanControllerProfile::profileDescription(const QString& profileName)
-{
-    MainDb mdb;
-
-    return mdb.readProfile(profileName, *this);
-}*/
-
 /* Set from the current controller settings
  */
 void FanControllerProfile::setFromCurrentData(const FanControllerData& data)

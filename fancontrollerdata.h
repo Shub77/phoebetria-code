@@ -32,8 +32,6 @@ class FanControllerData : public QObject
 public:
     explicit FanControllerData(QObject *parent = 0);
 
-    const QString& name(void) const;
-
     void syncWithProfile(const FanControllerProfile& fcp);
 
     const FanChannelData& fanChannelSettings(int channel) const
@@ -129,6 +127,7 @@ public:
     void setLastRPM(int channel, int to);
     void setMinLoggedRPM(int channel, int to);
     void setMaxLoggedRPM(int channel, int to);
+
     // END TODO: make these protected or even private
 
 
