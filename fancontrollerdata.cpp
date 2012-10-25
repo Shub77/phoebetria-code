@@ -20,6 +20,8 @@
 
 #include <QDebug>
 
+static const int FC_RTEMP_NOTSET = 0xffff;
+
 FanControllerData::FanControllerData(QObject *parent)
     : QObject(parent),
       m_isCelcius(-1),
@@ -29,7 +31,10 @@ FanControllerData::FanControllerData(QObject *parent)
       m_isSoftwareAuto(false),
       m_lastProfileId(-1)
 {
+    clearRampTemps();
 }
+
+
 
 void FanControllerData::syncWithProfile(const FanControllerProfile& fcp)
 {
@@ -144,38 +149,50 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.lastTemp() != to || !cd.isSet_lastTemp())
     {
-        if (cd.minTemp() > to || !cd.isSet_MinTemp())
-        {
-            cd.setMinTemp(to);
-            emit minLoggedTemp_changed(channel, to);
-        }
-        if (cd.maxTemp() < to || !cd.isSet_MaxTemp())
-        {
-            cd.setMaxTemp(to);
-            emit maxLoggedTemp_changed(channel, to);
-        }
         cd.setLastTemp(to);
         if (emitSignal) emit temperature_changed(channel, to);
+
+        updateMinMax_temp(channel, to);
+    }
+
+    // Do software speeds
+    // TODO: Ensure we're in manual mode
+    if (rampsReady() && m_isSoftwareAuto)
+    {
+        int rDelta = m_rTemps[channel] - to;
+        // if temperature has changed by 1 or more degrees F
+        // FIXME: TODO: Make user adjustable
+        if (rDelta >= 1 || m_rTemps[channel] == FC_RTEMP_NOTSET)
+        {
+            int currRpm = cd.lastRPM();
+            int newRpm = m_ramp[channel].temperatureToRpm(to);
+            if (newRpm != currRpm || m_rTemps[channel] == FC_RTEMP_NOTSET)
+            {
+                updateMinMax_rpm(channel, newRpm);
+                m_rTemps[channel] = to; // Save tF for next time
+                // TODO: emit swAutoRpmChanged(channel, to)
+            }
+        }
     }
 
     /* ####### DEBUG FOR S/WARE AUTO */
 
-    if (rampsReady())
-    {
-        for (int i = 0; i < FC_MAX_CHANNELS; ++i)
-        {
-            if (m_ramp[i].probeAffinity() == channel)
-            {
-                qDebug() << "Software Auto (Channel"
-                            << channel
-                            << ")"
-                            << "Temp:"
-                            << (m_isCelcius ? toCelcius(to) : to)
-                            << "RPM:"
-                            << m_ramp[i].temperatureToRpm(to);
-            }
-        }
-    }
+//    if (rampsReady())
+//    {
+//        for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+//        {
+//            if (m_ramp[i].probeAffinity() == channel)
+//            {
+//                qDebug() << "Software Auto (Channel"
+//                            << channel
+//                            << ")"
+//                            << "Temp:"
+//                            << (m_isCelcius ? toCelcius(to) : to)
+//                            << "RPM:"
+//                            << m_ramp[i].temperatureToRpm(to);
+//            }
+//        }
+//    }
 
     /* ####### END DEBUG FOR S/WARE AUTO */
 }
@@ -185,16 +202,7 @@ void FanControllerData::updateRPM(int channel, int to, bool emitSignal)
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.lastRPM() != to || !cd.isSet_lastRPM())
     {
-        if (cd.minLoggedRPM() > to || !cd.isSet_minLoggedRPM())
-        {
-            cd.setMinLoggedRPM(to);
-            emit minLoggedRPM_changed(channel, to);
-        }
-        if (cd.maxLoggedRPM() < to || !cd.isSet_maxLoggedRPM())
-        {
-            cd.setMaxLoggedRPM(to);
-            emit maxLoggedRPM_changed(channel, to);
-        }
+        updateMinMax_rpm(channel, to);
         cd.setLastRPM(to);
         if (emitSignal) emit RPM_changed(channel, to);
     }
@@ -228,6 +236,54 @@ void FanControllerData::updateIsAudibleAlarm(bool isAudible, bool emitSignal)
     }
 }
 
+void FanControllerData::clearMinMax(void)
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+    {
+        FanChannelData& cd = m_channelSettings[i];
+        cd.setMinTemp(FanChannelData::minLoggedTempNotSetValue);
+        cd.setMaxTemp(FanChannelData::minLoggedTempNotSetValue);
+        cd.setMinLoggedRPM(FanChannelData::rpmNotSetValue);
+        cd.setMaxLoggedRPM(FanChannelData::rpmNotSetValue);
+    }
+}
+
+void FanControllerData::clearRampTemps(void)
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+        m_rTemps[i] = FC_RTEMP_NOTSET;
+}
+
+void FanControllerData::updateMinMax_temp(int channel, int t)
+{
+    FanChannelData& cd = m_channelSettings[channel];
+
+    if (cd.minTemp() > t || !cd.isSet_MinTemp())
+    {
+        cd.setMinTemp(t);
+        emit minLoggedTemp_changed(channel, t);
+    }
+    if (cd.maxTemp() < t || !cd.isSet_MaxTemp())
+    {
+        cd.setMaxTemp(t);
+        emit maxLoggedTemp_changed(channel, t);
+    }
+}
+
+void FanControllerData::updateMinMax_rpm(int channel, int rpm)
+{
+    FanChannelData& cd = m_channelSettings[channel];
+    if (cd.minLoggedRPM() > rpm || !cd.isSet_minLoggedRPM())
+    {
+        cd.setMinLoggedRPM(rpm);
+        emit minLoggedRPM_changed(channel, rpm);
+    }
+    if (cd.maxLoggedRPM() < rpm || !cd.isSet_maxLoggedRPM())
+    {
+        cd.setMaxLoggedRPM(rpm);
+        emit maxLoggedRPM_changed(channel, rpm);
+    }
+}
 
 // ------------------------------------------------------------------------
 // Set channel settings

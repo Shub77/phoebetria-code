@@ -25,12 +25,15 @@
 #include "fanprofiles.h"
 #include "fanramp.h"
 
+
 class FanControllerData : public QObject
 {
     Q_OBJECT
 
 public:
     explicit FanControllerData(QObject *parent = 0);
+
+    const QString& name(void) const;
 
     void syncWithProfile(const FanControllerProfile& fcp);
 
@@ -130,7 +133,6 @@ public:
     void setLastRPM(int channel, int to);
     void setMinLoggedRPM(int channel, int to);
     void setMaxLoggedRPM(int channel, int to);
-
     // END TODO: make these protected or even private
 
 
@@ -143,6 +145,14 @@ public:
     inline int toCurrTempScale(int tF) const;
     inline double toCurrTempScaleReal(int tF) const;
 
+protected:
+
+    void clearMinMax(void);
+    void clearRampTemps(void);
+
+    void updateMinMax_temp(int channel, int t);
+    void updateMinMax_rpm(int channel, int rpm);
+
 private:
 
     // Common data
@@ -152,6 +162,7 @@ private:
 
     FanChannelData m_channelSettings[FC_MAX_CHANNELS];
     FanSpeedRamp m_ramp[FC_MAX_CHANNELS];
+    int m_rTemps[FC_MAX_CHANNELS];
 
     bool m_rampsReady;
 

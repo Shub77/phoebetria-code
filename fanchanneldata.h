@@ -26,6 +26,13 @@ class FanChannelData
 public:
     FanChannelData();
 
+    static const int rpmNotSetValue;
+    static const int temperatureNotSetValue;
+    static const int maxLoggedTempNotSetValue;
+    static const int minLoggedTempNotSetValue;
+    static const int manualRPMNotSetValue;
+    static const int manualRPMNotSetValue_Preferred;
+
     //
     inline int maxRPM(void) const;
     inline int alarmTemp(void) const;
@@ -76,13 +83,6 @@ private:
     int m_maxLoggedRPM;
 
     int m_manualRPM;
-
-    static const int m_RpmNotSetValue;
-    static const int m_TemperatureNotSetValue;
-    static const int m_maxLoggedTempNotSetValue;
-    static const int m_minLoggedTempNotSetValue;
-    static const int m_manualRPMNotSetValue;
-    static const int m_manualRPMNotSetValue_Preferred;
 };
 
 
@@ -181,54 +181,54 @@ void FanChannelData::setMaxLoggedRPM(int to)
 
 bool FanChannelData::isSet_maxRpm(void) const
 {
-    return m_maxRPM != m_RpmNotSetValue;
+    return m_maxRPM != rpmNotSetValue;
 }
 
 bool FanChannelData::isSet_alarmTemp(void) const
 {
-    return m_alarmTemp != m_TemperatureNotSetValue;
+    return m_alarmTemp != temperatureNotSetValue;
 }
 
 bool FanChannelData::isSet_manualRPM(void) const
 {
-    return m_manualRPM != m_manualRPMNotSetValue
-           && m_manualRPM != m_manualRPMNotSetValue_Preferred;
+    return m_manualRPM != manualRPMNotSetValue
+           && m_manualRPM != manualRPMNotSetValue_Preferred;
 }
 
 bool FanChannelData::isSet_lastTemp(void) const
 {
-    return m_lastTemp != m_TemperatureNotSetValue;
+    return m_lastTemp != temperatureNotSetValue;
 }
 
 bool FanChannelData::isSet_MinTemp(void) const
 {
-    return m_minTemp != m_minLoggedTempNotSetValue;
+    return m_minTemp != minLoggedTempNotSetValue;
 }
 
 bool FanChannelData::isSet_MaxTemp(void) const
 {
-    return m_maxTemp != m_maxLoggedTempNotSetValue;
+    return m_maxTemp != maxLoggedTempNotSetValue;
 }
 
 bool FanChannelData::isSet_lastRPM(void) const
 {
-    return m_lastRPM != m_RpmNotSetValue;
+    return m_lastRPM != rpmNotSetValue;
 }
 
 bool FanChannelData::isSet_minLoggedRPM(void) const
 {
-    return m_minLoggedRPM != m_RpmNotSetValue;
+    return m_minLoggedRPM != rpmNotSetValue;
 }
 
 bool FanChannelData::isSet_maxLoggedRPM(void) const
 {
-    return m_maxLoggedRPM != m_RpmNotSetValue;
+    return m_maxLoggedRPM != rpmNotSetValue;
 }
 
 bool FanChannelData::isUndefinedValue_manualRPM(int value)
 {
-    return !( value == m_manualRPMNotSetValue
-              || value == m_manualRPMNotSetValue_Preferred );
+    return !( value == manualRPMNotSetValue
+              || value == manualRPMNotSetValue_Preferred );
 }
 
 bool FanChannelData::reqRampParamsAreSet(void) const

@@ -18,25 +18,25 @@
 #include "fanchanneldata.h"
 
 
-const int FanChannelData::m_RpmNotSetValue = -1;
-const int FanChannelData::m_TemperatureNotSetValue = 65535;
-const int FanChannelData::m_maxLoggedTempNotSetValue = 65535;
-const int FanChannelData::m_minLoggedTempNotSetValue = 63335;
-const int FanChannelData::m_manualRPMNotSetValue = -1;
+const int FanChannelData::rpmNotSetValue = -1;
+const int FanChannelData::temperatureNotSetValue = 65535;
+const int FanChannelData::maxLoggedTempNotSetValue = 65535;
+const int FanChannelData::minLoggedTempNotSetValue = 63335;
+const int FanChannelData::manualRPMNotSetValue = -1;
 // Keeping -1 so that V1.0.0-Beta profiles do not break.
-const int FanChannelData::m_manualRPMNotSetValue_Preferred = 65535;
+const int FanChannelData::manualRPMNotSetValue_Preferred = 65535;
 
 
 FanChannelData::FanChannelData()
 {
-    m_maxLoggedRPM  = m_RpmNotSetValue;
-    m_lastRPM       = m_RpmNotSetValue;
-    m_minLoggedRPM  = m_RpmNotSetValue;
-    m_lastTemp      = m_TemperatureNotSetValue;
-    m_maxTemp       = m_maxLoggedTempNotSetValue;
-    m_minTemp       = m_minLoggedTempNotSetValue;
-    m_alarmTemp     = m_TemperatureNotSetValue;
-    m_maxRPM        = m_RpmNotSetValue;
-    m_manualRPM     = m_manualRPMNotSetValue_Preferred;
+    m_maxLoggedRPM  = rpmNotSetValue;
+    m_lastRPM       = rpmNotSetValue;
+    m_minLoggedRPM  = rpmNotSetValue;
+    m_lastTemp      = temperatureNotSetValue;
+    m_maxTemp       = maxLoggedTempNotSetValue;
+    m_minTemp       = minLoggedTempNotSetValue;
+    m_alarmTemp     = temperatureNotSetValue;
+    m_maxRPM        = rpmNotSetValue;
+    m_manualRPM     = manualRPMNotSetValue_Preferred;
 }
 

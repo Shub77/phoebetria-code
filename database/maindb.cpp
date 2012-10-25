@@ -113,7 +113,7 @@ bool MainDb::writeProfile(const QString& name,
         if (!ok) break;
     }
 
-    if (ok)// && profile.isSoftwareAuto())
+    if (ok && profile.isSoftwareAuto())
         ok = writeChannelSpeedRamps(p_id, profile);
 
     if (!ok)
