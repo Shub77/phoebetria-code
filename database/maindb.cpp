@@ -72,16 +72,6 @@ QString MainDb::profileDescription(const QString& profileName)
 
     if (!ok) { m_lastSqlError = qry.lastError(); return QString(); }
 
-    if (qry.size() != 1)
-    {
-        QSqlError err;
-        QString errText = "Error reading profile descriptions from database";
-        err.setDatabaseText(errText);
-        err.setType(QSqlError::UnknownError);
-        m_lastSqlError = QSqlError();
-        return QString();
-    }
-
     return qry.first() ? qry.value(0).toString() : QString();
 }
 
