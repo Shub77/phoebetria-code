@@ -57,6 +57,34 @@ QStringList MainDb::profileNames()
     return profileList;
 }
 
+QString MainDb::profileDescription(const QString& profileName)
+{
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    bool ok = qry.prepare("select description"
+                          " from Profile"
+                          " where name = :pName;");
+    qry.bindValue(":pName", profileName);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return QString(); }
+
+    ok = qry.exec();
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return QString(); }
+
+    if (qry.size() != 1)
+    {
+        QSqlError err;
+        QString errText = "Error reading profile descriptions from database";
+        err.setDatabaseText(errText);
+        err.setType(QSqlError::UnknownError);
+        m_lastSqlError = QSqlError();
+        return QString();
+    }
+
+    return qry.first() ? qry.value(0).toString() : QString();
+}
+
 bool MainDb::writeProfile(const QString& name,
                           const FanControllerProfile& profile)
 {

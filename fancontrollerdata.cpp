@@ -18,6 +18,7 @@
 #include "fanchanneldata.h"
 #include <cmath>
 
+#include <QDebug>
 
 FanControllerData::FanControllerData(QObject *parent)
     : QObject(parent),

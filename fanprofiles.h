@@ -19,7 +19,6 @@
 
 #include <QString>
 #include <QSettings>
-#include <QtSql>
 #include "bfx-recon/bfxrecon.h"
 #include "fanchanneldata.h"
 
@@ -43,9 +42,8 @@ public:
     FanControllerProfile(const QString& name, const QString& desc);
 
     QString defualtProfileLocation(void) const;
-    static QStringList getProfileNames(void);
 
-    //QString profileDescription(const QString& profileName);
+    static QStringList getProfileNames(void);
 
     void setProfileName(const QString& name);
     void setFilenameAndPath(const QString& filenameAndPath);
@@ -55,6 +53,7 @@ public:
     bool save(void);
     bool load(const QString& profileName);
     bool read(const QString& profileName);
+    QString profileDescription(const QString& profileName);
 
     static int importFromIni(QDir &dir);
 

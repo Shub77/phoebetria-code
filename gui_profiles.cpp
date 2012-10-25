@@ -1,6 +1,5 @@
 #include "gui_profiles.h"
 #include "ui_gui_profiles.h"
-#include "maindb.h"
 #include "fanprofiles.h"
 
 gui_Profiles::gui_Profiles(QWidget *parent) :
@@ -47,17 +46,13 @@ bool gui_Profiles::getProfileList(void)
 
 void gui_Profiles::on_ctrl_profileList_itemClicked()
 {
-        FanControllerProfile fcp;
+    FanControllerProfile fcp;
 
-        QString m_profileName = ui->ctrl_profileList->currentItem()->text();
+    m_profileName = ui->ctrl_profileList->currentItem()->text();
+    m_profileDescription = fcp.profileDescription(m_profileName);
 
-        if (fcp.read(m_profileName))
-        {
-            QString m_profileDescription = fcp.description();
-
-            ui->ctrl_profileName->setText(m_profileName);
-            ui->ctrl_profileDescription->setPlainText(m_profileDescription);
-        }
+    ui->ctrl_profileName->setText(m_profileName);
+    ui->ctrl_profileDescription->setPlainText(m_profileDescription);
 }
 
 void gui_Profiles::on_buttonBox_accepted()

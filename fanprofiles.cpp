@@ -127,6 +127,13 @@ bool FanControllerProfile::erase(const QString& profileName)
     return mdb.deleteProfile(profileName);
 }
 
+QString FanControllerProfile::profileDescription(const QString& profileName)
+{
+    MainDb mdb;
+
+    return mdb.profileDescription(profileName);
+}
+
 // returns the number of files imported
 // pre dir.exists() == true
 int FanControllerProfile::importFromIni(QDir& dir)
