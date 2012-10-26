@@ -200,10 +200,10 @@ void gui_MainWindow::connectCustomSignals(void)
     connect(&fcd, SIGNAL(maxLoggedRPM_changed(int,int)),
             this, SLOT(onMaxLoggedRpmChanged(int,int)));
 
-    connect(&fcd, SIGNAL(minLoggedRPM_changed(int,int)),
+    connect(&fcd, SIGNAL(minLoggedTemp_changed(int,int)),
             this, SLOT(onMinLoggedTempChanged(int,int)));
 
-    connect(&fcd, SIGNAL(maxLoggedRPM_changed(int,int)),
+    connect(&fcd, SIGNAL(maxLoggedTemp_changed(int,int)),
             this, SLOT(onMaxLoggedTempChanged(int,int)));
 }
 
