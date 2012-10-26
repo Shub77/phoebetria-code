@@ -155,46 +155,47 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
         updateMinMax_temp(channel, to);
     }
 
-    // Do software speeds
-    // TODO: Ensure we're in manual mode
-    if (rampsReady() && m_isSoftwareAuto)
+    doSoftwareAuto(channel, to);
+}
+
+void FanControllerData::doSoftwareAuto(int channel, int tempF)
+{
+//    if (!m_isSoftwareAuto)
+//        return;
+
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
     {
-        int rDelta = m_rTemps[channel] - to;
-        // if temperature has changed by 1 or more degrees F
-        // FIXME: TODO: Make user adjustable
-        if (rDelta >= 1 || m_rTemps[channel] == FC_RTEMP_NOTSET)
+        if (isRampInitialised(i) && m_ramp[i].probeAffinity() == channel)
         {
-            int currRpm = cd.lastRPM();
-            int newRpm = m_ramp[channel].temperatureToRpm(to);
-            if (newRpm != currRpm || m_rTemps[channel] == FC_RTEMP_NOTSET)
-            {
-                updateMinMax_rpm(channel, newRpm);
-                m_rTemps[channel] = to; // Save tF for next time
-                // TODO: emit swAutoRpmChanged(channel, to)
-            }
+            doSoftwareAutoChannel(i, tempF);
         }
     }
+}
 
-    /* ####### DEBUG FOR S/WARE AUTO */
+void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
+{
+    FanChannelData& cd = m_channelSettings[channel];
 
-//    if (rampsReady())
-//    {
-//        for (int i = 0; i < FC_MAX_CHANNELS; ++i)
-//        {
-//            if (m_ramp[i].probeAffinity() == channel)
-//            {
-//                qDebug() << "Software Auto (Channel"
-//                            << channel
-//                            << ")"
-//                            << "Temp:"
-//                            << (m_isCelcius ? toCelcius(to) : to)
-//                            << "RPM:"
-//                            << m_ramp[i].temperatureToRpm(to);
-//            }
-//        }
-//    }
+    //tempF = rand() % 256; // for testing
 
-    /* ####### END DEBUG FOR S/WARE AUTO */
+    int rDelta = abs(m_rTemps[channel] - tempF);
+    // if temperature has changed by 1 or more degrees F
+    // FIXME: TODO: Make user adjustable
+    if (rDelta >= 1 || m_rTemps[channel] == FC_RTEMP_NOTSET)
+    {
+
+        int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel]);
+        int newRpm = m_ramp[channel].temperatureToRpm(tempF);
+
+        if (newRpm != currRpm || m_rTemps[channel] == FC_RTEMP_NOTSET)
+        {
+            updateMinMax_rpm(channel, newRpm);
+            m_rTemps[channel] = tempF; // Save tF for next time
+            // TODO: emit swAutoRpmChanged(channel, to)
+            qDebug() << "S/W Auto -- Channel/Temp/RPM ="
+                     << channel << tempF << newRpm;
+        }
+    }
 }
 
 void FanControllerData::updateRPM(int channel, int to, bool emitSignal)

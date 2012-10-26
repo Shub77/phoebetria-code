@@ -92,6 +92,8 @@ public:
     void updateAlarmTemp(int channel, int to, bool emitSignal = true);
     void updateManualRPM(int channel, int to, bool emitSignal = true);
     void updateTempF(int channel, int to, bool emitSignal = true);
+    void doSoftwareAuto(int channel, int tempF);
+    void doSoftwareAutoChannel(int channel, int tempF);
     void updateRPM(int channel, int to, bool emitSignal = true);
     void updateIsCelcius(bool isCelcius, bool emitSignal = true);
     void updateIsAuto(bool isAuto, bool emitSignal = true);
