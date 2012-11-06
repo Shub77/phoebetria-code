@@ -41,6 +41,7 @@ void FanControllerData::syncWithProfile(const FanControllerProfile& fcp)
     m_isCelcius = fcp.isCelcius();
     m_isAuto = fcp.isAuto();
     m_isAudibleAlarm = fcp.isAudibleAlarm();
+    m_isSoftwareAuto = fcp.isSoftwareAuto();
 
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
@@ -197,6 +198,7 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
         }
     }
 }
+
 
 void FanControllerData::updateRPM(int channel, int to, bool emitSignal)
 {

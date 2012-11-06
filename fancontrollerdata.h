@@ -60,6 +60,7 @@ public:
         { return m_isAuto != -1; }
 
     // Set common settings
+    // TODO: These should be at least protected
     void setIsCelcius(bool isC)
         { m_isCelcius = isC; }
 

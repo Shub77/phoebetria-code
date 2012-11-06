@@ -70,7 +70,8 @@ SOURCES += main.cpp \
     QCustomPlot/qcustomplot.cpp \
     gui_softwareautosetup.cpp \
     softwareauto/fanramp.cpp \
-    gui_profiles.cpp
+    gui_profiles.cpp \
+    softwareauto/softwareauto.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -93,7 +94,8 @@ HEADERS  += gui_mainwindow.h \
     QCustomPlot/qcustomplot.h \
     gui_softwareautosetup.h \
     softwareauto/fanramp.h \
-    gui_profiles.h
+    gui_profiles.h \
+    softwareauto/softwareauto.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
@@ -145,4 +147,6 @@ RESOURCES += \
     gui_resources.qrc
 
 OTHER_FILES +=
+
+
 

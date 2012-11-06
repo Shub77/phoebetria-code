@@ -240,6 +240,9 @@ public:
     void processManualSpeed(int channel, int rpm);
     void processDeviceSettings(bool isAuto, bool isCelcius, bool isAudibleAlarm);
 
+    void doSoftwareAuto(int channel, int tempF);
+    void doSoftwareAutoChannel(int channel, int tempF);
+
     // Requests
 
     void requestDeviceFlags(void);
@@ -247,11 +250,6 @@ public:
     void requestTempAndSpeed(int channel);
 
     void requestAlarmAndSpeed(int channel);
-
-    // Software Auto
-
-    bool switchOnSwAuto(void);
-    bool switchOffSwAuto(void);
 
 protected:
 
@@ -277,8 +275,6 @@ private:
     FanControllerData m_fanControllerData;
 
     HandshakeQueue m_handshakeQueue;
-
-    FanControllerProfile m_preSwAutoState;
 };
 
 
