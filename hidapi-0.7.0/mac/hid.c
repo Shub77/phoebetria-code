@@ -414,8 +414,11 @@ struct hid_device_info  HID_API_EXPORT *hid_enumerate(unsigned short vendor_id, 
 	setlocale(LC_ALL,"");
 
 	/* Set up the HID Manager if it hasn't been done */
-	hid_init();
-	
+    //hid_init();
+
+    /* Fixed a bug where hid_init() returns a -1 causing it to fail */
+    if(hid_init() < 0) return NULL;
+
 	/* Get a list of the Devices */
 	CFSetRef device_set = IOHIDManagerCopyDevices(hid_mgr);
 
