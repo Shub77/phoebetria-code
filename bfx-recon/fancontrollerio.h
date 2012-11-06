@@ -248,6 +248,11 @@ public:
 
     void requestAlarmAndSpeed(int channel);
 
+    // Software Auto
+
+    bool switchOnSwAuto(void);
+    bool switchOffSwAuto(void);
+
 protected:
 
     int rawToTemp(unsigned char byte) const;
@@ -272,6 +277,8 @@ private:
     FanControllerData m_fanControllerData;
 
     HandshakeQueue m_handshakeQueue;
+
+    FanControllerProfile m_preSwAutoState;
 };
 
 

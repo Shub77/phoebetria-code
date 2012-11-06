@@ -688,3 +688,52 @@ bool FanControllerIO::setFromProfile(const FanControllerProfile& profile)
 }
 
 
+bool FanControllerIO::switchOnSwAuto(void)
+{
+    if (m_fanControllerData.isSoftwareAuto())
+    {
+        qDebug() << "Error: Attempt swith to s/w auto but already in s/w auto";
+        return false;
+    }
+
+    /* Save the current state of the Recon so we can restore it when s/ware
+       auto is switched off or the application ends
+      */
+    m_preSwAutoState.setFromCurrentData(m_fanControllerData);
+
+    /* Switch to manual mode... s/w will set appropriate fan speeds
+     */
+    if ( setDeviceFlags(m_fanControllerData.isCelcius(),
+                   false,   // manual
+                   m_fanControllerData.isAudibleAlarm()
+                   ) )
+    {
+        m_fanControllerData.setIsSwAuto(true);
+        return true;
+    }
+
+    qDebug() << "Swithing to s/ware auto failed";
+
+    return false;
+}
+
+bool FanControllerIO::switchOffSwAuto(void)
+{
+
+    if (!m_fanControllerData.isSoftwareAuto())
+    {
+        qDebug() << "Error: Attempt swith OFFs/w but not in s/w auto mode";
+        return false;
+    }
+
+    // Restore previous fan controller state
+
+    bool r;
+    r = setFromProfile(m_preSwAutoState);
+
+    if (!r) qDebug() << "Swithing OFF s/ware auto failed";
+
+    return r;
+}
+
+

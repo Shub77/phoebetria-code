@@ -69,6 +69,9 @@ public:
     void setIsAudibleAlarm(bool isAudible)
         { m_isAudibleAlarm = isAudible; }
 
+    void setIsSwAuto(bool isSoftwareAuto)
+        { m_isSoftwareAuto = isSoftwareAuto; }
+
     // Access functions to channel settings
     int maxRPM(int channel) const;
     int alarmTemp(int channel) const;

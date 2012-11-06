@@ -160,8 +160,8 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 
 void FanControllerData::doSoftwareAuto(int channel, int tempF)
 {
-//    if (!m_isSoftwareAuto)
-//        return;
+    if (!m_isSoftwareAuto)
+        return;
 
     for (int i = 0; i < FC_MAX_CHANNELS; ++i)
     {
