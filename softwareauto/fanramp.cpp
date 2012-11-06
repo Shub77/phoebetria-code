@@ -85,6 +85,11 @@ int FanSpeedRampParameters::speedFromTemperatureLinear(int temperatureF,
 
     int deltax = b.x() - a.x();
 
+    if (deltax == 0)
+    {
+        return FanSpeedRamp::snapToStepSize(b.y(), speedStepSize);
+    }
+
     /* Adding speedStepSize/2 to deltay to ensure the ramp ends at ramp end
        ; i.e. we are using floor() to round the calcs and also rounding to
          closest "step size" (e.g. 100) and this can mean that ramp end speed
