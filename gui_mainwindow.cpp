@@ -96,6 +96,10 @@ void gui_MainWindow::initWaitForReqChannelParams(void)
 
 void gui_MainWindow::checkForReqChannelParems(void)
 {
+
+    if (!ph_fanControllerIO().isConnected())
+        return;
+
     if (fcdata().ramp_reqParamsForInitAreSet())
     {
         m_reqChannelParamsAreSet = true;
