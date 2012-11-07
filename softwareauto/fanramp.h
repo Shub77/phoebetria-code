@@ -49,7 +49,9 @@ public:
     int speedStepSize;
     bool fixedRpm;
     int probeAffinity;
-    int temperatureHysteresis;
+    int tHysteresisUp;
+    int tHysteresisDown;
+    int tHysteresisFanOff;
 
 protected:
 
@@ -100,7 +102,9 @@ public:
     inline int  speedStepSize(void) const;
     inline bool isFixedRpm(void) const;
     inline int  probeAffinity(void) const;
-    inline int  temperature_hysteresis(void) const;
+    inline int  hysteresisUp(void) const;
+    inline int  hysteresisDown(void) const;
+    inline int  hysteresisFanOff(void) const;
 
     int temperatureToRpm(int tF) const;
 
@@ -128,7 +132,9 @@ public:
 
     inline void    setProbeAffinity(int probeNumber);
 
-    inline void    setTemperatureHysteresis(int tempInF);
+    inline void    setTemperatureHysteresisUp(int tempInF);
+    inline void    setTemperatureHysteresisDown(int tempInF);
+    inline void    setTemperatureHysteresisFanOff(int tempInF);
 
     // ----------- END Set functions for setup data
 
@@ -192,6 +198,7 @@ const FanSpeedRampParameters& FanSpeedRamp::rampParameters(void) const
 {
     return m_rampParameters;
 }
+
 bool FanSpeedRamp::allowFanToTurnOff(void) const
 {
     return m_rampParameters.allowFanToTurnOff;
@@ -267,9 +274,19 @@ int  FanSpeedRamp::probeAffinity(void) const
     return m_rampParameters.probeAffinity;
 }
 
-int  FanSpeedRamp::temperature_hysteresis(void) const
+int  FanSpeedRamp::hysteresisUp(void) const
 {
-    return m_rampParameters.temperatureHysteresis;
+    return m_rampParameters.tHysteresisUp;
+}
+
+int  FanSpeedRamp::hysteresisDown(void) const
+{
+    return m_rampParameters.tHysteresisDown;
+}
+
+int  FanSpeedRamp::hysteresisFanOff(void) const
+{
+    return m_rampParameters.tHysteresisFanOff;
 }
 
 

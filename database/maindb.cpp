@@ -375,7 +375,7 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
                 "           ,speed_rampMid"
                 "           ,speed_rampEnd"
                 "           ,speed_stepSize"
-                "           ,temperatureHysteresis"
+                "           ,tHysteresisUp"
                 "           ,rampType"
                 "        )"
 
@@ -395,7 +395,7 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
                 "           ,:speed_rampMid"
                 "           ,:speed_rampEnd"
                 "           ,:speed_stepSize"
-                "           ,:temperatureHysteresis"
+                "           ,:tHysteresisUp"
                 "           ,:rampType"
                 "        )"
         );
@@ -415,7 +415,7 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
     qry.bindValue(":speed_rampMid",         ramp.speed_rampMid());
     qry.bindValue(":speed_rampEnd",         ramp.speed_rampEnd());
     qry.bindValue(":speed_stepSize",        ramp.speedStepSize());
-    qry.bindValue(":temperatureHysteresis", ramp.temperature_hysteresis());
+    qry.bindValue(":tHysteresisUp",         ramp.hysteresisUp());
     qry.bindValue(":rampType", ramp.isFixedRpm() ? "fixedRPM" : "linear");
 
     if (!ok) { m_lastSqlError = qry.lastError(); return false; }
