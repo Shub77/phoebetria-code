@@ -519,6 +519,11 @@ QSqlError MainDb::checkExistingDb(const QString &connectionName)
 
 QSqlError MainDb::recreateDb(const QString &connectionName)
 {
+
+#ifdef QT_DEBUG
+        qDebug() << "WARNING: Re-creating database";
+#endif
+
     QSqlError err;
 
     QString dbPathAndName
