@@ -16,6 +16,7 @@
 
 #include "fancontrollerdata.h"
 #include "fanchanneldata.h"
+#include "phoebetriaapp.h"
 #include <cmath>
 
 #include <QDebug>
@@ -192,7 +193,13 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
         {
             updateMinMax_rpm(channel, newRpm);
             m_rTemps[channel] = tempF; // Save tF for next time
-            // TODO: emit swAutoRpmChanged(channel, to)
+
+            emit manualRPM_changed(channel, newRpm);
+
+            ph_fanControllerIO().setChannelSettings(channel,
+                                                    alarmTemp(channel),
+                                                    newRpm);
+
             qDebug() << "S/W Auto -- Channel/Temp/RPM ="
                      << channel << tempF << newRpm;
         }
@@ -255,6 +262,11 @@ void FanControllerData::clearRampTemps(void)
 {
     for (int i = 0; i < FC_MAX_CHANNELS; ++i)
         m_rTemps[i] = FC_RTEMP_NOTSET;
+}
+
+void FanControllerData::clearRampTemp(int channel)
+{
+    m_rTemps[channel] = FC_RTEMP_NOTSET;
 }
 
 void FanControllerData::updateMinMax_temp(int channel, int t)

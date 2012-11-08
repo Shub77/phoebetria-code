@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "fanramp.h"
+#include "bfx-recon/bfxrecon.h"
 
 // Fwd decls
 class FanControllerData;
@@ -62,6 +63,14 @@ private slots:
 
     void on_ctrl_probeAffinity_valueChanged(int arg1);
 
+    void on_buttonBox_accepted();
+
+    void on_ctrl_isFanAlwaysOn_clicked(bool checked);
+
+    void on_ctrl_fanOnTemp_valueChanged(int arg1);
+
+    void on_ctrl_fanOnSpeed_valueChanged(int arg1);
+
 private:
     Ui::gui_SoftwareAutoSetup *ui;
 
@@ -71,7 +80,7 @@ private:
 
     bool m_ignoreSignals;
 
-    FanSpeedRamp m_ramp;
+    FanSpeedRamp m_ramp[FC_MAX_CHANNELS];
 
     FanControllerData* m_fcdata;
 };

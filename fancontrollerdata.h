@@ -108,6 +108,12 @@ public:
     FanSpeedRamp ramp(int channel) const
         { return m_ramp[channel]; }
 
+    void setRamp(int channel, const FanSpeedRamp& ramp)
+        {
+            m_ramp[channel] = ramp;
+            clearRampTemp(channel);
+        }
+
     bool initRamp(int channel)
         { return m_ramp[channel].init(*this, channel, m_lastProfileId); }
 
@@ -155,6 +161,7 @@ protected:
 
     void clearMinMax(void);
     void clearRampTemps(void);
+    void clearRampTemp(int channel);
 
     void updateMinMax_temp(int channel, int t);
     void updateMinMax_rpm(int channel, int rpm);

@@ -23,12 +23,15 @@ bool SoftwareAuto::switchOn(FanControllerIO& fcIO, FanControllerData& fcData)
       */
     m_preSwAutoState.setFromCurrentData(fcData);
 
-    /* Switch to manual mode... s/w will set appropriate fan speeds
-     */
-    fcIO.setDeviceFlags(fcData.isCelcius(),
-                        false,   // manual
-                        fcData.isAudibleAlarm()
-                        );
+    if (fcData.isAuto())
+    {
+        /* Switch to manual mode... s/w will set appropriate fan speeds
+         */
+        fcIO.setDeviceFlags(fcData.isCelcius(),
+                            false,   // manual
+                            fcData.isAudibleAlarm()
+                            );
+    }
 
     fcData.setIsSwAuto(true);
 
@@ -50,6 +53,8 @@ bool SoftwareAuto::switchOff(FanControllerIO& fcIO, FanControllerData& fcData)
     r = fcIO.setFromProfile(m_preSwAutoState);
 
     if (!r) qDebug() << "Swithing OFF s/ware auto failed";
+
+    fcData.setIsSwAuto(!r);
 
     return r;
 }

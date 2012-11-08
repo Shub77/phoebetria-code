@@ -24,6 +24,7 @@
 #include <QPushButton>
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
+#include "softwareauto.h"
 
 namespace Ui
 {
@@ -166,6 +167,8 @@ private:
     QSystemTrayIcon m_trayIcon;
 
     bool m_reqChannelParamsAreSet;
+
+    SoftwareAuto m_softwareAuto;
 
 };
 

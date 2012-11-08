@@ -34,10 +34,9 @@
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::gui_MainWindow)
+    ui(new Ui::gui_MainWindow),
+    m_softwareAuto(parent)
 {
-    connectCustomSignals();
-
     ui->setupUi(this);
 
     // Stop resizing
@@ -77,6 +76,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
     }
 
+    connectCustomSignals();
     initWaitForReqChannelParams();
 
 }
@@ -891,6 +891,11 @@ void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
     dlg->init(&fcdata());
 
     dlg->exec();
+
+    if (!fcdata().isSoftwareAuto())
+    {
+        m_softwareAuto.switchOn(ph_fanControllerIO(), fcdata());
+    }
 }
 
 void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
