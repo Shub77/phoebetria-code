@@ -70,13 +70,6 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
     if (m_controlByte == FanControllerIO::NOTSET) return false;
 
-//    if (m_dataLen + 2 > blockLen) {
-//        qDebug() << "No Data. Block is:"
-//                 << toHexString(block, blockLen);
-
-//        return true; // No data is not necessarily an error
-//    }
-
     for (int i = 2; i < m_dataLen; i++)
     {
         *(m_data + i - 2) = *(block + i);
@@ -93,7 +86,6 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
     // Actual data length does not include bytes 0 and 1 of the input
     m_dataLen = m_dataLen - 2;
 
-
 #ifdef QT_DEBUG
     if (m_checksum != calculatedChecksum)
     {
@@ -103,6 +95,9 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
                  << "++++ Checksum mismatch."
                  << "Expected" << QString::number(m_checksum)
                  << "Got" << QString::number(calculatedChecksum);
+
+        qDebug() << "Block is:"
+                 << toHexString(block, blockLen);
 
         return false; // Checksum failure
     }
@@ -352,10 +347,6 @@ void FanControllerIO::onDispatcherSignal(EventDispatcher::TaskId taskId)
         return;
     }
 
-    // Only create new requests if there are none pending processing
-    //if (!m_requestQueue.isEmpty())
-    //    return;
-
     if (taskId == EventDispatcher::ReqDeviceFlags)
     {
         requestDeviceFlags();
@@ -388,6 +379,21 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     qDebug() << "#### Raw Data From Device:"
              << toHexString((const unsigned char*)rawdata.constData(), rawdata.length());
 #endif
+
+    /* !!!!!!!!! HACK  !!!!!!!!!!!!! */
+    /* No idea what command 0xF4 actually is. Also, the data length always
+       appears to be 0x05 but the checksums are never correct. There may
+       not actually even be a checksum on these blocks (?).
+       These are the blocks I've observed so far (in hex):
+            05 F4 08 07 05 81 03 08
+            05 F4 08 00 00 00 00 00
+            05 F4 09 00 00 00 00 00
+       Adding this check here to just skip it completely
+     */
+
+    if (rawdata.length() > 1 && (unsigned char)rawdata.at(1) == 0xF4) return;
+
+    /* End Hack*/
 
     inputParsed = parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
 
