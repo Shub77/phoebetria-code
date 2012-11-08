@@ -70,6 +70,16 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
     if (m_controlByte == FanControllerIO::NOTSET) return false;
 
+    if (m_dataLen > 7)
+    {
+        qDebug() << "Got input with data block length set to"
+                    << m_dataLen
+                    << "(ignoring block)";
+        qDebug() << "Block is:"
+                 << toHexString(block, blockLen);
+        return false;
+    }
+
     for (int i = 2; i < m_dataLen; i++)
     {
         *(m_data + i - 2) = *(block + i);
@@ -381,15 +391,7 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 #endif
 
     /* !!!!!!!!! HACK  !!!!!!!!!!!!! */
-    /* No idea what command 0xF4 actually is. Also, the data length always
-       appears to be 0x05 but the checksums are never correct. There may
-       not actually even be a checksum on these blocks (?).
-       These are the blocks I've observed so far (in hex):
-            05 F4 08 07 05 81 03 08
-            05 F4 08 00 00 00 00 00
-            05 F4 09 00 00 00 00 00
-       Adding this check here to just skip it completely
-     */
+
 
     if (rawdata.length() > 1 && (unsigned char)rawdata.at(1) == 0xF4) return;
 
