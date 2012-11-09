@@ -181,7 +181,8 @@ int FanSpeedRamp::temperatureToRpm(int tF) const
         }
     }
     if (i == c)
-        rpm = m_ramp.at(i-1).y();
+        rpm = m_rampParameters.maxUsableRpm;
+
     return rpm;
 }
 
