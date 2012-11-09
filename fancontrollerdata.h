@@ -152,7 +152,7 @@ public:
 
     static int toCelcius(int tempInF);
     static double toCelciusReal(int tempInF);
-    static int toFahrenheit(int tempInC);
+    static int toFahrenheit(int tempInC, double errCorr = 0);
 
     inline int toCurrTempScale(int tF) const;
     inline double toCurrTempScaleReal(int tF) const;

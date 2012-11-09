@@ -353,7 +353,7 @@ QString FanControllerData::temperatureString(int temperature,
         bool addScaleSymbol)
 {
     QString r;
-    int t = m_isCelcius ? ceil((temperature-32)*5.0/9) : temperature;
+    int t = m_isCelcius ? toCelcius(temperature) : temperature;
     r = QString::number(t);
     if (addScaleSymbol) r += (m_isCelcius ? " C" : " F");
     return r;
@@ -366,7 +366,7 @@ QString FanControllerData::temperatureString(int temperature,
  */
 int FanControllerData::toCelcius(int tempInF)
 {
-    return ceil((tempInF-32)*5.0/9);
+    return floor((tempInF-32)*5.0/9);
 }
 
 double FanControllerData::toCelciusReal(int tempInF)
@@ -379,9 +379,9 @@ double FanControllerData::toCelciusReal(int tempInF)
  *          the rounding (or potential rounding) etc. make the function
  *          unsuitable for general purpose use.
  */
-int FanControllerData::toFahrenheit(int tempInC)
+int FanControllerData::toFahrenheit(int tempInC, double errCorr)
 {
-    return ceil(tempInC * 9/5.0 + 32);
+    return floor( (tempInC + errCorr) * 9/5.0 + 32);
 }
 
 bool FanControllerData::ramp_reqParamsForInitAreSet(void) const

@@ -172,11 +172,11 @@ int FanSpeedRamp::temperatureToRpm(int tF) const
     int c = m_ramp.count();
     int rpm = 0;
     int i;
-    for (i = 1; i < c; ++i)
+    for (i = 0; i < c; ++i)
     {
         if (m_ramp.at(i).x() >= tF)
         {
-            rpm = m_ramp.at(i-1).y();
+            rpm = m_ramp.at(i).y();
             break;
         }
     }
@@ -206,10 +206,13 @@ bool FanSpeedRamp::generateCurve(const FanSpeedRampParameters& fanCurveData,
                 rpm = fanCurveData.minUsableRpm;
         }
 
-        if (fanCurveData.allowFanToTurnOff
-                && i == fanCurveData.temperatureF_fanOn - 1)
+        if (fanCurveData.allowFanToTurnOff && i == fanCurveData.temperatureF_fanOn - 1)
         {
             dest->append(QPoint(i, 0));
+        }
+        else if (fanCurveData.allowFanToTurnOff && i == fanCurveData.temperatureF_fanOn)
+        {
+            dest->append(QPoint(i, minUsableRpm()));
         }
         else if (i == fanCurveData.temperatureF_rampStart)
         {
