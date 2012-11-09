@@ -189,6 +189,8 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
         int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel]);
         int newRpm = m_ramp[channel].temperatureToRpm(tempF);
 
+        if (newRpm == -1) return;   // Do nothing if ramp not initialised
+
         if (newRpm != currRpm || m_rTemps[channel] == FC_RTEMP_NOTSET)
         {
             updateMinMax_rpm(channel, newRpm);
