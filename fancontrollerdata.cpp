@@ -366,7 +366,7 @@ QString FanControllerData::temperatureString(int temperature,
  */
 int FanControllerData::toCelcius(int tempInF)
 {
-    return floor((tempInF-32)*5.0/9);
+    return round((tempInF-32)*5.0/9);
 }
 
 double FanControllerData::toCelciusReal(int tempInF)
@@ -381,7 +381,7 @@ double FanControllerData::toCelciusReal(int tempInF)
  */
 int FanControllerData::toFahrenheit(int tempInC, double errCorr)
 {
-    return floor( (tempInC + errCorr) * 9/5.0 + 32);
+    return round( (tempInC + errCorr) * 9/5.0 + 32);
 }
 
 bool FanControllerData::ramp_reqParamsForInitAreSet(void) const

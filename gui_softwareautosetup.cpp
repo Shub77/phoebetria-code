@@ -194,7 +194,7 @@ void gui_SoftwareAutoSetup::regenerateCurve(void)
 
 int gui_SoftwareAutoSetup::tempInF(int t) const
 {
-    return m_isCelcius ? m_fcdata->toFahrenheit(t, 0.5) : t;
+    return m_isCelcius ? m_fcdata->toFahrenheit(t) : t;
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_fanOnTemp_valueChanged(int arg1)
