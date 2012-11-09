@@ -341,7 +341,7 @@ bool MainDb::writeChannelSpeedRamps(int profileId,
 
     for (int i = 0; i < FC_MAX_CHANNELS; ++i)
     {
-        if (profile.ramp(i).isCustom())
+        if (profile.ramp(i).isCustom() || profile.ramp(i).isModified())
             ok = writeChannelSpeedRamp(profileId, i, profile.ramp(i));
         if (!ok)
             break;
@@ -407,7 +407,7 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
     qry.bindValue(":speed_minUsable",       ramp.minUsableRpm());
     qry.bindValue(":temperature_fanOn",     ramp.temperatureF_fanOn());
     qry.bindValue(":temperature_rampStart", ramp.temperatureF_rampStart());
-    qry.bindValue(":temperature_rampMid",   ramp.temperatureF_rampEnd());
+    qry.bindValue(":temperature_rampMid",   ramp.temperatureF_rampMid());
     qry.bindValue(":temperature_rampEnd",   ramp.temperatureF_rampEnd());
     qry.bindValue(":temperature_fanToMax",  ramp.temperatureF_fanToMax());
     qry.bindValue(":speed_fanOn",           ramp.speed_fanOn());
