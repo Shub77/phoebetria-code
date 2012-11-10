@@ -47,6 +47,8 @@ public:
 
     inline static QString dbFilenameWithPath(DatabaseId dbId);
 
+    static bool driverIsAvailable(void);
+
     static QStringList tables(const QString& dbConnectionName);
 
     static QStringList tableFields(const QString &dbConnectionName,

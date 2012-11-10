@@ -51,7 +51,24 @@ DatabaseManager::DatabaseManager(const QSqlDatabase& other)
 
 void DatabaseManager::initAllDatabases(void)
 {
+    if (!driverIsAvailable())
+        return;
+
     MainDb::init();
+}
+
+bool DatabaseManager::driverIsAvailable(void)
+{
+    QStringList drivers = QSqlDatabase::drivers();
+    int c = drivers.count();
+    int i;
+    for (i = 0; i < c; ++i)
+    {
+        if (drivers.at(i) == "QSQLITE")
+            break;
+    }
+
+    return i < c;
 }
 
 QString DatabaseManager::prependDbPath(const QString& filename)
