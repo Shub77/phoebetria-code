@@ -50,7 +50,7 @@ public:
 
     void setFromCurrentData(const FanControllerData& data);
 
-    bool save(void);
+    bool save(const QString& profileName);
     bool load(const QString& profileName);
     bool read(const QString& profileName);
     QString profileDescription(const QString& profileName);

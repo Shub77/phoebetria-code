@@ -841,44 +841,44 @@ bool gui_MainWindow::loadProfile(void)
 
 void gui_MainWindow::on_ctrl_ErasePreset_clicked()
 {
-    gui_Profiles* profileDlg = new gui_Profiles(this);
+//    gui_Profiles* profileDlg;// = new gui_Profiles(this);
 
-    profileDlg->exec();
+//    profileDlg->exec();
 
-    QString m_profileName = profileDlg->selectedName();
+//    QString m_profileName = profileDlg->selectedName();
 
-    FanControllerProfile fcp;
+//    FanControllerProfile fcp;
 
-    if (m_profileName.isEmpty()) return;
+//    if (m_profileName.isEmpty()) return;
 
-    if (m_profileName == ui->ctrl_PresetName->currentText())
-    {
-        //TODO: Error while trying to delete Profile being used?
-        return;
-    }
+//    if (m_profileName == ui->ctrl_PresetName->currentText())
+//    {
+//        //TODO: Error while trying to delete Profile being used?
+//        return;
+//    }
 
-    if (FanControllerProfile::isReservedProfileName(m_profileName))
-    {
-        QMessageBox::critical(
-                    this,
-                    tr("Invalid profile name"),
-                    tr("Profile names beginning with %1"
-                       " are reserved.\nThe profile has not been erased!")
-                    .arg(FanControllerProfile::reservedProfileNameStartChars())
-                    );
+//    if (FanControllerProfile::isReservedProfileName(m_profileName))
+//    {
+//        QMessageBox::critical(
+//                    this,
+//                    tr("Invalid profile name"),
+//                    tr("Profile names beginning with %1"
+//                       " are reserved.\nThe profile has not been erased!")
+//                    .arg(FanControllerProfile::reservedProfileNameStartChars())
+//                    );
 
-        return;
-    }
+//        return;
+//    }
 
-    if (fcp.erase(m_profileName))
-    {
-        int idx = ui->ctrl_PresetName->findText(m_profileName);
-        if (idx != -1)
-            ui->ctrl_PresetName->removeItem(idx);
+//    if (fcp.erase(m_profileName))
+//    {
+//        int idx = ui->ctrl_PresetName->findText(m_profileName);
+//        if (idx != -1)
+//            ui->ctrl_PresetName->removeItem(idx);
 
-        if (ui->ctrl_PresetName->currentText() == m_profileName)
-            ui->ctrl_PresetName->setEditText("");
-    }
+//        if (ui->ctrl_PresetName->currentText() == m_profileName)
+//            ui->ctrl_PresetName->setEditText("");
+//    }
 }
 
 
@@ -907,62 +907,65 @@ void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
 
 void gui_MainWindow::on_ctrl_SavePreset_clicked()
 {
-    gui_Profiles profileDlg(this);// = new gui_Profiles(this);
+//    gui_Profiles profileDlg(this);// = new gui_Profiles(this);
 
-    profileDlg.exec();
+//    profileDlg.exec();
 
-    QString profileName = profileDlg.selectedName();
-    QString profileDescription = profileDlg.selectedDescription();
+//    QString profileName = profileDlg.selectedName();
+//    QString profileDescription = profileDlg.selectedDescription();
 
-    if (profileName.isEmpty())
-        return;
+//    if (profileName.isEmpty())
+//        return;
 
-    // TODO: FIXME: Reserved names should be checked in the dlg
+//    // TODO: FIXME: Reserved names should be checked in the dlg
 
-    if (FanControllerProfile::isReservedProfileName(profileName))
-    {
-        QMessageBox::critical(
-                    this,
-                    tr("Invalid profile name"),
-                    tr("Profile names beginning with %1"
-                       " are reserved.\nThe profile has not been saved!")
-                    .arg(FanControllerProfile::reservedProfileNameStartChars())
-                    );
+//    if (FanControllerProfile::isReservedProfileName(profileName))
+//    {
+//        QMessageBox::critical(
+//                    this,
+//                    tr("Invalid profile name"),
+//                    tr("Profile names beginning with %1"
+//                       " are reserved.\nThe profile has not been saved!")
+//                    .arg(FanControllerProfile::reservedProfileNameStartChars())
+//                    );
 
-        return;
-    }
+//        return;
+//    }
 
-    bool bs1 = this->blockSignals(true);
-    bool bs2 = fcdata().blockSignals(true);
+//    bool bs1 = this->blockSignals(true);
+//    bool bs2 = fcdata().blockSignals(true);
 
-    FanControllerProfile fcp(profileName, profileDescription);
-    fcp.setFromCurrentData(fcdata());
+//    FanControllerProfile fcp(profileName, profileDescription);
+//    fcp.setFromCurrentData(fcdata());
 
-    this->blockSignals(bs1);
-    fcdata().blockSignals(bs2);
+//    this->blockSignals(bs1);
+//    fcdata().blockSignals(bs2);
 
-    if (fcp.save())
-    {
-        if (ui->ctrl_PresetName->findText(profileName) == -1)
-        {
-            ui->ctrl_PresetName->addItem(profileName);
-            int idx = ui->ctrl_PresetName->findText(profileName);
-            ui->ctrl_PresetName->setCurrentIndex(idx);
-        }
-    }
+//    if (fcp.save())
+//    {
+//        if (ui->ctrl_PresetName->findText(profileName) == -1)
+//        {
+//            ui->ctrl_PresetName->addItem(profileName);
+//            int idx = ui->ctrl_PresetName->findText(profileName);
+//            ui->ctrl_PresetName->setCurrentIndex(idx);
+//        }
+//    }
 
 }
 
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 {
-//    gui_Profiles* profileDlg = new gui_Profiles(this);
+    int idx = ui->ctrl_PresetName->currentIndex();
 
-//    profileDlg->exec();
+    gui_Profiles* profileDlg = new gui_Profiles(this);
 
-//    QString m_profileName = profileDlg->selectedName();
-//    QString m_profileDescription = profileDlg->selectedDescription();
+    profileDlg->exec();
 
-//    qDebug() << "Name: " << m_profileName;
-//    qDebug() << "Description: " << m_profileDescription;
+    //QString m_profileName = profileDlg->selectedName();
+    //QString m_profileDescription = profileDlg->selectedDescription();
+
+    populate_ctrl_PresetName();
+
+    ui->ctrl_PresetName->setCurrentIndex(idx);
 
 }

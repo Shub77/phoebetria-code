@@ -99,11 +99,12 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
 }
 
 
-bool FanControllerProfile::save(void)
+bool FanControllerProfile::save(const QString& profileName)
 {
     MainDb mdb;
+    qDebug() << "FCP ProfileName:" << profileName;
 
-    return mdb.writeProfile(m_name, *this);
+    return mdb.writeProfile(profileName, *this);
 }
 
 // Redundant load and read functions, load function is inaccuratly named for it's use, Chris will resolve...

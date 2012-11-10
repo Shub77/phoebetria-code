@@ -2,6 +2,7 @@
 #define GUI_PROFILES_H
 
 #include <QDialog>
+#include "fancontrollerdata.h"
 
 namespace Ui {
 class gui_Profiles;
@@ -26,9 +27,9 @@ public:
 private slots:
     void on_ctrl_profileList_itemClicked();
 
-    void on_buttonBox_accepted();
+    void on_ctrl_SaveProfile_clicked();
 
-    void on_buttonBox_rejected();
+    void on_ctrl_EraseProfile_clicked();
 
 private:
     Ui::gui_Profiles *ui;
@@ -37,6 +38,8 @@ private:
 
     QString m_profileDescription;
     QString m_profileName;
+
+    FanControllerData& fcdata(void) const;
 };
 
 inline const QString& gui_Profiles::selectedName(void) const

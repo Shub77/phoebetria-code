@@ -1,6 +1,8 @@
 #include "gui_profiles.h"
 #include "ui_gui_profiles.h"
+#include "phoebetriaapp.h"
 
+#include <QDebug>
 #include <QMessageBox>
 
 #include "fanprofiles.h"
@@ -58,49 +60,78 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
     ui->ctrl_profileDescription->setPlainText(m_profileDescription);
 }
 
-// TODO: FIXME: Replace accepted() rejected() with custom functions
-//              So abort/error can be handled more gracefully
-
-void gui_Profiles::on_buttonBox_accepted()
+void gui_Profiles::on_ctrl_SaveProfile_clicked()
 {
-    bool overwrite = true;
+    m_profileName = ui->ctrl_profileName->text();
+    m_profileDescription = ui->ctrl_profileDescription->toPlainText();
 
-    QString pName = ui->ctrl_profileName->text();
+    bool bs1 = this->blockSignals(true);
+    bool bs2 = fcdata().blockSignals(true);
 
-    // TODO: FIXME: Also need to check for reserved profile names
+    FanControllerProfile fcp(m_profileName, m_profileDescription);
+    fcp.setFromCurrentData(fcdata());
 
-    if (pName.isEmpty())
+    this->blockSignals(bs1);
+    fcdata().blockSignals(bs2);
+
+    qDebug() << "GUI Profiles:" << m_profileName;
+
+    if (fcp.save(m_profileName))
     {
-        QMessageBox::warning(this,
-                             tr("File not saved."),
-                             tr("Invalid filename."));
-        on_buttonBox_rejected();
+        getProfileList();
     }
 
-    if (!ui->ctrl_profileList->findItems(pName,
-                                        Qt::MatchExactly).isEmpty())
-    {
-        if (QMessageBox::question(this,
-                                  tr("Replace file?"),
-                                  tr("Overwrite existing profile %1?")
-                                    .arg(pName),
-                                  QMessageBox::Yes,
-                                  QMessageBox::No) == QMessageBox::No)
-        {
-            overwrite = false;
-        }
-    }
-    if (overwrite)
-    {
-        m_profileName = pName;
-        m_profileDescription = ui->ctrl_profileDescription->toPlainText();
-    }
-    else
-        on_buttonBox_rejected();
 }
 
-void gui_Profiles::on_buttonBox_rejected()
+void gui_Profiles::on_ctrl_EraseProfile_clicked()
 {
-    m_profileName = "";
-    m_profileDescription = "";
+    FanControllerProfile fcp;
+
+//    if (m_profileName == ui->ctrl_profileName->currentText())
+//    {
+//        //TODO: Error while trying to delete Profile being used?
+//        return;
+//    }
+
+    if (FanControllerProfile::isReservedProfileName(m_profileName))
+    {
+        QMessageBox::critical(
+                    this,
+                    tr("Invalid profile name"),
+                    tr("Profile names beginning with %1"
+                       " are reserved.\nThe profile has not been erased!")
+                    .arg(FanControllerProfile::reservedProfileNameStartChars())
+                    );
+
+        return;
+    }
+
+    QMessageBox msgbox;
+    QString text = QString("You have selected to delete profile:\n"
+                           "%1\n\n"
+                           "Would you like to continue?\n").arg(m_profileName);
+    msgbox.setWindowTitle("Erase Profile");
+    msgbox.setText(text);
+    msgbox.addButton(QMessageBox::Ok);
+    msgbox.addButton(QMessageBox::Cancel);
+
+    int status = msgbox.exec();
+    switch (status) {
+        case QMessageBox::Ok:
+            if (fcp.erase(m_profileName))
+            {
+                getProfileList();
+
+                return;
+            };
+            break;
+        case QMessageBox::Cancel:
+            break;
+     }
+
+}
+
+FanControllerData& gui_Profiles::fcdata(void) const
+{
+    return ph_fanControllerData();
 }
