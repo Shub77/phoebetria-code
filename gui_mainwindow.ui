@@ -741,6 +741,13 @@ QPushButton:hover {
 	margin: 0px;
     padding: 0px;
 	image: url(:/Images/icon_auto_lite.png)
+}
+
+QPushButton:checked {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_manual.png)
 }</string>
                 </property>
                 <property name="text">
@@ -753,13 +760,13 @@ QPushButton:hover {
                  </size>
                 </property>
                 <property name="checkable">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="checked">
                  <bool>false</bool>
                 </property>
                 <property name="flat">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -784,10 +791,27 @@ QPushButton:hover {
 	margin: 0px;
     padding: 0px;
 	image: url(:/Images/icon_celcius_lite.png)
+}
+
+QPushButton:checked {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_fahrenheit.png)
+}
+
+QPushButton:hover:checked {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_fahrenheit_lite.png)
 }</string>
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -812,10 +836,27 @@ QPushButton:hover {
 	margin: 0px;
     padding: 0px;
 	image: url(:/Images/icon_volume_on_lite.png)
+}
+
+QPushButton:checked {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_volume_off.png)
+}
+
+QPushButton:hover:checked {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_volume_off_lite.png)
 }</string>
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
