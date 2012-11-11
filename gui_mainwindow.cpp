@@ -407,9 +407,13 @@ void gui_MainWindow::updateRpmIndicators(void)
 
 void gui_MainWindow::updateToggleControls(void)
 {
+//    FIXME:  updated after adding icons instead of toggles
     //ui->ctrl_tempScaleToggle->setValue(fcdata().isCelcius() ? 1 : 0);
     //ui->ctrl_isManual->setValue(fcdata().isAuto() ? 0 : 1);
     //ui->ctrl_isAudibleAlarm->setValue(fcdata().isAudibleAlarm() ? 1 : 0);
+    ui->ctrl_tempScaleToggleBtn->setChecked(fcdata().isCelcius() ? 1 : 0);
+    ui->ctrl_isManualBtn->setChecked(fcdata().isAuto() ? 0 : 1);
+    ui->ctrl_isAudibleAlarmBtn->setChecked(fcdata().isAudibleAlarm() ? 1 : 0);
 }
 
 
@@ -552,6 +556,7 @@ void gui_MainWindow::onMaxLoggedTempChanged (int channel, int temperature)
    GUI slots
    ----------------------------------------------------------------------*/
 
+//    FIXME:  removed after adding icons instead of toggles
 //void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 //{
 ////    FanControllerIO* fc = &ph_fanControllerIO();
@@ -811,6 +816,7 @@ void gui_MainWindow::on_actionSQL_Query_triggered()
     sqlQryDlg->activateWindow();
 }
 
+//    FIXME:  removed after moving this function to profiles form
 //bool gui_MainWindow::loadProfile(void)
 //{
 //    /*FanControllerProfile fcp;
