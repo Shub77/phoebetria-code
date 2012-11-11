@@ -66,11 +66,11 @@ private slots:
 
     void checkForReqChannelParems(void);
 
-    void on_ctrl_isManual_valueChanged(int value);
+//    void on_ctrl_isManual_valueChanged(int value);
 
-    void on_ctrl_isAudibleAlarm_valueChanged(int value);
+//    void on_ctrl_isAudibleAlarm_valueChanged(int value);
 
-    void on_ctrl_tempScaleToggle_valueChanged(int value);
+//    void on_ctrl_tempScaleToggle_valueChanged(int value);
 
     void on_ctrl_channel1speedSlider_sliderPressed();
     void on_ctrl_channel1speedSlider_sliderReleased();
@@ -101,14 +101,11 @@ private slots:
     void on_actionAbout_triggered();
     void on_actionPreferences_triggered();
 
-    void on_ctrl_SavePreset_clicked();
-    void on_ctrl_ErasePreset_clicked();
-
     void on_actionSQL_Query_triggered();
 
-    void on_ctrl_configSoftwareAuto_clicked();
+//    void on_ctrl_configSoftwareAuto_clicked();
 
-    void on_ctrl_PresetName_currentIndexChanged(int index);
+//    void on_ctrl_PresetName_currentIndexChanged(int index);
 
     void on_ctrl_ModifyProfile_clicked();
 
@@ -118,11 +115,11 @@ private slots:
 
     void on_ctrl_isAudibleAlarmBtn_toggled(bool checked);
 
-    void on_pushButton_4_clicked();
+    void on_ctrl_configSoftwareAutoBtn_clicked();
 
 private:
 
-    bool loadProfile(void);
+//    bool loadProfile(void);
 
     void initCtrlArrays(void);
 

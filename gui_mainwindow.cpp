@@ -552,51 +552,51 @@ void gui_MainWindow::onMaxLoggedTempChanged (int channel, int temperature)
    GUI slots
    ----------------------------------------------------------------------*/
 
-void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
-{
-//    FanControllerIO* fc = &ph_fanControllerIO();
-//    bool isAuto = value == 0 ? true : false;
+//void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
+//{
+////    FanControllerIO* fc = &ph_fanControllerIO();
+////    bool isAuto = value == 0 ? true : false;
 
-//    fcdata().updateIsAuto(isAuto, false);
+////    fcdata().updateIsAuto(isAuto, false);
 
-//    fc->setDeviceFlags(fcdata().isCelcius(),
-//                       isAuto,
-//                       fcdata().isAudibleAlarm()
-//                      );
+////    fc->setDeviceFlags(fcdata().isCelcius(),
+////                       isAuto,
+////                       fcdata().isAudibleAlarm()
+////                      );
 
-//    enableSpeedControls(!isAuto);
-//    updateAllSpeedCtrls();
-//    updateRpmIndicators();
-}
+////    enableSpeedControls(!isAuto);
+////    updateAllSpeedCtrls();
+////    updateRpmIndicators();
+//}
 
-void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
-{
-//    FanControllerIO* fc = &ph_fanControllerIO();
-//    bool isAudible = value == 1 ? true : false;
+//void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
+//{
+////    FanControllerIO* fc = &ph_fanControllerIO();
+////    bool isAudible = value == 1 ? true : false;
 
-//    fcdata().updateIsAudibleAlarm(isAudible, false);
+////    fcdata().updateIsAudibleAlarm(isAudible, false);
 
-//    fc->setDeviceFlags(fcdata().isCelcius(),
-//                       fcdata().isAuto(),
-//                       isAudible
-//                      );
-}
+////    fc->setDeviceFlags(fcdata().isCelcius(),
+////                       fcdata().isAuto(),
+////                       isAudible
+////                      );
+//}
 
-void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
-{
-//    FanControllerIO* fc = &ph_fanControllerIO();
-//    bool isC = value == 1 ? true : false;
+//void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
+//{
+////    FanControllerIO* fc = &ph_fanControllerIO();
+////    bool isC = value == 1 ? true : false;
 
-//    fcdata().updateIsCelcius(isC, false);
+////    fcdata().updateIsCelcius(isC, false);
 
-//    fc->setDeviceFlags(isC,
-//                       fcdata().isAuto(),
-//                       fcdata().isAudibleAlarm()
-//                      );
+////    fc->setDeviceFlags(isC,
+////                       fcdata().isAuto(),
+////                       fcdata().isAudibleAlarm()
+////                      );
 
-//    updateAllAlarmCtrls(isC);
-//    updateAllCurrentTempControls();
-}
+////    updateAllAlarmCtrls(isC);
+////    updateAllCurrentTempControls();
+//}
 
 
 void gui_MainWindow::userPressedChannelRpmSlider(int channel)
@@ -811,147 +811,56 @@ void gui_MainWindow::on_actionSQL_Query_triggered()
     sqlQryDlg->activateWindow();
 }
 
-bool gui_MainWindow::loadProfile(void)
-{
-    /*FanControllerProfile fcp;
-    QString m_profileName = ui->ctrl_PresetName->currentText();
-    if (m_profileName.isEmpty()) return false;
+//bool gui_MainWindow::loadProfile(void)
+//{
+//    /*FanControllerProfile fcp;
+//    QString m_profileName = ui->ctrl_PresetName->currentText();
+//    if (m_profileName.isEmpty()) return false;
 
-    bool success = false;
+//    bool success = false;
 
-    if (fcp.load(m_profileName))
-    {
-        FanControllerIO* fc = &ph_fanControllerIO();
-
-        if (fc->setFromProfile(fcp))
-        {
-            fcdata().syncWithProfile(fcp);
-            updateSpeedControlTooltips();
-            updateAllSpeedCtrls();
-            updateAllAlarmCtrls(fcdata().isCelcius());
-            updateToggleControls();
-            enableSpeedControls(!fcp.isAuto());
-
-            success = true;
-        }
-    }
-
-    return success;*/
-}
-
-void gui_MainWindow::on_ctrl_ErasePreset_clicked()
-{
-//    gui_Profiles* profileDlg;// = new gui_Profiles(this);
-
-//    profileDlg->exec();
-
-//    QString m_profileName = profileDlg->selectedName();
-
-//    FanControllerProfile fcp;
-
-//    if (m_profileName.isEmpty()) return;
-
-//    if (m_profileName == ui->ctrl_PresetName->currentText())
+//    if (fcp.load(m_profileName))
 //    {
-//        //TODO: Error while trying to delete Profile being used?
-//        return;
-//    }
+//        FanControllerIO* fc = &ph_fanControllerIO();
 
-//    if (FanControllerProfile::isReservedProfileName(m_profileName))
-//    {
-//        QMessageBox::critical(
-//                    this,
-//                    tr("Invalid profile name"),
-//                    tr("Profile names beginning with %1"
-//                       " are reserved.\nThe profile has not been erased!")
-//                    .arg(FanControllerProfile::reservedProfileNameStartChars())
-//                    );
-
-//        return;
-//    }
-
-//    if (fcp.erase(m_profileName))
-//    {
-//        int idx = ui->ctrl_PresetName->findText(m_profileName);
-//        if (idx != -1)
-//            ui->ctrl_PresetName->removeItem(idx);
-
-//        if (ui->ctrl_PresetName->currentText() == m_profileName)
-//            ui->ctrl_PresetName->setEditText("");
-//    }
-}
-
-
-void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
-{
-//    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
-
-//    fcdata().initAllRamps();
-
-//    dlg->init(&fcdata());
-
-//    dlg->exec();
-
-//    if (!fcdata().isSoftwareAuto())
-//    {
-//        m_softwareAuto.switchOn(ph_fanControllerIO(), fcdata());
-//    }
-}
-
-void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
-{
-    (void)index;    //unused
-    loadProfile();
-
-}
-
-void gui_MainWindow::on_ctrl_SavePreset_clicked()
-{
-//    gui_Profiles profileDlg(this);// = new gui_Profiles(this);
-
-//    profileDlg.exec();
-
-//    QString profileName = profileDlg.selectedName();
-//    QString profileDescription = profileDlg.selectedDescription();
-
-//    if (profileName.isEmpty())
-//        return;
-
-//    // TODO: FIXME: Reserved names should be checked in the dlg
-
-//    if (FanControllerProfile::isReservedProfileName(profileName))
-//    {
-//        QMessageBox::critical(
-//                    this,
-//                    tr("Invalid profile name"),
-//                    tr("Profile names beginning with %1"
-//                       " are reserved.\nThe profile has not been saved!")
-//                    .arg(FanControllerProfile::reservedProfileNameStartChars())
-//                    );
-
-//        return;
-//    }
-
-//    bool bs1 = this->blockSignals(true);
-//    bool bs2 = fcdata().blockSignals(true);
-
-//    FanControllerProfile fcp(profileName, profileDescription);
-//    fcp.setFromCurrentData(fcdata());
-
-//    this->blockSignals(bs1);
-//    fcdata().blockSignals(bs2);
-
-//    if (fcp.save())
-//    {
-//        if (ui->ctrl_PresetName->findText(profileName) == -1)
+//        if (fc->setFromProfile(fcp))
 //        {
-//            ui->ctrl_PresetName->addItem(profileName);
-//            int idx = ui->ctrl_PresetName->findText(profileName);
-//            ui->ctrl_PresetName->setCurrentIndex(idx);
+//            fcdata().syncWithProfile(fcp);
+//            updateSpeedControlTooltips();
+//            updateAllSpeedCtrls();
+//            updateAllAlarmCtrls(fcdata().isCelcius());
+//            updateToggleControls();
+//            enableSpeedControls(!fcp.isAuto());
+
+//            success = true;
 //        }
 //    }
 
-}
+//    return success;*/
+//}
+
+//void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
+//{
+////    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
+
+////    fcdata().initAllRamps();
+
+////    dlg->init(&fcdata());
+
+////    dlg->exec();
+
+////    if (!fcdata().isSoftwareAuto())
+////    {
+////        m_softwareAuto.switchOn(ph_fanControllerIO(), fcdata());
+////    }
+//}
+
+//void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
+//{
+//    (void)index;    //unused
+//    loadProfile();
+
+//}
 
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 {
@@ -1016,7 +925,7 @@ void gui_MainWindow::on_ctrl_isAudibleAlarmBtn_toggled(bool checked)
                       );
 }
 
-void gui_MainWindow::on_pushButton_4_clicked()
+void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
 {
     gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
 
