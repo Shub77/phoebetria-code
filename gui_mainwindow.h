@@ -112,6 +112,14 @@ private slots:
 
     void on_ctrl_ModifyProfile_clicked();
 
+    void on_ctrl_tempScaleToggleBtn_toggled(bool checked);
+
+    void on_ctrl_isManualBtn_toggled(bool checked);
+
+    void on_ctrl_isAudibleAlarmBtn_toggled(bool checked);
+
+    void on_pushButton_4_clicked();
+
 private:
 
     bool loadProfile(void);

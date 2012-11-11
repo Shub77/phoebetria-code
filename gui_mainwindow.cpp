@@ -43,10 +43,10 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     //this->setFixedSize(this->size());
 
     // Make sure the "Control" tab is at the front
-    if (ui->tabWidget->currentIndex() != 0)
-    {
-        ui->tabWidget->setCurrentIndex(0);
-    }
+//    if (ui->tabWidget->currentIndex() != 0)
+//    {
+//        ui->tabWidget->setCurrentIndex(0);
+//    }
 
 #if defined Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
@@ -103,7 +103,7 @@ void gui_MainWindow::checkForReqChannelParems(void)
     if (fcdata().ramp_reqParamsForInitAreSet())
     {
         m_reqChannelParamsAreSet = true;
-        ui->ctrl_configSoftwareAuto->setEnabled(true);
+        ui->ctrl_configSoftwareAutoBtn->setEnabled(true);
 
         EventDispatcher& ed = ph_phoebetriaApp()->dispatcher();
 
@@ -407,9 +407,9 @@ void gui_MainWindow::updateRpmIndicators(void)
 
 void gui_MainWindow::updateToggleControls(void)
 {
-    ui->ctrl_tempScaleToggle->setValue(fcdata().isCelcius() ? 1 : 0);
-    ui->ctrl_isManual->setValue(fcdata().isAuto() ? 0 : 1);
-    ui->ctrl_isAudibleAlarm->setValue(fcdata().isAudibleAlarm() ? 1 : 0);
+    //ui->ctrl_tempScaleToggle->setValue(fcdata().isCelcius() ? 1 : 0);
+    //ui->ctrl_isManual->setValue(fcdata().isAuto() ? 0 : 1);
+    //ui->ctrl_isAudibleAlarm->setValue(fcdata().isAudibleAlarm() ? 1 : 0);
 }
 
 
@@ -453,25 +453,25 @@ void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
 
 void gui_MainWindow::onTemperatureScaleChanged(bool isCelcius)
 {
-    bool bs = ui->ctrl_tempScaleToggle->blockSignals(true);
-    ui->ctrl_tempScaleToggle->setValue(isCelcius ? 1 : 0);
-    ui->ctrl_tempScaleToggle->blockSignals(bs);
+    bool bs = ui->ctrl_tempScaleToggleBtn->blockSignals(true);
+    ui->ctrl_tempScaleToggleBtn->setChecked(isCelcius ? 1 : 0);
+    ui->ctrl_tempScaleToggleBtn->blockSignals(bs);
 }
 
 void gui_MainWindow::onControlModeChanged(bool isAuto)
 {
-    bool bs = ui->ctrl_isManual->blockSignals(true);
-    ui->ctrl_isManual->setValue(isAuto ? 0 : 1);
-    ui->ctrl_isManual->blockSignals(bs);
+    bool bs = ui->ctrl_isManualBtn->blockSignals(true);
+    ui->ctrl_isManualBtn->setChecked(isAuto ? 0 : 1);
+    ui->ctrl_isManualBtn->blockSignals(bs);
     enableSpeedControls(!isAuto);
     updateRpmIndicators();
 }
 
 void gui_MainWindow::onIsAudibleAlarmChanged(bool isAudibleAlarm)
 {
-    bool bs = ui->ctrl_isAudibleAlarm->blockSignals(true);
-    ui->ctrl_isAudibleAlarm->setValue(isAudibleAlarm ? 1 : 0);
-    bs = ui->ctrl_isAudibleAlarm->blockSignals(bs);
+    bool bs = ui->ctrl_isAudibleAlarmBtn->blockSignals(true);
+    ui->ctrl_isAudibleAlarmBtn->setChecked(isAudibleAlarm ? 1 : 0);
+    bs = ui->ctrl_isAudibleAlarmBtn->blockSignals(bs);
 }
 
 /* ------------------------------------------------------------------------
@@ -554,48 +554,48 @@ void gui_MainWindow::onMaxLoggedTempChanged (int channel, int temperature)
 
 void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
 {
-    FanControllerIO* fc = &ph_fanControllerIO();
-    bool isAuto = value == 0 ? true : false;
+//    FanControllerIO* fc = &ph_fanControllerIO();
+//    bool isAuto = value == 0 ? true : false;
 
-    fcdata().updateIsAuto(isAuto, false);
+//    fcdata().updateIsAuto(isAuto, false);
 
-    fc->setDeviceFlags(fcdata().isCelcius(),
-                       isAuto,
-                       fcdata().isAudibleAlarm()
-                      );
+//    fc->setDeviceFlags(fcdata().isCelcius(),
+//                       isAuto,
+//                       fcdata().isAudibleAlarm()
+//                      );
 
-    enableSpeedControls(!isAuto);
-    updateAllSpeedCtrls();
-    updateRpmIndicators();
+//    enableSpeedControls(!isAuto);
+//    updateAllSpeedCtrls();
+//    updateRpmIndicators();
 }
 
 void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
 {
-    FanControllerIO* fc = &ph_fanControllerIO();
-    bool isAudible = value == 1 ? true : false;
+//    FanControllerIO* fc = &ph_fanControllerIO();
+//    bool isAudible = value == 1 ? true : false;
 
-    fcdata().updateIsAudibleAlarm(isAudible, false);
+//    fcdata().updateIsAudibleAlarm(isAudible, false);
 
-    fc->setDeviceFlags(fcdata().isCelcius(),
-                       fcdata().isAuto(),
-                       isAudible
-                      );
+//    fc->setDeviceFlags(fcdata().isCelcius(),
+//                       fcdata().isAuto(),
+//                       isAudible
+//                      );
 }
 
 void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
 {
-    FanControllerIO* fc = &ph_fanControllerIO();
-    bool isC = value == 1 ? true : false;
+//    FanControllerIO* fc = &ph_fanControllerIO();
+//    bool isC = value == 1 ? true : false;
 
-    fcdata().updateIsCelcius(isC, false);
+//    fcdata().updateIsCelcius(isC, false);
 
-    fc->setDeviceFlags(isC,
-                       fcdata().isAuto(),
-                       fcdata().isAudibleAlarm()
-                      );
+//    fc->setDeviceFlags(isC,
+//                       fcdata().isAuto(),
+//                       fcdata().isAudibleAlarm()
+//                      );
 
-    updateAllAlarmCtrls(isC);
-    updateAllCurrentTempControls();
+//    updateAllAlarmCtrls(isC);
+//    updateAllCurrentTempControls();
 }
 
 
@@ -884,18 +884,18 @@ void gui_MainWindow::on_ctrl_ErasePreset_clicked()
 
 void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
 {
-    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
+//    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
 
-    fcdata().initAllRamps();
+//    fcdata().initAllRamps();
 
-    dlg->init(&fcdata());
+//    dlg->init(&fcdata());
 
-    dlg->exec();
+//    dlg->exec();
 
-    if (!fcdata().isSoftwareAuto())
-    {
-        m_softwareAuto.switchOn(ph_fanControllerIO(), fcdata());
-    }
+//    if (!fcdata().isSoftwareAuto())
+//    {
+//        m_softwareAuto.switchOn(ph_fanControllerIO(), fcdata());
+//    }
 }
 
 void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
@@ -968,4 +968,66 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 
     ui->ctrl_PresetName->setCurrentIndex(idx);
 
+}
+
+void gui_MainWindow::on_ctrl_tempScaleToggleBtn_toggled(bool checked)
+{
+    FanControllerIO* fc = &ph_fanControllerIO();
+    bool isC = checked == 1 ? true : false;
+
+    fcdata().updateIsCelcius(isC, false);
+
+    fc->setDeviceFlags(isC,
+                       fcdata().isAuto(),
+                       fcdata().isAudibleAlarm()
+                      );
+
+    updateAllAlarmCtrls(isC);
+    updateAllCurrentTempControls();
+}
+
+void gui_MainWindow::on_ctrl_isManualBtn_toggled(bool checked)
+{
+    FanControllerIO* fc = &ph_fanControllerIO();
+    bool isAuto = checked == 0 ? true : false;
+
+    fcdata().updateIsAuto(isAuto, false);
+
+    fc->setDeviceFlags(fcdata().isCelcius(),
+                       isAuto,
+                       fcdata().isAudibleAlarm()
+                      );
+
+    enableSpeedControls(!isAuto);
+    updateAllSpeedCtrls();
+    updateRpmIndicators();
+}
+
+void gui_MainWindow::on_ctrl_isAudibleAlarmBtn_toggled(bool checked)
+{
+    FanControllerIO* fc = &ph_fanControllerIO();
+    bool isAudible = checked == 1 ? true : false;
+
+    fcdata().updateIsAudibleAlarm(isAudible, false);
+
+    fc->setDeviceFlags(fcdata().isCelcius(),
+                       fcdata().isAuto(),
+                       isAudible
+                      );
+}
+
+void gui_MainWindow::on_pushButton_4_clicked()
+{
+    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
+
+    fcdata().initAllRamps();
+
+    dlg->init(&fcdata());
+
+    dlg->exec();
+
+    if (!fcdata().isSoftwareAuto())
+    {
+        m_softwareAuto.switchOn(ph_fanControllerIO(), fcdata());
+    }
 }
