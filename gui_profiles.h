@@ -31,6 +31,8 @@ private slots:
 
     void on_ctrl_EraseProfile_clicked();
 
+    void on_ctrl_LoadProfile_clicked();
+
 private:
     Ui::gui_Profiles *ui;
 

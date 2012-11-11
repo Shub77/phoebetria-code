@@ -35,6 +35,20 @@
         <file>Images/slider_newtemp_bg.png</file>
         <file>Images/slider_newtemp_cel.png</file>
         <file>Images/slider_newtemp_fah.png</file>
+        <file>Images/icon_auto.png</file>
+        <file>Images/icon_celcius.png</file>
+        <file>Images/icon_celcius_lite.png</file>
+        <file>Images/icon_fahrenheit.png</file>
+        <file>Images/icon_fahrenheit_lite.png</file>
+        <file>Images/icon_fan.png</file>
+        <file>Images/icon_fan_lite.png</file>
+        <file>Images/icon_manual.png</file>
+        <file>Images/icon_volume_off.png</file>
+        <file>Images/icon_volume_off_lite.png</file>
+        <file>Images/icon_volume_on.png</file>
+        <file>Images/icon_volume_on_lite.png</file>
+        <file>Images/icon_wrench.png</file>
+        <file>Images/icon_wrench_lite.png</file>
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>

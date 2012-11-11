@@ -135,3 +135,27 @@ FanControllerData& gui_Profiles::fcdata(void) const
 {
     return ph_fanControllerData();
 }
+
+void gui_Profiles::on_ctrl_LoadProfile_clicked()
+{
+    FanControllerProfile fcp;
+
+    bool success = false;
+
+    if (fcp.load(m_profileName))
+    {
+        FanControllerIO* fc = &ph_fanControllerIO();
+
+        if (fc->setFromProfile(fcp))
+        {
+            fcdata().syncWithProfile(fcp);
+//            updateSpeedControlTooltips();
+//            updateAllSpeedCtrls();
+//            updateAllAlarmCtrls(fcdata().isCelcius());
+//            updateToggleControls();
+//            enableSpeedControls(!fcp.isAuto());
+
+            success = true;
+        }
+    }
+}
