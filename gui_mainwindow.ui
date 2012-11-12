@@ -95,7 +95,7 @@
              <x>0</x>
              <y>20</y>
              <width>266</width>
-             <height>28</height>
+             <height>32</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout">
@@ -103,8 +103,8 @@
              <widget class="QPushButton" name="ctrl_tempScaleToggleBtn">
               <property name="maximumSize">
                <size>
-                <width>25</width>
-                <height>25</height>
+                <width>23</width>
+                <height>23</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -149,7 +149,7 @@ QPushButton:hover:checked {
                <bool>true</bool>
               </property>
               <property name="flat">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -258,6 +258,57 @@ QPushButton:hover:checked {
               </property>
               <property name="flat">
                <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="ctrl_isSoftwareControlBtn">
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_hardware.png)
+}
+
+QPushButton:hover {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_hardware_lite.png)
+}
+
+QPushButton:checked {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_software.png)
+}
+
+QPushButton:hover:checked {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_software_lite.png)
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
              </widget>
             </item>

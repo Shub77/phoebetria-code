@@ -115,6 +115,10 @@ private slots:
 
     void on_ctrl_configSoftwareAutoBtn_clicked();
 
+    void on_ctrl_isSoftwareControlBtn_toggled(bool checked);
+
+    //void on_ctrl_isSoftwareControl_valueChanged(int value);
+
 private:
 
 //    FIXME:  removed after moving this function to profiles form

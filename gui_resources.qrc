@@ -51,6 +51,10 @@
         <file>Images/icon_auto_lite.png</file>
         <file>Images/icon_manual.png</file>
         <file>Images/icon_manual_lite.png</file>
+        <file>Images/icon_hardware.png</file>
+        <file>Images/icon_hardware_lite.png</file>
+        <file>Images/icon_software.png</file>
+        <file>Images/icon_software_lite.png</file>
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>

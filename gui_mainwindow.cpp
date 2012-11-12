@@ -946,3 +946,8 @@ void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
         m_softwareAuto.switchOn(ph_fanControllerIO(), fcdata());
     }
 }
+
+void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)
+{
+    //FIXME: Hook up to Software Auto
+}
