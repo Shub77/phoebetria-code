@@ -413,7 +413,7 @@ void gui_MainWindow::updateToggleControls(void)
     //ui->ctrl_isAudibleAlarm->setValue(fcdata().isAudibleAlarm() ? 1 : 0);
     ui->ctrl_tempScaleToggleBtn->setChecked(fcdata().isCelcius() ? 1 : 0);
     ui->ctrl_isManualBtn->setChecked(fcdata().isAuto() ? 0 : 1);
-    ui->ctrl_isAudibleAlarmBtn->setChecked(fcdata().isAudibleAlarm() ? 1 : 0);
+    ui->ctrl_isAudibleAlarmBtn->setChecked(fcdata().isAudibleAlarm() ? 0 : 1);
 }
 
 
@@ -474,7 +474,7 @@ void gui_MainWindow::onControlModeChanged(bool isAuto)
 void gui_MainWindow::onIsAudibleAlarmChanged(bool isAudibleAlarm)
 {
     bool bs = ui->ctrl_isAudibleAlarmBtn->blockSignals(true);
-    ui->ctrl_isAudibleAlarmBtn->setChecked(isAudibleAlarm ? 1 : 0);
+    ui->ctrl_isAudibleAlarmBtn->setChecked(isAudibleAlarm ? 0 : 1);
     bs = ui->ctrl_isAudibleAlarmBtn->blockSignals(bs);
 }
 
@@ -921,7 +921,7 @@ void gui_MainWindow::on_ctrl_isManualBtn_toggled(bool checked)
 void gui_MainWindow::on_ctrl_isAudibleAlarmBtn_toggled(bool checked)
 {
     FanControllerIO* fc = &ph_fanControllerIO();
-    bool isAudible = checked == 1 ? true : false;
+    bool isAudible = checked ? false : true;
 
     fcdata().updateIsAudibleAlarm(isAudible, false);
 
