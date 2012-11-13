@@ -39,6 +39,8 @@ public:
     explicit gui_MainWindow(QWidget *parent = 0);
     ~gui_MainWindow();
 
+    void syncGuiCtrlsWithFanController(void);
+
 public slots:
 
     void changeEvent(QEvent* e);

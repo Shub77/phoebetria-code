@@ -272,6 +272,13 @@ QPushButton:hover:checked {
 	margin: 0px;
     padding: 0px;
 	image: url(:/Images/icon_manual_lite.png)
+}
+
+QPushButton::disabled {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_software_lite.png)
 }</string>
                  </property>
                  <property name="text">
@@ -2077,7 +2084,7 @@ margin:-2px;</string>
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">

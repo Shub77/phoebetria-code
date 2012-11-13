@@ -81,6 +81,17 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
 }
 
+void gui_MainWindow::syncGuiCtrlsWithFanController(void)
+{
+    FanControllerData& fcd = fcdata();
+
+    updateSpeedControlTooltips();
+    updateAllSpeedCtrls();
+    updateAllAlarmCtrls(fcd.isCelcius());
+    updateToggleControls();
+    enableSpeedControls(!fcd.isAuto());
+}
+
 
 void gui_MainWindow::initWaitForReqChannelParams(void)
 {
@@ -407,13 +418,20 @@ void gui_MainWindow::updateRpmIndicators(void)
 
 void gui_MainWindow::updateToggleControls(void)
 {
-//    FIXME:  updated after adding icons instead of toggles
-    //ui->ctrl_tempScaleToggle->setValue(fcdata().isCelcius() ? 1 : 0);
-    //ui->ctrl_isManual->setValue(fcdata().isAuto() ? 0 : 1);
-    //ui->ctrl_isAudibleAlarm->setValue(fcdata().isAudibleAlarm() ? 1 : 0);
     ui->ctrl_tempScaleToggleBtn->setChecked(fcdata().isCelcius() ? 1 : 0);
-    ui->ctrl_isManualBtn->setChecked(fcdata().isAuto() ? 0 : 1);
     ui->ctrl_isAudibleAlarmBtn->setChecked(fcdata().isAudibleAlarm() ? 0 : 1);
+
+    if (fcdata().isSoftwareAuto())
+    {
+        ui->ctrl_isManualBtn->setEnabled(false);
+        ui->ctrl_isSoftwareControlBtn->setChecked(true);
+    }
+    else
+    {
+        ui->ctrl_isManualBtn->setEnabled(true);
+        ui->ctrl_isManualBtn->setChecked(fcdata().isAuto() ? 0 : 1);
+        ui->ctrl_isSoftwareControlBtn->setChecked(false);
+    }
 }
 
 
@@ -882,6 +900,9 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
     populate_ctrl_PresetName();
 
     ui->ctrl_PresetName->setCurrentIndex(idx);
+
+    // Need to update controls in case a new profile was loaded
+    syncGuiCtrlsWithFanController();
 
 }
 
