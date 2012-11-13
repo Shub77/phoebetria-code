@@ -49,6 +49,10 @@ public:
     int getProfileId(const QString& name);
 
 protected:
+
+    bool readChannelSpeedRamps(const QString&name,
+                               FanControllerProfile& profile);
+
     int writeProfileCommonSettings(const QString& profileName,
                                    const QString &profileDescription,
                                    bool isAuto,

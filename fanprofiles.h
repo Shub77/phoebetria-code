@@ -76,6 +76,8 @@ public:
 
     void setDescription(const QString& desc);
 
+    inline  void setRamp(int channel, const FanSpeedRamp& other);
+
 protected:
 
     void initCommon(void);
@@ -157,6 +159,12 @@ inline const FanSpeedRamp& FanControllerProfile::ramp(int channel) const
 inline void FanControllerProfile::setDescription(const QString& desc)
 {
     m_description = desc;
+}
+
+void FanControllerProfile::setRamp(int channel, const FanSpeedRamp& other)
+{
+    m_ramp[channel] = other;
+    m_ramp[channel].generateCurve(m_ramp[channel].maxUsableRpm());
 }
 
 #endif // PHOEBETRIA_FAN_PROFILES_H

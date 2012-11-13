@@ -247,9 +247,76 @@ bool MainDb::readProfile(const QString&name, FanControllerProfile& profile)
         profile.m_channelSettings[channel].alarmTemp    = alarmTempF;
     }
 
+    readChannelSpeedRamps(name, profile);
+
     return true;
 }
 
+bool MainDb::readChannelSpeedRamps(const QString&name,
+                                   FanControllerProfile& profile)
+{
+
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    bool ok = qry.prepare(
+        "select "
+        "    channel"
+        "    ,probeAffinity"
+        "    ,allowFanToTurnOff"
+        "    ,speed_minUsable"
+        "    ,temperatureF_fanOn"
+        "    ,temperatureF_rampStart"
+        "    ,temperatureF_rampMid"
+        "    ,temperatureF_rampEnd"
+        "    ,temperatureF_fanToMax"
+        "    ,speed_fanOn"
+        "    ,speed_rampStart"
+        "    ,speed_rampMid"
+        "    ,speed_rampEnd"
+        "    ,speed_stepSize"
+        "    ,tHysteresisUp"
+        "    ,rampType"
+        " from Profile"
+        " join SoftwareAutoSetting on Profile.p_id = SoftwareAutoSetting.p_id"
+        " where Profile.name = :pName"
+    );
+
+    qry.bindValue(":pName", name);
+
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    ok = qry.exec();
+    if (!ok) { m_lastSqlError = qry.lastError(); return false; }
+
+    for (qry.first(); qry.isValid(); qry.next())
+    {
+        FanSpeedRamp ramp;
+
+        int channel = qry.value(0).toInt();
+        ramp.setProbeAffinity(qry.value(1).toInt());
+        ramp.setAllowFanToTurnOff(qry.value(2).toBool());
+        ramp.setMinUsableRpm(qry.value(3).toInt());
+        ramp.setTemperatureFanOn(qry.value(4).toInt());
+        ramp.setTemperatureRampStart(qry.value(5).toInt());
+        ramp.setTemperatureRampMid(qry.value(6).toInt());
+        ramp.setTemperatureRampEnd(qry.value(7).toInt());
+        ramp.setSpeedFanOn(qry.value(8).toInt());
+        ramp.setSpeedFanOn(qry.value(9).toInt());
+        ramp.setSpeedRampStart(qry.value(10).toInt());
+        ramp.setSpeedRampMid(qry.value(11).toInt());
+        ramp.setSpeedRampEnd(qry.value(12).toInt());
+        ramp.setHysteresisUp(qry.value(13).toInt());
+        ramp.setHysteresisDown(qry.value(14).toInt());
+        ramp.setHysteresisFanOff(qry.value(15).toInt());
+
+        ramp.setIsCustom(true);
+        ramp.setIsModified(false);
+
+        profile.setRamp(channel, ramp);
+    }
+
+    return true;
+}
 
 bool MainDb::deleteProfile(const QString& profileName)
 {

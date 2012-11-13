@@ -112,6 +112,7 @@ public:
     // ----------- Set functions for setup data
 
     inline void    setIsCustom(bool isCustom = true);
+    inline void    setIsModified(bool isModified);
     inline void    setAllowFanToTurnOff(bool allow);
     inline void    setTemperatureFanOn(int t);
     inline void    setTemperatureRampStart(int t);
@@ -135,6 +136,10 @@ public:
     inline void    setTemperatureHysteresisUp(int tempInF);
     inline void    setTemperatureHysteresisDown(int tempInF);
     inline void    setTemperatureHysteresisFanOff(int tempInF);
+
+    inline void    setHysteresisUp(int delta);
+    inline void    setHysteresisDown(int delta);
+    inline void    setHysteresisFanOff(int delta);
 
     // ----------- END Set functions for setup data
 
@@ -299,6 +304,11 @@ void FanSpeedRamp::setIsCustom(bool isCustom)
     m_isCustom = isCustom;
 }
 
+void FanSpeedRamp::setIsModified(bool isModified)
+{
+    m_isModified = isModified;
+}
+
 void FanSpeedRamp::setAllowFanToTurnOff(bool allow)
 {
     m_isModified = true;
@@ -388,6 +398,25 @@ void FanSpeedRamp::setProbeAffinity(int probeNumber)
     m_isModified = true;
     m_rampParameters.probeAffinity = probeNumber;
 }
+
+void FanSpeedRamp::setHysteresisUp(int delta)
+{
+    m_isModified = true;
+    m_rampParameters.tHysteresisUp = delta;
+}
+
+void FanSpeedRamp::setHysteresisDown(int delta)
+{
+    m_isModified = true;
+    m_rampParameters.tHysteresisDown = delta;
+}
+
+void FanSpeedRamp::setHysteresisFanOff(int delta)
+{
+    m_isModified = true;
+    m_rampParameters.tHysteresisFanOff = delta;
+}
+
 
 /*------------------------------------------------------------------------
   END Set functions for setup data
