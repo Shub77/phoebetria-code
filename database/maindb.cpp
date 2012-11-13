@@ -275,6 +275,8 @@ bool MainDb::readChannelSpeedRamps(const QString&name,
         "    ,speed_rampEnd"
         "    ,speed_stepSize"
         "    ,tHysteresisUp"
+        "    ,tHysteresisDown"
+        "    ,tHysteresisFanOff"
         "    ,rampType"
         " from Profile"
         " join SoftwareAutoSetting on Profile.p_id = SoftwareAutoSetting.p_id"
@@ -300,19 +302,21 @@ bool MainDb::readChannelSpeedRamps(const QString&name,
         ramp.setTemperatureRampStart(qry.value(5).toInt());
         ramp.setTemperatureRampMid(qry.value(6).toInt());
         ramp.setTemperatureRampEnd(qry.value(7).toInt());
-        ramp.setSpeedFanOn(qry.value(8).toInt());
+        ramp.setTemperatureFanToMax(qry.value(8).toInt());
         ramp.setSpeedFanOn(qry.value(9).toInt());
         ramp.setSpeedRampStart(qry.value(10).toInt());
         ramp.setSpeedRampMid(qry.value(11).toInt());
         ramp.setSpeedRampEnd(qry.value(12).toInt());
-        ramp.setHysteresisUp(qry.value(13).toInt());
-        ramp.setHysteresisDown(qry.value(14).toInt());
-        ramp.setHysteresisFanOff(qry.value(15).toInt());
+        ramp.setSpeedStepSize(qry.value(13).toInt());
+        ramp.setHysteresisUp(qry.value(14).toInt());
+        ramp.setHysteresisDown(qry.value(15).toInt());
+        ramp.setHysteresisFanOff(qry.value(16).toInt());
 
         ramp.setIsCustom(true);
         ramp.setIsModified(false);
 
         profile.setRamp(channel, ramp);
+        qDebug() << "Loaded ramp";
     }
 
     return true;

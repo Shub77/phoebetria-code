@@ -972,13 +972,15 @@ void gui_MainWindow::on_ctrl_isAudibleAlarmBtn_toggled(bool checked)
 
 void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
 {
-    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
+    //gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
 
-    fcdata().initAllRamps();
+    gui_SoftwareAutoSetup dlg(this);
 
-    dlg->init(&fcdata());
+    //fcdata().initAllRamps();
 
-    dlg->exec();
+    dlg.init(&fcdata());
+
+    dlg.exec();
 }
 
 void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)

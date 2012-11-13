@@ -113,6 +113,7 @@ public:
 
     inline void    setIsCustom(bool isCustom = true);
     inline void    setIsModified(bool isModified);
+    inline void    setIsInitialised(bool isInitialised);
     inline void    setAllowFanToTurnOff(bool allow);
     inline void    setTemperatureFanOn(int t);
     inline void    setTemperatureRampStart(int t);
@@ -308,6 +309,12 @@ void FanSpeedRamp::setIsModified(bool isModified)
 {
     m_isModified = isModified;
 }
+
+void FanSpeedRamp::setIsInitialised(bool isInitialised)
+{
+    m_rampIsInitialised = isInitialised;
+}
+
 
 void FanSpeedRamp::setAllowFanToTurnOff(bool allow)
 {

@@ -49,6 +49,7 @@ void FanControllerData::syncWithProfile(const FanControllerProfile& fcp)
         const BasicChannelData& fcs = fcp.getChannelSettings(i);
         setAlarmTemp(i, fcs.alarmTemp);
         setManualRPM(i, fcs.speed);
+        setRamp(i, fcp.ramp(i));
     }
 }
 
