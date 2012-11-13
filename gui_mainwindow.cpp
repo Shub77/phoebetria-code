@@ -93,6 +93,24 @@ void gui_MainWindow::syncGuiCtrlsWithFanController(void)
 }
 
 
+void gui_MainWindow::setSoftwareAutoOn(bool yes)
+{
+    FanControllerData& fcd = fcdata();
+
+    if (yes)
+    {
+        m_softwareAuto.switchOn(ph_fanControllerIO(), fcd);
+    }
+    else
+    {
+        m_softwareAuto.switchOff(ph_fanControllerIO(), fcd);
+    }
+
+    updateToggleControls();
+    updateAllSpeedCtrls();
+    updateRpmIndicators();
+}
+
 void gui_MainWindow::initWaitForReqChannelParams(void)
 {
     m_reqChannelParamsAreSet = false;
@@ -965,5 +983,6 @@ void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
 
 void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)
 {
-    //FIXME: Hook up to Software Auto
+    setSoftwareAutoOn(checked);
 }
+

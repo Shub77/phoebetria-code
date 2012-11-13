@@ -40,6 +40,7 @@ public:
     ~gui_MainWindow();
 
     void syncGuiCtrlsWithFanController(void);
+    void setSoftwareAutoOn(bool yes = true);
 
 public slots:
 
