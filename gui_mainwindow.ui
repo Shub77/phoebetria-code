@@ -466,6 +466,9 @@ QPushButton:hover {
              </item>
              <item>
               <widget class="QComboBox" name="ctrl_PresetName">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>155</width>
@@ -474,91 +477,6 @@ QPushButton:hover {
                </property>
                <property name="editable">
                 <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSlider" name="ctrl_isSoftwareControl">
-               <property name="styleSheet">
-                <string notr="true">QSlider {
- min-width:71px;
- min-height:21px;
- max-width:71px;
- max-height:21px;
- }
- QSlider::groove:horizontal {
- background-image: url(:/Images/slider_new_bg.png);
- background-repeat: no-repeat;
- background-position:center;
- margin:0px;
- border:0px;
- padding:0px;
- }
- 
-QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_new_on.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-left:0px;
- }
- 
-QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_new_off.png);
- background-repeat: no-repeat;
- background-position:right;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-right:0px;
- }
- 
-QSlider::handle:horizontal {
- background-image: url(:/Images/slider_toggle_new.png);
- width:35px;
- height:17px;
- margin:0px;
- border:0px;
- padding:0px;
- }
- 
-QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_onoff_on_disabled.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-left:0px;
- }
- 
-QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_onoff_on_disabled.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-right:0px;
- }
- 
-QSlider::handle:horizontal:disabled {
- background-image: url(:/Images/slider_toggle.png);
- width:35px;
- height:17px;
- margin:0px;
- border:0px;
- padding:0px;
- }
-</string>
-               </property>
-               <property name="maximum">
-                <number>1</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
