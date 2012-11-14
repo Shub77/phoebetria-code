@@ -42,6 +42,10 @@ public:
     void syncGuiCtrlsWithFanController(void);
     void setSoftwareAutoOn(bool yes = true);
 
+protected:
+
+    void closeEvent(QCloseEvent *event);
+
 public slots:
 
     void changeEvent(QEvent* e);

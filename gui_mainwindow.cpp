@@ -19,6 +19,7 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QCloseEvent>
 #include <cmath>
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
@@ -79,6 +80,18 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     connectCustomSignals();
     initWaitForReqChannelParams();
 
+}
+
+void gui_MainWindow::closeEvent(QCloseEvent *event)
+{
+    // URGENT
+    // FIXME: This will not work. What needs to happen is for the close
+    //        to be delayed until the RECON actually ACKs the commands
+    //        to return it to the state it was in before software auto
+    //        was turned on.
+    //
+    setSoftwareAutoOn(false);
+    event->accept();
 }
 
 void gui_MainWindow::syncGuiCtrlsWithFanController(void)
@@ -503,7 +516,7 @@ void gui_MainWindow::onControlModeChanged(bool isAuto)
     bool bs = ui->ctrl_isManualBtn->blockSignals(true);
     ui->ctrl_isManualBtn->setChecked(isAuto ? 0 : 1);
     ui->ctrl_isManualBtn->blockSignals(bs);
-    enableSpeedControls(!isAuto);
+    enableSpeedControls(!(isAuto || fcdata().isSoftwareAuto()));
     updateRpmIndicators();
 }
 
@@ -972,11 +985,7 @@ void gui_MainWindow::on_ctrl_isAudibleAlarmBtn_toggled(bool checked)
 
 void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
 {
-    //gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
-
     gui_SoftwareAutoSetup dlg(this);
-
-    //fcdata().initAllRamps();
 
     dlg.init(&fcdata());
 
@@ -986,5 +995,7 @@ void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
 void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)
 {
     setSoftwareAutoOn(checked);
+    enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
+    updateRpmIndicators();
 }
 
