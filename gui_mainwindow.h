@@ -183,6 +183,7 @@ private:
 
     SoftwareAuto m_softwareAuto;
 
+
 };
 
 #endif // GUI_MAINWINDOW_H

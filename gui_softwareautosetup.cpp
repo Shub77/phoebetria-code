@@ -76,8 +76,8 @@ void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(
 
 void gui_SoftwareAutoSetup::setupSpeedCtrlLimits(int maxRpm)
 {
-    int min = m_ramp[m_currChannel].snapToStepSize(maxRpm * 2/3);
-    ui->ctrl_minRpm->setMaximum(min);
+    //int min = m_ramp[m_currChannel].snapToStepSize(maxRpm * 2/3);
+    ui->ctrl_minRpm->setMaximum(maxRpm);
 
     ui->ctrl_rampStartSpeed->setMaximum(maxRpm);
     ui->ctrl_rampMidSpeed->setMaximum(maxRpm);
@@ -188,7 +188,7 @@ void gui_SoftwareAutoSetup::drawPlot(void)
 
 void gui_SoftwareAutoSetup::regenerateCurve(void)
 {
-    m_ramp[m_currChannel].generateCurve(m_fcdata->fanChannelSettings(m_currChannel).maxRPM());
+    m_ramp[m_currChannel].generateCurve();
     drawPlot();
 }
 

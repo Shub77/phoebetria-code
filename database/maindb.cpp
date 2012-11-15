@@ -113,7 +113,7 @@ bool MainDb::writeProfile(const QString& name,
         if (!ok) break;
     }
 
-    if (ok && profile.isSoftwareAuto())
+    if (ok)
         ok = writeChannelSpeedRamps(p_id, profile);
 
     if (!ok)
@@ -278,6 +278,7 @@ bool MainDb::readChannelSpeedRamps(const QString&name,
         "    ,tHysteresisDown"
         "    ,tHysteresisFanOff"
         "    ,rampType"
+        "    ,maxFanSpeed"
         " from Profile"
         " join SoftwareAutoSetting on Profile.p_id = SoftwareAutoSetting.p_id"
         " where Profile.name = :pName"
@@ -311,6 +312,8 @@ bool MainDb::readChannelSpeedRamps(const QString&name,
         ramp.setHysteresisUp(qry.value(14).toInt());
         ramp.setHysteresisDown(qry.value(15).toInt());
         ramp.setHysteresisFanOff(qry.value(16).toInt());
+        // qry.value(16) is ramp type
+        ramp.setMaxUsableRpm(qry.value(18).toInt());
 
         ramp.setIsCustom(true);
         ramp.setIsModified(false);
@@ -448,6 +451,7 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
                 "           ,speed_stepSize"
                 "           ,tHysteresisUp"
                 "           ,rampType"
+                "           ,maxFanSpeed"
                 "        )"
 
                 " values ("
@@ -468,6 +472,7 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
                 "           ,:speed_stepSize"
                 "           ,:tHysteresisUp"
                 "           ,:rampType"
+                "           ,:maxFanSpeed"
                 "        )"
         );
 
@@ -488,6 +493,7 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
     qry.bindValue(":speed_stepSize",        ramp.speedStepSize());
     qry.bindValue(":tHysteresisUp",         ramp.hysteresisUp());
     qry.bindValue(":rampType", ramp.isFixedRpm() ? "fixedRPM" : "linear");
+    qry.bindValue(":maxFanSpeed",           ramp.maxUsableRpm());
 
     if (!ok) { m_lastSqlError = qry.lastError(); return false; }
 
