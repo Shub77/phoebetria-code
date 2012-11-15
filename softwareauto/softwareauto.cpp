@@ -6,22 +6,27 @@
 #include "fancontrollerdata.h"
 
 SoftwareAuto::SoftwareAuto(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_preStateStored(false)
 {
 }
 
+void SoftwareAuto::storeCurrentState(FanControllerData& fcData)
+{
+    m_preSwAutoState.setFromCurrentData(fcData);
+    m_preStateStored = true;
+}
+
+
 bool SoftwareAuto::switchOn(FanControllerIO& fcIO, FanControllerData& fcData)
 {
-    if (fcData.isSoftwareAuto())
+    if (!m_preStateStored)
     {
-        qDebug() << "Error: Attempt swith to s/w auto but already in s/w auto";
-        return false;
+        /* Save the current state of the Recon so we can restore it when s/ware
+           auto is switched off or the application ends
+          */
+        storeCurrentState(fcData);
     }
-
-    /* Save the current state of the Recon so we can restore it when s/ware
-       auto is switched off or the application ends
-      */
-    m_preSwAutoState.setFromCurrentData(fcData);
 
     if (fcData.isAuto())
     {
@@ -47,12 +52,21 @@ bool SoftwareAuto::switchOff(FanControllerIO& fcIO, FanControllerData& fcData)
         return false;
     }
 
+    if (!m_preStateStored)
+    {
+        qDebug() << "Error: State of the the Recon prior to s/ware auto not stored";
+        return false;
+
+    }
     // Restore previous fan controller state
 
     bool r;
     r = fcIO.setFromProfile(m_preSwAutoState);
 
-    if (!r) qDebug() << "Swithing OFF s/ware auto failed";
+    if (!r)
+        qDebug() << "Swithing OFF s/ware auto failed";
+    else
+        m_preStateStored = false;
 
     fcData.setIsSwAuto(!r);
 

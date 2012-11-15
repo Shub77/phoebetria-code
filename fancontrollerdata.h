@@ -71,7 +71,7 @@ public:
         { m_isAudibleAlarm = isAudible; }
 
     void setIsSwAuto(bool isSoftwareAuto)
-        { m_isSoftwareAuto = isSoftwareAuto; }
+        { clearRampTemps(); m_isSoftwareAuto = isSoftwareAuto; }
 
     // Access functions to channel settings
     int maxRPM(int channel) const;

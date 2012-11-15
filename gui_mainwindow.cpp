@@ -102,7 +102,7 @@ void gui_MainWindow::syncGuiCtrlsWithFanController(void)
     updateAllSpeedCtrls();
     updateAllAlarmCtrls(fcd.isCelcius());
     updateToggleControls();
-    enableSpeedControls(!fcd.isAuto());
+    enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
 }
 
 
@@ -142,10 +142,12 @@ void gui_MainWindow::checkForReqChannelParems(void)
     if (!ph_fanControllerIO().isConnected())
         return;
 
-    if (fcdata().ramp_reqParamsForInitAreSet())
+    if (fcdata().ramp_reqParamsForInitAreSet() && !m_reqChannelParamsAreSet)
     {
         m_reqChannelParamsAreSet = true;
         ui->ctrl_configSoftwareAutoBtn->setEnabled(true);
+
+        m_softwareAuto.storeCurrentState(fcdata());
 
         EventDispatcher& ed = ph_phoebetriaApp()->dispatcher();
 
@@ -429,7 +431,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
             style = "background-image: url(:/Images/bar_green.png);margin:0px;";
 
         }
-        m_ctrls_rpmIndicator[channel]->setToolTip(QString(tr("Manual RPM = %1"))
+        m_ctrls_rpmIndicator[channel]->setToolTip(QString(tr("Target RPM = %1"))
                                                   .arg(fcdata().manualRPM(channel))
                                                   );
     }
@@ -995,7 +997,6 @@ void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
 void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)
 {
     setSoftwareAutoOn(checked);
-    enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
-    updateRpmIndicators();
+    syncGuiCtrlsWithFanController();
 }
 
