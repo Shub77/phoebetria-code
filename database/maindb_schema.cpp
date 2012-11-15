@@ -99,6 +99,7 @@ static MainDbSchema::TableDef schema[] =
         "   ,tHysteresisDown        INTEGER     DEFAULT 1"
         "   ,tHysteresisFanOff      INTEGER     DEFAULT 2"
         "   ,adjustSpeedDelay       INTEGER     DEFAULT 15000 /* ms */"
+        "   ,maxFanSpeed            INTEGER"
         "   ,primary key ( p_id, channel )"
         "   ,foreign key ( p_id ) references Profile ( p_id )"
         "       on delete cascade deferrable initially deferred"

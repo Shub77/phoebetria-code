@@ -157,7 +157,7 @@ bool FanSpeedRamp::initWithDefaultData(const FanControllerData& fcd, int channel
     m_rampParameters.tHysteresisDown         = 1;   // degrees F
     m_rampParameters.tHysteresisFanOff       = 2;   // degrees F
 
-    generateCurve(m_rampParameters, fcd.maxRPM(channel), 0, 255, &m_ramp);
+    generateCurve(m_rampParameters, 0, 255, &m_ramp);
 
     m_isModified = false;
     m_isCustom = false;
@@ -187,7 +187,6 @@ int FanSpeedRamp::temperatureToRpm(int tF) const
 }
 
 bool FanSpeedRamp::generateCurve(const FanSpeedRampParameters& fanCurveData,
-                             int maxRpm,
                              int tempRangeMin,
                              int tempRangeMax,
                              QList<QPoint>* dest)
@@ -195,6 +194,7 @@ bool FanSpeedRamp::generateCurve(const FanSpeedRampParameters& fanCurveData,
     dest->clear();
 
     int lastRpm = -1;
+    int maxRpm = fanCurveData.maxUsableRpm;
 
     for (int i = tempRangeMin; i < tempRangeMax; ++i)
     {

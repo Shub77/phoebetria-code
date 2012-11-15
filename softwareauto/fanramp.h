@@ -83,7 +83,7 @@ public:
 
     inline static int snapToStepSize(int rpm, int stepSize);
 
-    inline bool generateCurve(int maxRpm);
+    inline bool generateCurve(void);
 
     inline const FanSpeedRampParameters& rampParameters(void) const;
 
@@ -149,7 +149,6 @@ protected:
     bool initWithDefaultData(const FanControllerData& fcd, int channel);
 
     bool generateCurve(const FanSpeedRampParameters &fanCurveData,
-                       int maxRpm,
                        int tempRangeMin,
                        int tempRangeMax,
                        QList<QPoint> *dest);
@@ -195,9 +194,9 @@ int FanSpeedRamp::snapToStepSize(int rpm, int stepSize)
     return floor((double)rpm / stepSize) * stepSize;
 }
 
-bool FanSpeedRamp::generateCurve(int maxRpm)
+bool FanSpeedRamp::generateCurve(void)
 {
-    return generateCurve(m_rampParameters, maxRpm, 0, 255, &m_ramp);
+    return generateCurve(m_rampParameters, 0, 255, &m_ramp);
 }
 
 const FanSpeedRampParameters& FanSpeedRamp::rampParameters(void) const

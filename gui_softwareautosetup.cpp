@@ -188,7 +188,7 @@ void gui_SoftwareAutoSetup::drawPlot(void)
 
 void gui_SoftwareAutoSetup::regenerateCurve(void)
 {
-    m_ramp[m_currChannel].generateCurve(m_fcdata->fanChannelSettings(m_currChannel).maxRPM());
+    m_ramp[m_currChannel].generateCurve();
     drawPlot();
 }
 
