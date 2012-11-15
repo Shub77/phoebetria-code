@@ -76,8 +76,8 @@ void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(
 
 void gui_SoftwareAutoSetup::setupSpeedCtrlLimits(int maxRpm)
 {
-    int min = m_ramp[m_currChannel].snapToStepSize(maxRpm * 2/3);
-    ui->ctrl_minRpm->setMaximum(min);
+    //int min = m_ramp[m_currChannel].snapToStepSize(maxRpm * 2/3);
+    ui->ctrl_minRpm->setMaximum(maxRpm);
 
     ui->ctrl_rampStartSpeed->setMaximum(maxRpm);
     ui->ctrl_rampMidSpeed->setMaximum(maxRpm);
