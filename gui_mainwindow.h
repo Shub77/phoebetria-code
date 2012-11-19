@@ -72,10 +72,6 @@ public slots:
 private slots:
 
     void checkForReqChannelParems(void);
-//    FIXME:  removed after adding icons instead of toggles
-//    void on_ctrl_isManual_valueChanged(int value);
-//    void on_ctrl_isAudibleAlarm_valueChanged(int value);
-//    void on_ctrl_tempScaleToggle_valueChanged(int value);
 
     void on_ctrl_channel1speedSlider_sliderPressed();
     void on_ctrl_channel1speedSlider_sliderReleased();
@@ -106,10 +102,6 @@ private slots:
     void on_actionAbout_triggered();
     void on_actionPreferences_triggered();
 
-//    FIXME:  removed after adding icons instead of toggles
-//    void on_ctrl_configSoftwareAuto_clicked();
-//    void on_ctrl_PresetName_currentIndexChanged(int index);
-
     void on_ctrl_ModifyProfile_clicked();
 
     void on_ctrl_tempScaleToggleBtn_toggled(bool checked);
@@ -123,9 +115,6 @@ private slots:
     void on_ctrl_isSoftwareControlBtn_toggled(bool checked);
 
 private:
-
-//    FIXME:  removed after moving this function to profiles form
-//    bool loadProfile(void);
 
     void initCtrlArrays(void);
 

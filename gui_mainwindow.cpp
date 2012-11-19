@@ -39,15 +39,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Stop resizing
-    //this->setFixedSize(this->size());
-
-    // Make sure the "Control" tab is at the front
-//    if (ui->tabWidget->currentIndex() != 0)
-//    {
-//        ui->tabWidget->setCurrentIndex(0);
-//    }
-
 #if defined Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
 #elif defined Q_WS_MAC
@@ -606,54 +597,6 @@ void gui_MainWindow::onMaxLoggedTempChanged (int channel, int temperature)
    GUI slots
    ----------------------------------------------------------------------*/
 
-//    FIXME:  removed after adding icons instead of toggles
-//void gui_MainWindow::on_ctrl_isManual_valueChanged(int value)
-//{
-////    FanControllerIO* fc = &ph_fanControllerIO();
-////    bool isAuto = value == 0 ? true : false;
-
-////    fcdata().updateIsAuto(isAuto, false);
-
-////    fc->setDeviceFlags(fcdata().isCelcius(),
-////                       isAuto,
-////                       fcdata().isAudibleAlarm()
-////                      );
-
-////    enableSpeedControls(!isAuto);
-////    updateAllSpeedCtrls();
-////    updateRpmIndicators();
-//}
-
-//void gui_MainWindow::on_ctrl_isAudibleAlarm_valueChanged(int value)
-//{
-////    FanControllerIO* fc = &ph_fanControllerIO();
-////    bool isAudible = value == 1 ? true : false;
-
-////    fcdata().updateIsAudibleAlarm(isAudible, false);
-
-////    fc->setDeviceFlags(fcdata().isCelcius(),
-////                       fcdata().isAuto(),
-////                       isAudible
-////                      );
-//}
-
-//void gui_MainWindow::on_ctrl_tempScaleToggle_valueChanged(int value)
-//{
-////    FanControllerIO* fc = &ph_fanControllerIO();
-////    bool isC = value == 1 ? true : false;
-
-////    fcdata().updateIsCelcius(isC, false);
-
-////    fc->setDeviceFlags(isC,
-////                       fcdata().isAuto(),
-////                       fcdata().isAudibleAlarm()
-////                      );
-
-////    updateAllAlarmCtrls(isC);
-////    updateAllCurrentTempControls();
-//}
-
-
 void gui_MainWindow::userPressedChannelRpmSlider(int channel)
 {
     (void)channel; // Unused
@@ -856,57 +799,7 @@ void gui_MainWindow::on_actionPreferences_triggered()
     preferencesDlg.exec();
 }
 
-//    FIXME:  removed after moving this function to profiles form
-//bool gui_MainWindow::loadProfile(void)
-//{
-//    /*FanControllerProfile fcp;
-//    QString m_profileName = ui->ctrl_PresetName->currentText();
-//    if (m_profileName.isEmpty()) return false;
 
-//    bool success = false;
-
-//    if (fcp.load(m_profileName))
-//    {
-//        FanControllerIO* fc = &ph_fanControllerIO();
-
-//        if (fc->setFromProfile(fcp))
-//        {
-//            fcdata().syncWithProfile(fcp);
-//            updateSpeedControlTooltips();
-//            updateAllSpeedCtrls();
-//            updateAllAlarmCtrls(fcdata().isCelcius());
-//            updateToggleControls();
-//            enableSpeedControls(!fcp.isAuto());
-
-//            success = true;
-//        }
-//    }
-
-//    return success;*/
-//}
-
-//void gui_MainWindow::on_ctrl_configSoftwareAuto_clicked()
-//{
-////    gui_SoftwareAutoSetup* dlg = new gui_SoftwareAutoSetup(this);
-
-////    fcdata().initAllRamps();
-
-////    dlg->init(&fcdata());
-
-////    dlg->exec();
-
-////    if (!fcdata().isSoftwareAuto())
-////    {
-////        m_softwareAuto.switchOn(ph_fanControllerIO(), fcdata());
-////    }
-//}
-
-//void gui_MainWindow::on_ctrl_PresetName_currentIndexChanged(int index)
-//{
-//    (void)index;    //unused
-//    loadProfile();
-
-//}
 
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 {
@@ -915,9 +808,6 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
     gui_Profiles* profileDlg = new gui_Profiles(this);
 
     profileDlg->exec();
-
-    //QString m_profileName = profileDlg->selectedName();
-    //QString m_profileDescription = profileDlg->selectedDescription();
 
     populate_ctrl_PresetName();
 
