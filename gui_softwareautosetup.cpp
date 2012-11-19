@@ -316,7 +316,7 @@ void gui_SoftwareAutoSetup::on_buttonBox_accepted()
 {
     for (int i = 0; i < FC_MAX_CHANNELS; ++i)
     {
-        if (m_ramp[i].isInitialised() && !m_ramp[i].isCustom())
+        if (m_ramp[i].isInitialised() && m_ramp[i].isModified())
         {
             m_fcdata->setRamp(i, m_ramp[i]);
         }
