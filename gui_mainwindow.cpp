@@ -29,7 +29,6 @@
 #include "gui_preferences.h"
 #include "fanprofiles.h"
 #include "qglobal.h"
-#include "gui_simplesqlqry.h"
 #include "gui_softwareautosetup.h"
 #include "gui_profiles.h"
 
@@ -855,16 +854,6 @@ void gui_MainWindow::on_actionPreferences_triggered()
 {
     gui_Preferences preferencesDlg(this);
     preferencesDlg.exec();
-}
-
-void gui_MainWindow::on_actionSQL_Query_triggered()
-{
-    gui_SimpleSqlQry* sqlQryDlg = new gui_SimpleSqlQry(this);
-    sqlQryDlg->setAttribute(Qt::WA_DeleteOnClose);
-    sqlQryDlg->setWindowModality(Qt::NonModal);
-    sqlQryDlg->show();
-    sqlQryDlg->raise();
-    sqlQryDlg->activateWindow();
 }
 
 //    FIXME:  removed after moving this function to profiles form

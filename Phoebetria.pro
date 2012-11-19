@@ -62,7 +62,6 @@ SOURCES += main.cpp \
     preferences.cpp \
     dispatcher.cpp \
     fanprofiles.cpp \
-    gui_simplesqlqry.cpp \
     gui_preferences.cpp \
     database/dbmanager.cpp \
     database/maindb.cpp \
@@ -86,7 +85,6 @@ HEADERS  += gui_mainwindow.h \
     bfx-recon/bfxrecon.h \
     dispatcher.h \
     fanprofiles.h \
-    gui_simplesqlqry.h \
     gui_preferences.h \
     database/dbmanager.h \
     database/maindb.h \
@@ -99,7 +97,6 @@ HEADERS  += gui_mainwindow.h \
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
-    gui_simplesqlqry.ui \
     gui_preferences.ui \
     gui_softwareautosetup.ui \
     gui_profiles.ui

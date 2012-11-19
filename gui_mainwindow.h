@@ -106,8 +106,6 @@ private slots:
     void on_actionAbout_triggered();
     void on_actionPreferences_triggered();
 
-    void on_actionSQL_Query_triggered();
-
 //    FIXME:  removed after adding icons instead of toggles
 //    void on_ctrl_configSoftwareAuto_clicked();
 //    void on_ctrl_PresetName_currentIndexChanged(int index);
