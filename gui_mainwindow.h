@@ -136,8 +136,6 @@ private:
 
     void connectCustomSignals(void);
 
-    void populate_ctrl_PresetName(void);
-
     void enableSpeedControls(bool enabled = true);
 
     void updateSpeedControlTooltip(int channel);

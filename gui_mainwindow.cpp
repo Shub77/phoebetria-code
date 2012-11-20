@@ -56,7 +56,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     setWindowIcon(QIcon(":/icon16x16"));
 
     initCtrlArrays();
-    populate_ctrl_PresetName();
 
     // Synchronise fan controller data with GUI.
 
@@ -240,32 +239,8 @@ void gui_MainWindow::connectCustomSignals(void)
             this, SLOT(onMaxLoggedTempChanged(int,int)));
 }
 
-
-void gui_MainWindow::populate_ctrl_PresetName(void)
-{
-    FanControllerProfile fcp;
-    ui->ctrl_PresetName->clear();
-
-    QStringList items = fcp.getProfileNames();
-
-    bool bs = ui->ctrl_PresetName->blockSignals(true);
-
-    for (int i = 0; i < items.count(); ++i)
-    {
-        const QString& item = items.at(i);
-        // Skip reserved profile names
-        if (FanControllerProfile::isReservedProfileName(item)) continue;
-        ui->ctrl_PresetName->addItem(item);
-    }
-
-    ui->ctrl_PresetName->blockSignals(bs);
-}
-
 void gui_MainWindow::enableSpeedControls(bool enabled)
 {
-    //bool enabled = ui->ctrl_isManual->value() == 1 ? true : false;
-    //bool enabled = !fcdata().isAuto();
-
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_ctrls_RpmSliders[i]->setEnabled(enabled);
@@ -808,18 +783,18 @@ void gui_MainWindow::on_actionPreferences_triggered()
 
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 {
-    int idx = ui->ctrl_PresetName->currentIndex();
+    FanControllerProfile fcp;
 
     gui_Profiles* profileDlg = new gui_Profiles(this);
 
     profileDlg->exec();
 
-    populate_ctrl_PresetName();
-
-    ui->ctrl_PresetName->setCurrentIndex(idx);
-
     // Need to update controls in case a new profile was loaded
     syncGuiCtrlsWithFanController();
+
+    QString m_profileName = profileDlg->selectedName();
+
+    ui->lbl_activeProfile->setText("Profile: " + m_profileName);
 
 }
 

@@ -96,21 +96,33 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_11">
              <property name="spacing">
-              <number>5</number>
+              <number>0</number>
              </property>
              <item>
-              <widget class="QComboBox" name="ctrl_PresetName">
-               <property name="enabled">
-                <bool>false</bool>
+              <widget class="QLabel" name="lbl_activeProfile">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
-               <property name="minimumSize">
-                <size>
-                 <width>155</width>
-                 <height>0</height>
-                </size>
+               <property name="autoFillBackground">
+                <bool>true</bool>
                </property>
-               <property name="editable">
-                <bool>false</bool>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="text">
+                <string>Profile: </string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -169,6 +181,9 @@
                     <height>20</height>
                    </size>
                   </property>
+                  <property name="toolTip">
+                   <string>Toggle Temperature Scale</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
 	border: none;
@@ -222,6 +237,9 @@ QPushButton:hover:checked {
                     <width>20</width>
                     <height>20</height>
                    </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Toggle Alarm</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
@@ -304,6 +322,9 @@ QPushButton:hover:checked {
                     <height>20</height>
                    </size>
                   </property>
+                  <property name="toolTip">
+                   <string>Toggle Profile Stage</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
 	border: none;
@@ -367,6 +388,9 @@ QPushButton::disabled {
                     <width>20</width>
                     <height>20</height>
                    </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Manage Profiles</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
@@ -432,6 +456,9 @@ QPushButton:hover {
                     <height>20</height>
                    </size>
                   </property>
+                  <property name="toolTip">
+                   <string>Toggle Software Profile State</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
 	border: none;
@@ -485,6 +512,9 @@ QPushButton:hover:checked {
                     <width>20</width>
                     <height>20</height>
                    </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Manage Software Profiles</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
