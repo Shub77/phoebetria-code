@@ -55,6 +55,11 @@
         <file>Images/icon_auto_lite.png</file>
         <file>Images/icon_manual.png</file>
         <file>Images/icon_manual_lite.png</file>
+        <file>Images/channel_1_hover.png</file>
+        <file>Images/channel_2_hover.png</file>
+        <file>Images/channel_3_hover.png</file>
+        <file>Images/channel_4_hover.png</file>
+        <file>Images/channel_5_hover.png</file>
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>

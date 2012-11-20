@@ -114,6 +114,16 @@ private slots:
 
     void on_ctrl_isSoftwareControlBtn_toggled(bool checked);
 
+    void on_ctrl_channel1Select_clicked();
+
+    void on_ctrl_channel2Select_clicked();
+
+    void on_ctrl_channel3Select_clicked();
+
+    void on_ctrl_channel4Select_clicked();
+
+    void on_ctrl_channel5Select_clicked();
+
 private:
 
     void initCtrlArrays(void);

@@ -884,3 +884,28 @@ void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)
     syncGuiCtrlsWithFanController();
 }
 
+
+void gui_MainWindow::on_ctrl_channel1Select_clicked()
+{
+    qDebug() << "Channel 1 Clicked";
+}
+
+void gui_MainWindow::on_ctrl_channel2Select_clicked()
+{
+    qDebug() << "Channel 2 Clicked";
+}
+
+void gui_MainWindow::on_ctrl_channel3Select_clicked()
+{
+    qDebug() << "Channel 3 Clicked";
+}
+
+void gui_MainWindow::on_ctrl_channel4Select_clicked()
+{
+    qDebug() << "Channel 4 Clicked";
+}
+
+void gui_MainWindow::on_ctrl_channel5Select_clicked()
+{
+    qDebug() << "Channel 5 Clicked";
+}

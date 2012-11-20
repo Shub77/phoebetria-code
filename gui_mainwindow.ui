@@ -785,49 +785,42 @@ margin:0px;</string>
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="label_9">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <widget class="QPushButton" name="ctrl_channel1Select">
              <property name="minimumSize">
               <size>
                <width>50</width>
                <height>30</height>
               </size>
              </property>
-             <property name="font">
-              <font>
-               <family>Arial Black</family>
-               <pointsize>16</pointsize>
-               <weight>50</weight>
-               <italic>false</italic>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>Channel</string>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-image: url(:/Images/channel_1.png);
-margin:-2px;</string>
+              <string notr="true">QPushButton {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_1.png)
+}
+
+QPushButton:hover {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_1_hover.png)
+}</string>
              </property>
-             <property name="frameShape">
-              <enum>QFrame::Panel</enum>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="indent">
-              <number>0</number>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -1079,47 +1072,49 @@ margin:0px;</string>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_20">
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QLabel" name="label_6">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <widget class="QPushButton" name="ctrl_channel2Select">
              <property name="minimumSize">
               <size>
-               <width>51</width>
+               <width>50</width>
                <height>30</height>
               </size>
              </property>
-             <property name="font">
-              <font>
-               <family>Arial Black</family>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>Channel</string>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-image: url(:/Images/channel_2.png);
-margin:-2px;</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::Panel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <string notr="true">QPushButton {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_2.png)
+}
+
+QPushButton:hover {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_2_hover.png)
+}</string>
              </property>
              <property name="text">
               <string/>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
-             <property name="indent">
-              <number>0</number>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -1371,47 +1366,49 @@ margin:0px;</string>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_26">
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QLabel" name="label_7">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <widget class="QPushButton" name="ctrl_channel3Select">
              <property name="minimumSize">
               <size>
-               <width>51</width>
+               <width>50</width>
                <height>30</height>
               </size>
              </property>
-             <property name="font">
-              <font>
-               <family>Arial Black</family>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>Channel</string>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-image: url(:/Images/channel_3.png);
-margin:-2px;</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::Panel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <string notr="true">QPushButton {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_3.png)
+}
+
+QPushButton:hover {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_3_hover.png)
+}</string>
              </property>
              <property name="text">
               <string/>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
-             <property name="indent">
-              <number>0</number>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -1663,47 +1660,49 @@ margin:0px;</string>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_28">
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QLabel" name="label_5">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <widget class="QPushButton" name="ctrl_channel4Select">
              <property name="minimumSize">
               <size>
-               <width>51</width>
+               <width>50</width>
                <height>30</height>
               </size>
              </property>
-             <property name="font">
-              <font>
-               <family>Arial Black</family>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>Channel</string>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-image: url(:/Images/channel_4.png);
-margin:-2px;</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::Panel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <string notr="true">QPushButton {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_4.png)
+}
+
+QPushButton:hover {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_4_hover.png)
+}</string>
              </property>
              <property name="text">
               <string/>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
-             <property name="indent">
-              <number>0</number>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -1955,47 +1954,49 @@ margin:0px;</string>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_33">
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QLabel" name="label_8">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <widget class="QPushButton" name="ctrl_channel5Select">
              <property name="minimumSize">
               <size>
-               <width>51</width>
+               <width>50</width>
                <height>30</height>
               </size>
              </property>
-             <property name="font">
-              <font>
-               <family>Arial Black</family>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>Channel</string>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-image: url(:/Images/channel_5.png);
-margin:-2px;</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::Panel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <string notr="true">QPushButton {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_5.png)
+}
+
+QPushButton:hover {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/channel_5_hover.png)
+}</string>
              </property>
              <property name="text">
               <string/>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
+             <property name="iconSize">
+              <size>
+               <width>50</width>
+               <height>30</height>
+              </size>
              </property>
-             <property name="indent">
-              <number>0</number>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -2040,7 +2041,7 @@ margin:-2px;</string>
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -2068,8 +2069,14 @@ margin:-2px;</string>
    </property>
   </action>
   <action name="actionPreferences">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Preferences</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
