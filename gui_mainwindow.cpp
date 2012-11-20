@@ -793,8 +793,15 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
     syncGuiCtrlsWithFanController();
 
     QString m_profileName = profileDlg->selectedName();
+    QString m_profileDescription = profileDlg->selectedDescription();
+    QString label;
+    QString toolTip;
 
-    ui->lbl_activeProfile->setText("Profile: " + m_profileName);
+    label = "Profile: " + m_profileName;
+    ui->lbl_activeProfile->setText(label);
+    toolTip = label + "\n";
+    toolTip += "Description: " + m_profileDescription;
+    ui->lbl_activeProfile->setToolTip(toolTip);
 
 }
 
