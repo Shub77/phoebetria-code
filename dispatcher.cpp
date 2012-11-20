@@ -83,6 +83,7 @@ EventDispatcher::EventDispatcher(QObject *parent) :
     m_minInterval = 0;
     m_elapsedTicks = 0;
     m_isStarted = false;
+    m_isShuttingDown = false;
 }
 
 /*! Starts the dispatcher.
@@ -119,6 +120,14 @@ int EventDispatcher::start(unsigned interval)
     m_elapsedTicks = 0;
 
     return m_minInterval;
+}
+
+bool EventDispatcher::shutdown(void)
+{
+    if (!m_isShuttingDown)
+        m_isShuttingDown = true;
+
+    return m_tasks.isEmpty();
 }
 
 /*! Populates the dispatcher schedule.
@@ -207,10 +216,12 @@ unsigned EventDispatcher::tickToInterval(unsigned tick) const
 */
 void EventDispatcher::onTimer(void)
 {
-
-    emit tick();        // Alternative signal to task(Tick)
-    emit task(Tick);
-    emit task(CheckForDeviceData);
+    if (!m_isShuttingDown)
+    {
+        emit tick();        // Alternative signal to task(Tick)
+        emit task(Tick);
+        emit task(CheckForDeviceData);
+    }
 
     for (int i = 0; i < m_tasks.size(); ++i)
     {

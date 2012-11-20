@@ -40,3 +40,12 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     m_fanControllerIO.connectSignals();
 
 }
+
+bool PhoebetriaApp::shutdown(void)
+{
+    // Wait for all pending tasks to be processed
+    m_dispatcher.shutdown();
+    while (!m_fanControllerIO.shutdown())
+        ;
+    return true;
+}

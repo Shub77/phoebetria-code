@@ -251,6 +251,16 @@ public:
 
     void requestAlarmAndSpeed(int channel);
 
+    bool isRequestQueueEmpty(void) const
+    { return m_requestQueue.isEmpty(); }
+
+    bool shutdown(void)
+    {
+        if (isRequestQueueEmpty())
+            return true;
+        processRequestQueue();
+    }
+
 protected:
 
     int rawToTemp(unsigned char byte) const;

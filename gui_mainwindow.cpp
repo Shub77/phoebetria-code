@@ -74,13 +74,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
 void gui_MainWindow::closeEvent(QCloseEvent *event)
 {
-    // URGENT
-    // FIXME: This will not work. What needs to happen is for the close
-    //        to be delayed until the RECON actually ACKs the commands
-    //        to return it to the state it was in before software auto
-    //        was turned on.
-    //
     setSoftwareAutoOn(false);
+    ph_shutdown();
     event->accept();
 }
 
@@ -104,7 +99,7 @@ void gui_MainWindow::setSoftwareAutoOn(bool yes)
     {
         m_softwareAuto.switchOn(ph_fanControllerIO(), fcd);
     }
-    else
+    else if (fcd.isSoftwareAuto())
     {
         m_softwareAuto.switchOff(ph_fanControllerIO(), fcd);
     }

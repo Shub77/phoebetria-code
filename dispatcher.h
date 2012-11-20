@@ -77,6 +77,10 @@ public:
     explicit EventDispatcher(QObject *parent = 0);
 
     int start(unsigned interval);
+    bool shutdown(void);
+
+    bool isShuttingDown(void) const
+        { return m_isShuttingDown; }
 
     //! The minumum interval (in milliseconds) that can be set
     unsigned minInterval(void) const
@@ -99,6 +103,7 @@ private:
     unsigned m_elapsedTicks;
 
     bool m_isStarted;
+    bool m_isShuttingDown;
 
 signals:
 

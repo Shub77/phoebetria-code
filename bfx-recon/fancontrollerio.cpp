@@ -344,16 +344,19 @@ void FanControllerIO::onDispatcherSignal(EventDispatcher::TaskId taskId)
 
     if (signalsBlocked()) return;
 
+    if (taskId == EventDispatcher::Tick)
+    {
+        processRequestQueue();
+        return;
+    }
+
+    // Don't issue any more requests if we're shutting down
+    if (ph_isShuttingDown())
+        return;
 
     if (taskId == EventDispatcher::CheckForDeviceData)
     {
         m_io_device.pollForData();
-        return;
-    }
-
-    if (taskId == EventDispatcher::Tick)
-    {
-        processRequestQueue();
         return;
     }
 

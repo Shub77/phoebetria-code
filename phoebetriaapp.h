@@ -28,6 +28,10 @@
 #define ph_fanControllerData() (ph_phoebetriaApp()->fcd())
 #define ph_fanControllerIO() (ph_phoebetriaApp()->fanControllerIO())
 
+#define ph_isShuttingDown() (ph_phoebetriaApp()->isShuttingDown())
+
+#define ph_shutdown() (ph_phoebetriaApp()->shutdown())
+
 class PhoebetriaApp : public QApplication
 {
 
@@ -47,6 +51,11 @@ public:
 
     EventDispatcher& dispatcher(void)
         { return m_dispatcher; }
+
+    bool isShuttingDown(void)
+        { return m_dispatcher.isShuttingDown(); }
+
+    bool shutdown(void);
 
 private:
     static FanControllerIO m_fanControllerIO;
