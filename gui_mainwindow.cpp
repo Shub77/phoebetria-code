@@ -441,14 +441,24 @@ void gui_MainWindow::updateToggleControls(void)
 
     if (fcdata().isSoftwareAuto())
     {
+        bool bs = ui->ctrl_isManualBtn->blockSignals(true);
         ui->ctrl_isManualBtn->setEnabled(false);
+        ui->ctrl_isManualBtn->blockSignals(bs);
+
+        bs = ui->ctrl_isSoftwareControlBtn->blockSignals(true);
         ui->ctrl_isSoftwareControlBtn->setChecked(true);
+        ui->ctrl_isSoftwareControlBtn->blockSignals(bs);
     }
     else
     {
+        bool bs = ui->ctrl_isManualBtn->blockSignals(true);
         ui->ctrl_isManualBtn->setEnabled(true);
         ui->ctrl_isManualBtn->setChecked(fcdata().isAuto() ? 0 : 1);
+        ui->ctrl_isManualBtn->blockSignals(bs);
+
+        bs = ui->ctrl_isSoftwareControlBtn->blockSignals(true);
         ui->ctrl_isSoftwareControlBtn->setChecked(false);
+        ui->ctrl_isSoftwareControlBtn->blockSignals(bs);
     }
 }
 

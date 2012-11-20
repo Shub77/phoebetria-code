@@ -20,13 +20,10 @@ void SoftwareAuto::storeCurrentState(FanControllerData& fcData)
 
 bool SoftwareAuto::switchOn(FanControllerIO& fcIO, FanControllerData& fcData)
 {
-    if (!m_preStateStored)
-    {
-        /* Save the current state of the Recon so we can restore it when s/ware
-           auto is switched off or the application ends
-          */
-        storeCurrentState(fcData);
-    }
+    /* Save the current state of the Recon so we can restore it when s/ware
+       auto is switched off or the application ends
+      */
+    storeCurrentState(fcData);
 
     if (fcData.isAuto())
     {
