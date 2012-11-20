@@ -182,7 +182,7 @@
                    </size>
                   </property>
                   <property name="toolTip">
-                   <string>Toggle Temperature Scale</string>
+                   <string>Toggle temperature scale</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
@@ -239,7 +239,7 @@ QPushButton:hover:checked {
                    </size>
                   </property>
                   <property name="toolTip">
-                   <string>Toggle Alarm</string>
+                   <string>Toggle alarm</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
@@ -323,7 +323,7 @@ QPushButton:hover:checked {
                    </size>
                   </property>
                   <property name="toolTip">
-                   <string>Toggle Profile Stage</string>
+                   <string>Toggle profile state</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
@@ -390,7 +390,7 @@ QPushButton::disabled {
                    </size>
                   </property>
                   <property name="toolTip">
-                   <string>Manage Profiles</string>
+                   <string>Manage profiles</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
@@ -457,7 +457,7 @@ QPushButton:hover {
                    </size>
                   </property>
                   <property name="toolTip">
-                   <string>Toggle Software Profile State</string>
+                   <string>Toggle software profile state</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
@@ -514,7 +514,7 @@ QPushButton:hover:checked {
                    </size>
                   </property>
                   <property name="toolTip">
-                   <string>Manage Software Profiles</string>
+                   <string>Manage software profiles</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
