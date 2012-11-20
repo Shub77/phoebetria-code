@@ -38,6 +38,7 @@ private:
 
     bool getProfileList(void);
 
+    QStringList m_ProfileList;
     QString m_profileDescription;
     QString m_profileName;
 

@@ -32,13 +32,13 @@ bool gui_Profiles::getProfileList(void)
     FanControllerProfile fcp;
     ui->ctrl_profileList->clear();
 
-    QStringList items = fcp.getProfileNames();
+    QStringList m_ProfileList = fcp.getProfileNames();
 
     bool bs = ui->ctrl_profileList->blockSignals(true);
 
-    for (int i = 0; i < items.count(); ++i)
+    for (int i = 0; i < m_ProfileList.count(); ++i)
     {
-        const QString& item = items.at(i);
+        const QString& item = m_ProfileList.at(i);
         // Skip reserved profile names
         if (FanControllerProfile::isReservedProfileName(item)) continue;
         ui->ctrl_profileList->addItem(item);
@@ -62,11 +62,22 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
 
 void gui_Profiles::on_ctrl_SaveProfile_clicked()
 {
-    m_profileName = ui->ctrl_profileName->text();
+    m_profileName = ui->ctrl_profileName->text().trimmed();
     m_profileDescription = ui->ctrl_profileDescription->toPlainText();
 
     bool bs1 = this->blockSignals(true);
     bool bs2 = fcdata().blockSignals(true);
+
+    if (m_profileName.trimmed().isEmpty())
+    {
+        QMessageBox::critical(
+                    this,
+                    tr("Invalid profile name"),
+                    tr("The profile name you have entered is\n"
+                       " blank, please enter a valid name!")
+                    );
+        return;
+    }
 
     FanControllerProfile fcp(m_profileName, m_profileDescription);
     fcp.setFromCurrentData(fcdata());
@@ -74,13 +85,12 @@ void gui_Profiles::on_ctrl_SaveProfile_clicked()
     this->blockSignals(bs1);
     fcdata().blockSignals(bs2);
 
-    qDebug() << "GUI Profiles:" << m_profileName;
-
     if (fcp.save(m_profileName))
     {
         getProfileList();
     }
 
+    this->close();
 }
 
 void gui_Profiles::on_ctrl_EraseProfile_clicked()
@@ -121,6 +131,8 @@ void gui_Profiles::on_ctrl_EraseProfile_clicked()
             if (fcp.erase(m_profileName))
             {
                 getProfileList();
+                ui->ctrl_profileName->clear();
+                ui->ctrl_profileDescription->clear();
 
                 return;
             };
@@ -139,6 +151,19 @@ FanControllerData& gui_Profiles::fcdata(void) const
 void gui_Profiles::on_ctrl_LoadProfile_clicked()
 {
     FanControllerProfile fcp;
+
+    if (!fcp.getProfileNames().contains(m_profileName))
+    {
+        QMessageBox::critical(
+                    this,
+                    tr("Profile not found!"),
+                    tr("Profile named: %1 was not found!"
+                       "\n\nPlease verify the name and try again.")
+                    .arg(ui->ctrl_profileName->text())
+                    );
+        return;
+
+    }
 
     bool success = false;
 
