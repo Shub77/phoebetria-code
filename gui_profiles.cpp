@@ -116,6 +116,11 @@ void gui_Profiles::on_ctrl_EraseProfile_clicked()
         return;
     }
 
+    if (!fcp.getProfileNames().contains(m_profileName))
+    {
+        return; // Nothing to delete; i.e. profile does not exist
+    }
+
     QMessageBox msgbox;
     QString text = QString("You have selected to delete profile:\n"
                            "%1\n\n"
