@@ -48,6 +48,8 @@ public:
 
     int getProfileId(const QString& name);
 
+    static bool isValid(void);
+
 protected:
 
     bool readChannelSpeedRamps(const QString&name,

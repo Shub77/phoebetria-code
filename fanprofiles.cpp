@@ -103,6 +103,9 @@ bool FanControllerProfile::save(const QString& profileName)
 {
     MainDb mdb;
 
+    if (!mdb.isValid())
+        return false;
+
     return mdb.writeProfile(profileName, *this);
 }
 
@@ -112,12 +115,18 @@ bool FanControllerProfile::load(const QString& profileName)
 {
     MainDb mdb;
 
+    if (!mdb.isValid())
+        return false;
+
     return mdb.readProfile(profileName, *this);
 }
 
 bool FanControllerProfile::read(const QString& profileName)
 {
     MainDb mdb;
+
+    if (!mdb.isValid())
+        return false;
 
     return mdb.readProfile(profileName, *this);
 }
@@ -126,12 +135,18 @@ bool FanControllerProfile::erase(const QString& profileName)
 {
     MainDb mdb;
 
+    if (!mdb.isValid())
+        return false;
+
     return mdb.deleteProfile(profileName);
 }
 
 QString FanControllerProfile::profileDescription(const QString& profileName)
 {
     MainDb mdb;
+
+    if (!mdb.isValid())
+        return QString();
 
     return mdb.profileDescription(profileName);
 }

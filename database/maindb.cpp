@@ -685,3 +685,11 @@ int MainDb::importOldStyleProfiles(void)
     return FanControllerProfile::importFromIni(dir);
 
 }
+
+
+bool MainDb::isValid(void)
+{
+    QSqlDatabase db = QSqlDatabase::database(dbConnectionName());
+
+    return db.isValid();
+}
