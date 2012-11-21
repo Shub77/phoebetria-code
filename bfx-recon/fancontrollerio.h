@@ -256,6 +256,8 @@ public:
 
     bool shutdown(void)
     {
+        if (!isConnected())
+            return true;
         if (isRequestQueueEmpty())
             return true;
         processRequestQueue();
