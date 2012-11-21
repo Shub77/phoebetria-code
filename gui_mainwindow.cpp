@@ -31,6 +31,7 @@
 #include "qglobal.h"
 #include "gui_softwareautosetup.h"
 #include "gui_profiles.h"
+#include "maindb.h"
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -68,6 +69,18 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     connectCustomSignals();
     initWaitForReqChannelParams();
+
+    if (!MainDb::isValid())
+    {
+        QMessageBox::critical(
+                    this,
+                    tr("Profile database error."),
+                    tr("The profile database could not be initialised"
+                       " or another error has occurred. Profile management"
+                       " will not work!")
+                    );
+        this->ui->ctrl_ModifyProfile->setEnabled(false);
+    }
 
 }
 
