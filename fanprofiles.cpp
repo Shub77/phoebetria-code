@@ -102,7 +102,6 @@ void FanControllerProfile::setFromCurrentData(const FanControllerData& data)
 bool FanControllerProfile::save(const QString& profileName)
 {
     MainDb mdb;
-    qDebug() << "FCP ProfileName:" << profileName;
 
     return mdb.writeProfile(profileName, *this);
 }

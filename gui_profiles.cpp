@@ -88,9 +88,18 @@ void gui_Profiles::on_ctrl_SaveProfile_clicked()
     if (fcp.save(m_profileName))
     {
         getProfileList();
+        this->close();
     }
-
-    this->close();
+    else
+    {
+        QMessageBox::critical(
+                    this,
+                    tr("Save failed"),
+                    tr("An error occurred saving the profile.\n"
+                       "The profile has NOT been saved!")
+                    );
+        return;
+    }
 }
 
 void gui_Profiles::on_ctrl_EraseProfile_clicked()
