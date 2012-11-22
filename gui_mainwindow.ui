@@ -2094,13 +2094,6 @@ QPushButton:hover {
     </property>
     <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menuTools">
-    <property name="title">
-     <string>Tools</string>
-    </property>
-    <addaction name="actionPreferences"/>
-   </widget>
-   <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -2124,11 +2117,6 @@ QPushButton:hover {
    </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
-   </property>
-  </action>
-  <action name="actionSQL_Query">
-   <property name="text">
-    <string>Query Database</string>
    </property>
   </action>
  </widget>
