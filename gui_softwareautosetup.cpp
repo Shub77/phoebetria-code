@@ -11,6 +11,11 @@ gui_SoftwareAutoSetup::gui_SoftwareAutoSetup(QWidget *parent) :
     m_ignoreSignals(false)
 {
     ui->setupUi(this);
+
+    // FIXME: Temporarily hide controls for pre-release preview release
+    ui->ctrl_probeAffinity->hide();
+    ui->ctrl_isFanConstantSpeed->hide();
+    ui->label_probeAffinity->hide();
 }
 
 gui_SoftwareAutoSetup::~gui_SoftwareAutoSetup()
