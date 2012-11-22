@@ -60,6 +60,8 @@ that Phoebetria is at least as good as the "official" software and that
 it unlocks the BitFenix Recon to allow the hardware to be used to its
 full capacity.
 
+We thank BitFenix for supplying hardware to use for testing; Versions 1.2.0
+onwards have benefited from their generosity.
 
 Installation
 ============
