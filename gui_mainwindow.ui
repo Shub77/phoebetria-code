@@ -35,9 +35,6 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_9">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_10"/>
-    </item>
-    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_12">
       <property name="spacing">
        <number>2</number>
@@ -2085,7 +2082,7 @@ QPushButton:hover {
      <x>0</x>
      <y>0</y>
      <width>430</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">

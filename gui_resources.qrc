@@ -1,12 +1,6 @@
 <RCC>
     <qresource prefix="/" lang="English">
-        <file>Images/slider_onoff_bg.png</file>
-        <file>Images/slider_onoff_off.png</file>
-        <file>Images/slider_onoff_on.png</file>
         <file>Images/slider_toggle.png</file>
-        <file>Images/slider_temp_bg.png</file>
-        <file>Images/slider_temp_cel.png</file>
-        <file>Images/slider_temp_fah.png</file>
         <file>Images/channel_1.png</file>
         <file>Images/channel_2.png</file>
         <file>Images/channel_3.png</file>
@@ -21,20 +15,12 @@
         <file>Images/icons/128x128/phoebetria.png</file>
         <file>Images/icons/256x256/phoebetria.png</file>
         <file>Images/phoebetria_icon_error.png</file>
-        <file>Images/profile_play.png</file>
-        <file>Images/profile_save.png</file>
-        <file>Images/slider_toggle_green.png</file>
-        <file>Images/slider_toggle_yellow.png</file>
         <file>Images/bar_green.png</file>
         <file>Images/bar_yellow.png</file>
-        <file>Images/profile_erase.png</file>
         <file>Images/slider_toggle_new.png</file>
         <file>Images/slider_new_bg.png</file>
         <file>Images/slider_new_off.png</file>
         <file>Images/slider_new_on.png</file>
-        <file>Images/slider_newtemp_bg.png</file>
-        <file>Images/slider_newtemp_cel.png</file>
-        <file>Images/slider_newtemp_fah.png</file>
         <file>Images/icon_fan.png</file>
         <file>Images/icon_fan_lite.png</file>
         <file>Images/icon_volume_off.png</file>
