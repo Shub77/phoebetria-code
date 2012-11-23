@@ -182,9 +182,9 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
     //tempF = rand() % 256; // for testing
 
     int rDelta = abs(m_rTemps[channel] - tempF);
-    // if temperature has changed by 1 or more degrees F
+    // if temperature has changed by 2 or more degrees F
     // FIXME: TODO: Make user adjustable
-    if (rDelta >= 1 || m_rTemps[channel] == FC_RTEMP_NOTSET)
+    if (rDelta >= 2 || m_rTemps[channel] == FC_RTEMP_NOTSET)
     {
 
         int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel]);
