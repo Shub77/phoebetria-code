@@ -61,11 +61,14 @@ bool SoftwareAuto::switchOff(FanControllerIO& fcIO, FanControllerData& fcData)
     r = fcIO.setFromProfile(m_preSwAutoState);
 
     if (!r)
+    {
         qDebug() << "Swithing OFF s/ware auto failed";
+        return false;
+    }
     else
         m_preStateStored = false;
 
-    fcData.setIsSwAuto(!r);
+    fcData.setIsSwAuto(false);
 
     return r;
 }

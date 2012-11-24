@@ -21,6 +21,7 @@
 
 #include <QApplication>
 #include <QTimer>
+#include <QThread>
 
 #include "dispatcher.h"
 
@@ -32,9 +33,19 @@
 
 #define ph_shutdown() (ph_phoebetriaApp()->shutdown())
 
-class PhoebetriaApp : public QApplication
+
+class ShutdownHelper : QThread
 {
 
+public:
+    explicit ShutdownHelper(QThread *parent = 0);
+
+    static void wait(unsigned long ms);
+};
+
+
+class PhoebetriaApp : public QApplication
+{
     friend void EventDispatcher::connectToTimerSignal(void);
 
 public:

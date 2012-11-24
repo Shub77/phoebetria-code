@@ -21,10 +21,21 @@ FanControllerIO PhoebetriaApp::m_fanControllerIO;
 EventDispatcher PhoebetriaApp::m_dispatcher;
 QTimer PhoebetriaApp::m_globalTimer;
 
+
+ShutdownHelper::ShutdownHelper(QThread *parent)
+    : QThread(parent)
+{
+
+}
+
+void ShutdownHelper::wait(unsigned long ms)
+{
+    msleep(ms);
+}
+
 PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-
     setOrganizationName("Phoebetria");
     setApplicationName("Phoebetria");
     QSettings::setDefaultFormat(QSettings::IniFormat);
@@ -45,7 +56,13 @@ bool PhoebetriaApp::shutdown(void)
 {
     // Wait for all pending tasks to be processed
     m_dispatcher.shutdown();
+
+    ShutdownHelper::wait(200);
+    //qDebug() << "Shutting down";
     while (!m_fanControllerIO.shutdown())
-        ;
+    {
+        //qDebug() << ".";
+        ShutdownHelper::wait(200);
+    }
     return true;
 }

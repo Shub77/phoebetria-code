@@ -87,7 +87,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 void gui_MainWindow::closeEvent(QCloseEvent *event)
 {
     setSoftwareAutoOn(false);
-    ph_shutdown();
     event->accept();
 }
 

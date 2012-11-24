@@ -14,16 +14,34 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "main.h"
 #include <QApplication>
+
 #include "gui_mainwindow.h"
 #include "phoebetriaapp.h"
-
 #include "device-io.h"
+
+
+
+CloseHelper::CloseHelper(QObject *parent)
+    : QObject(parent)
+{
+}
+
+void CloseHelper::onLastWindowClosed(void)
+{
+    ph_shutdown();
+}
+
 
 int main(int argc, char *argv[])
 {
     PhoebetriaApp a(argc, argv);
     gui_MainWindow w;
+    CloseHelper chelper;
+
+    QObject::connect(&a, SIGNAL(lastWindowClosed()),
+                     &chelper, SLOT(onLastWindowClosed()));
 
     w.show();
 

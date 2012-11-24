@@ -93,7 +93,8 @@ HEADERS  += gui_mainwindow.h \
     gui_softwareautosetup.h \
     softwareauto/fanramp.h \
     gui_profiles.h \
-    softwareauto/softwareauto.h
+    softwareauto/softwareauto.h \
+    main.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
