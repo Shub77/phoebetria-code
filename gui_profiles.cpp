@@ -122,12 +122,6 @@ void gui_Profiles::on_ctrl_EraseProfile_clicked()
 {
     FanControllerProfile fcp;
 
-//    if (m_profileName == ui->ctrl_profileName->currentText())
-//    {
-//        //TODO: Error while trying to delete Profile being used?
-//        return;
-//    }
-
     if (FanControllerProfile::isReservedProfileName(m_profileName))
     {
         QMessageBox::critical(
@@ -163,7 +157,8 @@ void gui_Profiles::on_ctrl_EraseProfile_clicked()
                 getProfileList();
                 ui->ctrl_profileName->clear();
                 ui->ctrl_profileDescription->clear();
-
+                m_profileName.clear();
+                m_profileDescription.clear();
                 return;
             };
             break;
