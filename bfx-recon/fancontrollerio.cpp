@@ -70,13 +70,22 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
     if (m_controlByte == FanControllerIO::NOTSET) return false;
 
+    /* This check is not here just for paranoia... sometimes byte 0 actually
+       *is* > 7; i.e. the block doesn't follow the general structure documented
+       above. I have no idea if these blocks actually mean something or if
+       they are transmission errors. This doesn't happen very often (it might
+       not happen in a session at all) but it does occassionally so the check
+       must stay.
+      */
     if (m_dataLen > 7)
     {
+#       ifdef QT_DEBUG
         qDebug() << "Got input with data block length set to"
                     << m_dataLen
                     << "(ignoring block)";
         qDebug() << "Block is:"
                  << toHexString(block, blockLen);
+#       endif
         return false;
     }
 
@@ -87,16 +96,18 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
     m_checksum = *(block + m_dataLen);
 
+    // Actual data length does not include bytes 0 and 1 of the input
+    m_dataLen = m_dataLen - 2;
+
+#ifdef QT_DEBUG
+
+    // TODO: FIXME: Why isn't the checksum checked in release builds?
+
     unsigned calculatedChecksum = FanControllerIO::calcChecksum(
                                       RX_NULL,
                                       m_dataLen-1,    // Skipping the first byte
                                       block+1
                                   );
-
-    // Actual data length does not include bytes 0 and 1 of the input
-    m_dataLen = m_dataLen - 2;
-
-#ifdef QT_DEBUG
     if (m_checksum != calculatedChecksum)
     {
 
@@ -111,8 +122,6 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
         return false; // Checksum failure
     }
-#else
-    (void)calculatedChecksum;   // not used in release builds
 #endif
 
     return true;
