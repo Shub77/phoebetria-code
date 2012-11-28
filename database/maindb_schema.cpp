@@ -331,7 +331,7 @@ QSqlError MainDbSchema::insertDefaultData(void)
     else
     {
         db.rollback();
-        qDebug() << db.lastError();
+        qDebug() << "Error:" << db.lastError();
     }
     return err;
 }

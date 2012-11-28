@@ -881,22 +881,22 @@ void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)
 
 void gui_MainWindow::on_ctrl_channel1Select_clicked()
 {
-    qDebug() << "Channel 1 Clicked";
+    // TODO: Implement
 }
 
 void gui_MainWindow::on_ctrl_channel2Select_clicked()
 {
-    qDebug() << "Channel 2 Clicked";
+    // TODO: Implement
 }
 
 void gui_MainWindow::on_ctrl_channel3Select_clicked()
 {
-    qDebug() << "Channel 3 Clicked";
+    // TODO: Implement
 }
 
 void gui_MainWindow::on_ctrl_channel4Select_clicked()
 {
-    qDebug() << "Channel 4 Clicked";
+    // TODO: Implement
 }
 
 void gui_MainWindow::on_ctrl_channel5Select_clicked()

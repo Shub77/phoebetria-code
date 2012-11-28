@@ -33,6 +33,7 @@ void ShutdownHelper::wait(unsigned long ms)
     msleep(ms);
 }
 
+
 PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     : QApplication(argc, argv)
 {
@@ -44,24 +45,35 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     db.initAllDatabases();
 
     m_globalTimer.start(200);
-
     m_dispatcher.start(200);
 
-    m_fanControllerIO.connect();
+    m_fanControllerIO.connect();            // Connect to the IO device
     m_fanControllerIO.connectSignals();
 
 }
+
+
+/* This function ensures that the FanControllerIO is shutdown correctly;
+   i.e. that all request in the event queue have been processed. This is
+   especially required when the app was in software auto mode and the
+   Recon needs to be reset back to a pre-software-auto state.
+ */
 
 bool PhoebetriaApp::shutdown(void)
 {
     // Wait for all pending tasks to be processed
     m_dispatcher.shutdown();
 
+    /* We don't know how many ms have elapsed since the request queue was
+       last processed, so delay before the loop to make sure at least 200ms
+       have elapsed since the previous processing of the request queue
+      */
     ShutdownHelper::wait(200);
-    //qDebug() << "Shutting down";
+
+    /* Loop until the request queue is emptied
+     */
     while (!m_fanControllerIO.shutdown())
     {
-        //qDebug() << ".";
         ShutdownHelper::wait(200);
     }
     return true;

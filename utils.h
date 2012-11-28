@@ -19,9 +19,14 @@
 
 #include <QString>
 
-#define PHOEBETRIA_STUB_FUNCTION \
-    qDebug() << "Stub function called. File:" \
-    << __FILE__ << "Line:" << __LINE__;
+#ifdef QT_DEBUG
+#   define PHOEBETRIA_STUB_FUNCTION \
+        qDebug() << "Stub function called. File:" \
+        << __FILE__ << "Line:" << __LINE__;
+#else
+#   define PHOEBETRIA_STUB_FUNCTION \
+        {}
+#endif
 
 QString toHexString(const unsigned char *data, int len);
 

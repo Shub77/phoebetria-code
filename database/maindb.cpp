@@ -319,7 +319,6 @@ bool MainDb::readChannelSpeedRamps(const QString&name,
         ramp.setIsModified(false);
 
         profile.setRamp(channel, ramp);
-        qDebug() << "Loaded ramp";
     }
 
     return true;

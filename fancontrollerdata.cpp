@@ -202,9 +202,10 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
             ph_fanControllerIO().setChannelSettings(channel,
                                                     alarmTemp(channel),
                                                     newRpm);
-
+#ifdef QT_DEBUG
             qDebug() << "S/W Auto -- Channel/Temp/RPM ="
                      << channel << tempF << newRpm;
+#endif
         }
     }
 }

@@ -25,6 +25,9 @@
 
 #include "dispatcher.h"
 
+/* Convenience macros
+ */
+
 #define ph_phoebetriaApp() (static_cast<PhoebetriaApp*> qApp)
 #define ph_fanControllerData() (ph_phoebetriaApp()->fcd())
 #define ph_fanControllerIO() (ph_phoebetriaApp()->fanControllerIO())
@@ -33,6 +36,14 @@
 
 #define ph_shutdown() (ph_phoebetriaApp()->shutdown())
 
+
+/*
+    By the time PhoebetriaApp::shutdown() is called, the global timer has
+    been disabled by Qt. Since the request thread still needs to be emptied,
+    and requests can must be sent with a minumum interval of 200ms between
+    them we need a mechanism for delay. This class implements a wait function
+    that is used to add this delay between calls to m_fanControllerIO.shutdown()
+*/
 
 class ShutdownHelper : QThread
 {

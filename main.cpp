@@ -40,12 +40,13 @@ int main(int argc, char *argv[])
     gui_MainWindow w;
     CloseHelper chelper;
 
+    /* Connect to the lastWindowClosed signal so that we can do cleanup
+       and/or save preferences, etc
+      */
     QObject::connect(&a, SIGNAL(lastWindowClosed()),
                      &chelper, SLOT(onLastWindowClosed()));
 
     w.show();
 
-    int r = a.exec();
-
-    return r;
+    return a.exec();
 }
