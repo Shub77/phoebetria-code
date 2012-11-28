@@ -49,5 +49,6 @@
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>
+        <file alias="Acknowledgments">ACKNOWLEDGEMENTS.html</file>
     </qresource>
 </RCC>
