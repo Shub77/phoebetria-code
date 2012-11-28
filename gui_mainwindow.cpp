@@ -795,8 +795,6 @@ void gui_MainWindow::on_actionPreferences_triggered()
 
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 {
-    FanControllerProfile fcp;
-
     gui_Profiles* profileDlg = new gui_Profiles(this);
 
     profileDlg->exec();
@@ -901,5 +899,5 @@ void gui_MainWindow::on_ctrl_channel4Select_clicked()
 
 void gui_MainWindow::on_ctrl_channel5Select_clicked()
 {
-    qDebug() << "Channel 5 Clicked";
+    // TODO: Implement
 }

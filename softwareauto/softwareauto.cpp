@@ -19,6 +19,7 @@
 #include <QDebug>
 #include "bfx-recon/fancontrollerio.h"
 #include "fancontrollerdata.h"
+#include "phoebetriaapp.h"
 
 SoftwareAuto::SoftwareAuto(QObject *parent) :
     QObject(parent),
@@ -66,8 +67,18 @@ bool SoftwareAuto::switchOff(FanControllerIO& fcIO, FanControllerData& fcData)
 
     if (!m_preStateStored)
     {
-        qDebug() << "Error: State of the the Recon prior to s/ware auto not stored";
-        return false;
+        qDebug() << "Error: State of the the Recon prior to s/ware auto not stored."
+                 << "Setting to Auto";
+
+        FanControllerData& fcd = ph_fanControllerData();
+
+        fcIO.setDeviceFlags(fcd.isCelcius(),
+                            true,
+                            fcd.isAudibleAlarm()
+                            );
+        fcData.updateIsAuto(true, false);
+        fcData.setIsSwAuto(false);
+        return true;
 
     }
     // Restore previous fan controller state
