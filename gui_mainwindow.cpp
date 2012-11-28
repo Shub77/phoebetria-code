@@ -86,7 +86,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
 void gui_MainWindow::closeEvent(QCloseEvent *event)
 {
-    setSoftwareAutoOn(false);
+    if (fcdata().isSoftwareAuto())
+        setSoftwareAutoOn(false);
     event->accept();
 }
 
