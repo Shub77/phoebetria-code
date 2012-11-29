@@ -100,6 +100,7 @@ void gui_MainWindow::syncGuiCtrlsWithFanController(void)
     updateAllAlarmCtrls(fcd.isCelcius());
     updateToggleControls();
     enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
+    updateRpmIndicators();
 }
 
 
@@ -386,7 +387,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
 {
     QString style;
 
-    if (fcdata().isAuto())
+    if (fcdata().isAuto() && !fcdata().isSoftwareAuto())
     {
         style = "background-image: url(:/Images/bar_green.png);margin:0px;";
         m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
@@ -526,7 +527,7 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
 
 void gui_MainWindow::onManualRPMChanged(int channel, int RPM)
 {
-    if (!fcdata().isAuto())
+    if (!fcdata().isAuto() || fcdata().isSoftwareAuto())
     {
         updateSpeedControl(channel, RPM, true);
         updateRpmIndicator(channel);
@@ -813,6 +814,8 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
     toolTip = label + "\n";
     toolTip += "Description: " + m_profileDescription;
     ui->lbl_activeProfile->setToolTip(toolTip);
+
+    syncGuiCtrlsWithFanController();
 
 }
 
