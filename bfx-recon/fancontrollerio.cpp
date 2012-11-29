@@ -99,18 +99,14 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
     // Actual data length does not include bytes 0 and 1 of the input
     m_dataLen = m_dataLen - 2;
 
-#ifdef QT_DEBUG
-
-    // TODO: FIXME: Why isn't the checksum checked in release builds?
-
     unsigned calculatedChecksum = FanControllerIO::calcChecksum(
                                       RX_NULL,
-                                      m_dataLen-1,    // Skipping the first byte
+                                      *(block)-1,   // Skipping the first byte
                                       block+1
                                   );
     if (m_checksum != calculatedChecksum)
     {
-
+#ifdef QT_DEBUG
         qDebug() << "File:" << QString(__FILE__)
                  << "Line:" << QString::number(__LINE__)
                  << "++++ Checksum mismatch."
@@ -119,10 +115,10 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
 
         qDebug() << "Block is:"
                  << toHexString(block, blockLen);
-
+#endif
         return false; // Checksum failure
     }
-#endif
+
 
     return true;
 }
