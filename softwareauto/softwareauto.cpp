@@ -65,6 +65,28 @@ bool SoftwareAuto::switchOff(FanControllerIO& fcIO, FanControllerData& fcData)
         return false;
     }
 
+    // Set to auto. This is in leiu of the code below that is #ifdefd away
+    FanControllerData& fcd = ph_fanControllerData();
+
+    fcIO.setDeviceFlags(fcd.isCelcius(),
+                        true,
+                        fcd.isAudibleAlarm()
+                        );
+    fcData.updateIsAuto(true, false);
+    fcData.setIsSwAuto(false);
+    return true;
+
+#if 0
+
+    FIXME
+
+    This does not work as intended if a profile was loaded that is s/ware
+    auto. When loading the pre-state is not stored correctly. A better way
+    to load a profile is for the manage profiles dialog to let the main
+    dialog know that a profile should be loaded and the profile loaded
+    from the main window rather than from the manage profiles dialog. This
+    way pre-states could be properly stored.
+
     if (!m_preStateStored)
     {
         qDebug() << "Error: State of the the Recon prior to s/ware auto not stored."
@@ -97,4 +119,5 @@ bool SoftwareAuto::switchOff(FanControllerIO& fcIO, FanControllerData& fcData)
     fcData.setIsSwAuto(false);
 
     return r;
+#endif
 }
