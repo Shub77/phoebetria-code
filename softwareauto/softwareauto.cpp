@@ -41,6 +41,8 @@ bool SoftwareAuto::switchOn(FanControllerIO& fcIO, FanControllerData& fcData)
       */
     storeCurrentState(fcData);
 
+    fcData.setIsSwAuto(true);
+
     if (fcData.isAuto())
     {
         /* Switch to manual mode... s/w will set appropriate fan speeds
@@ -50,8 +52,6 @@ bool SoftwareAuto::switchOn(FanControllerIO& fcIO, FanControllerData& fcData)
                             fcData.isAudibleAlarm()
                             );
     }
-
-    fcData.setIsSwAuto(true);
 
     return true;
 }
@@ -67,6 +67,8 @@ bool SoftwareAuto::switchOff(FanControllerIO& fcIO, FanControllerData& fcData)
 
     // Set to auto. This is in leiu of the code below that is #ifdefd away
     FanControllerData& fcd = ph_fanControllerData();
+
+    fcIO.clearRequestQueue();
 
     fcIO.setDeviceFlags(fcd.isCelcius(),
                         true,

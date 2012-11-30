@@ -24,10 +24,14 @@
 #include "fanprofiles.h"
 #include "fancontrollerdata.h"
 #include "dispatcher.h"
+#include "softwareauto.h"
 
 class FanControllerIO : public QObject
 {
     Q_OBJECT
+
+    friend bool SoftwareAuto::switchOff(FanControllerIO& fcIO, FanControllerData& fcData);
+
 public:
 
     //---------------------------------------------------------------------
@@ -272,6 +276,8 @@ protected:
     void issueRequest(const Request& req);
     void processRequestQueue(void);
 
+    inline void clearRequestQueue(void);
+
 public slots:
     void onDispatcherSignal(EventDispatcher::TaskId taskId);
     void onRawData(QByteArray rawdata);
@@ -289,5 +295,9 @@ private:
     HandshakeQueue m_handshakeQueue;
 };
 
+void FanControllerIO::clearRequestQueue(void)
+{
+    m_requestQueue.clear();
+}
 
 #endif // FANCONTROLLERIO_H

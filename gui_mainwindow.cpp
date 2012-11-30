@@ -128,6 +128,7 @@ void gui_MainWindow::initWaitForReqChannelParams(void)
 
     EventDispatcher& ed = ph_phoebetriaApp()->dispatcher();
 
+    ui->ctrl_configSoftwareAutoBtn->setEnabled(false);
     ui->ctrl_isSoftwareControlBtn->setEnabled(false);
 
     connect(&ed, SIGNAL(tick()),
@@ -146,6 +147,7 @@ void gui_MainWindow::checkForReqChannelParems(void)
     {
         m_reqChannelParamsAreSet = true;
         ui->ctrl_configSoftwareAutoBtn->setEnabled(true);
+        ui->ctrl_isSoftwareControlBtn->setEnabled(true);
 
         m_softwareAuto.storeCurrentState(fcdata());
 
