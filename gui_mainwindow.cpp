@@ -892,25 +892,25 @@ void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)
 
 void gui_MainWindow::on_ctrl_channel1Select_clicked()
 {
-    // TODO: Implement
+    ph_fanControllerIO().setDisplayChannel(0);
 }
 
 void gui_MainWindow::on_ctrl_channel2Select_clicked()
 {
-    // TODO: Implement
+    ph_fanControllerIO().setDisplayChannel(1);
 }
 
 void gui_MainWindow::on_ctrl_channel3Select_clicked()
 {
-    // TODO: Implement
+    ph_fanControllerIO().setDisplayChannel(2);
 }
 
 void gui_MainWindow::on_ctrl_channel4Select_clicked()
 {
-    // TODO: Implement
+    ph_fanControllerIO().setDisplayChannel(3);
 }
 
 void gui_MainWindow::on_ctrl_channel5Select_clicked()
 {
-    // TODO: Implement
+    ph_fanControllerIO().setDisplayChannel(4);
 }

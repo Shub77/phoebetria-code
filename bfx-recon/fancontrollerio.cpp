@@ -400,6 +400,7 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 
     /* !!!!!!!!! HACK  !!!!!!!!!!!!! */
 
+    // TODO: This is probably not needed anymore
 
     if (rawdata.length() > 1 && (unsigned char)rawdata.at(1) == 0xF4) return;
 
@@ -683,6 +684,23 @@ bool FanControllerIO::setChannelSettings(int channel,
     return true;
 }
 
+void FanControllerIO::setDisplayChannel(int channel)
+{
+    Request req;
+
+
+    req.m_category = Request::Set_DeviceSettings;
+    req.m_controlByte = (ControlByte)(TX_SetDisplayChannel_Ch0 + channel);
+
+    req.m_dataLen = 0;
+
+    req.setURB();
+
+    req.m_expectAckNak = true;
+    issueRequest(req);
+
+    m_pollNumber = 0;
+}
 
 bool FanControllerIO::setFromProfile(const FanControllerProfile& profile)
 {

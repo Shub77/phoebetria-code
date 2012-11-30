@@ -44,6 +44,12 @@ public:
 
         TX_CurrentChannel               = 0x10, /**< Current selected channel (??) */
 
+        TX_SetDisplayChannel_Ch0        = 0x20,
+        TX_SetDisplayChannel_Ch1        = 0x21,
+        TX_SetDisplayChannel_Ch2        = 0x22,
+        TX_SetDisplayChannel_Ch3        = 0x23,
+        TX_SetDisplayChannel_Ch4        = 0x24,
+
         TX_TempAndSpeed_Channel0        = 0x30, /**< OUT  Temp in F and current speed (RPM) */
         TX_TempAndSpeed_Channel1        = 0x31, /**< OUT   in F and current speed (RPM) */
         TX_TempAndSpeed_Channel2        = 0x32, /**< OUT   in F and current speed (RPM) */
@@ -226,6 +232,7 @@ public:
 
     bool setDeviceFlags(bool isCelcius, bool isAuto, bool isAudibleAlarm);
     bool setChannelSettings(int channel, unsigned thresholdF, unsigned speed);
+    void setDisplayChannel(int channel);
     bool setFromProfile(const FanControllerProfile& profile);
 
     int minProbeTemp(bool inCelcius) const
