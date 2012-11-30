@@ -291,6 +291,13 @@ bool MainDb::readChannelSpeedRamps(const QString&name,
     ok = qry.exec();
     if (!ok) { m_lastSqlError = qry.lastError(); return false; }
 
+    // Clear all ramps
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+    {
+        FanSpeedRamp ramp;
+        profile.setRamp(i, ramp);
+    }
+
     for (qry.first(); qry.isValid(); qry.next())
     {
         FanSpeedRamp ramp;
@@ -317,6 +324,7 @@ bool MainDb::readChannelSpeedRamps(const QString&name,
 
         ramp.setIsCustom(true);
         ramp.setIsModified(false);
+        ramp.setIsInitialised(true);
 
         profile.setRamp(channel, ramp);
     }
@@ -414,7 +422,7 @@ bool MainDb::writeChannelSpeedRamps(int profileId,
 
     for (int i = 0; i < FC_MAX_CHANNELS; ++i)
     {
-        if (profile.ramp(i).isCustom() || profile.ramp(i).isModified())
+        if (profile.ramp(i).isInitialised())
             ok = writeChannelSpeedRamp(profileId, i, profile.ramp(i));
         if (!ok)
             break;

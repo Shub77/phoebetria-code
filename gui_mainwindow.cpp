@@ -128,6 +128,8 @@ void gui_MainWindow::initWaitForReqChannelParams(void)
 
     EventDispatcher& ed = ph_phoebetriaApp()->dispatcher();
 
+    ui->ctrl_isSoftwareControlBtn->setEnabled(false);
+
     connect(&ed, SIGNAL(tick()),
             this, SLOT(checkForReqChannelParems()));
 
@@ -814,6 +816,11 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
     toolTip = label + "\n";
     toolTip += "Description: " + m_profileDescription;
     ui->lbl_activeProfile->setToolTip(toolTip);
+
+    /* Loading a profile resets ramps, so they need to be initialised
+       again.
+     */
+    initWaitForReqChannelParams();
 
     syncGuiCtrlsWithFanController();
 
