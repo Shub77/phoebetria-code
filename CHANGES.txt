@@ -7,6 +7,26 @@
                                 CHANGE LOG
 
 
+Version 1.2.0
+====================
+It took some time but we feel Phoebetria finally matured to a non-beta
+status.  There are two significant changes packed into this release, the
+first of which is software auto.  This feature takes the Recon's auto
+mode a step further by allowing you to setup your own fan curves and 
+unlocks the fans so that they can be controlled by any temperature probe.
+The second feature has to do with the way your profiles are saved.  We've
+moved away from .ini files to a SQLite database for greater flexibility.
+The first time you launch this version your old profiles will be imported 
+automatically.
+
+Other changes include:
+
+  Cleaning up the GUI to maximize space and make it more intuitive.  While
+in manual mode clicking the RPM button opens a window for an alternative
+way to set the RPM. Clicking the channel icon will change the Recon's
+display to show that channels settings.
+
+
 Version 1.1.1 (Beta)
 ====================
 Although this is a "point release" many changes and improvements have 
