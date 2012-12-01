@@ -159,6 +159,8 @@ public:
 
     void clearRampTemps(void);
 
+    void clearAllChannelRpmAndTemp(void);
+
 protected:
 
     void clearMinMax(void);

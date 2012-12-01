@@ -70,7 +70,8 @@ SOURCES += main.cpp \
     gui_softwareautosetup.cpp \
     softwareauto/fanramp.cpp \
     gui_profiles.cpp \
-    softwareauto/softwareauto.cpp
+    softwareauto/softwareauto.cpp \
+    gui_setmanualrpm.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -94,13 +95,15 @@ HEADERS  += gui_mainwindow.h \
     softwareauto/fanramp.h \
     gui_profiles.h \
     softwareauto/softwareauto.h \
-    main.h
+    main.h \
+    gui_setmanualrpm.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
     gui_preferences.ui \
     gui_softwareautosetup.ui \
-    gui_profiles.ui
+    gui_profiles.ui \
+    gui_setmanualrpm.ui
 
 #-------------------------------------------------
 # Config for the HID API library

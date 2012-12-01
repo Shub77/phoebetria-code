@@ -114,6 +114,8 @@ private slots:
 
     void on_ctrl_isSoftwareControlBtn_toggled(bool checked);
 
+    void askUserForManualSpeed(int channel);
+
     void on_ctrl_channel1Select_clicked();
 
     void on_ctrl_channel2Select_clicked();
@@ -123,6 +125,16 @@ private slots:
     void on_ctrl_channel4Select_clicked();
 
     void on_ctrl_channel5Select_clicked();
+
+    void on_ctrl_channel1speed_clicked();
+
+    void on_ctrl_channel2speed_clicked();
+
+    void on_ctrl_channel3speed_clicked();
+
+    void on_ctrl_channel4speed_clicked();
+
+    void on_ctrl_channel5speed_clicked();
 
 private:
 
@@ -167,7 +179,7 @@ private:
 
     // Convenience pointers to controls
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
-    QLineEdit* m_ctrls_currentRPM[FC_MAX_CHANNELS];
+    QPushButton* m_ctrls_currentRPM[FC_MAX_CHANNELS];
     QLabel* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];

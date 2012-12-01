@@ -289,6 +289,12 @@ void FanControllerData::updateMinMax_temp(int channel, int t)
     }
 }
 
+void FanControllerData::clearAllChannelRpmAndTemp(void)
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+        m_channelSettings[i].clearRpmAndTemp();
+}
+
 void FanControllerData::updateMinMax_rpm(int channel, int rpm)
 {
     FanChannelData& cd = m_channelSettings[channel];

@@ -70,6 +70,8 @@ public:
 
     inline bool reqRampParamsAreSet(void) const;
 
+    inline void clearRpmAndTemp(void);
+
 private:
     int m_maxRPM;
     int m_alarmTemp;
@@ -234,6 +236,13 @@ bool FanChannelData::isUndefinedValue_manualRPM(int value)
 bool FanChannelData::reqRampParamsAreSet(void) const
 {
     return isSet_alarmTemp() && isSet_maxRpm();
+}
+
+void FanChannelData::clearRpmAndTemp(void)
+{
+    m_lastTemp = temperatureNotSetValue;
+    m_lastRPM = rpmNotSetValue;
+    m_manualRPM = rpmNotSetValue;
 }
 
 #endif // FANCHANNELDATA_H

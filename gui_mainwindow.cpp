@@ -31,7 +31,9 @@
 #include "qglobal.h"
 #include "gui_softwareautosetup.h"
 #include "gui_profiles.h"
+#include "gui_setmanualrpm.h"
 #include "maindb.h"
+
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -262,6 +264,7 @@ void gui_MainWindow::enableSpeedControls(bool enabled)
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_ctrls_RpmSliders[i]->setEnabled(enabled);
+        m_ctrls_currentRPM[i]->setEnabled(enabled);
     }
 }
 
@@ -320,6 +323,8 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 
     const FanChannelData& fcs = fcdata().fanChannelSettings(channel);
 
+    if (RPM == -1)
+        return;
 
     QString RpmText;
     RpmText = RPM == 0 ? "OFF" : (RPM == 65500 ? QString::number(fcdata().lastRPM(channel)) :
@@ -346,8 +351,8 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 
         bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
 
-        int newValue = !fcdata().isAuto() && RPM == 65500
-                        ? m_ctrls_RpmSliders[channel]->maximum()
+        int newValue = RPM == 65500
+                        ? 100
                         : ceil(newRPM*100.0/ch_maxRPM);
 
         m_ctrls_RpmSliders[channel]->setValue(newValue);
@@ -429,8 +434,8 @@ void gui_MainWindow::updateRpmIndicator(int channel)
         QString tooltip;
         if (fcdata().manualRPM(channel) == 65500)
         {
-            tooltip = QString(tr("Target RPM = %1"))
-                    .arg(fcdata().lastRPM(channel));
+            tooltip = QString(tr("Target RPM = MAX"));
+
         }
         else
         {
@@ -885,9 +890,12 @@ void gui_MainWindow::on_ctrl_isManualBtn_toggled(bool checked)
                        fcdata().isAudibleAlarm()
                       );
 
-    enableSpeedControls(!isAuto);
-    updateAllSpeedCtrls();
-    updateRpmIndicators();
+    if (!isAuto)
+    {
+        fcdata().clearAllChannelRpmAndTemp();
+        ph_resetSchedulerElapsedTime();
+    }
+    syncGuiCtrlsWithFanController();
 }
 
 void gui_MainWindow::on_ctrl_isAudibleAlarmBtn_toggled(bool checked)
@@ -948,4 +956,63 @@ void gui_MainWindow::on_ctrl_channel4Select_clicked()
 void gui_MainWindow::on_ctrl_channel5Select_clicked()
 {
     ph_fanControllerIO().setDisplayChannel(4);
+}
+
+
+void gui_MainWindow::askUserForManualSpeed(int channel)
+{
+    gui_setManualRpm dlg(this);
+
+    dlg.setChannelLabel(channel);
+    dlg.setCurrentRpm(fcdata().manualRPM(channel));
+
+    dlg.exec();
+
+    if (dlg.accepted())
+    {
+        int val;
+        FanControllerIO* fc = &ph_fanControllerIO();
+
+        if (dlg.useMaxRpm())
+        {
+            val = 65500;
+        }
+        else
+        {
+            val = dlg.getUserValue();
+        }
+        fcdata().clearAllChannelRpmAndTemp();
+        fcdata().updateManualRPM(channel, val, false);
+        updateSpeedControl(channel, val, true);
+        fc->setChannelSettings(channel, fcdata().alarmTemp(channel), val);
+
+        ph_resetSchedulerElapsedTime();
+        syncGuiCtrlsWithFanController();
+    }
+}
+
+void gui_MainWindow::on_ctrl_channel1speed_clicked()
+{
+    askUserForManualSpeed(0);
+}
+
+
+void gui_MainWindow::on_ctrl_channel2speed_clicked()
+{
+    askUserForManualSpeed(1);
+}
+
+void gui_MainWindow::on_ctrl_channel3speed_clicked()
+{
+    askUserForManualSpeed(2);
+}
+
+void gui_MainWindow::on_ctrl_channel4speed_clicked()
+{
+    askUserForManualSpeed(3);
+}
+
+void gui_MainWindow::on_ctrl_channel5speed_clicked()
+{
+    askUserForManualSpeed(4);
 }
