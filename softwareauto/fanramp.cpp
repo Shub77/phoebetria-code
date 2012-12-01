@@ -21,6 +21,7 @@
 #include "fancontrollerdata.h"
 
 FanSpeedRampParameters::FanSpeedRampParameters()
+    : fixedRpm(false)
 {}
 
 int FanSpeedRampParameters::temperatureToRpm(int temperatureF, int maxRpm) const
