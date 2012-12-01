@@ -96,7 +96,7 @@ void gui_MainWindow::syncGuiCtrlsWithFanController(void)
     FanControllerData& fcd = fcdata();
 
     updateSpeedControlTooltips();
-    updateAllSpeedCtrls();
+    updateAllSpeedCtrls(!fcdata().isAuto() && fcdata().isSoftwareAuto());
     updateAllAlarmCtrls(fcd.isCelcius());
     updateToggleControls();
     enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
@@ -271,6 +271,10 @@ void gui_MainWindow::updateSpeedControlTooltip(int channel)
 
     QString tooltip;
 
+    tooltip += tr("Current RPM: ");
+    tooltip += QString::number(fcdata().lastRPM(channel));
+    tooltip += "\n";
+
     tooltip += tr("Min Temp: ");
     tooltip += fcdata().temperatureString(
                    fcdata().minTemp(channel),
@@ -318,13 +322,16 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 
 
     QString RpmText;
-    RpmText = RPM == 0 ? "OFF" : QString::number(RPM);
+    RpmText = RPM == 0 ? "OFF" : (RPM == 65500 ? QString::number(fcdata().lastRPM(channel)) :
+                                                 QString::number(RPM));
     m_ctrls_currentRPM[channel]->setText(RpmText);
 
-    if (updateSlider)
+    if (updateSlider || RPM == 65500)
     {
         int newRPM;
-        if (!fcdata().isAuto() && fcs.isSet_manualRPM())
+        if (!fcdata().isAuto()
+                && fcs.isSet_manualRPM()
+                && fcs.manualRPM() != 65500)
         {
             newRPM = fcs.manualRPM();
         }
@@ -338,9 +345,16 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
         if (ch_maxRPM < 1) ch_maxRPM = 1;
 
         bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
-        m_ctrls_RpmSliders[channel]->setValue(ceil(newRPM*100.0/ch_maxRPM));
+
+        int newValue = !fcdata().isAuto() && RPM == 65500
+                        ? m_ctrls_RpmSliders[channel]->maximum()
+                        : ceil(newRPM*100.0/ch_maxRPM);
+
+        m_ctrls_RpmSliders[channel]->setValue(newValue);
         m_ctrls_RpmSliders[channel]->blockSignals(sb);
     }
+
+    updateSpeedControlTooltip(channel);
 }
 
 void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
@@ -379,11 +393,12 @@ void gui_MainWindow::updateAllAlarmCtrls(bool isCelcius)
     }
 }
 
-void gui_MainWindow::updateAllSpeedCtrls(void)
+void gui_MainWindow::updateAllSpeedCtrls(bool useManualRpm)
 {
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
-        updateSpeedControl(i, fcdata().lastRPM(i));
+        int rpm = useManualRpm ? fcdata().manualRPM(i) : fcdata().lastRPM(i);
+        updateSpeedControl(i, rpm);
     }
 }
 
@@ -400,18 +415,30 @@ void gui_MainWindow::updateRpmIndicator(int channel)
     {
         if (fcdata().isManualRpmSet(channel)
                 && fcdata().lastRPM(channel) != fcdata().manualRPM(channel)
-                && fcdata().manualRPM(channel) != 0)
+                && fcdata().manualRPM(channel) != 0
+                && fcdata().manualRPM(channel) != 65500)
         {
             style = "background-image: url(:/Images/bar_yellow.png);margin:0px;";
-                    }
+        }
         else
         {
             style = "background-image: url(:/Images/bar_green.png);margin:0px;";
 
         }
-        m_ctrls_rpmIndicator[channel]->setToolTip(QString(tr("Target RPM = %1"))
-                                                  .arg(fcdata().manualRPM(channel))
-                                                  );
+
+        QString tooltip;
+        if (fcdata().manualRPM(channel) == 65500)
+        {
+            tooltip = QString(tr("Target RPM = %1"))
+                    .arg(fcdata().lastRPM(channel));
+        }
+        else
+        {
+            tooltip = QString(tr("Target RPM = %1"))
+                    .arg(fcdata().manualRPM(channel));
+
+        }
+        m_ctrls_rpmIndicator[channel]->setToolTip(tooltip);
     }
 
     m_ctrls_rpmIndicator[channel]->setStyleSheet(style);
@@ -822,6 +849,8 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
     /* Loading a profile resets ramps, so they need to be initialised
        again.
      */
+    fcdata().clearRampTemps();
+    ph_resetSchedulerElapsedTime();
     initWaitForReqChannelParams();
 
     syncGuiCtrlsWithFanController();
@@ -881,11 +910,17 @@ void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
     dlg.init(&fcdata());
 
     dlg.exec();
+
+    fcdata().clearRampTemps();
+    ph_resetSchedulerElapsedTime();
+    syncGuiCtrlsWithFanController();
 }
 
 void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)
 {
     setSoftwareAutoOn(checked);
+    fcdata().clearRampTemps();
+    ph_resetSchedulerElapsedTime();
     syncGuiCtrlsWithFanController();
 }
 

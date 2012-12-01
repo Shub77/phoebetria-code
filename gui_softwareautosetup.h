@@ -42,6 +42,7 @@ public:
 protected:
 
     void setupAxes(const FanControllerData & fcdata, int channel);
+    void setupRpmAxis_currentRamp(void);
     void setupTemperatureCtrlLimits(const FanControllerData & fcdata);
     void setupSpeedCtrlLimits(int maxRpm);
     void setupChannelComboBox(void);

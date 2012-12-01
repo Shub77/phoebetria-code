@@ -68,7 +68,12 @@ void gui_SoftwareAutoSetup::setupAxes(const FanControllerData& fcdata, int chann
     int maxProbeTemp = fc->maxProbeTemp(fcdata.isCelcius())+10;
 
     ui->ctrl_plot->xAxis->setRange(minProbeTemp, maxProbeTemp);
-    ui->ctrl_plot->yAxis->setRange(0, fcdata.maxRPM(channel) + 100);
+    ui->ctrl_plot->yAxis->setRange(0, m_ramp[channel].maxUsableRpm() + 100);
+}
+
+void gui_SoftwareAutoSetup::setupRpmAxis_currentRamp(void)
+{
+    ui->ctrl_plot->yAxis->setRange(0, m_ramp[m_currChannel].maxUsableRpm()+100);
 }
 
 void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(
@@ -98,6 +103,10 @@ void gui_SoftwareAutoSetup::setupTemperatureCtrlLimits(
 void gui_SoftwareAutoSetup::setupSpeedCtrlLimits(int maxRpm)
 {
     //int min = m_ramp[m_currChannel].snapToStepSize(maxRpm * 2/3);
+
+    //maxRpm += 5000; // Adding some room for user adjustment
+    maxRpm = 65535;
+
     ui->ctrl_minRpm->setMaximum(maxRpm);
 
     ui->ctrl_rampStartSpeed->setMaximum(maxRpm);
@@ -280,6 +289,8 @@ void gui_SoftwareAutoSetup::on_ctrl_rampEndSpeed_valueChanged(int arg1)
 {
     if (m_ignoreSignals) return;
     m_ramp[m_currChannel].setSpeedRampEnd(arg1);
+    m_ramp[m_currChannel].setMaxUsableRpm(arg1);
+    setupRpmAxis_currentRamp();
     regenerateCurve();
 }
 

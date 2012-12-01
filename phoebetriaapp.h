@@ -36,6 +36,8 @@
 
 #define ph_shutdown() (ph_phoebetriaApp()->shutdown())
 
+#define ph_resetSchedulerElapsedTime() \
+    ( ph_phoebetriaApp()->resetScheduler() )
 
 /*
     By the time PhoebetriaApp::shutdown() is called, the global timer has
@@ -78,6 +80,9 @@ public:
         { return m_dispatcher.isShuttingDown(); }
 
     bool shutdown(void);
+
+    void resetScheduler(void)
+        { m_dispatcher.resetElapsedTime(); }
 
 private:
     static FanControllerIO m_fanControllerIO;

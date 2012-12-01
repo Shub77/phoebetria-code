@@ -157,10 +157,11 @@ public:
     inline int toCurrTempScale(int tF) const;
     inline double toCurrTempScaleReal(int tF) const;
 
+    void clearRampTemps(void);
+
 protected:
 
     void clearMinMax(void);
-    void clearRampTemps(void);
     void clearRampTemp(int channel);
 
     void updateMinMax_temp(int channel, int t);

@@ -297,7 +297,7 @@ void FanControllerData::updateMinMax_rpm(int channel, int rpm)
         cd.setMinLoggedRPM(rpm);
         emit minLoggedRPM_changed(channel, rpm);
     }
-    if (cd.maxLoggedRPM() < rpm || !cd.isSet_maxLoggedRPM())
+    if ((cd.maxLoggedRPM() < rpm || !cd.isSet_maxLoggedRPM()) && rpm != 65500)
     {
         cd.setMaxLoggedRPM(rpm);
         emit maxLoggedRPM_changed(channel, rpm);

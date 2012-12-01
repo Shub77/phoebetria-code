@@ -89,6 +89,8 @@ public:
     unsigned intervalToTick(unsigned interval) const;
     unsigned tickToInterval(unsigned tick) const;
 
+    inline void resetElapsedTime(void);
+
 protected:
 
     int initTasks(void);
@@ -114,5 +116,10 @@ public slots:
 
     void onTimer(void);
 };
+
+void EventDispatcher::resetElapsedTime(void)
+{
+    m_elapsedTicks = 0;
+}
 
 #endif // PHOEBETRIA_DISPATCHER_H
