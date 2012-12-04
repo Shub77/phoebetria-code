@@ -33,9 +33,15 @@ FanControllerData::FanControllerData(QObject *parent)
       m_lastProfileId(-1)
 {
     clearRampTemps();
+
+
 }
 
-
+void FanControllerData::connectSignals(void)
+{
+    connect(&ph_dispatcher(), SIGNAL(refresh_critical()),
+            this, SLOT(onReset()));
+}
 
 void FanControllerData::syncWithProfile(const FanControllerProfile& fcp)
 {
@@ -422,3 +428,14 @@ void FanControllerData::initAllRamps(void)
 
     m_rampsReady = true;
 }
+
+void FanControllerData::onReset(void)
+{
+    clearMinMax();
+    clearAllChannelRpmAndTemp();
+    clearRampTemps();
+
+    qDebug() << "FanControllerData::onReset() called";
+}
+
+

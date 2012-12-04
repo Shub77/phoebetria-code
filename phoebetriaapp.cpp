@@ -50,6 +50,8 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     m_fanControllerIO.connect();            // Connect to the IO device
     m_fanControllerIO.connectSignals();
 
+    m_fanControllerIO.fanControllerData().connectSignals();
+
 }
 
 

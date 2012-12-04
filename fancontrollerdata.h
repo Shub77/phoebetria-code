@@ -33,6 +33,8 @@ class FanControllerData : public QObject
 public:
     explicit FanControllerData(QObject *parent = 0);
 
+    void connectSignals(void);
+
     const QString& name(void) const;
 
     void syncWithProfile(const FanControllerProfile& fcp);
@@ -202,6 +204,11 @@ signals:
     void temperatureScale_changed(bool isCelcius);
     void controlMode_changed (bool isAuto);
     void alarmIsAudible_changed (bool isAudibleAlarm);
+
+public slots:
+
+    void onReset(void);
+
 };
 
 int FanControllerData::probeTemp(int probe) const
@@ -218,5 +225,6 @@ double FanControllerData::toCurrTempScaleReal(int tF) const
 {
     return isCelcius() ? toCelciusReal(tF) : tF;
 }
+
 
 #endif // FANCONTROLLERDATA_H

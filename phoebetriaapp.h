@@ -31,6 +31,7 @@
 #define ph_phoebetriaApp() (static_cast<PhoebetriaApp*> qApp)
 #define ph_fanControllerData() (ph_phoebetriaApp()->fcd())
 #define ph_fanControllerIO() (ph_phoebetriaApp()->fanControllerIO())
+#define ph_dispatcher() (ph_phoebetriaApp()->dispatcher())
 
 #define ph_isShuttingDown() (ph_phoebetriaApp()->isShuttingDown())
 
