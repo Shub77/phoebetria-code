@@ -20,7 +20,6 @@
 
 #include "phoebetriaapp.h"
 
-
 /*************************************************************************/
 /*!
     \class  EventDispatcher
@@ -84,6 +83,7 @@ EventDispatcher::EventDispatcher(QObject *parent) :
     m_elapsedTicks = 0;
     m_isStarted = false;
     m_isShuttingDown = false;
+    m_timeLastCalled = QDateTime::currentDateTime();
 }
 
 /*! Starts the dispatcher.
@@ -221,15 +221,35 @@ void EventDispatcher::onTimer(void)
         emit tick();        // Alternative signal to task(Tick)
         emit task(Tick);
         emit task(CheckForDeviceData);
-    }
 
-    for (int i = 0; i < m_tasks.size(); ++i)
-    {
-        const Task& item = m_tasks.at(i);
-        if (m_elapsedTicks % item.interval() == 0)
+        unsigned long msSinceLastCalled;
+
+        msSinceLastCalled = QDateTime::currentDateTime().toMSecsSinceEpoch()
+                            - m_timeLastCalled.toMSecsSinceEpoch();
+
+        if (msSinceLastCalled > 30000)
         {
-            emit task(item.taskId());
+            if (msSinceLastCalled > 120000)
+            {
+                emit refresh_critical();
+            }
+            else
+            {
+                emit refresh_low();
+            }
+            m_elapsedTicks = 0; // force the loop below to emit all tasks
         }
+
+        for (int i = 0; i < m_tasks.size(); ++i)
+        {
+            const Task& item = m_tasks.at(i);
+            if (m_elapsedTicks % item.interval() == 0)
+            {
+                emit task(item.taskId());
+            }
+        }
+
+        m_timeLastCalled = QDateTime::currentDateTime();
     }
 
     ++m_elapsedTicks;

@@ -20,6 +20,7 @@
 #include <QObject>
 #include <QList>
 #include <QTimer>
+#include <QDateTime>
 
 class PhoebetriaApp;    // fwd decl
 
@@ -57,7 +58,6 @@ public:
         LogData
 
     } TaskId; //!< Signal "types" that can be issued.
-
 
     class Task
     {
@@ -107,10 +107,15 @@ private:
     bool m_isStarted;
     bool m_isShuttingDown;
 
+    QDateTime m_timeLastCalled;
+
 signals:
 
     void task(EventDispatcher::TaskId task);
     void tick(void);
+
+    void refresh_critical(void);
+    void refresh_low(void);
 
 public slots:
 
