@@ -20,6 +20,8 @@
 #include <QObject>
 #include <QQueue>
 
+#include <QDateTime>        // For debugging
+
 #include "device-io.h"
 #include "fanprofiles.h"
 #include "fancontrollerdata.h"
@@ -300,6 +302,31 @@ private:
     FanControllerData m_fanControllerData;
 
     HandshakeQueue m_handshakeQueue;
+
+
+
+
+    // For Debugging
+
+    QDateTime m_lastPollTime;
+
+    QDateTime m_pollTime_maxDelta_start;
+    QDateTime m_pollTime_maxDelta_end;
+
+    unsigned long m_pollTime_maxDelta;
+
+    unsigned long m_maxQueueSize;
+
+public:
+
+    unsigned long maxPollDelta(void) const
+    { return m_pollTime_maxDelta; }
+
+    unsigned long maxReqQueueSize(void) const
+    { return m_maxQueueSize; }
+
+    // End For Debugging
+
 };
 
 void FanControllerIO::clearRequestQueue(void)

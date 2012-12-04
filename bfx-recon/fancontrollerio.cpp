@@ -305,7 +305,10 @@ unsigned char FanControllerIO::calcChecksum(
 FanControllerIO::FanControllerIO(QObject *parent) :
     QObject(parent),
     m_pollNumber(0),
-    m_fanControllerData()
+    m_fanControllerData(),
+    m_lastPollTime(QDateTime::currentDateTime()),
+    m_pollTime_maxDelta(0),
+    m_maxQueueSize(0)
 {
 }
 
@@ -348,6 +351,24 @@ void FanControllerIO::onDispatcherSignal(EventDispatcher::TaskId taskId)
     if (!isConnected()) return;
 
     if (signalsBlocked()) return;
+
+    // For debugging
+    {
+        QDateTime now(QDateTime::currentDateTime());
+        unsigned long delta;
+        delta = now.toMSecsSinceEpoch() - m_lastPollTime.toMSecsSinceEpoch();
+        if (delta > m_pollTime_maxDelta)
+        {
+            m_pollTime_maxDelta = delta;
+            m_pollTime_maxDelta_start = m_lastPollTime;
+            m_pollTime_maxDelta_end = now;
+        }
+        m_lastPollTime = now;
+
+        if (m_requestQueue.size() > m_maxQueueSize)
+            m_maxQueueSize = m_requestQueue.size();
+    }
+
 
     if (taskId == EventDispatcher::Tick)
     {

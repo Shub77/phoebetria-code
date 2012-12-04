@@ -1016,3 +1016,20 @@ void gui_MainWindow::on_ctrl_channel5speed_clicked()
 {
     askUserForManualSpeed(4);
 }
+
+void gui_MainWindow::on_pushButton_clicked()
+{
+    QMessageBox msg;
+
+    msg.setText(QString("Max poll time (ms): %1\n"
+                        "Max req queue size: %2")
+                .arg(ph_fanControllerIO().maxPollDelta())
+                .arg(ph_fanControllerIO().maxReqQueueSize())
+                );
+    msg.exec();
+}
+
+void gui_MainWindow::on_ctrl_syncGui_clicked()
+{
+    syncGuiCtrlsWithFanController();
+}

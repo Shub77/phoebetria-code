@@ -136,6 +136,20 @@
                </property>
               </spacer>
              </item>
+             <item>
+              <widget class="QPushButton" name="pushButton">
+               <property name="text">
+                <string>PushButton</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="ctrl_syncGui">
+               <property name="text">
+                <string>Sync UI</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>

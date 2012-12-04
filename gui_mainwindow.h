@@ -136,6 +136,10 @@ private slots:
 
     void on_ctrl_channel5speed_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_ctrl_syncGui_clicked();
+
 private:
 
     void initCtrlArrays(void);
