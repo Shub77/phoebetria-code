@@ -98,7 +98,7 @@ void gui_MainWindow::syncGuiCtrlsWithFanController(void)
     FanControllerData& fcd = fcdata();
 
     updateSpeedControlTooltips();
-    updateAllSpeedCtrls(!fcdata().isAuto() && fcdata().isSoftwareAuto());
+    updateAllSpeedCtrls(!fcdata().isAuto());
     updateAllAlarmCtrls(fcd.isCelcius());
     updateToggleControls();
     enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
