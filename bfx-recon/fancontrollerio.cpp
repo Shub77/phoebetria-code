@@ -419,14 +419,6 @@ void FanControllerIO::onRawData(QByteArray rawdata)
              << toHexString((const unsigned char*)rawdata.constData(), rawdata.length());
 #endif
 
-    /* !!!!!!!!! HACK  !!!!!!!!!!!!! */
-
-    // TODO: This is probably not needed anymore
-
-    if (rawdata.length() > 1 && (unsigned char)rawdata.at(1) == 0xF4) return;
-
-    /* End Hack*/
-
     inputParsed = parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
 
     if (!inputParsed)
