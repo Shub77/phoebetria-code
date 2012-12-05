@@ -207,7 +207,9 @@ signals:
 
 public slots:
 
+
     void onReset(void);
+    void softReset(void);
 
 };
 

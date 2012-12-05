@@ -179,6 +179,12 @@ private:
 
     void userClickedAlarmTempCtrl(int channel);
 
+    bool loadProfile(const QString& profileName);
+    bool saveProfile(const QString& profileName, const QString& description);
+
+    void updateProfileDisplay(const QString& profileName,
+                              const QString& description);
+
     Ui::gui_MainWindow *ui;
 
     // Convenience pointers to controls

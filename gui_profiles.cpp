@@ -25,7 +25,8 @@
 
 gui_Profiles::gui_Profiles(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::gui_Profiles)
+    ui(new Ui::gui_Profiles),
+    m_action(0)
 {
     ui->setupUi(this);
 
@@ -76,47 +77,6 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
     ui->ctrl_profileDescription->setPlainText(m_profileDescription);
 }
 
-void gui_Profiles::on_ctrl_SaveProfile_clicked()
-{
-    m_profileName = ui->ctrl_profileName->text().trimmed();
-    m_profileDescription = ui->ctrl_profileDescription->toPlainText();
-
-    bool bs1 = this->blockSignals(true);
-    bool bs2 = fcdata().blockSignals(true);
-
-    if (m_profileName.trimmed().isEmpty())
-    {
-        QMessageBox::critical(
-                    this,
-                    tr("Invalid profile name"),
-                    tr("The profile name you have entered is\n"
-                       " blank, please enter a valid name!")
-                    );
-        return;
-    }
-
-    FanControllerProfile fcp(m_profileName, m_profileDescription);
-    fcp.setFromCurrentData(fcdata());
-
-    this->blockSignals(bs1);
-    fcdata().blockSignals(bs2);
-
-    if (fcp.save(m_profileName))
-    {
-        getProfileList();
-        this->close();
-    }
-    else
-    {
-        QMessageBox::critical(
-                    this,
-                    tr("Save failed"),
-                    tr("An error occurred saving the profile.\n"
-                       "The profile has NOT been saved!")
-                    );
-        return;
-    }
-}
 
 void gui_Profiles::on_ctrl_EraseProfile_clicked()
 {
@@ -159,6 +119,7 @@ void gui_Profiles::on_ctrl_EraseProfile_clicked()
                 ui->ctrl_profileDescription->clear();
                 m_profileName.clear();
                 m_profileDescription.clear();
+                m_action |= RefreshProfileDisplay;
                 return;
             };
             break;
@@ -166,11 +127,6 @@ void gui_Profiles::on_ctrl_EraseProfile_clicked()
             break;
      }
 
-}
-
-FanControllerData& gui_Profiles::fcdata(void) const
-{
-    return ph_fanControllerData();
 }
 
 void gui_Profiles::on_ctrl_LoadProfile_clicked()
@@ -187,24 +143,31 @@ void gui_Profiles::on_ctrl_LoadProfile_clicked()
                     .arg(ui->ctrl_profileName->text())
                     );
         return;
-
     }
 
-    bool success = false;
+    m_action = LoadProfile;
+    this->accept();
+}
 
-    if (fcp.load(m_profileName))
+void gui_Profiles::on_ctrl_SaveProfile_clicked()
+{
+
+    m_profileName = ui->ctrl_profileName->text().trimmed();
+    m_profileDescription = ui->ctrl_profileDescription->toPlainText();
+
+    if (m_profileName.trimmed().isEmpty())
     {
-        FanControllerIO* fc = &ph_fanControllerIO();
-
-        if (fc->setFromProfile(fcp))
-        {
-            fcdata().syncWithProfile(fcp);
-            success = true;
-            this->accept();
-        }
-        else
-        {
-            // TODO: Display error message
-        }
+        QMessageBox::critical(
+                    this,
+                    tr("Invalid profile name"),
+                    tr("The profile name you have entered is\n"
+                       " blank, please enter a valid name!")
+                    );
+        return;
     }
+
+    // TODO FIXME Check that the profile name is not reserved
+
+    m_action = SaveProfile;
+    this->accept();
 }

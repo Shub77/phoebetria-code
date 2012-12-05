@@ -27,8 +27,17 @@ class gui_Profiles;
 class gui_Profiles : public QDialog
 {
     Q_OBJECT
-    
+
 public:
+
+    typedef enum
+    {
+        LoadProfile             = 1U << 0,
+        SaveProfile             = 1U << 1,
+        RefreshProfileDisplay   = 1U << 2
+    } Action;
+
+    // Constructors/Destructors
     explicit gui_Profiles(QWidget *parent = 0);
     ~gui_Profiles();
 
@@ -37,8 +46,10 @@ public:
     bool saveProfile(void);
     bool eraseProfile(void);
 
-    const QString& selectedName(void) const;
-    const QString& selectedDescription(void) const;
+    inline const QString& selectedName(void) const;
+    inline const QString& selectedDescription(void) const;
+
+    inline unsigned action(void) const;
     
 private slots:
     void on_ctrl_profileList_itemClicked();
@@ -58,18 +69,22 @@ private:
     QString m_profileDescription;
     QString m_profileName;
 
-    FanControllerData& fcdata(void) const;
+    unsigned m_action;
 };
 
-inline const QString& gui_Profiles::selectedName(void) const
+const QString& gui_Profiles::selectedName(void) const
 {
     return m_profileName;
 }
 
-inline const QString& gui_Profiles::selectedDescription(void) const
+const QString& gui_Profiles::selectedDescription(void) const
 {
     return m_profileDescription;
 }
 
+inline unsigned gui_Profiles::action(void) const
+{
+    return m_action;
+}
 
 #endif // GUI_PROFILES_H

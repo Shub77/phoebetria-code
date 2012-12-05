@@ -162,6 +162,9 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
         if (emitSignal) emit temperature_changed(channel, to);
 
         updateMinMax_temp(channel, to);
+
+        if (!cd.isSet_lastTemp())
+            qDebug() << "Last temp not set";
     }
 
     doSoftwareAuto(channel, to);
@@ -262,7 +265,7 @@ void FanControllerData::clearMinMax(void)
     {
         FanChannelData& cd = m_channelSettings[i];
         cd.setMinTemp(FanChannelData::minLoggedTempNotSetValue);
-        cd.setMaxTemp(FanChannelData::minLoggedTempNotSetValue);
+        cd.setMaxTemp(FanChannelData::maxLoggedTempNotSetValue);
         cd.setMinLoggedRPM(FanChannelData::rpmNotSetValue);
         cd.setMaxLoggedRPM(FanChannelData::rpmNotSetValue);
     }
@@ -435,7 +438,13 @@ void FanControllerData::onReset(void)
     clearAllChannelRpmAndTemp();
     clearRampTemps();
 
-    qDebug() << "FanControllerData::onReset() called";
+    //qDebug() << "FanControllerData::onReset() called";
+}
+
+void FanControllerData::softReset(void)
+{
+    clearAllChannelRpmAndTemp();
+    clearRampTemps();
 }
 
 

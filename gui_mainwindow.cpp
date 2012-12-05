@@ -837,29 +837,98 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 
     profileDlg->exec();
 
-    // Need to update controls in case a new profile was loaded
-    syncGuiCtrlsWithFanController();
+    bool updatePD = false;
 
-    QString m_profileName = profileDlg->selectedName();
-    QString m_profileDescription = profileDlg->selectedDescription();
+    if (profileDlg->action() & gui_Profiles::LoadProfile)
+    {
+        if (loadProfile(profileDlg->selectedName()))
+        {
+            fcdata().softReset();
+            ph_resetSchedulerElapsedTime();
+            initWaitForReqChannelParams();
+            syncGuiCtrlsWithFanController();
+            updatePD = true;
+        }
+    }
+    else if (profileDlg->action() & gui_Profiles::SaveProfile)
+    {
+        if (!saveProfile(profileDlg->selectedName(),
+                        profileDlg->selectedDescription()))
+        {
+            QMessageBox::critical(
+                        this,
+                        tr("Save failed"),
+                        tr("An error occurred saving the profile.\n"
+                           "The profile has NOT been saved!")
+                        );
+        }
+        else
+        {
+            updatePD = true;
+        }
+    }
+    else if (profileDlg->action() & gui_Profiles::RefreshProfileDisplay)
+    {
+        updatePD = true;
+    }
+
+    if (updatePD)
+    {
+        updateProfileDisplay(profileDlg->selectedName(),
+                             profileDlg->selectedDescription());
+    }
+}
+
+bool gui_MainWindow::loadProfile(const QString& profileName)
+{
+    FanControllerProfile fcp;
+    bool r = fcp.load(profileName);
+
+    if (r)
+    {
+        FanControllerIO* fc = &ph_fanControllerIO();
+
+        if (fc->setFromProfile(fcp))
+        {
+            fcdata().syncWithProfile(fcp);
+        }
+        else
+        {
+            // TODO: Display error message
+
+            r = false;
+        }
+    }
+
+    return r;
+}
+
+bool gui_MainWindow::saveProfile(const QString& profileName,
+                                 const QString& description)
+{
+
+    bool bs = fcdata().blockSignals(true);
+
+    FanControllerProfile fcp(profileName, description);
+
+    fcp.setFromCurrentData(fcdata());
+
+    fcdata().blockSignals(bs);
+
+    return fcp.save(profileName);
+}
+
+void gui_MainWindow::updateProfileDisplay(const QString& profileName,
+                                          const QString& description)
+{
     QString label;
     QString toolTip;
 
-    label = "Profile: " + m_profileName;
+    label = "Profile: " + profileName;
     ui->lbl_activeProfile->setText(label);
     toolTip = label + "\n";
-    toolTip += "Description: " + m_profileDescription;
+    toolTip += "Description: " + description;
     ui->lbl_activeProfile->setToolTip(toolTip);
-
-    /* Loading a profile resets ramps, so they need to be initialised
-       again.
-     */
-    fcdata().clearRampTemps();
-    ph_resetSchedulerElapsedTime();
-    initWaitForReqChannelParams();
-
-    syncGuiCtrlsWithFanController();
-
 }
 
 void gui_MainWindow::on_ctrl_tempScaleToggleBtn_toggled(bool checked)
