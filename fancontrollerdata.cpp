@@ -193,7 +193,8 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
     int rDelta = abs(m_rTemps[channel] - tempF);
     // if temperature has changed by 2 or more degrees F
     // FIXME: TODO: Make user adjustable
-    if (rDelta >= 2 || m_rTemps[channel] == FC_RTEMP_NOTSET)
+    if (rDelta >= 2 || m_rTemps[channel] == FC_RTEMP_NOTSET
+            || !cd.isSet_manualRPM())
     {
 
         int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel]);
@@ -201,7 +202,8 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
 
         if (newRpm == -1) return;   // Do nothing if ramp not initialised
 
-        if (newRpm != currRpm || m_rTemps[channel] == FC_RTEMP_NOTSET)
+        if (newRpm != currRpm || m_rTemps[channel] == FC_RTEMP_NOTSET
+                || !cd.isSet_manualRPM())
         {
             updateMinMax_rpm(channel, newRpm);
             m_rTemps[channel] = tempF; // Save tF for next time
