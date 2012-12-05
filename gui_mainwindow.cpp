@@ -439,8 +439,15 @@ void gui_MainWindow::updateRpmIndicator(int channel)
         }
         else
         {
+            int targetRpm = fcdata().manualRPM(channel);
+            QString targetString;
+            if (targetRpm == -1)
+                targetString = "?";
+            else
+                targetString = QString::number(targetRpm);
+
             tooltip = QString(tr("Target RPM = %1"))
-                    .arg(fcdata().manualRPM(channel));
+                    .arg(targetString);
 
         }
         m_ctrls_rpmIndicator[channel]->setToolTip(tooltip);
