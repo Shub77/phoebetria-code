@@ -33,8 +33,6 @@ FanControllerData::FanControllerData(QObject *parent)
       m_lastProfileId(-1)
 {
     clearRampTemps();
-
-
 }
 
 void FanControllerData::connectSignals(void)
@@ -147,14 +145,6 @@ void FanControllerData::updateManualRPM(int channel, int to, bool emitSignal)
 
 void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 {
-    /* !!!!!!!!! TODO: HOW? The range is 0x00 to 0xFF */
-
-    /* Sometimes -'ve temperatures are sent from the device (that are
-     * incorrect). The specs page for the recon show 0-100C as the probes'
-     * range, so ignore these -'ve values.
-     */
-    if (to < 0) return;
-
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.lastTemp() != to || !cd.isSet_lastTemp())
     {
@@ -162,9 +152,6 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
         if (emitSignal) emit temperature_changed(channel, to);
 
         updateMinMax_temp(channel, to);
-
-        if (!cd.isSet_lastTemp())
-            qDebug() << "Last temp not set";
     }
 
     doSoftwareAuto(channel, to);
@@ -196,7 +183,6 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
     if (rDelta >= 2 || m_rTemps[channel] == FC_RTEMP_NOTSET
             || !cd.isSet_manualRPM())
     {
-
         int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel]);
         int newRpm = m_ramp[channel].temperatureToRpm(tempF);
 

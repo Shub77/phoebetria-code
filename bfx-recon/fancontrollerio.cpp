@@ -559,7 +559,7 @@ void FanControllerIO::processDeviceSettings(bool isAuto,
 
 int FanControllerIO::rawToTemp(unsigned char byte) const
 {
-    return byte;
+    return (int)byte;
 }
 
 int FanControllerIO::rawToRPM(char highByte, char lowByte) const
