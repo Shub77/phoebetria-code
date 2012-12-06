@@ -52,6 +52,12 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
 #endif
 
+
+#ifndef QT_DEBUG
+    ui->pushButton->hide();
+    ui->ctrl_syncGui->hide();
+#endif
+
     m_trayIcon.setToolTip("Phoebetria");
     connect(&m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(onTrayIconActivated(QSystemTrayIcon::ActivationReason)));
