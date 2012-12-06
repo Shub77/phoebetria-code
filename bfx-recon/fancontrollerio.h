@@ -186,32 +186,6 @@ public:
         unsigned char m_URB[9];     // Must be one byte longer than max URB size
 
         bool m_URB_isSet;
-
-        bool m_expectAckNak;
-    };
-
-    class HandshakeQueue
-    {
-        friend class FanControllerIO;
-
-    public:
-
-        HandshakeQueue();
-
-        bool isEmpty(void) const { return m_requestsWaiting.isEmpty(); }
-
-    protected:
-
-        void updateProcessedReqs(bool ack);
-        void updateCounters(Request::Category cat, int delta);
-        void enqueue(const Request& req);
-
-    private:
-
-        int m_deviceSettingsCounter;
-        int m_channelSettingsCounter;
-
-        QQueue<Request> m_requestsWaiting;
     };
 
     //---------------------------------------------------------------------
@@ -246,8 +220,6 @@ public:
         return inCelcius ? 124 : 255;    /* C : F */
     }
 
-    bool waitingForHandshake(Request::Category cat) const;
-
     void processTempAndSpeed(int channel, int tempF, int rpm, int maxRpm);
     void processAlarmTemp(int channel, int alarmTempF);
     void processManualSpeed(int channel, int rpm);
@@ -274,6 +246,8 @@ public:
         if (isRequestQueueEmpty())
             return true;
         processRequestQueue();
+
+        return isRequestQueueEmpty();
     }
 
 protected:
@@ -301,10 +275,6 @@ private:
 
     FanControllerData m_fanControllerData;
 
-    HandshakeQueue m_handshakeQueue;
-
-
-
 
     // For Debugging
 
@@ -315,14 +285,14 @@ private:
 
     unsigned long m_pollTime_maxDelta;
 
-    unsigned long m_maxQueueSize;
+    int m_maxQueueSize;
 
 public:
 
     unsigned long maxPollDelta(void) const
     { return m_pollTime_maxDelta; }
 
-    unsigned long maxReqQueueSize(void) const
+    int maxReqQueueSize(void) const
     { return m_maxQueueSize; }
 
     // End For Debugging

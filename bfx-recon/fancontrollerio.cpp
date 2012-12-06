@@ -135,7 +135,6 @@ FanControllerIO::Request::Request()
     m_controlByte = TX_NULL;
     m_dataLen = 0;
     m_URB_isSet = false;
-    m_expectAckNak = false;
 }
 
 FanControllerIO::Request::Request(const Request& ref)
@@ -143,7 +142,6 @@ FanControllerIO::Request::Request(const Request& ref)
     m_controlByte = ref.m_controlByte;
     m_dataLen = ref.m_dataLen;
     m_URB_isSet = ref.m_URB_isSet;
-    m_expectAckNak = ref.m_expectAckNak;
     m_category = ref.m_category;
 
     for (unsigned i = 0; i < sizeof(m_data); i++)
@@ -163,7 +161,6 @@ FanControllerIO::Request::Request(ControlByte controlByte)
 {
     m_controlByte = controlByte;
     m_dataLen = 0;
-    m_expectAckNak = false;
     setURB();
 }
 
@@ -198,77 +195,6 @@ bool FanControllerIO::Request::toURB(int blockLen,
     m_URB_isSet = true;
 
     return true;
-}
-
-/**********************************************************************
-  FanControllerIO::HandshakeQueue
- *********************************************************************/
-
-FanControllerIO::HandshakeQueue::HandshakeQueue()
-{
-    m_deviceSettingsCounter     = 0;
-    m_channelSettingsCounter    = 0;
-}
-
-
-void FanControllerIO::HandshakeQueue::updateProcessedReqs(bool ack)
-{
-    if (m_requestsWaiting.isEmpty())
-        return;
-
-    Request r = m_requestsWaiting.dequeue();
-
-    updateCounters(r.m_category, -1);
-
-#if 0
-    qDebug() << "Processed" << QString::number(r.m_controlByte)
-             << (ack ? "ACK" : "NAK");
-    qDebug() << "Queue size" << m_requestsWaiting.count();
-#endif
-
-}
-
-void FanControllerIO::HandshakeQueue::updateCounters(Request::Category cat,
-                                                     int delta)
-{
-    switch (cat)
-    {
-    case Request::Set_ChannelSettings:
-        m_channelSettingsCounter += delta;
-        break;
-
-    case Request::Set_DeviceSettings:
-        m_deviceSettingsCounter += delta;
-        break;
-
-    default:
-        qDebug() << "Unhandled request category:"<< __FILE__ << ":" << __LINE__;
-        break;
-    }
-
-    if (m_channelSettingsCounter < 0)
-    {
-        m_channelSettingsCounter = 0;
-        qDebug() << "Handshake queue out of sync";
-    }
-    if (m_deviceSettingsCounter < 0)
-    {
-        m_deviceSettingsCounter = 0;
-        qDebug() << "Handshake queue out of sync";
-    }
-}
-
-void FanControllerIO::HandshakeQueue::enqueue(const Request& req)
-{
-    if (!req.m_expectAckNak)
-    {
-        qDebug() << "Internal error:"
-                 << "Request being added to handshake queue does not have"
-                 << "'m_expectAckNak' == true";
-        return;
-    }
-    m_requestsWaiting.enqueue(req);
-    updateCounters(req.m_category, 1);
 }
 
 
@@ -392,10 +318,6 @@ void FanControllerIO::onDispatcherSignal(EventDispatcher::TaskId taskId)
         return;
     }
 
-    // If waiting for handshake from previous requests, don't make new ones
-    if (waitingForHandshake(Request::Set_ChannelSettings))
-        return;
-
     if (taskId == EventDispatcher::ReqAlarmTempAndManualRpm)
     {
         for (int i = 0; i < MAX_FAN_CHANNELS; ++i)
@@ -435,7 +357,6 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     {
     case RX_ACK:
     case RX_NAK:
-        m_handshakeQueue.updateProcessedReqs(parsedData.m_controlByte == RX_ACK);
         break;
 
     case RX_TempAndSpeed_Channel0:
@@ -499,25 +420,6 @@ void FanControllerIO::onRawData(QByteArray rawdata)
 
     }
 }
-
-bool FanControllerIO::waitingForHandshake(Request::Category cat) const
-{
-    bool r;
-
-    switch (cat)
-    {
-    case Request::Set_ChannelSettings:
-        r = m_handshakeQueue.m_channelSettingsCounter > 0;
-        break;
-    case Request::Set_DeviceSettings:
-        r = m_handshakeQueue.m_deviceSettingsCounter > 0;
-    default:
-        r = false;
-    }
-
-    return r;
-}
-
 
 void FanControllerIO::processTempAndSpeed(int channel,
         int tempF,
@@ -607,9 +509,6 @@ void FanControllerIO::processRequestQueue(void)
     m_io_device.sendData(r.m_URB, sizeof(r.m_URB));
 
     blockSignals(bs);
-
-    if (r.m_expectAckNak)
-        m_handshakeQueue.enqueue(r);
 }
 
 
@@ -665,7 +564,6 @@ bool FanControllerIO::setDeviceFlags(bool isCelcius,
 
     req.setURB();
 
-    req.m_expectAckNak = true;
     issueRequest(req);
 
     m_pollNumber = 0;
@@ -689,7 +587,6 @@ bool FanControllerIO::setChannelSettings(int channel,
 
     req.setURB();
 
-    req.m_expectAckNak = true;
     issueRequest(req);
 
     m_pollNumber = 0;
@@ -709,7 +606,6 @@ void FanControllerIO::setDisplayChannel(int channel)
 
     req.setURB();
 
-    req.m_expectAckNak = true;
     issueRequest(req);
 
     m_pollNumber = 0;
