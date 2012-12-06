@@ -44,13 +44,13 @@ public:
         RX_NULL                         = 0x00, /**< Not used by device. Required for calcChecksum() */
         TX_NULL                         = 0x00, /**< Not used by device; Internal use only */
 
-        TX_CurrentChannel               = 0x10, /**< Current selected channel (??) */
+        TX_CurrentChannel               = 0x10, /**< (TX/RX?) Current selected channel (??) */
 
-        TX_SetDisplayChannel_Ch0        = 0x20,
-        TX_SetDisplayChannel_Ch1        = 0x21,
-        TX_SetDisplayChannel_Ch2        = 0x22,
-        TX_SetDisplayChannel_Ch3        = 0x23,
-        TX_SetDisplayChannel_Ch4        = 0x24,
+        TX_SetDisplayChannel_Ch0        = 0x20, /**< OUT Set the Recon's display to channel */
+        TX_SetDisplayChannel_Ch1        = 0x21, /**< OUT Set the Recon's display to channel */
+        TX_SetDisplayChannel_Ch2        = 0x22, /**< OUT Set the Recon's display to channel */
+        TX_SetDisplayChannel_Ch3        = 0x23, /**< OUT Set the Recon's display to channel */
+        TX_SetDisplayChannel_Ch4        = 0x24, /**< OUT Set the Recon's display to channel */
 
         TX_TempAndSpeed_Channel0        = 0x30, /**< OUT  Temp in F and current speed (RPM) */
         TX_TempAndSpeed_Channel1        = 0x31, /**< OUT   in F and current speed (RPM) */
