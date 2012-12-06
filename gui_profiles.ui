@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>gui_Profiles</class>
  <widget class="QDialog" name="gui_Profiles">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,7 +27,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="spacing">
-    <number>-1</number>
+    <number>6</number>
    </property>
    <item row="1" column="0" rowspan="4" colspan="2">
     <widget class="QListWidget" name="ctrl_profileList">
