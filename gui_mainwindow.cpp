@@ -34,7 +34,6 @@
 #include "gui_setmanualrpm.h"
 #include "maindb.h"
 
-
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow),
@@ -58,6 +57,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     setWindowIcon(QIcon(":/icon16x16"));
 
+    initTargetRpmIndicators();
     initCtrlArrays();
 
     // Synchronise fan controller data with GUI.
@@ -1112,5 +1112,65 @@ void gui_MainWindow::on_ctrl_syncGui_clicked()
 
 void gui_MainWindow::initTargetRpmIndicators()
 {
+    QString style_sliderOverylay =
+            "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
+            "QSlider::handle:vertical { background: yellow; border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; border-radius: 2px; }";
 
+    /* initialize target RPM indicators overlayed with the current rpm sliders */
+    /* Channel1 */
+    sliderOverlay *ctrl_channel1targetspeedSlider = new sliderOverlay();
+    ctrl_channel1targetspeedSlider->setStyleSheet(style_sliderOverylay);
+
+    QGridLayout *layout_channel1targetspeedSlider = new QGridLayout(ui->ctrl_channel1speedSlider);
+    layout_channel1targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel1targetspeedSlider->addWidget(ctrl_channel1targetspeedSlider);
+
+    ctrl_channel1targetspeedSlider->setValue(50);
+
+    /* Channel2 */
+    sliderOverlay *ctrl_channel2targetspeedSlider = new sliderOverlay();
+    ctrl_channel2targetspeedSlider->setStyleSheet(style_sliderOverylay);
+
+    QGridLayout *layout_channel2targetspeedSlider = new QGridLayout(ui->ctrl_channel2speedSlider);
+    layout_channel2targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel2targetspeedSlider->addWidget(ctrl_channel2targetspeedSlider);
+
+    ctrl_channel2targetspeedSlider->setValue(50);
+
+    /* Channel3 */
+    sliderOverlay *ctrl_channel3targetspeedSlider = new sliderOverlay();
+    ctrl_channel3targetspeedSlider->setStyleSheet(style_sliderOverylay);
+
+    QGridLayout *layout_channel3targetspeedSlider = new QGridLayout(ui->ctrl_channel3speedSlider);
+    layout_channel3targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel3targetspeedSlider->addWidget(ctrl_channel3targetspeedSlider);
+
+    ctrl_channel3targetspeedSlider->setValue(50);
+
+    /* Channel4 */
+    sliderOverlay *ctrl_channel4targetspeedSlider = new sliderOverlay();
+    ctrl_channel4targetspeedSlider->setStyleSheet(style_sliderOverylay);
+
+    QGridLayout *layout_channel4targetspeedSlider = new QGridLayout(ui->ctrl_channel4speedSlider);
+    layout_channel4targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel4targetspeedSlider->addWidget(ctrl_channel4targetspeedSlider);
+
+    ctrl_channel4targetspeedSlider->setValue(50);
+
+    /* Channel5 */
+    sliderOverlay *ctrl_channel5targetspeedSlider = new sliderOverlay();
+    ctrl_channel5targetspeedSlider->setStyleSheet(style_sliderOverylay);
+
+    QGridLayout *layout_channel5targetspeedSlider = new QGridLayout(ui->ctrl_channel5speedSlider);
+    layout_channel5targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel5targetspeedSlider->addWidget(ctrl_channel5targetspeedSlider);
+
+    ctrl_channel5targetspeedSlider->setValue(50);
+}
+
+sliderOverlay::sliderOverlay(QSlider *parent)
+    : QSlider(parent)
+{
+    setPalette(Qt::transparent);
+    setAttribute(Qt::WA_TransparentForMouseEvents);
 }

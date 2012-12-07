@@ -202,7 +202,12 @@ private:
 
     void initTargetRpmIndicators();
 
+};
 
+class sliderOverlay : public QSlider
+{
+public:
+     explicit sliderOverlay(QSlider *parent = 0);
 };
 
 #endif // GUI_MAINWINDOW_H
