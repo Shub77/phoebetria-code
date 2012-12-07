@@ -1122,27 +1122,27 @@ void gui_MainWindow::initTargetRpmIndicators()
     ctrl_channel1targetspeedSlider->setStyleSheet(style_sliderOverylay);
 
     QGridLayout *layout_channel1targetspeedSlider = new QGridLayout(ui->ctrl_channel1speedSlider);
-    layout_channel1targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel1targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel1targetspeedSlider->addWidget(ctrl_channel1targetspeedSlider);
 
-    ctrl_channel1targetspeedSlider->setValue(50);
+    ctrl_channel1targetspeedSlider->setValue(0);
 
     /* Channel2 */
     sliderOverlay *ctrl_channel2targetspeedSlider = new sliderOverlay();
     ctrl_channel2targetspeedSlider->setStyleSheet(style_sliderOverylay);
 
     QGridLayout *layout_channel2targetspeedSlider = new QGridLayout(ui->ctrl_channel2speedSlider);
-    layout_channel2targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel2targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel2targetspeedSlider->addWidget(ctrl_channel2targetspeedSlider);
 
-    ctrl_channel2targetspeedSlider->setValue(50);
+    ctrl_channel2targetspeedSlider->setValue(100);
 
     /* Channel3 */
     sliderOverlay *ctrl_channel3targetspeedSlider = new sliderOverlay();
     ctrl_channel3targetspeedSlider->setStyleSheet(style_sliderOverylay);
 
     QGridLayout *layout_channel3targetspeedSlider = new QGridLayout(ui->ctrl_channel3speedSlider);
-    layout_channel3targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel3targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel3targetspeedSlider->addWidget(ctrl_channel3targetspeedSlider);
 
     ctrl_channel3targetspeedSlider->setValue(50);
@@ -1152,7 +1152,7 @@ void gui_MainWindow::initTargetRpmIndicators()
     ctrl_channel4targetspeedSlider->setStyleSheet(style_sliderOverylay);
 
     QGridLayout *layout_channel4targetspeedSlider = new QGridLayout(ui->ctrl_channel4speedSlider);
-    layout_channel4targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel4targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel4targetspeedSlider->addWidget(ctrl_channel4targetspeedSlider);
 
     ctrl_channel4targetspeedSlider->setValue(50);
@@ -1162,7 +1162,7 @@ void gui_MainWindow::initTargetRpmIndicators()
     ctrl_channel5targetspeedSlider->setStyleSheet(style_sliderOverylay);
 
     QGridLayout *layout_channel5targetspeedSlider = new QGridLayout(ui->ctrl_channel5speedSlider);
-    layout_channel5targetspeedSlider->setContentsMargins(0,0,0,0);
+    layout_channel5targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel5targetspeedSlider->addWidget(ctrl_channel5targetspeedSlider);
 
     ctrl_channel5targetspeedSlider->setValue(50);
