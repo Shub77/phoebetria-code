@@ -1109,3 +1109,8 @@ void gui_MainWindow::on_ctrl_syncGui_clicked()
 {
     syncGuiCtrlsWithFanController();
 }
+
+void gui_MainWindow::initTargetRpmIndicators()
+{
+
+}

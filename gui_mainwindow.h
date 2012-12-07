@@ -200,6 +200,8 @@ private:
 
     SoftwareAuto m_softwareAuto;
 
+    void initTargetRpmIndicators();
+
 
 };
 
