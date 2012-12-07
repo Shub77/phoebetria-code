@@ -421,7 +421,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
     if (fcdata().isAuto() && !fcdata().isSoftwareAuto())
     {
         style = "background-image: url(:/Images/bar_green.png);margin:0px;";
-        //m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
+        m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
         targetRpm = (double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100;
     }
     else
@@ -453,7 +453,6 @@ void gui_MainWindow::updateRpmIndicator(int channel)
         }
         else
         {
-            targetRpm = fcdata().manualRPM(channel);
             QString targetString;
             if (targetRpm == -1)
                 targetString = "?";
@@ -469,11 +468,11 @@ void gui_MainWindow::updateRpmIndicator(int channel)
                 targetRpm = (double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100;
 
         }
-        //ctrl_channel1targetspeedSlider->setToolTip(tooltip);
+        m_ctrls_rpmIndicator[channel]->setToolTip(tooltip);
     }
 
-    //m_ctrls_rpmIndicator[channel]->setStyleSheet(style_sliderOverylay);
-    m_ctrls_rpmIndicator[channel]->setValue(targetRpm);
+    m_ctrls_rpmIndicator[channel]->setStyleSheet(style_sliderOverylay);
+    m_ctrls_rpmIndicator[channel]->setValue(fcdata().lastRPM(channel));
 
 }
 
