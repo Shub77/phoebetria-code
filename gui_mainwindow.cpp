@@ -185,12 +185,17 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_currentRPM[2] = ui->ctrl_channel3speed;
     m_ctrls_currentRPM[3] = ui->ctrl_channel4speed;
     m_ctrls_currentRPM[4] = ui->ctrl_channel5speed;
-
-    m_ctrls_rpmIndicator[0] = ui->ctrl_channel1RpmIndicator;
-    m_ctrls_rpmIndicator[1] = ui->ctrl_channel2RpmIndicator;
-    m_ctrls_rpmIndicator[2] = ui->ctrl_channel3RpmIndicator;
-    m_ctrls_rpmIndicator[3] = ui->ctrl_channel4RpmIndicator;
-    m_ctrls_rpmIndicator[4] = ui->ctrl_channel5RpmIndicator;
+// FIXME - Replace with Target RPM Sliders
+//    m_ctrls_rpmIndicator[0] = ui->ctrl_channel1RpmIndicator;
+//    m_ctrls_rpmIndicator[1] = ui->ctrl_channel2RpmIndicator;
+//    m_ctrls_rpmIndicator[2] = ui->ctrl_channel3RpmIndicator;
+//    m_ctrls_rpmIndicator[3] = ui->ctrl_channel4RpmIndicator;
+//    m_ctrls_rpmIndicator[4] = ui->ctrl_channel5RpmIndicator;
+    m_ctrls_rpmIndicator[0] = ctrl_channel1targetspeedSlider;
+    m_ctrls_rpmIndicator[1] = ctrl_channel2targetspeedSlider;
+    m_ctrls_rpmIndicator[2] = ctrl_channel3targetspeedSlider;
+    m_ctrls_rpmIndicator[3] = ctrl_channel4targetspeedSlider;
+    m_ctrls_rpmIndicator[4] = ctrl_channel5targetspeedSlider;
 
     m_ctrls_RpmSliders[0] = ui->ctrl_channel1speedSlider;
     m_ctrls_RpmSliders[1] = ui->ctrl_channel2speedSlider;
@@ -409,12 +414,13 @@ void gui_MainWindow::updateAllSpeedCtrls(bool useManualRpm)
 
 void gui_MainWindow::updateRpmIndicator(int channel)
 {
+    //FIXME - Replaced with Target RPM Sliders
     QString style;
 
     if (fcdata().isAuto() && !fcdata().isSoftwareAuto())
     {
         style = "background-image: url(:/Images/bar_green.png);margin:0px;";
-        m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
+        //m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
     }
     else
     {
@@ -424,10 +430,16 @@ void gui_MainWindow::updateRpmIndicator(int channel)
                 && fcdata().manualRPM(channel) != 65500)
         {
             style = "background-image: url(:/Images/bar_yellow.png);margin:0px;";
+            style_sliderOverylay =
+                        "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
+                        "QSlider::handle:vertical { background: yellow; border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; border-radius: 2px; }";
         }
         else
         {
             style = "background-image: url(:/Images/bar_green.png);margin:0px;";
+            style_sliderOverylay =
+                        "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
+                        "QSlider::handle:vertical { background: lightgreen; border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; border-radius: 2px; }";
 
         }
 
@@ -450,10 +462,11 @@ void gui_MainWindow::updateRpmIndicator(int channel)
                     .arg(targetString);
 
         }
-        m_ctrls_rpmIndicator[channel]->setToolTip(tooltip);
+        //ctrl_channel1targetspeedSlider->setToolTip(tooltip);
     }
 
-    m_ctrls_rpmIndicator[channel]->setStyleSheet(style);
+    //m_ctrls_rpmIndicator[channel]->setStyleSheet(style_sliderOverylay);
+    //m_ctrls_rpmIndicator[channel]->setValue(fcdata().lastRPM(channel));
 
 
 }
@@ -1112,7 +1125,7 @@ void gui_MainWindow::on_ctrl_syncGui_clicked()
 
 void gui_MainWindow::initTargetRpmIndicators()
 {
-    QString style_sliderOverylay =
+    style_sliderOverylay =
             "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
             "QSlider::handle:vertical { background: yellow; border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; border-radius: 2px; }";
 
@@ -1125,7 +1138,6 @@ void gui_MainWindow::initTargetRpmIndicators()
     layout_channel1targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel1targetspeedSlider->addWidget(ctrl_channel1targetspeedSlider);
 
-    ctrl_channel1targetspeedSlider->setValue(0);
 
     /* Channel2 */
     sliderOverlay *ctrl_channel2targetspeedSlider = new sliderOverlay();
@@ -1135,7 +1147,6 @@ void gui_MainWindow::initTargetRpmIndicators()
     layout_channel2targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel2targetspeedSlider->addWidget(ctrl_channel2targetspeedSlider);
 
-    ctrl_channel2targetspeedSlider->setValue(100);
 
     /* Channel3 */
     sliderOverlay *ctrl_channel3targetspeedSlider = new sliderOverlay();
@@ -1145,7 +1156,6 @@ void gui_MainWindow::initTargetRpmIndicators()
     layout_channel3targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel3targetspeedSlider->addWidget(ctrl_channel3targetspeedSlider);
 
-    ctrl_channel3targetspeedSlider->setValue(50);
 
     /* Channel4 */
     sliderOverlay *ctrl_channel4targetspeedSlider = new sliderOverlay();
@@ -1155,7 +1165,6 @@ void gui_MainWindow::initTargetRpmIndicators()
     layout_channel4targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel4targetspeedSlider->addWidget(ctrl_channel4targetspeedSlider);
 
-    ctrl_channel4targetspeedSlider->setValue(50);
 
     /* Channel5 */
     sliderOverlay *ctrl_channel5targetspeedSlider = new sliderOverlay();
@@ -1165,7 +1174,6 @@ void gui_MainWindow::initTargetRpmIndicators()
     layout_channel5targetspeedSlider->setContentsMargins(0,3,0,0);
     layout_channel5targetspeedSlider->addWidget(ctrl_channel5targetspeedSlider);
 
-    ctrl_channel5targetspeedSlider->setValue(50);
 }
 
 sliderOverlay::sliderOverlay(QSlider *parent)

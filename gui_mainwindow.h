@@ -26,6 +26,12 @@
 #include "fancontrollerdata.h"
 #include "softwareauto.h"
 
+class sliderOverlay : public QSlider
+{
+public:
+     explicit sliderOverlay(QSlider *parent = 0);
+};
+
 namespace Ui
 {
 class gui_MainWindow;
@@ -190,7 +196,9 @@ private:
     // Convenience pointers to controls
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_currentRPM[FC_MAX_CHANNELS];
-    QLabel* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
+    // FIXME - Replaced with Slider Indicators
+    // QLabel* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
+    QSlider* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
@@ -202,12 +210,13 @@ private:
 
     void initTargetRpmIndicators();
 
-};
+    sliderOverlay *ctrl_channel1targetspeedSlider;
+    sliderOverlay *ctrl_channel2targetspeedSlider;
+    sliderOverlay *ctrl_channel3targetspeedSlider;
+    sliderOverlay *ctrl_channel4targetspeedSlider;
+    sliderOverlay *ctrl_channel5targetspeedSlider;
+    QString style_sliderOverylay;
 
-class sliderOverlay : public QSlider
-{
-public:
-     explicit sliderOverlay(QSlider *parent = 0);
 };
 
 #endif // GUI_MAINWINDOW_H
