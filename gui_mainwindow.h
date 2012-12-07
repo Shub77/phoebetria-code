@@ -198,7 +198,7 @@ private:
     QPushButton* m_ctrls_currentRPM[FC_MAX_CHANNELS];
     // FIXME - Replaced with Slider Indicators
     // QLabel* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
-    QSlider* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
+    sliderOverlay* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
