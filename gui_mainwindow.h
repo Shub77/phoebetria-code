@@ -22,6 +22,7 @@
 #include <QLabel>
 #include <QSlider>
 #include <QPushButton>
+#include <QLayout>
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
 #include "softwareauto.h"
@@ -196,10 +197,9 @@ private:
     // Convenience pointers to controls
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_currentRPM[FC_MAX_CHANNELS];
-    // FIXME - Replaced with Slider Indicators
-    // QLabel* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
-    sliderOverlay* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
+    sliderOverlay* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
+    QGridLayout* m_layout_rpmIndicator[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
     QSystemTrayIcon m_trayIcon;
@@ -210,11 +210,6 @@ private:
 
     void initTargetRpmIndicators();
 
-    sliderOverlay *ctrl_channel1targetspeedSlider;
-    sliderOverlay *ctrl_channel2targetspeedSlider;
-    sliderOverlay *ctrl_channel3targetspeedSlider;
-    sliderOverlay *ctrl_channel4targetspeedSlider;
-    sliderOverlay *ctrl_channel5targetspeedSlider;
     QString style_sliderOverylay;
 
 };

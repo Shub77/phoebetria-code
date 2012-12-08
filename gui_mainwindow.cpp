@@ -57,7 +57,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     setWindowIcon(QIcon(":/icon16x16"));
 
-    initTargetRpmIndicators();
     initCtrlArrays();
 
     // Synchronise fan controller data with GUI.
@@ -71,6 +70,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     connectCustomSignals();
     initWaitForReqChannelParams();
+    initTargetRpmIndicators();
 
     if (!MainDb::isValid())
     {
@@ -185,17 +185,6 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_currentRPM[2] = ui->ctrl_channel3speed;
     m_ctrls_currentRPM[3] = ui->ctrl_channel4speed;
     m_ctrls_currentRPM[4] = ui->ctrl_channel5speed;
-// FIXME - Replace with Target RPM Sliders
-//    m_ctrls_rpmIndicator[0] = ui->ctrl_channel1RpmIndicator;
-//    m_ctrls_rpmIndicator[1] = ui->ctrl_channel2RpmIndicator;
-//    m_ctrls_rpmIndicator[2] = ui->ctrl_channel3RpmIndicator;
-//    m_ctrls_rpmIndicator[3] = ui->ctrl_channel4RpmIndicator;
-//    m_ctrls_rpmIndicator[4] = ui->ctrl_channel5RpmIndicator;
-    m_ctrls_rpmIndicator[0] = ctrl_channel1targetspeedSlider;
-    m_ctrls_rpmIndicator[1] = ctrl_channel2targetspeedSlider;
-    m_ctrls_rpmIndicator[2] = ctrl_channel3targetspeedSlider;
-    m_ctrls_rpmIndicator[3] = ctrl_channel4targetspeedSlider;
-    m_ctrls_rpmIndicator[4] = ctrl_channel5targetspeedSlider;
 
     m_ctrls_RpmSliders[0] = ui->ctrl_channel1speedSlider;
     m_ctrls_RpmSliders[1] = ui->ctrl_channel2speedSlider;
@@ -414,13 +403,10 @@ void gui_MainWindow::updateAllSpeedCtrls(bool useManualRpm)
 
 void gui_MainWindow::updateRpmIndicator(int channel)
 {
-    //FIXME - Replaced with Target RPM Sliders
-    QString style;
     int targetRpm;
 
     if (fcdata().isAuto() && !fcdata().isSoftwareAuto())
     {
-        style = "background-image: url(:/Images/bar_green.png);margin:0px;";
         m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
         targetRpm = (double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100;
     }
@@ -431,14 +417,12 @@ void gui_MainWindow::updateRpmIndicator(int channel)
                 && fcdata().manualRPM(channel) != 0
                 && fcdata().manualRPM(channel) != 65500)
         {
-            style = "background-image: url(:/Images/bar_yellow.png);margin:0px;";
             style_sliderOverylay =
                         "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
                         "QSlider::handle:vertical { background: yellow; border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; border-radius: 2px; }";
         }
         else
         {
-            style = "background-image: url(:/Images/bar_green.png);margin:0px;";
             style_sliderOverylay =
                         "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
                         "QSlider::handle:vertical { background: lightgreen; border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; border-radius: 2px; }";
@@ -453,6 +437,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
         }
         else
         {
+            targetRpm = fcdata().manualRPM(channel);
             QString targetString;
             if (targetRpm == -1)
                 targetString = "?";
@@ -472,7 +457,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
     }
 
     m_ctrls_rpmIndicator[channel]->setStyleSheet(style_sliderOverylay);
-    m_ctrls_rpmIndicator[channel]->setValue(fcdata().lastRPM(channel));
+    m_ctrls_rpmIndicator[channel]->setValue(targetRpm);
 
 }
 
@@ -1132,54 +1117,20 @@ void gui_MainWindow::initTargetRpmIndicators()
 {
     style_sliderOverylay =
             "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
-            "QSlider::handle:vertical { background: yellow; border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; border-radius: 2px; }";
+            "QSlider::handle:vertical { background: #026; border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; border-radius: 2px; }";
 
     /* initialize target RPM indicators overlayed with the current rpm sliders */
-    /* Channel1 */
-    ctrl_channel1targetspeedSlider = new sliderOverlay();
-    ctrl_channel1targetspeedSlider->setStyleSheet(style_sliderOverylay);
 
-    QGridLayout *layout_channel1targetspeedSlider = new QGridLayout(ui->ctrl_channel1speedSlider);
-    layout_channel1targetspeedSlider->setContentsMargins(0,3,0,0);
-    layout_channel1targetspeedSlider->addWidget(ctrl_channel1targetspeedSlider);
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
+        m_ctrls_rpmIndicator[i] = new sliderOverlay();
+        m_ctrls_rpmIndicator[i]->setStyleSheet(style_sliderOverylay);
 
+        m_layout_rpmIndicator[i] = new QGridLayout(m_ctrls_RpmSliders[i]);
+        m_layout_rpmIndicator[i]->setContentsMargins(0,2,0,0);
+        m_layout_rpmIndicator[i]->addWidget(m_ctrls_rpmIndicator[i]);
 
-    /* Channel2 */
-    ctrl_channel2targetspeedSlider = new sliderOverlay();
-    ctrl_channel2targetspeedSlider->setStyleSheet(style_sliderOverylay);
-
-    QGridLayout *layout_channel2targetspeedSlider = new QGridLayout(ui->ctrl_channel2speedSlider);
-    layout_channel2targetspeedSlider->setContentsMargins(0,3,0,0);
-    layout_channel2targetspeedSlider->addWidget(ctrl_channel2targetspeedSlider);
-
-
-    /* Channel3 */
-    ctrl_channel3targetspeedSlider = new sliderOverlay();
-    ctrl_channel3targetspeedSlider->setStyleSheet(style_sliderOverylay);
-
-    QGridLayout *layout_channel3targetspeedSlider = new QGridLayout(ui->ctrl_channel3speedSlider);
-    layout_channel3targetspeedSlider->setContentsMargins(0,3,0,0);
-    layout_channel3targetspeedSlider->addWidget(ctrl_channel3targetspeedSlider);
-
-
-    /* Channel4 */
-    ctrl_channel4targetspeedSlider = new sliderOverlay();
-    ctrl_channel4targetspeedSlider->setStyleSheet(style_sliderOverylay);
-
-    QGridLayout *layout_channel4targetspeedSlider = new QGridLayout(ui->ctrl_channel4speedSlider);
-    layout_channel4targetspeedSlider->setContentsMargins(0,3,0,0);
-    layout_channel4targetspeedSlider->addWidget(ctrl_channel4targetspeedSlider);
-
-
-    /* Channel5 */
-    ctrl_channel5targetspeedSlider = new sliderOverlay();
-    ctrl_channel5targetspeedSlider->setStyleSheet(style_sliderOverylay);
-    ctrl_channel5targetspeedSlider->setRange(0, 100);
-
-    QGridLayout *layout_channel5targetspeedSlider = new QGridLayout(ui->ctrl_channel5speedSlider);
-    layout_channel5targetspeedSlider->setContentsMargins(0,3,0,0);
-    layout_channel5targetspeedSlider->addWidget(ctrl_channel5targetspeedSlider);
-
+    }
 }
 
 sliderOverlay::sliderOverlay(QSlider *parent)
