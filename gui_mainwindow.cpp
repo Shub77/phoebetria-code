@@ -421,7 +421,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
             style_sliderOverylay =
                     "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
                     "QSlider::handle:vertical {"
-                        "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #0F0, stop:1 #999);"
+                        "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #FF0, stop:1 #999);"
                          "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
         }
         else
