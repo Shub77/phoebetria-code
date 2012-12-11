@@ -408,7 +408,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
     if (fcdata().isAuto() && !fcdata().isSoftwareAuto())
     {
         m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
-        targetRpm = (double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100;
+        targetRpm = ceil((double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100);
     }
     else
     {
@@ -455,7 +455,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
             if (targetRpm == -1)
                 targetRpm = 0;
             else
-                targetRpm = (double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100;
+                targetRpm = ceil((double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100);
 
         }
         m_ctrls_rpmIndicator[channel]->setToolTip(tooltip);
