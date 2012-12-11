@@ -66,14 +66,21 @@ public:
     void setIsCelcius(bool isC)
         { m_isCelcius = isC; }
 
-    void setIsAuto(bool isAuto)
-        { m_isAuto = isAuto;}
+//    void setIsAuto(bool isAuto)
+//        {
+//            m_isAuto = isAuto;
+//            m_isSoftwareAuto = !isAuto;
+//        }
 
     void setIsAudibleAlarm(bool isAudible)
         { m_isAudibleAlarm = isAudible; }
 
     void setIsSwAuto(bool isSoftwareAuto)
-        { clearRampTemps(); m_isSoftwareAuto = isSoftwareAuto; }
+        {
+            clearRampTemps();
+            m_isSoftwareAuto = isSoftwareAuto;
+            m_isAuto = !isSoftwareAuto;
+        }
 
     // Access functions to channel settings
     int maxRPM(int channel) const;
@@ -103,6 +110,7 @@ public:
     void updateRPM(int channel, int to, bool emitSignal = true);
     void updateIsCelcius(bool isCelcius, bool emitSignal = true);
     void updateIsAuto(bool isAuto, bool emitSignal = true);
+    void updateIsSwAuto(bool isSwAuto);
     void updateIsAudibleAlarm(bool isAudible, bool emitSignal = true);
 
     bool ramp_reqParamsForInitAreSet(void) const;

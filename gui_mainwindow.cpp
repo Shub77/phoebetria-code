@@ -37,8 +37,7 @@
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::gui_MainWindow),
-    m_softwareAuto(parent)
+    ui(new Ui::gui_MainWindow)
 {
     ui->setupUi(this);
 
@@ -116,14 +115,7 @@ void gui_MainWindow::setSoftwareAutoOn(bool yes)
 {
     FanControllerData& fcd = fcdata();
 
-    if (yes)
-    {
-        m_softwareAuto.switchOn(ph_fanControllerIO(), fcd);
-    }
-    else if (fcd.isSoftwareAuto())
-    {
-        m_softwareAuto.switchOff(ph_fanControllerIO(), fcd);
-    }
+    fcd.updateIsSwAuto(yes);
 
     updateToggleControls();
     updateAllSpeedCtrls();
@@ -156,8 +148,6 @@ void gui_MainWindow::checkForReqChannelParems(void)
         m_reqChannelParamsAreSet = true;
         ui->ctrl_configSoftwareAutoBtn->setEnabled(true);
         ui->ctrl_isSoftwareControlBtn->setEnabled(true);
-
-        m_softwareAuto.storeCurrentState(fcdata());
 
         EventDispatcher& ed = ph_phoebetriaApp()->dispatcher();
 
@@ -551,6 +541,7 @@ void gui_MainWindow::onControlModeChanged(bool isAuto)
     bool bs = ui->ctrl_isManualBtn->blockSignals(true);
     ui->ctrl_isManualBtn->setChecked(isAuto ? 0 : 1);
     ui->ctrl_isManualBtn->blockSignals(bs);
+    updateToggleControls();
     enableSpeedControls(!(isAuto || fcdata().isSoftwareAuto()));
     updateRpmIndicators();
 }

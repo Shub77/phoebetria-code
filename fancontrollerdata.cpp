@@ -234,8 +234,31 @@ void FanControllerData::updateIsAuto(bool isAuto, bool emitSignal)
     if (m_isAuto != (short)isAuto || m_isAuto == -1)
     {
         m_isAuto = (short)isAuto;
+
+        m_isSoftwareAuto = false;
+
         if (emitSignal) emit controlMode_changed(isAuto);
     }
+}
+
+
+void FanControllerData::updateIsSwAuto(bool isSwAuto)
+{
+    if (isSwAuto && m_isSoftwareAuto)
+        return;     // Do nothing; already in s/ware auto mode
+
+
+    ph_fanControllerIO().setDeviceFlags(
+                isCelcius(),
+                !isSwAuto,      // manual if swAuto == true
+                isAudibleAlarm());
+
+    if (isSwAuto)
+    {
+        clearRampTemps();
+    }
+    m_isSoftwareAuto = isSwAuto;
+    m_isAuto = false;
 }
 
 void FanControllerData::updateIsAudibleAlarm(bool isAudible, bool emitSignal)

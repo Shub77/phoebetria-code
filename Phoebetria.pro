@@ -70,7 +70,6 @@ SOURCES += main.cpp \
     gui_softwareautosetup.cpp \
     softwareauto/fanramp.cpp \
     gui_profiles.cpp \
-    softwareauto/softwareauto.cpp \
     gui_setmanualrpm.cpp
 
 HEADERS  += gui_mainwindow.h \
@@ -94,7 +93,6 @@ HEADERS  += gui_mainwindow.h \
     gui_softwareautosetup.h \
     softwareauto/fanramp.h \
     gui_profiles.h \
-    softwareauto/softwareauto.h \
     main.h \
     gui_setmanualrpm.h
 
