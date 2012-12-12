@@ -119,6 +119,14 @@ int FanControllerData::maxLoggedRPM(int channel) const
 }
 
 /* Returns the percentage p as an rpm. The rpm will be a multiple of stepSize.
+
+   pre: 0 <= channel <= 4
+   pre: 0 <= p <= 100
+   pre: stepsize > 0
+
+   Note: The RPM returned may not necessarily be a settable RPM; i.e. the
+         RPM may be less than the fan is able to spin at. It is up to the
+         calling function to check for this condition.
  */
 int FanControllerData::percentageToRpm(int channel, int p, unsigned stepSize) const
 {
@@ -138,7 +146,7 @@ int FanControllerData::percentageToRpm(int channel, int p, unsigned stepSize) co
 /* Returns the rpm as an integer percentage (0-100) of the channels maximum
    settable fan speed as reported by the Recon.
 
-   pre: 0 <= channel < 5
+   pre: 0 <= channel <= 4
  */
 int FanControllerData::rpmToPercentage(int channel, int rpm) const
 {
