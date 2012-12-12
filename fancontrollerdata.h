@@ -46,6 +46,8 @@ public:
 
     void syncWithProfile(const FanControllerProfile& fcp);
 
+    void storeCurrentState(void);
+
     const FanChannelData& fanChannelSettings(int channel) const
         { return m_channelSettings[channel]; }
 
@@ -182,7 +184,7 @@ private:
 
     int m_lastProfileId;
 
-    FanControllerState m_preSWA_state;
+    FanControllerState m_storedState;
 
 signals:
     void deviceConnected(void);

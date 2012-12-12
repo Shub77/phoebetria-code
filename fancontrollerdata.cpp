@@ -64,6 +64,12 @@ void FanControllerData::syncWithProfile(const FanControllerProfile& fcp)
 }
 
 
+void FanControllerData::storeCurrentState(void)
+{
+    m_storedState.m_state.setFromCurrentData(*this);
+    m_storedState.m_isSet = true;
+}
+
 // ------------------------------------------------------------------------
 //  Access functions to channel settings
 // ------------------------------------------------------------------------
@@ -269,8 +275,7 @@ void FanControllerData::updateIsSwAuto(bool isSwAuto, bool forceToHWAutoWhenOff)
             */
 
             // Store current state
-            m_preSWA_state.m_state.setFromCurrentData(*this);
-            m_preSWA_state.m_isSet = true;
+            storeCurrentState();
         }
 
         // Set to manual
@@ -286,13 +291,13 @@ void FanControllerData::updateIsSwAuto(bool isSwAuto, bool forceToHWAutoWhenOff)
     else
     {
         // Turn SWA off
-        if (m_preSWA_state.m_isSet && !forceToHWAutoWhenOff)
+        if (m_storedState.m_isSet && !forceToHWAutoWhenOff)
         {
-            if (ph_fanControllerIO().setFromProfile(m_preSWA_state.m_state))
+            if (ph_fanControllerIO().setFromProfile(m_storedState.m_state))
             {
-                syncWithProfile(m_preSWA_state.m_state);
+                syncWithProfile(m_storedState.m_state);
             }
-            m_preSWA_state.m_isSet = false;
+            m_storedState.m_isSet = false;
         }
         else
         {
