@@ -23,6 +23,12 @@
 
 static const int FC_RTEMP_NOTSET = 0xffff;
 
+
+FanControllerData::FanControllerState::FanControllerState() :
+    m_isSet(false)
+{
+}
+
 FanControllerData::FanControllerData(QObject *parent)
     : QObject(parent),
       m_isCelcius(-1),
@@ -57,6 +63,12 @@ void FanControllerData::syncWithProfile(const FanControllerProfile& fcp)
     }
 }
 
+
+void FanControllerData::storeCurrentState(void)
+{
+    m_storedState.m_state.setFromCurrentData(*this);
+    m_storedState.m_isSet = true;
+}
 
 // ------------------------------------------------------------------------
 //  Access functions to channel settings
@@ -234,7 +246,69 @@ void FanControllerData::updateIsAuto(bool isAuto, bool emitSignal)
     if (m_isAuto != (short)isAuto || m_isAuto == -1)
     {
         m_isAuto = (short)isAuto;
+
+        m_isSoftwareAuto = false;
+
         if (emitSignal) emit controlMode_changed(isAuto);
+    }
+}
+
+
+void FanControllerData::updateIsSwAuto(bool isSwAuto, bool forceToHWAutoWhenOff)
+{
+    if (isSwAuto)
+    {
+        // Turn SWA on
+
+        if (!m_isSoftwareAuto)
+        {
+            /* NOTE: It may not at first make sense to turn s/ware auto on
+                     if it's already on, however this function may be
+                     called after a sleep/wake cycle of the OS to make
+                     sure everything is set correctly. If that's the case
+                     it's correct that these actions are undertaken,
+                     *except* for storing the pre-state; the pre-state
+                     would have been stored before the sleep/wake so don't
+                     re-store it here because the current state of the Recon
+                     most-likely does not represent the state before the OS
+                     slept.
+            */
+
+            // Store current state
+            storeCurrentState();
+        }
+
+        // Set to manual
+        ph_fanControllerIO().setDeviceFlags(
+                    isCelcius(),
+                    false,          // Hardware Manual
+                    isAudibleAlarm());
+
+        clearRampTemps();
+        m_isSoftwareAuto = true;
+        m_isAuto = false;
+    }
+    else
+    {
+        // Turn SWA off
+        if (m_storedState.m_isSet && !forceToHWAutoWhenOff)
+        {
+            if (ph_fanControllerIO().setFromProfile(m_storedState.m_state))
+            {
+                syncWithProfile(m_storedState.m_state);
+            }
+            m_storedState.m_isSet = false;
+        }
+        else
+        {
+            // No pre-SWA state stored, just set to Auto
+            ph_fanControllerIO().setDeviceFlags(
+                        isCelcius(),
+                        true,           // Hardware Auto
+                        isAudibleAlarm());
+            m_isAuto = true;
+        }
+        m_isSoftwareAuto = false;
     }
 }
 
@@ -422,9 +496,11 @@ void FanControllerData::initAllRamps(void)
 
 void FanControllerData::onReset(void)
 {
+    updateIsSwAuto(m_isSoftwareAuto);
     clearMinMax();
     clearAllChannelRpmAndTemp();
     clearRampTemps();
+
 
     //qDebug() << "FanControllerData::onReset() called";
 }

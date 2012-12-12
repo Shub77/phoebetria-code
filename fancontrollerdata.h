@@ -25,10 +25,17 @@
 #include "fanprofiles.h"
 #include "fanramp.h"
 
-
 class FanControllerData : public QObject
 {
     Q_OBJECT
+
+    class FanControllerState
+    {
+    public:
+        FanControllerState();
+        FanControllerProfile m_state;
+        bool m_isSet;
+    };
 
 public:
     explicit FanControllerData(QObject *parent = 0);
@@ -38,6 +45,8 @@ public:
     const QString& name(void) const;
 
     void syncWithProfile(const FanControllerProfile& fcp);
+
+    void storeCurrentState(void);
 
     const FanChannelData& fanChannelSettings(int channel) const
         { return m_channelSettings[channel]; }
@@ -60,20 +69,6 @@ public:
 
     bool isAutoSet(void) const
         { return m_isAuto != -1; }
-
-    // Set common settings
-    // TODO: These should be at least protected
-    void setIsCelcius(bool isC)
-        { m_isCelcius = isC; }
-
-    void setIsAuto(bool isAuto)
-        { m_isAuto = isAuto;}
-
-    void setIsAudibleAlarm(bool isAudible)
-        { m_isAudibleAlarm = isAudible; }
-
-    void setIsSwAuto(bool isSoftwareAuto)
-        { clearRampTemps(); m_isSoftwareAuto = isSoftwareAuto; }
 
     // Access functions to channel settings
     int maxRPM(int channel) const;
@@ -103,6 +98,7 @@ public:
     void updateRPM(int channel, int to, bool emitSignal = true);
     void updateIsCelcius(bool isCelcius, bool emitSignal = true);
     void updateIsAuto(bool isAuto, bool emitSignal = true);
+    void updateIsSwAuto(bool isSwAuto, bool forceToHWAutoWhenOff = false);
     void updateIsAudibleAlarm(bool isAudible, bool emitSignal = true);
 
     bool ramp_reqParamsForInitAreSet(void) const;
@@ -187,6 +183,8 @@ private:
     bool m_isSoftwareAuto;
 
     int m_lastProfileId;
+
+    FanControllerState m_storedState;
 
 signals:
     void deviceConnected(void);

@@ -65,6 +65,8 @@ class PhoebetriaApp : public QApplication
 public:
     PhoebetriaApp(int &argc, char **argv);
 
+    void commitData(QSessionManager& manager);
+
     FanControllerIO& fanControllerIO(void)
         { return m_fanControllerIO; }
 

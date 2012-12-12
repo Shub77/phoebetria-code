@@ -24,7 +24,6 @@
 #include <QPushButton>
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
-#include "softwareauto.h"
 
 namespace Ui
 {
@@ -43,8 +42,6 @@ public:
     void setSoftwareAutoOn(bool yes = true);
 
 protected:
-
-    void closeEvent(QCloseEvent *event);
 
 public slots:
 
@@ -197,9 +194,6 @@ private:
     QSystemTrayIcon m_trayIcon;
 
     bool m_reqChannelParamsAreSet;
-
-    SoftwareAuto m_softwareAuto;
-
 
 };
 

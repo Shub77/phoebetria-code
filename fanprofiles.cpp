@@ -24,6 +24,8 @@
 #include "fancontrollerdata.h"
 #include "maindb.h"
 
+#include "phoebetriaapp.h"
+
 FanControllerProfile::FanControllerProfile()
 {
     initCommon();
@@ -109,7 +111,6 @@ bool FanControllerProfile::save(const QString& profileName)
     return mdb.writeProfile(profileName, *this);
 }
 
-// Redundant load and read functions, load function is inaccuratly named for it's use, Chris will resolve...
 
 bool FanControllerProfile::load(const QString& profileName)
 {
@@ -118,18 +119,12 @@ bool FanControllerProfile::load(const QString& profileName)
     if (!mdb.isValid())
         return false;
 
-    return mdb.readProfile(profileName, *this);
-}
-
-bool FanControllerProfile::read(const QString& profileName)
-{
-    MainDb mdb;
-
-    if (!mdb.isValid())
-        return false;
+    if (ph_fanControllerData().ramp_reqParamsForInitAreSet())
+        ph_fanControllerData().storeCurrentState();
 
     return mdb.readProfile(profileName, *this);
 }
+
 
 bool FanControllerProfile::erase(const QString& profileName)
 {

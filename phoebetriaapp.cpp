@@ -54,6 +54,13 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
 
 }
 
+void PhoebetriaApp::commitData(QSessionManager& manager)
+{
+    shutdown();
+
+    QApplication::commitData(manager);
+}
+
 
 /* This function ensures that the FanControllerIO is shutdown correctly;
    i.e. that all request in the event queue have been processed. This is

@@ -26,13 +26,10 @@
 #include "fanprofiles.h"
 #include "fancontrollerdata.h"
 #include "dispatcher.h"
-#include "softwareauto.h"
 
 class FanControllerIO : public QObject
 {
     Q_OBJECT
-
-    friend bool SoftwareAuto::switchOff(FanControllerIO& fcIO, FanControllerData& fcData);
 
 public:
 
