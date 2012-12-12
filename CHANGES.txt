@@ -17,8 +17,8 @@ Version 1.2.1
 This is a bug fix release. Due to the nature of some of the bugs it is 
 highly recommended that all users upgrade to this version if they are 
 using version 1.2.0. Stability and usability has been improved. The 
-internal state of Phoebetria is now reset after the goes through a 
-sleep/wake cycle. Occasional 'freezing' of the UI has been addressed. 
+internal state of Phoebetria is now reset after the system goes through 
+a sleep/wake cycle. Occasional 'freezing' of the UI has been addressed. 
 Software auto has been improved. Phoebetria can once again work 
 correctly with the OEM software still running. 
 
