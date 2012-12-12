@@ -109,7 +109,6 @@ bool FanControllerProfile::save(const QString& profileName)
     return mdb.writeProfile(profileName, *this);
 }
 
-// Redundant load and read functions, load function is inaccuratly named for it's use, Chris will resolve...
 
 bool FanControllerProfile::load(const QString& profileName)
 {
@@ -121,15 +120,6 @@ bool FanControllerProfile::load(const QString& profileName)
     return mdb.readProfile(profileName, *this);
 }
 
-bool FanControllerProfile::read(const QString& profileName)
-{
-    MainDb mdb;
-
-    if (!mdb.isValid())
-        return false;
-
-    return mdb.readProfile(profileName, *this);
-}
 
 bool FanControllerProfile::erase(const QString& profileName)
 {

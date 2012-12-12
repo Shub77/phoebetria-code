@@ -52,7 +52,7 @@ public:
 
     bool save(const QString& profileName);
     bool load(const QString& profileName);
-    bool read(const QString& profileName);
+
     QString profileDescription(const QString& profileName);
 
     static int importFromIni(QDir &dir);
