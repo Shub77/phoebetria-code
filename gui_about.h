@@ -19,7 +19,7 @@ public:
 
 private slots:
 
-    void on_ctrl_aboutDlgBtnBox_clicked(QAbstractButton *button);
+    void on_ctrl_aboutClose_clicked();
 
 private:
     Ui::gui_About *ui;

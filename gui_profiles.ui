@@ -29,6 +29,16 @@
    <property name="spacing">
     <number>6</number>
    </property>
+   <item row="0" column="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLineEdit" name="ctrl_profileName"/>
+   </item>
    <item row="1" column="0" rowspan="4" colspan="2">
     <widget class="QListWidget" name="ctrl_profileList">
      <property name="sortingEnabled">
@@ -42,16 +52,6 @@
       <string>Profile</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QLineEdit" name="ctrl_profileName"/>
    </item>
    <item row="4" column="2">
     <widget class="QPlainTextEdit" name="ctrl_profileDescription"/>
@@ -88,6 +88,68 @@
         <string>Delete</string>
        </property>
       </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="9" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ctrl_profileClose">
+       <property name="toolTip">
+        <string>Close</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_close.png)
+}
+
+QPushButton:hover {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_close_lite.png)
+}
+
+QPushButton:disabled {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_close_lite.png)
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>

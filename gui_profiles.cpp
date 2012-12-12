@@ -171,3 +171,8 @@ void gui_Profiles::on_ctrl_SaveProfile_clicked()
     m_action = SaveProfile;
     this->accept();
 }
+
+void gui_Profiles::on_ctrl_profileClose_clicked()
+{
+    this->close();
+}

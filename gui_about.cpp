@@ -34,10 +34,7 @@ gui_About::~gui_About()
     delete ui;
 }
 
-
-void gui_About::on_ctrl_aboutDlgBtnBox_clicked(QAbstractButton *button)
+void gui_About::on_ctrl_aboutClose_clicked()
 {
-    (void)(button); // Unused
-
-    this->close();
+        this->close();
 }
