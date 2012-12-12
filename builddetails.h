@@ -22,7 +22,7 @@
 #define PHOEBETRIA_VERSION  1
 #define PHOEBETRIA_MAJOR_REVISION   2
 #define PHOEBETRIA_MINOR_REVISION   1
-#define PHOEBETRIA_STATUS_STR       "Pre-release 1"
+#define PHOEBETRIA_STATUS_STR       ""
 
 class BuildDetails
 {

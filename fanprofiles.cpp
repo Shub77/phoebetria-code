@@ -119,7 +119,8 @@ bool FanControllerProfile::load(const QString& profileName)
     if (!mdb.isValid())
         return false;
 
-    ph_fanControllerData().storeCurrentState();
+    if (ph_fanControllerData().ramp_reqParamsForInitAreSet())
+        ph_fanControllerData().storeCurrentState();
 
     return mdb.readProfile(profileName, *this);
 }
