@@ -139,7 +139,7 @@ int FanControllerData::percentageToRpm(int channel, int p, unsigned stepSize) co
     double rpm = p / 100.0 * maxRpm;
 
     // return as a multiple of the rpm step size
-    return int(rpm / stepSize) * stepSize;
+    return int(rpm / (double)stepSize) * stepSize;
 }
 
 
