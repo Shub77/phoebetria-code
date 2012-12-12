@@ -88,6 +88,7 @@ public:
     int minLoggedRPM(int channel) const;
     int maxLoggedRPM(int channel) const;
 
+    int percentageToRpm(int channel, int p, unsigned stepSize) const;
     int rpmToPercentage(int channel, int rpm) const;
 
     //

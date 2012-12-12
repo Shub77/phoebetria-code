@@ -3,4 +3,6 @@
 
 #define FC_MAX_CHANNELS 5
 
+#define RECON_RPM_STEPSIZE 100
+
 #endif // BFXRECON_H

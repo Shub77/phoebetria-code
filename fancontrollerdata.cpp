@@ -118,6 +118,23 @@ int FanControllerData::maxLoggedRPM(int channel) const
     return m_channelSettings[channel].maxLoggedRPM();
 }
 
+/* Returns the percentage p as an rpm. The rpm will be a multiple of stepSize.
+ */
+int FanControllerData::percentageToRpm(int channel, int p, unsigned stepSize) const
+{
+    // If channel max RPM has not been read from the Recon yet just return 0
+    if (!m_channelSettings[channel].isSet_maxRpm())
+        return 0;
+
+    int maxRpm = m_channelSettings[channel].maxRPM();
+
+    double rpm = p / 100.0 * maxRpm;
+
+    // return as a multiple of the rpm step size
+    return int(rpm / stepSize) * stepSize;
+}
+
+
 /* Returns the rpm as an integer percentage (0-100) of the channels maximum
    settable fan speed as reported by the Recon.
 

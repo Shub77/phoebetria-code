@@ -666,10 +666,9 @@ int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
     int channelMaxRPM = maxRPM(channel);
     int channelMinRPM = floor(channelMaxRPM * 0.50 / 100) * 100;
 
-    double val = value / 100.0 * channelMaxRPM;
-    val = int(val / 100) * 100;
-    if (val < channelMinRPM) val = 0;
-    return val;
+    int rpm = fcdata().percentageToRpm(channel, value, RECON_RPM_STEPSIZE);
+
+    return rpm < channelMinRPM ? 0 : rpm;
 }
 
 void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
