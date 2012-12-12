@@ -43,8 +43,6 @@ public:
 
 protected:
 
-    void closeEvent(QCloseEvent *event);
-
 public slots:
 
     void changeEvent(QEvent* e);
