@@ -248,7 +248,7 @@ void FanControllerData::updateIsAuto(bool isAuto, bool emitSignal)
 }
 
 
-void FanControllerData::updateIsSwAuto(bool isSwAuto)
+void FanControllerData::updateIsSwAuto(bool isSwAuto, bool forceToHWAutoWhenOff)
 {
     if (isSwAuto)
     {
@@ -286,7 +286,7 @@ void FanControllerData::updateIsSwAuto(bool isSwAuto)
     else
     {
         // Turn SWA off
-        if (m_preSWA_state.m_isSet)
+        if (m_preSWA_state.m_isSet && !forceToHWAutoWhenOff)
         {
             if (ph_fanControllerIO().setFromProfile(m_preSWA_state.m_state))
             {

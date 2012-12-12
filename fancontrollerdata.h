@@ -111,7 +111,7 @@ public:
     void updateRPM(int channel, int to, bool emitSignal = true);
     void updateIsCelcius(bool isCelcius, bool emitSignal = true);
     void updateIsAuto(bool isAuto, bool emitSignal = true);
-    void updateIsSwAuto(bool isSwAuto);
+    void updateIsSwAuto(bool isSwAuto, bool forceToHWAutoWhenOff = false);
     void updateIsAudibleAlarm(bool isAudible, bool emitSignal = true);
 
     bool ramp_reqParamsForInitAreSet(void) const;

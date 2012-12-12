@@ -30,6 +30,11 @@ CloseHelper::CloseHelper(QObject *parent)
 
 void CloseHelper::onLastWindowClosed(void)
 {
+    if (ph_fanControllerData().isSoftwareAuto())
+    {
+        ph_fanControllerData().updateIsSwAuto(false, true);
+    }
+
     ph_shutdown();
 }
 
