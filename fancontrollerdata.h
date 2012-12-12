@@ -88,6 +88,8 @@ public:
     int minLoggedRPM(int channel) const;
     int maxLoggedRPM(int channel) const;
 
+    int rpmToPercentage(int channel, int rpm) const;
+
     //
     void updateMaxRPM(int channel, int to, bool emitSignal = true);
     void updateAlarmTemp(int channel, int to, bool emitSignal = true);

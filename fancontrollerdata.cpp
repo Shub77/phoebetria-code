@@ -118,6 +118,28 @@ int FanControllerData::maxLoggedRPM(int channel) const
     return m_channelSettings[channel].maxLoggedRPM();
 }
 
+/* Returns the rpm as an integer percentage (0-100) of the channels maximum
+   settable fan speed as reported by the Recon.
+
+   pre: 0 <= channel < 5
+ */
+int FanControllerData::rpmToPercentage(int channel, int rpm) const
+{
+    // If channel max RPM has not been read from the Recon yet just return 0
+    if (!m_channelSettings[channel].isSet_maxRpm())
+        return 0;
+
+    int maxRpm = m_channelSettings[channel].maxRPM();
+
+    if (maxRpm == 0)
+        return 0;
+
+    return maxRpm == 65500 || rpm > rpm
+            ? 100                           // max
+            : ceil(rpm * 100.0 / maxRpm);   // Calculated percentage
+}
+
+
 // ------------------------------------------------------------------------
 // Update channel settings
 // ------------------------------------------------------------------------
