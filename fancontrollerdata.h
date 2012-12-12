@@ -25,10 +25,17 @@
 #include "fanprofiles.h"
 #include "fanramp.h"
 
-
 class FanControllerData : public QObject
 {
     Q_OBJECT
+
+    class FanControllerState
+    {
+    public:
+        FanControllerState();
+        FanControllerProfile m_state;
+        bool m_isSet;
+    };
 
 public:
     explicit FanControllerData(QObject *parent = 0);
@@ -65,12 +72,6 @@ public:
     // TODO: These should be at least protected
     void setIsCelcius(bool isC)
         { m_isCelcius = isC; }
-
-//    void setIsAuto(bool isAuto)
-//        {
-//            m_isAuto = isAuto;
-//            m_isSoftwareAuto = !isAuto;
-//        }
 
     void setIsAudibleAlarm(bool isAudible)
         { m_isAudibleAlarm = isAudible; }
@@ -195,6 +196,8 @@ private:
     bool m_isSoftwareAuto;
 
     int m_lastProfileId;
+
+    FanControllerState m_preSWA_state;
 
 signals:
     void deviceConnected(void);
