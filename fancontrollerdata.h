@@ -68,21 +68,6 @@ public:
     bool isAutoSet(void) const
         { return m_isAuto != -1; }
 
-    // Set common settings
-    // TODO: These should be at least protected
-    void setIsCelcius(bool isC)
-        { m_isCelcius = isC; }
-
-    void setIsAudibleAlarm(bool isAudible)
-        { m_isAudibleAlarm = isAudible; }
-
-    void setIsSwAuto(bool isSoftwareAuto)
-        {
-            clearRampTemps();
-            m_isSoftwareAuto = isSoftwareAuto;
-            m_isAuto = !isSoftwareAuto;
-        }
-
     // Access functions to channel settings
     int maxRPM(int channel) const;
     int alarmTemp(int channel) const;
