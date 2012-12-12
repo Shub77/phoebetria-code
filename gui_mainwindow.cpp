@@ -464,12 +464,19 @@ void gui_MainWindow::updateRpmIndicators(void)
 
 void gui_MainWindow::updateToggleControls(void)
 {
+    bool bs;
+
+    bs = ui->ctrl_tempScaleToggleBtn->blockSignals(true);
     ui->ctrl_tempScaleToggleBtn->setChecked(fcdata().isCelcius() ? 1 : 0);
+    ui->ctrl_tempScaleToggleBtn->blockSignals(bs);
+
+    bs = ui->ctrl_isAudibleAlarmBtn->blockSignals(true);
     ui->ctrl_isAudibleAlarmBtn->setChecked(fcdata().isAudibleAlarm() ? 0 : 1);
+    ui->ctrl_isAudibleAlarmBtn->blockSignals(bs);
 
     if (fcdata().isSoftwareAuto())
     {
-        bool bs = ui->ctrl_isManualBtn->blockSignals(true);
+        bs = ui->ctrl_isManualBtn->blockSignals(true);
         ui->ctrl_isManualBtn->setEnabled(false);
         ui->ctrl_isManualBtn->blockSignals(bs);
 
@@ -479,7 +486,7 @@ void gui_MainWindow::updateToggleControls(void)
     }
     else
     {
-        bool bs = ui->ctrl_isManualBtn->blockSignals(true);
+        bs = ui->ctrl_isManualBtn->blockSignals(true);
         ui->ctrl_isManualBtn->setEnabled(true);
         ui->ctrl_isManualBtn->setChecked(fcdata().isAuto() ? 0 : 1);
         ui->ctrl_isManualBtn->blockSignals(bs);
