@@ -3,8 +3,12 @@
 
               Software for controlling the BitFenix(R) Recon
                               fan controller.
+                        
+               (C) 2012 by Craig Robbins and Christopher Ferris
+                        phoebetria.software@gmail.com
+                          http://www.phoebetria.com
 
-                       Bringer of Favourable Winds
+                         Bringer of Favourable Winds
                         
  "I am going to unexplored regions, to "the land of mist and snow," but
 I shall kill no albatross; therefore do not be alarmed for my safety or

@@ -4,7 +4,29 @@
               Software for controlling the BitFenix(R) Recon
                               fan controller.
                         
+               (C) 2012 by Craig Robbins and Christopher Ferris
+                        phoebetria.software@gmail.com
+                          http://www.phoebetria.com
+                        
                                 CHANGE LOG
+
+
+Version 1.2.1
+12-Dec-2012
+====================
+This is a bug fix release. Due to the nature of some of the bugs it is 
+highly recommended that all users upgrade to this version if they are 
+using version 1.2.0. Stability and usability has been improved. The 
+internal state of Phoebetria is now reset after the goes through a 
+sleep/wake cycle. Occasional 'freezing' of the UI has been addressed. 
+Software auto has been improved. Phoebetria can once again work 
+correctly with the OEM software still running. 
+
+Known issues: It would be desirable that if Phoebetria is running in SW 
+Auto mode that when the OS is shut down (not sleep/suspend) it sets the 
+Recon to (hardware) auto mode. Unfortunately if Phoebetria is minimised 
+to tray this does not happen. This is being worked on and is likely to 
+be fixed in V1.3. 
 
 
 Version 1.2.0

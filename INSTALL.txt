@@ -4,6 +4,10 @@
               Software for controlling the BitFenix(R) Recon
                               fan controller.
                         
+               (C) 2012 by Craig Robbins and Christopher Ferris
+                        phoebetria.software@gmail.com
+                          http://www.phoebetria.com
+                        
                                INSTALLATION
 
 
