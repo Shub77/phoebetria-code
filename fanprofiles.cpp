@@ -24,6 +24,8 @@
 #include "fancontrollerdata.h"
 #include "maindb.h"
 
+#include "phoebetriaapp.h"
+
 FanControllerProfile::FanControllerProfile()
 {
     initCommon();
@@ -116,6 +118,8 @@ bool FanControllerProfile::load(const QString& profileName)
 
     if (!mdb.isValid())
         return false;
+
+    ph_fanControllerData().storeCurrentState();
 
     return mdb.readProfile(profileName, *this);
 }
