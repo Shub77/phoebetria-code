@@ -2037,6 +2037,7 @@ QPushButton:hover {
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionPreferences"/>
    </widget>
    <addaction name="menuHelp"/>
   </widget>
@@ -2051,13 +2052,13 @@ QPushButton:hover {
   </action>
   <action name="actionPreferences">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Preferences</string>
    </property>
    <property name="visible">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>

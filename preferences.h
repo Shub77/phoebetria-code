@@ -30,6 +30,7 @@
     tooltips on minimize[y/n]       ??
     show tray icon tooltips[y/n]    ??
 
+    start minimized[y/n]
     minimize to tray[y/n]
     startup profile [string]
     shutdown profile [string]
