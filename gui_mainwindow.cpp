@@ -417,7 +417,6 @@ void gui_MainWindow::updateRpmIndicator(int channel)
     {
         if (fcdata().isManualRpmSet(channel)
                 && fcdata().lastRPM(channel) != fcdata().manualRPM(channel)
-                && fcdata().manualRPM(channel) != 0
                 && fcdata().manualRPM(channel) != RECON_MAXRPM)
         {
             /* Slider RPM != Target RPM */
