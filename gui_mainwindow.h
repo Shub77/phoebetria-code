@@ -204,8 +204,6 @@ private:
 
     void initTargetRpmIndicators();
 
-    QString style_sliderOverylay;
-
 };
 
 #endif // GUI_MAINWINDOW_H

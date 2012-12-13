@@ -1086,22 +1086,15 @@ void gui_MainWindow::on_ctrl_syncGui_clicked()
 
 void gui_MainWindow::initTargetRpmIndicators()
 {
-    style_sliderOverylay =
-            "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
-            "QSlider::handle:vertical {"
-                "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #02C, stop:1 #999);"
-                 "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
-
     /* initialize target RPM indicators overlayed with the current RPM sliders */
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_ctrls_rpmIndicator[i] = new sliderOverlay();
-        m_ctrls_rpmIndicator[i]->setStyleSheet(style_sliderOverylay);
+        m_ctrls_rpmIndicator[i]->setStyleSheet(style_sliderOverylay_blue);
 
         m_layout_rpmIndicator[i] = new QGridLayout(m_ctrls_RpmSliders[i]);
         m_layout_rpmIndicator[i]->setContentsMargins(0,2,0,0);
         m_layout_rpmIndicator[i]->addWidget(m_ctrls_rpmIndicator[i]);
-
     }
 }
 
