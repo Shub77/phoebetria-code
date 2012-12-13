@@ -34,7 +34,6 @@
 #include "gui_setmanualrpm.h"
 #include "maindb.h"
 
-
 static const char* style_sliderOverylay_blue =
             "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
             "QSlider::handle:vertical {"
@@ -322,16 +321,16 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
         return;
 
     QString RpmText;
-    RpmText = RPM == 0 ? "OFF" : (RPM == 65500 ? QString::number(fcdata().lastRPM(channel)) :
+    RpmText = RPM == 0 ? "OFF" : (RPM == RECON_MAXRPM ? QString::number(fcdata().lastRPM(channel)) :
                                                  QString::number(RPM));
     m_ctrls_currentRPM[channel]->setText(RpmText);
 
-    if (updateSlider || RPM == 65500)
+    if (updateSlider || RPM == RECON_MAXRPM)
     {
         int newRPM;
         if (!fcdata().isAuto()
                 && fcs.isSet_manualRPM()
-                && fcs.manualRPM() != 65500)
+                && fcs.manualRPM() != RECON_MAXRPM)
         {
             newRPM = fcs.manualRPM();
         }
@@ -414,7 +413,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
         if (fcdata().isManualRpmSet(channel)
                 && fcdata().lastRPM(channel) != fcdata().manualRPM(channel)
                 && fcdata().manualRPM(channel) != 0
-                && fcdata().manualRPM(channel) != 65500)
+                && fcdata().manualRPM(channel) != RECON_MAXRPM)
         {
             /* Slider RPM != Target RPM */
             style = style_sliderOverylay_yellow;
@@ -432,7 +431,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
 
 //        targetRPM = fcdata().manualRPM(channel);
 
-//        if (targetRPM == 65500)
+//        if (targetRPM == RECON_MAXRPM)
 //        {
 //            tooltip = QString(tr("Target RPM = MAX"));
 //        }
@@ -1047,7 +1046,7 @@ void gui_MainWindow::askUserForManualSpeed(int channel)
 
         if (dlg.useMaxRpm())
         {
-            val = 65500;
+            val = RECON_MAXRPM;
         }
         else
         {

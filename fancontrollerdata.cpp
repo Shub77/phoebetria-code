@@ -159,7 +159,7 @@ int FanControllerData::rpmToPercentage(int channel, int rpm) const
     if (maxRpm == 0)
         return 0;
 
-    return maxRpm == 65500 || rpm > rpm
+    return maxRpm == RECON_MAXRPM || rpm > rpm
             ? 100                           // max
             : ceil(rpm * 100.0 / maxRpm);   // Calculated percentage
 }
@@ -421,7 +421,7 @@ void FanControllerData::updateMinMax_rpm(int channel, int rpm)
         cd.setMinLoggedRPM(rpm);
         emit minLoggedRPM_changed(channel, rpm);
     }
-    if ((cd.maxLoggedRPM() < rpm || !cd.isSet_maxLoggedRPM()) && rpm != 65500)
+    if ((cd.maxLoggedRPM() < rpm || !cd.isSet_maxLoggedRPM()) && rpm != RECON_MAXRPM)
     {
         cd.setMaxLoggedRPM(rpm);
         emit maxLoggedRPM_changed(channel, rpm);

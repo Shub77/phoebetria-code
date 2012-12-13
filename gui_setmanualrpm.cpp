@@ -1,6 +1,8 @@
 #include "gui_setmanualrpm.h"
 #include "ui_gui_setmanualrpm.h"
 
+#include "bfx-recon/bfxrecon.h"
+
 gui_setManualRpm::gui_setManualRpm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::gui_setManualRpm),
@@ -32,7 +34,7 @@ void gui_setManualRpm::setChannelLabel(int channel)
 
 void gui_setManualRpm::setCurrentRpm(int rpm)
 {
-    if (rpm == 65500)
+    if (rpm == RECON_MAXRPM)
     {
         ui->ctrl_useMaxRpm->setChecked(true);
         ui->ctrl_manualRpm->setEnabled(false);
