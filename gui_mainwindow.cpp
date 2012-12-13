@@ -100,7 +100,6 @@ void gui_MainWindow::syncGuiCtrlsWithFanController(void)
     updateAllAlarmCtrls(fcd.isCelcius());
     updateToggleControls();
     enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
-    updateRpmIndicators();
 }
 
 
@@ -112,7 +111,6 @@ void gui_MainWindow::setSoftwareAutoOn(bool yes)
 
     updateToggleControls();
     updateAllSpeedCtrls();
-    updateRpmIndicators();
 }
 
 void gui_MainWindow::initWaitForReqChannelParams(void)
@@ -336,6 +334,7 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
     }
 
     updateSpeedControlTooltip(channel);
+    updateRpmIndicator(channel);
 }
 
 void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
@@ -455,13 +454,6 @@ void gui_MainWindow::updateRpmIndicator(int channel)
 
 }
 
-void gui_MainWindow::updateRpmIndicators(void)
-{
-    for (int i = 0; i < FC_MAX_CHANNELS; i++)
-    {
-        updateRpmIndicator(i);
-    }
-}
 
 void gui_MainWindow::updateToggleControls(void)
 {
@@ -550,8 +542,7 @@ void gui_MainWindow::onControlModeChanged(bool isAuto)
     ui->ctrl_isManualBtn->setChecked(isAuto ? 0 : 1);
     ui->ctrl_isManualBtn->blockSignals(bs);
     updateToggleControls();
-    enableSpeedControls(!(isAuto || fcdata().isSoftwareAuto()));
-    updateRpmIndicators();
+    enableSpeedControls(!(isAuto || fcdata().isSoftwareAuto()));    
 }
 
 void gui_MainWindow::onIsAudibleAlarmChanged(bool isAudibleAlarm)
@@ -570,7 +561,6 @@ void gui_MainWindow::onCurrentRPM(int channel, int RPM)
     Q_ASSERT(channel >= 0 && channel <= 4); // pre-condition
 
     updateSpeedControl(channel, RPM, fcdata().isAuto());
-    updateRpmIndicator(channel);
 }
 
 void gui_MainWindow::onManualRPMChanged(int channel, int RPM)
@@ -578,7 +568,6 @@ void gui_MainWindow::onManualRPMChanged(int channel, int RPM)
     if (!fcdata().isAuto() || fcdata().isSoftwareAuto())
     {
         updateSpeedControl(channel, RPM, true);
-        updateRpmIndicator(channel);
     }
 }
 

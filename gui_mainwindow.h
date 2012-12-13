@@ -166,7 +166,6 @@ private:
     void updateAllSpeedCtrls(bool useManualRpm = false);
 
     void updateRpmIndicator(int channel);
-    void updateRpmIndicators(void);
 
     void updateToggleControls(void);
 
