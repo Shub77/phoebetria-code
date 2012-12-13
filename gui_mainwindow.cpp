@@ -34,6 +34,20 @@
 #include "gui_setmanualrpm.h"
 #include "maindb.h"
 
+
+static const char* style_sliderOverylay_blue =
+            "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
+            "QSlider::handle:vertical {"
+            "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #02C, stop:1 #999);"
+            "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
+
+static const char* style_sliderOverylay_yellow =
+            "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
+            "QSlider::handle:vertical {"
+            "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #FF0, stop:1 #999);"
+            "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
+
+
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
@@ -384,19 +398,16 @@ void gui_MainWindow::updateAllSpeedCtrls(bool useManualRpm)
 
 void gui_MainWindow::updateRpmIndicator(int channel)
 {
-    int targetRpm;
+    int sliderPosition;
 
-    if (fcdata().isAuto() && !fcdata().isSoftwareAuto())
+    const char *style;
+
+    sliderPosition = fcdata().rpmToPercentage(channel, fcdata().lastRPM(channel));
+
+    if (fcdata().isAuto())
     {
         /* Change RPM slider overlays to blue when in hardware auto mode */
-        style_sliderOverylay =
-            "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
-            "QSlider::handle:vertical {"
-                "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #02C, stop:1 #999);"
-                "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
-
-        m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
-        targetRpm = ceil((double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100);
+        style = style_sliderOverylay_blue;
     }
     else
     {
@@ -406,52 +417,43 @@ void gui_MainWindow::updateRpmIndicator(int channel)
                 && fcdata().manualRPM(channel) != 65500)
         {
             /* Slider RPM != Target RPM */
-            style_sliderOverylay =
-                    "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
-                    "QSlider::handle:vertical {"
-                        "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #FF0, stop:1 #999);"
-                         "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
+            style = style_sliderOverylay_yellow;
         }
         else
         {
             /* Slider RPM == Target RPM */
-            style_sliderOverylay =
-                    "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
-                    "QSlider::handle:vertical {"
-                        "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #02C, stop:1 #999);"
-                        "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
-
+            style = style_sliderOverylay_blue;
         }
 
-        QString tooltip;
-        if (fcdata().manualRPM(channel) == 65500)
-        {
-            tooltip = QString(tr("Target RPM = MAX"));
-            targetRpm = 100;
-        }
-        else
-        {
-            targetRpm = fcdata().manualRPM(channel);
-            QString targetString;
-            if (targetRpm == -1)
-                targetString = "?";
-            else
-                targetString = QString::number(targetRpm);
+        // TODO: somehow add the tooltip to the main slider tooltip
 
-            tooltip = QString(tr("Target RPM = %1"))
-                    .arg(targetString);
 
-            if (targetRpm == -1)
-                targetRpm = 0;
-            else
-                targetRpm = ceil((double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100);
+//        QString tooltip;
 
-        }
-        m_ctrls_rpmIndicator[channel]->setToolTip(tooltip);
+//        targetRPM = fcdata().manualRPM(channel);
+
+//        if (targetRPM == 65500)
+//        {
+//            tooltip = QString(tr("Target RPM = MAX"));
+//        }
+//        else
+//        {
+//            QString targetString;
+
+//            if (targetRPM == -1)
+//                targetString = "?";
+//            else
+//                targetString = QString::number(targetRPM);
+
+//            tooltip = QString(tr("Target RPM = %1"))
+//                    .arg(targetString);
+
+//        }
+//        m_ctrls_rpmIndicator[channel]->setToolTip(tooltip);
     }
 
-    m_ctrls_rpmIndicator[channel]->setStyleSheet(style_sliderOverylay);
-    m_ctrls_rpmIndicator[channel]->setValue(targetRpm);
+    m_ctrls_rpmIndicator[channel]->setStyleSheet(style);
+    m_ctrls_rpmIndicator[channel]->setValue(sliderPosition);
 
 }
 
