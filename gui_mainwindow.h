@@ -22,8 +22,15 @@
 #include <QLabel>
 #include <QSlider>
 #include <QPushButton>
+#include <QLayout>
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
+
+class sliderOverlay : public QSlider
+{
+public:
+     explicit sliderOverlay(QSlider *parent = 0);
+};
 
 namespace Ui
 {
@@ -187,13 +194,18 @@ private:
     // Convenience pointers to controls
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_currentRPM[FC_MAX_CHANNELS];
-    QLabel* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
+    sliderOverlay* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
+    QGridLayout* m_layout_rpmIndicator[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 
     QSystemTrayIcon m_trayIcon;
 
     bool m_reqChannelParamsAreSet;
+
+    void initTargetRpmIndicators();
+
+    QString style_sliderOverylay;
 
 };
 

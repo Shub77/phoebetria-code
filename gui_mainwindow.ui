@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>430</width>
-    <height>510</height>
+    <height>567</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -649,14 +649,14 @@ QPushButton:disabled {
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <layout class="QHBoxLayout" name="layout_channel1targetspeedSlider">
            <item>
             <widget class="QSlider" name="ctrl_channel1speedSlider">
              <property name="enabled">
               <bool>false</bool>
              </property>
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -668,30 +668,29 @@ QPushButton:disabled {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider::groove:vertical {
+              <string notr="true">QSlider#ctrl_channel1speedSlider::groove:vertical {
      border: 1px solid #bbb;
      background: darkBlue;
      width: 20px;
      border-radius: 4px;
  }
 
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
+ QSlider#ctrl_channel1speedSlider::handle:vertical {
+	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 	height:15px;
+ 	margin:-6px;
+ 	border:1px solid #777;
+	border-radius:4px;
  }
 
- QSlider::add-page:vertical {
+ QSlider#ctrl_channel1speedSlider::add-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 border: 1px solid #777;
 	 border-radius: 4px;
  }
 
- QSlider::sub-page:vertical {
+ QSlider#ctrl_channel1speedSlider::sub-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
      border: 1px solid #777;
@@ -937,7 +936,7 @@ QPushButton:hover {
               <bool>false</bool>
              </property>
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -949,30 +948,29 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider::groove:vertical {
+              <string notr="true">QSlider#ctrl_channel2speedSlider::groove:vertical {
      border: 1px solid #bbb;
      background: darkBlue;
      width: 20px;
      border-radius: 4px;
  }
 
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
+ QSlider#ctrl_channel2speedSlider::handle:vertical {
+	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 	height:15px;
+ 	margin:-6px;
+ 	border:1px solid #777;
+	border-radius:4px;
  }
 
- QSlider::add-page:vertical {
+ QSlider#ctrl_channel2speedSlider::add-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 border: 1px solid #777;
 	 border-radius: 4px;
  }
 
- QSlider::sub-page:vertical {
+ QSlider#ctrl_channel2speedSlider::sub-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
      border: 1px solid #777;
@@ -1221,7 +1219,7 @@ QPushButton:hover {
               <bool>false</bool>
              </property>
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -1233,30 +1231,29 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider::groove:vertical {
+              <string notr="true">QSlider#ctrl_channel3speedSlider::groove:vertical {
      border: 1px solid #bbb;
      background: darkBlue;
      width: 20px;
      border-radius: 4px;
  }
 
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
+ QSlider#ctrl_channel3speedSlider::handle:vertical {
+	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 	height:15px;
+ 	margin:-6px;
+ 	border:1px solid #777;
+	border-radius:4px;
  }
 
- QSlider::add-page:vertical {
+ QSlider#ctrl_channel3speedSlider::add-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 border: 1px solid #777;
 	 border-radius: 4px;
  }
 
- QSlider::sub-page:vertical {
+ QSlider#ctrl_channel3speedSlider::sub-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
      border: 1px solid #777;
@@ -1505,7 +1502,7 @@ QPushButton:hover {
               <bool>false</bool>
              </property>
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -1517,30 +1514,29 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider::groove:vertical {
+              <string notr="true">QSlider#ctrl_channel4speedSlider::groove:vertical {
      border: 1px solid #bbb;
      background: darkBlue;
      width: 20px;
      border-radius: 4px;
  }
 
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
+ QSlider#ctrl_channel4speedSlider::handle:vertical {
+	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 	height:15px;
+ 	margin:-6px;
+ 	border:1px solid #777;
+	border-radius:4px;
  }
 
- QSlider::add-page:vertical {
+ QSlider#ctrl_channel4speedSlider::add-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 border: 1px solid #777;
 	 border-radius: 4px;
  }
 
- QSlider::sub-page:vertical {
+ QSlider#ctrl_channel4speedSlider::sub-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
      border: 1px solid #777;
@@ -1789,7 +1785,7 @@ QPushButton:hover {
               <bool>false</bool>
              </property>
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -1801,30 +1797,29 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider::groove:vertical {
+              <string notr="true">QSlider#ctrl_channel5speedSlider::groove:vertical {
      border: 1px solid #bbb;
      background: darkBlue;
      width: 20px;
      border-radius: 4px;
  }
 
- QSlider::handle:vertical {
-	 background-image: url(:/Images/slider_toggle.png);
- 	width:35px;
- 	height:20px;
- 	margin:-7px;
- 	border:0px;
- 	padding:0px;
+ QSlider#ctrl_channel5speedSlider::handle:vertical {
+	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 	height:15px;
+ 	margin:-6px;
+ 	border:1px solid #777;
+	border-radius:4px;
  }
 
- QSlider::add-page:vertical {
+ QSlider#ctrl_channel5speedSlider::add-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 border: 1px solid #777;
 	 border-radius: 4px;
  }
 
- QSlider::sub-page:vertical {
+ QSlider#ctrl_channel5speedSlider::sub-page:vertical {
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
 	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
      border: 1px solid #777;

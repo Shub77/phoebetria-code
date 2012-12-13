@@ -60,6 +60,8 @@ private slots:
 
     void on_ctrl_LoadProfile_clicked();
 
+    void on_ctrl_profileClose_clicked();
+
 private:
     Ui::gui_Profiles *ui;
 

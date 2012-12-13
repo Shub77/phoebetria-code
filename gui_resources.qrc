@@ -46,6 +46,8 @@
         <file>Images/channel_3_hover.png</file>
         <file>Images/channel_4_hover.png</file>
         <file>Images/channel_5_hover.png</file>
+        <file>Images/icon_close.png</file>
+        <file>Images/icon_close_lite.png</file>
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>

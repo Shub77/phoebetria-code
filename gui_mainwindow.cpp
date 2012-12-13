@@ -34,7 +34,6 @@
 #include "gui_setmanualrpm.h"
 #include "maindb.h"
 
-
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
@@ -76,6 +75,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     connectCustomSignals();
     initWaitForReqChannelParams();
+    initTargetRpmIndicators();
 
     if (!MainDb::isValid())
     {
@@ -174,12 +174,6 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_currentRPM[2] = ui->ctrl_channel3speed;
     m_ctrls_currentRPM[3] = ui->ctrl_channel4speed;
     m_ctrls_currentRPM[4] = ui->ctrl_channel5speed;
-
-    m_ctrls_rpmIndicator[0] = ui->ctrl_channel1RpmIndicator;
-    m_ctrls_rpmIndicator[1] = ui->ctrl_channel2RpmIndicator;
-    m_ctrls_rpmIndicator[2] = ui->ctrl_channel3RpmIndicator;
-    m_ctrls_rpmIndicator[3] = ui->ctrl_channel4RpmIndicator;
-    m_ctrls_rpmIndicator[4] = ui->ctrl_channel5RpmIndicator;
 
     m_ctrls_RpmSliders[0] = ui->ctrl_channel1speedSlider;
     m_ctrls_RpmSliders[1] = ui->ctrl_channel2speedSlider;
@@ -391,12 +385,12 @@ void gui_MainWindow::updateAllSpeedCtrls(bool useManualRpm)
 
 void gui_MainWindow::updateRpmIndicator(int channel)
 {
-    QString style;
+    int targetRpm;
 
     if (fcdata().isAuto() && !fcdata().isSoftwareAuto())
     {
-        style = "background-image: url(:/Images/bar_green.png);margin:0px;";
         m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
+        targetRpm = ceil((double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100);
     }
     else
     {
@@ -405,23 +399,32 @@ void gui_MainWindow::updateRpmIndicator(int channel)
                 && fcdata().manualRPM(channel) != 0
                 && fcdata().manualRPM(channel) != 65500)
         {
-            style = "background-image: url(:/Images/bar_yellow.png);margin:0px;";
+            /* Slider Yellow */
+            style_sliderOverylay =
+                    "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
+                    "QSlider::handle:vertical {"
+                        "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #FF0, stop:1 #999);"
+                         "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
         }
         else
         {
-            style = "background-image: url(:/Images/bar_green.png);margin:0px;";
-
+            /* Slider Green */
+            style_sliderOverylay =
+                "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
+                "QSlider::handle:vertical {"
+                    "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #0F0, stop:1 #999);"
+                     "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
         }
 
         QString tooltip;
         if (fcdata().manualRPM(channel) == 65500)
         {
             tooltip = QString(tr("Target RPM = MAX"));
-
+            targetRpm = 100;
         }
         else
         {
-            int targetRpm = fcdata().manualRPM(channel);
+            targetRpm = fcdata().manualRPM(channel);
             QString targetString;
             if (targetRpm == -1)
                 targetString = "?";
@@ -431,12 +434,17 @@ void gui_MainWindow::updateRpmIndicator(int channel)
             tooltip = QString(tr("Target RPM = %1"))
                     .arg(targetString);
 
+            if (targetRpm == -1)
+                targetRpm = 0;
+            else
+                targetRpm = ceil((double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100);
+
         }
         m_ctrls_rpmIndicator[channel]->setToolTip(tooltip);
     }
 
-    m_ctrls_rpmIndicator[channel]->setStyleSheet(style);
-
+    m_ctrls_rpmIndicator[channel]->setStyleSheet(style_sliderOverylay);
+    m_ctrls_rpmIndicator[channel]->setValue(targetRpm);
 
 }
 
@@ -1097,4 +1105,32 @@ void gui_MainWindow::on_pushButton_clicked()
 void gui_MainWindow::on_ctrl_syncGui_clicked()
 {
     syncGuiCtrlsWithFanController();
+}
+
+void gui_MainWindow::initTargetRpmIndicators()
+{
+    style_sliderOverylay =
+            "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
+            "QSlider::handle:vertical {"
+                "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #02C, stop:1 #999);"
+                 "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
+
+    /* initialize target RPM indicators overlayed with the current rpm sliders */
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
+        m_ctrls_rpmIndicator[i] = new sliderOverlay();
+        m_ctrls_rpmIndicator[i]->setStyleSheet(style_sliderOverylay);
+
+        m_layout_rpmIndicator[i] = new QGridLayout(m_ctrls_RpmSliders[i]);
+        m_layout_rpmIndicator[i]->setContentsMargins(0,2,0,0);
+        m_layout_rpmIndicator[i]->addWidget(m_ctrls_rpmIndicator[i]);
+
+    }
+}
+
+sliderOverlay::sliderOverlay(QSlider *parent)
+    : QSlider(parent)
+{
+    setPalette(Qt::transparent);
+    setAttribute(Qt::WA_TransparentForMouseEvents);
 }
