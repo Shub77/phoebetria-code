@@ -389,6 +389,13 @@ void gui_MainWindow::updateRpmIndicator(int channel)
 
     if (fcdata().isAuto() && !fcdata().isSoftwareAuto())
     {
+        /* Change RPM slider overlays to blue when in hardware auto mode */
+        style_sliderOverylay =
+            "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
+            "QSlider::handle:vertical {"
+                "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #02C, stop:1 #999);"
+                "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
+
         m_ctrls_rpmIndicator[channel]->setToolTip(tr("Auto"));
         targetRpm = ceil((double)fcdata().lastRPM(channel) / fcdata().maxRPM(channel) * 100);
     }
@@ -1115,7 +1122,7 @@ void gui_MainWindow::initTargetRpmIndicators()
                 "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #02C, stop:1 #999);"
                  "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
 
-    /* initialize target RPM indicators overlayed with the current rpm sliders */
+    /* initialize target RPM indicators overlayed with the current RPM sliders */
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_ctrls_rpmIndicator[i] = new sliderOverlay();
