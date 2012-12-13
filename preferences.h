@@ -21,6 +21,29 @@
 #include <QVariant>
 #include <QSettings>
 
+
+
+/** TODO
+
+    PREFERENCES FOR V1.3
+
+    tooltips on minimize[y/n]       ??
+    show tray icon tooltips[y/n]    ??
+
+    minimize to tray[y/n]
+    startup profile [string]
+    shutdown profile [string]
+    close vs. quite [y/n]
+    channel names
+    probe names
+
+
+    Get rid of current implementation of this class and implement the above...
+
+    */
+
+
+
 class Preferences : public QObject
 {
     Q_OBJECT
