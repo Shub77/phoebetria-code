@@ -428,6 +428,33 @@ void FanControllerData::updateMinMax_rpm(int channel, int rpm)
     }
 }
 
+const QString* FanControllerData::targetRpmString(int channel, QString* dest)
+{
+    if (isAuto())
+    {
+        *dest = QString(tr("AUTO"));
+    }
+    else
+    {
+        int targetRPM = manualRPM(channel);
+
+        if (targetRPM == RECON_MAXRPM)
+        {
+            *dest = QString(tr("MAX"));
+        }
+        else
+        {
+            if (targetRPM == FanChannelData::rpmNotSetValue)
+                *dest = "?";
+            else if (targetRPM == 0)
+                *dest = QString(tr("OFF"));
+            else
+                *dest = QString::number(targetRPM);
+        }
+    }
+    return dest;
+}
+
 // ------------------------------------------------------------------------
 // Set channel settings
 // ------------------------------------------------------------------------

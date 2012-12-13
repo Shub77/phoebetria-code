@@ -272,6 +272,11 @@ void gui_MainWindow::updateSpeedControlTooltip(int channel)
     tooltip += QString::number(fcdata().lastRPM(channel));
     tooltip += "\n";
 
+    tooltip += tr("Target RPM: ");
+    QString targetRpmStr;
+    tooltip += *fcdata().targetRpmString(channel, &targetRpmStr);
+    tooltip += "\n";
+
     tooltip += tr("Min Temp: ");
     tooltip += fcdata().temperatureString(
                    fcdata().minTemp(channel),
@@ -423,32 +428,6 @@ void gui_MainWindow::updateRpmIndicator(int channel)
             /* Slider RPM == Target RPM */
             style = style_sliderOverylay_blue;
         }
-
-        // TODO: somehow add the tooltip to the main slider tooltip
-
-
-//        QString tooltip;
-
-//        targetRPM = fcdata().manualRPM(channel);
-
-//        if (targetRPM == RECON_MAXRPM)
-//        {
-//            tooltip = QString(tr("Target RPM = MAX"));
-//        }
-//        else
-//        {
-//            QString targetString;
-
-//            if (targetRPM == -1)
-//                targetString = "?";
-//            else
-//                targetString = QString::number(targetRPM);
-
-//            tooltip = QString(tr("Target RPM = %1"))
-//                    .arg(targetString);
-
-//        }
-//        m_ctrls_rpmIndicator[channel]->setToolTip(tooltip);
     }
 
     m_ctrls_rpmIndicator[channel]->setStyleSheet(style);

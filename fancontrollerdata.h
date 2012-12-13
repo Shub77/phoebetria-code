@@ -162,6 +162,8 @@ public:
 
     void clearAllChannelRpmAndTemp(void);
 
+    const QString* targetRpmString(int channel, QString* dest);
+
 protected:
 
     void clearMinMax(void);
