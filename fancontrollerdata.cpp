@@ -159,7 +159,7 @@ int FanControllerData::rpmToPercentage(int channel, int rpm) const
     if (maxRpm == 0)
         return 0;
 
-    return maxRpm == RECON_MAXRPM || rpm > rpm
+    return maxRpm == RECON_MAXRPM || rpm > maxRpm
             ? 100                           // max
             : ceil(rpm * 100.0 / maxRpm);   // Calculated percentage
 }
