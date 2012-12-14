@@ -20,7 +20,7 @@
 #include <QObject>
 #include <QVariant>
 #include <QSettings>
-
+#include <QString>
 
 
 /** TODO
@@ -38,11 +38,13 @@
     channel names
     probe names
 
-
-    Get rid of current implementation of this class and implement the above...
-
     */
 
+#if defined Q_WS_MAC
+#   define DEFAULT_CLOSEBEHAVIOUR false
+#else
+#   define DEFAULT_CLOSEBEHAVIOUR true
+#endif
 
 
 class Preferences : public QObject
@@ -51,45 +53,35 @@ class Preferences : public QObject
 
 public:
 
-    typedef enum
-    {
-        PKey_MinimiseToTray,
-        PKey_ShowTooltipOnMinimise,
-        PKey_IntervalMs_GlobalTimer,
-        PKey_IntervalMs_FcCommonSettings,
-        PKey_IntervalMs_FcAlarmTempAndMaxSpeed,
-        PKey_IntervalMs_FcCurrentTempAndSpeed,
-
-        PKey_PrimaryDb_DeleteOnAnyCreateError
-    } KeyId;
-
     explicit Preferences(QObject *parent = 0);
 
     static QString filepath(void);
 
-    void set(KeyId id, const QVariant& value);
+    bool    startMinimised(bool defaultVal = false) const;
 
-    bool    minimiseToTray(bool defaultValue = true) const;
-    bool    showToolTipOnMinimise(bool defaultValue = false) const;
-    int     intervalMs_globalTimer(int defaultValue = 200);
-    int     intervalMs_FcCommonSettings(int defaultValue = 200);
-    int     intervalMs_FcAlarmTempAndMaxSpeed(int defaultValue = 5000);
-    int     intervalMs_FcCurrentTempAndSpeed(int defaultValue = 5000);
+    bool    minimiseToTray(bool defaultVal = true) const;
+
+    bool    showTrayIconTooltips(bool defaultVal = true) const;
+
+    QString startupProfile(QString defaultVal = "") const;
+
+    QString shutdownProfile(QString defaultVal = "") const;
+
+    bool    quitOnCloseButton(bool defaultVal = DEFAULT_CLOSEBEHAVIOUR) const;
 
 protected:
 
-    QString propertyName(KeyId id) const;
-
-    void read(void);
-    void write(void);
+    void syncToDisk(void);
+    void syncFromDisk(void);
 
 private:
-    static const char* m_userPrefsGroup;
 
 signals:
     
 public slots:
     
 };
+
+#undef DEFAULT_CLOSEBEHAVIOUR
 
 #endif // PREFERENCES_H

@@ -20,27 +20,15 @@
 #include <QFileInfo>
 
 
-/*
- * NOTE: The order (and number) of these strings must correspond with
- *       Preferences::KeyId
- */
-const char* preferenceKeyStrings[] =
-{
-    "MinimiseToTray",
-    "ShowToolTipOnMinimise",
-    "Interval_GlobalTimer",
-    "Interval_FcCommonSettings",
-    "Interval_FcAlarmTempAndMaxSpeed",
-    "Interval_FcCurrentTempAndSpeed",
+static const char* key_startMinimised       = "UserPrefs/startMinimised";
+static const char* key_minimiseToTray       = "UserPrefs/minimiseToTray";
+static const char* key_showTrayIconTT       = "UserPrefs/showTrayIconTooltips";
+static const char* key_startupProfile       = "UserPrefs/startupProfile";
+static const char* key_shutdownProfile      = "UserPrefs/shutdownProfile";
+static const char* key_quitOnCloseButton    = "UserPrefs/quitOnCloseButton";
 
-    "PrimaryDb_DeleteOnAnyCreateError"
-};
-
-
-/**************************************************************************
- *************************************************************************/
-
-const char* Preferences::m_userPrefsGroup = "UserPrefs/";
+static const char* keyBase_channelName      = "UserPrefs/channelName";
+static const char* keyBase_probeName        = "UserPrefs/probeName";
 
 Preferences::Preferences(QObject *parent) :
     QObject(parent)
@@ -56,16 +44,33 @@ QString Preferences::filepath(void)
     return QFileInfo(settings.fileName()).path();
 }
 
-void Preferences::set(KeyId id, const QVariant& value)
+bool Preferences::startMinimised(bool defaultVal) const
 {
-    QSettings settings;
-    settings.setProperty(propertyName(id).toAscii().constData(), value);
+
 }
 
-QString Preferences::propertyName(KeyId id) const
+bool Preferences::minimiseToTray(bool defaultVal) const
 {
-    // TODO Bounds checking may be wise
-    QString pname(m_userPrefsGroup);
-    pname += preferenceKeyStrings[id];
-    return pname;
+
+}
+
+bool Preferences::showTrayIconTooltips(bool defaultVal) const
+{
+
+}
+
+QString Preferences::startupProfile(QString defaultVal) const
+{
+
+}
+
+QString Preferences::shutdownProfile(QString defaultVal) const
+{
+
+}
+
+
+bool Preferences::quitOnCloseButton(bool defaultVal) const
+{
+
 }
