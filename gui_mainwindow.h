@@ -178,13 +178,13 @@ private:
 
     int sliderValToLogScale(int linearValue) const
     {
-        return log(linearValue+1) / log(102) * 100;
+        return ceil(log(linearValue+1) / log(102) * 100);
     }
 
     int sliderValToLogScale_inv(int linearValue) const
     {
         double scale = (log(101) - log(1)) / 100;
-        return exp(scale*(linearValue)) - 1;
+        return floor(exp(scale*(linearValue)) - 1);
     }
 
 
