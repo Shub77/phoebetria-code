@@ -28,3 +28,8 @@ gui_Preferences::~gui_Preferences()
 {
     delete ui;
 }
+
+void gui_Preferences::commitChanges(void) const
+{
+
+}

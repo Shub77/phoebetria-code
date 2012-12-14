@@ -32,6 +32,10 @@ public:
     explicit gui_Preferences(QWidget *parent = 0);
     ~gui_Preferences();
     
+protected:
+
+    void commitChanges(void) const;
+
 private:
     Ui::gui_Preferences *ui;
 };

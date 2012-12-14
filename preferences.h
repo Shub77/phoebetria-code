@@ -58,23 +58,27 @@ public:
     static QString filepath(void);
 
     bool    startMinimised(bool defaultVal = false) const;
-
     bool    minimiseToTray(bool defaultVal = true) const;
-
     bool    showTrayIconTooltips(bool defaultVal = true) const;
-
     QString startupProfile(QString defaultVal = "") const;
-
     QString shutdownProfile(QString defaultVal = "") const;
-
     bool    quitOnCloseButton(bool defaultVal = DEFAULT_CLOSEBEHAVIOUR) const;
-
     QString channelName(unsigned channel, QString defaultVal = "") const;
     QString probeName(unsigned channel, QString defaultVal = "") const;
 
-protected:
+    void setStartMinimised(bool istrue);
+    void setMinimiseToTray(bool istrue);
+    void setShowIconTooltips(bool istrue);
+    void setStartupProfile(const QString& profileName);
+    void setShutdownProfile(const QString& profileName);
+    void setQuitOnCloseButtons(bool istrue);
+    void setChannelName(unsigned channel, const QString& name);
+    void setProbeName(unsigned channel, const QString& name);
 
 private:
+
+    QString channelNameKeyString(int channel) const;
+    QString probeNameKeyString(int channel) const;
 
     QSettings m_settings;
 
@@ -83,6 +87,7 @@ signals:
 public slots:
     
 };
+
 
 #undef DEFAULT_CLOSEBEHAVIOUR
 

@@ -46,6 +46,10 @@ QString Preferences::filepath(void)
     return QFileInfo(settings.fileName()).path();
 }
 
+/****************************************************************************
+ Access functions
+ ****************************************************************************/
+
 bool Preferences::startMinimised(bool defaultVal) const
 {
     return m_settings.value(key_startMinimised, defaultVal).toBool();
@@ -78,14 +82,77 @@ bool Preferences::quitOnCloseButton(bool defaultVal) const
 
 QString Preferences::channelName(unsigned channel, QString defaultVal) const
 {
-    QString keyName = keyBase_channelName + QString("_") + QString::number(channel);
+    QString keyName = channelNameKeyString(channel);
 
     return m_settings.value(keyName, defaultVal).toString();
 }
 
 QString Preferences::probeName(unsigned channel, QString defaultVal) const
 {
-    QString keyName = keyBase_probeName + QString("_") + QString::number(channel);
+    QString keyName = probeNameKeyString(channel);
 
     return m_settings.value(keyName, defaultVal).toString();
+}
+
+/****************************************************************************
+ Set functions
+ ****************************************************************************/
+
+void Preferences::setStartMinimised(bool istrue)
+{
+    m_settings.setValue(key_startMinimised, istrue);
+}
+
+void Preferences::setMinimiseToTray(bool istrue)
+{
+    m_settings.setValue(key_minimiseToTray, istrue);
+}
+
+void Preferences::setShowIconTooltips(bool istrue)
+{
+    m_settings.setValue(key_showTrayIconTT, istrue);
+}
+
+void Preferences::setStartupProfile(const QString& profileName)
+{
+    m_settings.setValue(key_startupProfile, profileName);
+}
+
+void Preferences::setShutdownProfile(const QString& profileName)
+{
+    m_settings.setValue(key_shutdownProfile, profileName);
+}
+
+void Preferences::setQuitOnCloseButtons(bool istrue)
+{
+    m_settings.setValue(key_quitOnCloseButton, istrue);
+}
+
+void Preferences::setChannelName(unsigned channel, const QString& name)
+{
+    QString keyName = channelNameKeyString(channel);
+
+    m_settings.setValue(keyName, name);
+}
+
+void Preferences::setProbeName(unsigned channel, const QString& name)
+{
+    QString keyName = probeNameKeyString(channel);
+
+    m_settings.setValue(keyName, name);
+}
+
+
+/****************************************************************************
+ Private
+ ****************************************************************************/
+
+QString Preferences::channelNameKeyString(int channel) const
+{
+    return QString(keyBase_channelName) + QString("_") + QString::number(channel);
+}
+
+QString Preferences::probeNameKeyString(int channel) const
+{
+    return QString(keyBase_probeName) + QString("_") + QString::number(channel);
 }
