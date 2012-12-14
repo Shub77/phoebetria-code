@@ -19,7 +19,6 @@
 #include <QSettings>
 #include <QFileInfo>
 
-
 static const char* key_startMinimised       = "UserPrefs/startMinimised";
 static const char* key_minimiseToTray       = "UserPrefs/minimiseToTray";
 static const char* key_showTrayIconTT       = "UserPrefs/showTrayIconTooltips";
@@ -31,7 +30,10 @@ static const char* keyBase_channelName      = "UserPrefs/channelName";
 static const char* keyBase_probeName        = "UserPrefs/probeName";
 
 Preferences::Preferences(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_settings(QSettings::IniFormat, QSettings::UserScope,
+               "Phoebetria", "Phoebetria")
+
 {
 }
 
@@ -46,31 +48,44 @@ QString Preferences::filepath(void)
 
 bool Preferences::startMinimised(bool defaultVal) const
 {
-
+    return m_settings.value(key_startMinimised, defaultVal).toBool();
 }
 
 bool Preferences::minimiseToTray(bool defaultVal) const
 {
-
+    return m_settings.value(key_minimiseToTray, defaultVal).toBool();
 }
 
 bool Preferences::showTrayIconTooltips(bool defaultVal) const
 {
-
+    return m_settings.value(key_showTrayIconTT, defaultVal).toBool();
 }
 
 QString Preferences::startupProfile(QString defaultVal) const
-{
-
+{;
+    return m_settings.value(key_startupProfile, defaultVal).toString();
 }
 
 QString Preferences::shutdownProfile(QString defaultVal) const
 {
-
+    return m_settings.value(key_shutdownProfile, defaultVal).toString();
 }
-
 
 bool Preferences::quitOnCloseButton(bool defaultVal) const
 {
+    return m_settings.value(key_quitOnCloseButton, defaultVal).toBool();
+}
 
+QString Preferences::channelName(unsigned channel, QString defaultVal) const
+{
+    QString keyName = keyBase_channelName + QString("_") + QString::number(channel);
+
+    return m_settings.value(keyName, defaultVal).toString();
+}
+
+QString Preferences::probeName(unsigned channel, QString defaultVal) const
+{
+    QString keyName = keyBase_probeName + QString("_") + QString::number(channel);
+
+    return m_settings.value(keyName, defaultVal).toString();
 }

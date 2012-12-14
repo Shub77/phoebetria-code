@@ -69,12 +69,14 @@ public:
 
     bool    quitOnCloseButton(bool defaultVal = DEFAULT_CLOSEBEHAVIOUR) const;
 
+    QString channelName(unsigned channel, QString defaultVal = "") const;
+    QString probeName(unsigned channel, QString defaultVal = "") const;
+
 protected:
 
-    void syncToDisk(void);
-    void syncFromDisk(void);
-
 private:
+
+    QSettings m_settings;
 
 signals:
     
