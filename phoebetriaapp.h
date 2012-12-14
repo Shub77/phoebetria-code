@@ -26,23 +26,6 @@
 #include "dispatcher.h"
 #include "preferences.h"
 
-/* Convenience macros
- */
-
-#define ph_phoebetriaApp() (static_cast<PhoebetriaApp*> qApp)
-#define ph_fanControllerData() (ph_phoebetriaApp()->fcd())
-#define ph_fanControllerIO() (ph_phoebetriaApp()->fanControllerIO())
-#define ph_dispatcher() (ph_phoebetriaApp()->dispatcher())
-
-#define ph_isShuttingDown() (ph_phoebetriaApp()->isShuttingDown())
-
-#define ph_shutdown() (ph_phoebetriaApp()->shutdown())
-
-#define ph_resetSchedulerElapsedTime() \
-    ( ph_phoebetriaApp()->resetScheduler() )
-
-#define ph_prefs() ( ph_phoebetriaApp()->prefs() )
-
 /*
     By the time PhoebetriaApp::shutdown() is called, the global timer has
     been disabled by Qt. Since the request thread still needs to be emptied,
@@ -100,5 +83,48 @@ private:
     static Preferences m_prefs;
 };
 
+
+/* Convenience functions
+ */
+
+inline PhoebetriaApp* ph_phoebetriaApp(void)
+{
+    return static_cast<PhoebetriaApp*> qApp;
+}
+
+inline FanControllerData& ph_fanControllerData(void)
+{
+    return ph_phoebetriaApp()->fcd();
+}
+
+inline FanControllerIO& ph_fanControllerIO(void)
+{
+    return ph_phoebetriaApp()->fanControllerIO();
+}
+
+inline EventDispatcher& ph_dispatcher(void)
+{
+    return ph_phoebetriaApp()->dispatcher();
+}
+
+inline bool ph_isShuttingDown(void)
+{
+    return ph_phoebetriaApp()->isShuttingDown();
+}
+
+inline void ph_shutdown(void)
+{
+    ph_phoebetriaApp()->shutdown();
+}
+
+inline void ph_resetSchedulerElapsedTime(void)
+{
+    ph_phoebetriaApp()->resetScheduler();
+}
+
+inline Preferences& ph_prefs(void)
+{
+    return ph_phoebetriaApp()->prefs();
+}
 
 #endif // PHOEBETRIA_APP_H
