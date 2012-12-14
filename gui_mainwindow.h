@@ -26,10 +26,11 @@
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
 
-class sliderOverlay : public QSlider
+class SliderOverlay : public QSlider
 {
+    Q_OBJECT
 public:
-     sliderOverlay(QSlider *parent = 0);
+     SliderOverlay(QSlider *parent = 0);
 };
 
 namespace Ui
@@ -208,7 +209,7 @@ private:
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_currentRPM[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
-    sliderOverlay* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
+    SliderOverlay* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
     QGridLayout* m_layout_rpmIndicator[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
 

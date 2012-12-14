@@ -35,16 +35,20 @@
 #include "maindb.h"
 
 static const char* style_sliderOverylay_blue =
-            "QSlider#sliderOverlay::groove:vertical { border: 0px transparant; width: 18px; }"
-            "QSlider#sliderOverlay::handle:vertical {"
+            "SliderOverlay::groove:vertical { border: 0px transparant; width: 0px; }"
+            "SliderOverlay::handle:vertical {"
             "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #02C, stop:1 #999);"
-            "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
+            "border: 1px solid #777; height: 5px; margin: -8px; margin-top: 1px; margin-bottom: 1px; border-radius: 2px;}"
+            "SliderOverlay::add-page:vertical { border: 0px transparant; }"
+            "SliderOverlay::sub-page:vertical { border: 0px transparant; }";
 
 static const char* style_sliderOverylay_yellow =
-            "QSlider#sliderOverlay::groove:vertical { border: 0px transparant; width: 18px; }"
-            "QSlider#sliderOverlay::handle:vertical {"
+            "SliderOverlay::groove:vertical { border: 0px transparant; width: 0px; }"
+            "SliderOverlay::handle:vertical {"
             "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #FF0, stop:1 #999);"
-            "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
+            "border: 1px solid #777; height: 5px; margin: -8px; margin-top: 1px; margin-bottom: 1px; border-radius: 2px;}"
+            "SliderOverlay::add-page:vertical { border: 0px transparant; }"
+            "SliderOverlay::sub-page:vertical { border: 0px transparant; }";
 
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
@@ -1100,9 +1104,8 @@ void gui_MainWindow::initTargetRpmIndicators()
     /* initialize target RPM indicators overlayed with the current RPM sliders */
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
-        m_ctrls_rpmIndicator[i] = new sliderOverlay();
+        m_ctrls_rpmIndicator[i] = new SliderOverlay();
         m_ctrls_rpmIndicator[i]->setStyleSheet(style_sliderOverylay_blue);
-        m_ctrls_rpmIndicator[i]->setObjectName("sliderOverlay");
 
         m_layout_rpmIndicator[i] = new QGridLayout(m_ctrls_RpmSliders[i]);
         m_layout_rpmIndicator[i]->setContentsMargins(0,2,0,0);
@@ -1110,7 +1113,7 @@ void gui_MainWindow::initTargetRpmIndicators()
     }
 }
 
-sliderOverlay::sliderOverlay(QSlider *parent)
+SliderOverlay::SliderOverlay(QSlider *parent)
     : QSlider(parent)
 {
     setPalette(Qt::transparent);
