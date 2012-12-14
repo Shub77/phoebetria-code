@@ -176,13 +176,15 @@ private:
 
     int rpmSliderValueToRPM(int channel, int value) const;
 
-    int sliderValToLogScale(int linearValue) const
+    int valueToLogScale(int linearValue) const
     {
-        return ceil(log(linearValue+1) / log(102) * 100);
+        // FIXME: make the scale factor constant
+        return ceil(log(linearValue+1) / log(101) * 100);
     }
 
-    int sliderValToLogScale_inv(int linearValue) const
+    int valueToLinearScale(int linearValue) const
     {
+        // FIXME: make the scale factor constant
         double scale = (log(101) - log(1)) / 100;
         return floor(exp(scale*(linearValue)) - 1);
     }

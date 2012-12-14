@@ -346,7 +346,7 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 
         int newValue = fcdata().rpmToPercentage(channel, newRPM);
 
-        newValue = sliderValToLogScale_inv(newValue);
+        newValue = valueToLinearScale(newValue);
 
         bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
         m_ctrls_RpmSliders[channel]->setValue(newValue);
@@ -409,7 +409,7 @@ void gui_MainWindow::updateRpmIndicator(int channel)
     const char *style;
 
     sliderPosition = fcdata().rpmToPercentage(channel, fcdata().lastRPM(channel));
-    sliderPosition = sliderValToLogScale_inv(sliderPosition);
+    sliderPosition = valueToLinearScale(sliderPosition);
 
     if (fcdata().isAuto())
     {
@@ -656,7 +656,7 @@ int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
     qDebug() << "--------------";
     qDebug() << "lin val:" << value;
 
-    value = sliderValToLogScale(value);
+    value = valueToLogScale(value);
 
     qDebug() << "Log val:" << value;
     qDebug() << "--------------";
