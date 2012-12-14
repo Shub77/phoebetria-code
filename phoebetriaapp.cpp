@@ -21,6 +21,7 @@
 FanControllerIO PhoebetriaApp::m_fanControllerIO;
 EventDispatcher PhoebetriaApp::m_dispatcher;
 QTimer PhoebetriaApp::m_globalTimer;
+Preferences PhoebetriaApp::m_prefs;
 
 
 ShutdownHelper::ShutdownHelper(QThread *parent)

@@ -75,6 +75,9 @@ public:
     void setChannelName(unsigned channel, const QString& name);
     void setProbeName(unsigned channel, const QString& name);
 
+
+    inline void sync(void);
+
 private:
 
     QString channelNameKeyString(int channel) const;
@@ -88,6 +91,11 @@ public slots:
     
 };
 
+// Force settings to be written to disk
+void Preferences::sync(void)
+{
+    m_settings.sync();
+}
 
 #undef DEFAULT_CLOSEBEHAVIOUR
 

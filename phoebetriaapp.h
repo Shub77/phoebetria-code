@@ -24,6 +24,7 @@
 #include <QThread>
 
 #include "dispatcher.h"
+#include "preferences.h"
 
 /* Convenience macros
  */
@@ -39,6 +40,8 @@
 
 #define ph_resetSchedulerElapsedTime() \
     ( ph_phoebetriaApp()->resetScheduler() )
+
+#define ph_prefs() ( ph_phoebetriaApp()->prefs() )
 
 /*
     By the time PhoebetriaApp::shutdown() is called, the global timer has
@@ -79,6 +82,9 @@ public:
     EventDispatcher& dispatcher(void)
         { return m_dispatcher; }
 
+    Preferences& prefs(void)
+        { return m_prefs; }
+
     bool isShuttingDown(void)
         { return m_dispatcher.isShuttingDown(); }
 
@@ -91,6 +97,7 @@ private:
     static FanControllerIO m_fanControllerIO;
     static EventDispatcher m_dispatcher;
     static QTimer m_globalTimer;
+    static Preferences m_prefs;
 };
 
 
