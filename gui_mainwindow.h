@@ -183,8 +183,8 @@ private:
 
     int sliderValToLogScale_inv(int linearValue) const
     {
-        // FIXME: URGENT: THis is wrong
-        return log(linearValue+1) / log(102) * 100;
+        double scale = (log(101) - log(1)) / 100;
+        return exp(scale*(linearValue)) - 1;
     }
 
 
