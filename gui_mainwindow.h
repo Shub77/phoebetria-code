@@ -29,7 +29,7 @@
 class sliderOverlay : public QSlider
 {
 public:
-     explicit sliderOverlay(QSlider *parent = 0);
+     sliderOverlay(QSlider *parent = 0);
 };
 
 namespace Ui

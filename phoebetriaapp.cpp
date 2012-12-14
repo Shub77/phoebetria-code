@@ -17,6 +17,7 @@
 #include "phoebetriaapp.h"
 #include "dbmanager.h"
 
+
 FanControllerIO PhoebetriaApp::m_fanControllerIO;
 EventDispatcher PhoebetriaApp::m_dispatcher;
 QTimer PhoebetriaApp::m_globalTimer;
@@ -40,6 +41,11 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     setOrganizationName("Phoebetria");
     setApplicationName("Phoebetria");
     QSettings::setDefaultFormat(QSettings::IniFormat);
+
+    QFile file(":/other/Phoebetria.qss");
+    file.open(QFile::ReadOnly);
+    QString PhoebetriaStyleSheet = QLatin1String(file.readAll());
+    setStyleSheet(PhoebetriaStyleSheet);
 
     DatabaseManager db;
     db.initAllDatabases();

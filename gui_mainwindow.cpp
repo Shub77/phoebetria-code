@@ -35,14 +35,14 @@
 #include "maindb.h"
 
 static const char* style_sliderOverylay_blue =
-            "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
-            "QSlider::handle:vertical {"
+            "QSlider#sliderOverlay::groove:vertical { border: 0px transparant; width: 18px; }"
+            "QSlider#sliderOverlay::handle:vertical {"
             "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #02C, stop:1 #999);"
             "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
 
 static const char* style_sliderOverylay_yellow =
-            "QSlider::groove:vertical { border: 0px transparant; width: 18px; }"
-            "QSlider::handle:vertical {"
+            "QSlider#sliderOverlay::groove:vertical { border: 0px transparant; width: 18px; }"
+            "QSlider#sliderOverlay::handle:vertical {"
             "background-color: qlineargradient(spread:pad, x0:1, y2:1, x0:1, y2:1, stop:0 #FF0, stop:1 #999);"
             "border: 1px solid #777; height: 5px; margin-top: 0px; margin-bottom: 2px; margin-top: 2px; border-radius: 2px;}";
 
@@ -351,6 +351,7 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
         bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
         m_ctrls_RpmSliders[channel]->setValue(newValue);
         m_ctrls_RpmSliders[channel]->blockSignals(sb);
+
     }
 
     updateSpeedControlTooltip(channel);
@@ -1101,6 +1102,7 @@ void gui_MainWindow::initTargetRpmIndicators()
     {
         m_ctrls_rpmIndicator[i] = new sliderOverlay();
         m_ctrls_rpmIndicator[i]->setStyleSheet(style_sliderOverylay_blue);
+        m_ctrls_rpmIndicator[i]->setObjectName("sliderOverlay");
 
         m_layout_rpmIndicator[i] = new QGridLayout(m_ctrls_RpmSliders[i]);
         m_layout_rpmIndicator[i]->setContentsMargins(0,2,0,0);

@@ -51,9 +51,13 @@
         <file>Images/icon_checkbox.png</file>
         <file>Images/icon_checkbox_checked.png</file>
         <file>Images/icon_combobox.png</file>
+        <file>Images/icon_arrows.png</file>
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>
         <file alias="Acknowledgments">ACKNOWLEDGEMENTS.html</file>
+    </qresource>
+    <qresource prefix="/other">
+        <file>Phoebetria.qss</file>
     </qresource>
 </RCC>
