@@ -176,6 +176,18 @@ private:
 
     int rpmSliderValueToRPM(int channel, int value) const;
 
+    int sliderValToLogScale(int linearValue) const
+    {
+        return log(linearValue+1) / log(102) * 100;
+    }
+
+    int sliderValToLogScale_inv(int linearValue) const
+    {
+        // FIXME: URGENT: THis is wrong
+        return log(linearValue+1) / log(102) * 100;
+    }
+
+
     void userPressedChannelRpmSlider(int channel);
     void userReleasedChannelRpmSlider(int channel);
     void userChangedChannelRpmSlider(int channel, int value);
