@@ -34,7 +34,12 @@ public:
     
 protected:
 
+    void initControls(void);
+
     void commitChanges(void) const;
+
+private slots:
+    void on_ctrl_actionButtons_accepted();
 
 private:
     Ui::gui_Preferences *ui;

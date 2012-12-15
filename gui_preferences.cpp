@@ -17,11 +17,14 @@
 #include "gui_preferences.h"
 #include "ui_gui_preferences.h"
 
+#include "phoebetriaapp.h"
+
 gui_Preferences::gui_Preferences(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::gui_Preferences)
 {
     ui->setupUi(this);
+    initControls();
 }
 
 gui_Preferences::~gui_Preferences()
@@ -29,7 +32,20 @@ gui_Preferences::~gui_Preferences()
     delete ui;
 }
 
+void gui_Preferences::initControls(void)
+{
+    ui->ctrl_minimizeToTray->setChecked(ph_prefs().minimiseToTray());
+    ui->ctrl_useLogRpmScale->setChecked(ph_prefs().useLogScaleRpmSliders());
+}
+
 void gui_Preferences::commitChanges(void) const
 {
+    ph_prefs().setMinimiseToTray(ui->ctrl_minimizeToTray->isChecked());
+    ph_prefs().setUseLogScaleRpmSliders(ui->ctrl_useLogRpmScale->isChecked());
+    ph_prefs().sync();
+}
 
+void gui_Preferences::on_ctrl_actionButtons_accepted()
+{
+    commitChanges();
 }

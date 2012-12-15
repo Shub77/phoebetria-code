@@ -858,6 +858,8 @@ void gui_MainWindow::on_actionPreferences_triggered()
 {
     gui_Preferences preferencesDlg(this);
     preferencesDlg.exec();
+    updateChannelControlTooltips();
+    updateAllSpeedCtrls();
 }
 
 
