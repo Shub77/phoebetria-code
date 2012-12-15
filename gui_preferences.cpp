@@ -42,6 +42,19 @@ void gui_Preferences::initControls(void)
     ui->ctrl_quitOnClose->setChecked(ph_prefs().quitOnClose());
     ui->ctrl_startupProfile->setCurrentIndex(ui->ctrl_startupProfile->findText(ph_prefs().startupProfile()));
     ui->ctrl_shutdownProfile->setCurrentIndex(ui->ctrl_shutdownProfile->findText(ph_prefs().shutdownProfile()));
+
+    ui->ctrl_channel1FanName->setText(ph_prefs().channelName(0));
+    ui->ctrl_channel2FanName->setText(ph_prefs().channelName(1));
+    ui->ctrl_channel3FanName->setText(ph_prefs().channelName(2));
+    ui->ctrl_channel4FanName->setText(ph_prefs().channelName(3));
+    ui->ctrl_channel5FanName->setText(ph_prefs().channelName(4));
+
+    ui->ctrl_channel1TempName->setText(ph_prefs().probeName(0));
+    ui->ctrl_channel2TempName->setText(ph_prefs().probeName(1));
+    ui->ctrl_channel3TempName->setText(ph_prefs().probeName(2));
+    ui->ctrl_channel4TempName->setText(ph_prefs().probeName(3));
+    ui->ctrl_channel5TempName->setText(ph_prefs().probeName(4));
+
 }
 
 bool gui_Preferences::getProfileList(void)
@@ -82,6 +95,18 @@ void gui_Preferences::commitChanges(void) const
     ph_prefs().setQuitOnClose(ui->ctrl_quitOnClose->isChecked());
     ph_prefs().setStartupProfile(ui->ctrl_startupProfile->currentText());
     ph_prefs().setShutdownProfile(ui->ctrl_shutdownProfile->currentText());
+
+    ph_prefs().setChannelName(0, ui->ctrl_channel1FanName->text());
+    ph_prefs().setChannelName(1, ui->ctrl_channel2FanName->text());
+    ph_prefs().setChannelName(2, ui->ctrl_channel3FanName->text());
+    ph_prefs().setChannelName(3, ui->ctrl_channel4FanName->text());
+    ph_prefs().setChannelName(4, ui->ctrl_channel5FanName->text());
+
+    ph_prefs().setProbeName(0, ui->ctrl_channel1TempName->text());
+    ph_prefs().setProbeName(1, ui->ctrl_channel2TempName->text());
+    ph_prefs().setProbeName(2, ui->ctrl_channel3TempName->text());
+    ph_prefs().setProbeName(3, ui->ctrl_channel4TempName->text());
+    ph_prefs().setProbeName(4, ui->ctrl_channel5TempName->text());
 
     ph_prefs().sync();
 }
