@@ -96,6 +96,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     initWaitForReqChannelParams();
     initTargetRpmIndicators();
 
+    updateChannelControlTooltips();
+
     if (!MainDb::isValid())
     {
         QMessageBox::critical(
@@ -211,6 +213,12 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_alarmTemps[3] = ui->ctrl_channel4AlarmTemp;
     m_ctrls_alarmTemps[4] = ui->ctrl_channel5AlarmTemp;
 
+    m_ctrls_channel[0] = ui->ctrl_channel1Select;
+    m_ctrls_channel[1] = ui->ctrl_channel2Select;
+    m_ctrls_channel[2] = ui->ctrl_channel3Select;
+    m_ctrls_channel[3] = ui->ctrl_channel4Select;
+    m_ctrls_channel[4] = ui->ctrl_channel5Select;
+
 }
 
 FanControllerData& gui_MainWindow::fcdata(void) const
@@ -318,6 +326,27 @@ void gui_MainWindow::updateSpeedControlTooltips(void)
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         updateSpeedControlTooltip(i);
+    }
+}
+
+void gui_MainWindow::updateChannelControlTooltip(int channel)
+{
+    QString tt;
+
+    tt = ph_prefs().channelName(channel);
+    if (tt.isEmpty())
+    {
+        tt = "Channel ";
+        tt += QString::number(channel+1);
+    }
+    m_ctrls_channel[channel]->setToolTip(tt);
+}
+
+void gui_MainWindow::updateChannelControlTooltips(void)
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+    {
+        updateChannelControlTooltip(i);
     }
 }
 

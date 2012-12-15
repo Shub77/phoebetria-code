@@ -164,6 +164,9 @@ private:
     void updateSpeedControlTooltip(int channel);
     void updateSpeedControlTooltips(void);
 
+    void updateChannelControlTooltip(int channel);
+    void updateChannelControlTooltips(void);
+
     int maxRPM(int channel) const;
     void updateSpeedControl(int channel, int RPM, bool updateSlider = true);
     void updateAllSpeedCtrls(bool useManualRpm = false);
@@ -210,6 +213,7 @@ private:
     SliderOverlay* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
     QGridLayout* m_layout_rpmIndicator[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
+    QPushButton* m_ctrls_channel[FC_MAX_CHANNELS];
 
     QSystemTrayIcon m_trayIcon;
 
