@@ -40,8 +40,16 @@ void gui_Preferences::initControls(void)
     ui->ctrl_showTooltipOnMinimize->setChecked(ph_prefs().showTrayIconTooltips());
     ui->ctrl_useLogRpmScale->setChecked(ph_prefs().useLogScaleRpmSliders());
     ui->ctrl_quitOnClose->setChecked(ph_prefs().quitOnClose());
-    ui->ctrl_startupProfile->setCurrentIndex(ui->ctrl_startupProfile->findText(ph_prefs().startupProfile()));
-    ui->ctrl_shutdownProfile->setCurrentIndex(ui->ctrl_shutdownProfile->findText(ph_prefs().shutdownProfile()));
+
+    QString profileName;
+
+    profileName = ph_prefs().startupProfile();
+    if (!profileName.isEmpty())
+        ui->ctrl_startupProfile->setCurrentIndex(ui->ctrl_startupProfile->findText(profileName));
+
+    profileName = ph_prefs().shutdownProfile();
+    if (!profileName.isEmpty())
+        ui->ctrl_shutdownProfile->setCurrentIndex(ui->ctrl_shutdownProfile->findText(profileName));
 
     ui->ctrl_channel1FanName->setText(ph_prefs().channelName(0));
     ui->ctrl_channel2FanName->setText(ph_prefs().channelName(1));
@@ -63,8 +71,8 @@ bool gui_Preferences::getProfileList(void)
 
     ui->ctrl_startupProfile->clear();
     ui->ctrl_shutdownProfile->clear();
-    ui->ctrl_startupProfile->addItem("Default");
-    ui->ctrl_shutdownProfile->addItem("Default");
+    ui->ctrl_startupProfile->addItem("<None>");
+    ui->ctrl_shutdownProfile->addItem("<None>");
 
     QStringList m_ProfileList = fcp.getProfileNames();
 
@@ -75,10 +83,14 @@ bool gui_Preferences::getProfileList(void)
     {
         const QString& item = m_ProfileList.at(i);
         // Skip reserved profile names
-        if (FanControllerProfile::isReservedProfileName(item)) continue;
+        if (FanControllerProfile::isReservedProfileName(item))
+            continue;
         ui->ctrl_startupProfile->addItem(item);
         ui->ctrl_shutdownProfile->addItem(item);
     }
+
+    ui->ctrl_startupProfile->setCurrentIndex(0);
+    ui->ctrl_shutdownProfile->setCurrentIndex(0);
 
     ui->ctrl_startupProfile->blockSignals(startupProfileBS);
     ui->ctrl_shutdownProfile->blockSignals(shutdownProfileBS);
@@ -93,8 +105,20 @@ void gui_Preferences::commitChanges(void) const
     ph_prefs().setShowIconTooltips(ui->ctrl_showTooltipOnMinimize->isChecked());
     ph_prefs().setUseLogScaleRpmSliders(ui->ctrl_useLogRpmScale->isChecked());
     ph_prefs().setQuitOnClose(ui->ctrl_quitOnClose->isChecked());
-    ph_prefs().setStartupProfile(ui->ctrl_startupProfile->currentText());
-    ph_prefs().setShutdownProfile(ui->ctrl_shutdownProfile->currentText());
+
+    QString txt;
+
+    if(ui->ctrl_startupProfile->currentIndex() < 1)
+        txt = "";
+    else
+        txt = ui->ctrl_startupProfile->currentText();
+    ph_prefs().setStartupProfile(txt);
+
+    if(ui->ctrl_shutdownProfile->currentIndex() < 1)
+        txt = "";
+    else
+        txt = ui->ctrl_shutdownProfile->currentText();
+    ph_prefs().setShutdownProfile(txt);
 
     ph_prefs().setChannelName(0, ui->ctrl_channel1FanName->text());
     ph_prefs().setChannelName(1, ui->ctrl_channel2FanName->text());
