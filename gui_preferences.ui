@@ -34,206 +34,124 @@
         <attribute name="title">
          <string>Application</string>
         </attribute>
-        <widget class="QLabel" name="label_4">
-         <property name="geometry">
-          <rect>
-           <x>14</x>
-           <y>90</y>
-           <width>211</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Show RPM sliders using logarithmic scale</string>
-         </property>
-        </widget>
-        <widget class="QCheckBox" name="ctrl_useLogRpmScale">
-         <property name="geometry">
-          <rect>
-           <x>210</x>
-           <y>90</y>
-           <width>16</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-        <widget class="QLabel" name="lbl_MinimiseToTray">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>76</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Minimize to Tray</string>
-         </property>
-        </widget>
-        <widget class="QCheckBox" name="ctrl_minimizeToTray">
-         <property name="geometry">
-          <rect>
-           <x>216</x>
-           <y>10</y>
-           <width>16</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-        <widget class="QLabel" name="lbl_IntervalMs_GlobalTimer">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>29</y>
-           <width>72</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Start Minimized</string>
-         </property>
-        </widget>
-        <widget class="QCheckBox" name="ctrl_minimizeOnStart">
-         <property name="geometry">
-          <rect>
-           <x>216</x>
-           <y>29</y>
-           <width>16</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-        <widget class="QLabel" name="lbl_ShowTooltipOnMinimise">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>48</y>
-           <width>140</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Show Tooltips while Minimized</string>
-         </property>
-        </widget>
-        <widget class="QCheckBox" name="ctrl_showTooltipOnMinimize">
-         <property name="geometry">
-          <rect>
-           <x>216</x>
-           <y>48</y>
-           <width>16</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_3">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>67</y>
-           <width>64</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Quit on Close</string>
-         </property>
-        </widget>
-        <widget class="QCheckBox" name="checkBox">
-         <property name="geometry">
-          <rect>
-           <x>216</x>
-           <y>67</y>
-           <width>16</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>128</y>
-           <width>69</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Startup Profile</string>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="ctrl_startupProfile">
-         <property name="geometry">
-          <rect>
-           <x>156</x>
-           <y>128</y>
-           <width>69</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_2">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>154</y>
-           <width>81</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Shutdown Profile</string>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="ctrl_shutdownProfile">
-         <property name="geometry">
-          <rect>
-           <x>156</x>
-           <y>154</y>
-           <width>119</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="editable">
-          <bool>false</bool>
-         </property>
-        </widget>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="ctrl_minimizeToTray">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QCheckBox" name="ctrl_minimizeOnStart">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QCheckBox" name="ctrl_showTooltipOnMinimize">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QCheckBox" name="ctrl_quitOnClose">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1">
+          <widget class="QCheckBox" name="ctrl_useLogRpmScale">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="0">
+          <widget class="QLabel" name="lbl_startupProfile">
+           <property name="text">
+            <string>Startup Profile</string>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="1">
+          <widget class="QComboBox" name="ctrl_startupProfile">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="0">
+          <widget class="QLabel" name="lbl_shutdownProfile">
+           <property name="text">
+            <string>Shutdown Profile</string>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="1">
+          <widget class="QComboBox" name="ctrl_shutdownProfile">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_MinimiseToTray">
+           <property name="text">
+            <string>Minimize to Tray</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_minimizeOnStart">
+           <property name="text">
+            <string>Start Minimized</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="lbl_ShowTooltipOnMinimise">
+           <property name="text">
+            <string>Show Tooltips while Minimized</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="lbl_quitOnClose">
+           <property name="text">
+            <string>Quit on Close</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0">
+          <widget class="QLabel" name="lbl_useLogRpmScale">
+           <property name="text">
+            <string>RPM sliders use logarithmic scale</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="tabPrefController">
         <attribute name="title">
