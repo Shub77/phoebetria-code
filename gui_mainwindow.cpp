@@ -714,7 +714,8 @@ int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
     int channelMaxRPM = maxRPM(channel);
     int channelMinRPM = floor(channelMaxRPM * 0.50 / 100) * 100;
 
-    value = valueToLogScale(value);
+    if (ph_prefs().useLogScaleRpmSliders())
+        value = valueToLogScale(value);
 
     int rpm = fcdata().percentageToRpm(channel, value, RECON_RPM_STEPSIZE);
 
