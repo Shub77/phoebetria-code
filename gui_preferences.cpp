@@ -16,14 +16,15 @@
 
 #include "gui_preferences.h"
 #include "ui_gui_preferences.h"
-
 #include "phoebetriaapp.h"
+#include <QDebug>
 
 gui_Preferences::gui_Preferences(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::gui_Preferences)
 {
     ui->setupUi(this);
+    getProfileList();
     initControls();
 }
 
@@ -39,9 +40,37 @@ void gui_Preferences::initControls(void)
     ui->ctrl_showTooltipOnMinimize->setChecked(ph_prefs().showTrayIconTooltips());
     ui->ctrl_useLogRpmScale->setChecked(ph_prefs().useLogScaleRpmSliders());
     ui->ctrl_quitOnClose->setChecked(ph_prefs().quitOnClose());
+    ui->ctrl_startupProfile->setCurrentIndex(ui->ctrl_startupProfile->findText(ph_prefs().startupProfile()));
+    ui->ctrl_shutdownProfile->setCurrentIndex(ui->ctrl_shutdownProfile->findText(ph_prefs().shutdownProfile()));
+}
 
-    //ui->ctrl_startupProfile->setsetChecked(ph_prefs().setStartupProfile());
-    //ui->ctrl_shutdownProfile->setChecked(ph_prefs().setShutdownProfile());
+bool gui_Preferences::getProfileList(void)
+{
+    FanControllerProfile fcp;
+
+    ui->ctrl_startupProfile->clear();
+    ui->ctrl_shutdownProfile->clear();
+    ui->ctrl_startupProfile->addItem("Default");
+    ui->ctrl_shutdownProfile->addItem("Default");
+
+    QStringList m_ProfileList = fcp.getProfileNames();
+
+    bool startupProfileBS = ui->ctrl_startupProfile->blockSignals(true);
+    bool shutdownProfileBS = ui->ctrl_shutdownProfile->blockSignals(true);
+
+    for (int i = 0; i < m_ProfileList.count(); ++i)
+    {
+        const QString& item = m_ProfileList.at(i);
+        // Skip reserved profile names
+        if (FanControllerProfile::isReservedProfileName(item)) continue;
+        ui->ctrl_startupProfile->addItem(item);
+        ui->ctrl_shutdownProfile->addItem(item);
+    }
+
+    ui->ctrl_startupProfile->blockSignals(startupProfileBS);
+    ui->ctrl_shutdownProfile->blockSignals(shutdownProfileBS);
+
+    return true;
 }
 
 void gui_Preferences::commitChanges(void) const
@@ -51,9 +80,8 @@ void gui_Preferences::commitChanges(void) const
     ph_prefs().setShowIconTooltips(ui->ctrl_showTooltipOnMinimize->isChecked());
     ph_prefs().setUseLogScaleRpmSliders(ui->ctrl_useLogRpmScale->isChecked());
     ph_prefs().setQuitOnClose(ui->ctrl_quitOnClose->isChecked());
-
-    //ph_prefs().setStartupProfile(ui->ctrl_startupProfile->currentText());
-    //ph_prefs().setShutdownProfile(ui->ctrl_shutdownProfile->currentText());
+    ph_prefs().setStartupProfile(ui->ctrl_startupProfile->currentText());
+    ph_prefs().setShutdownProfile(ui->ctrl_shutdownProfile->currentText());
 
     ph_prefs().sync();
 }

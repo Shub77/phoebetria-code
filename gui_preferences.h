@@ -43,6 +43,10 @@ private slots:
 
 private:
     Ui::gui_Preferences *ui;
+
+    bool getProfileList(void);
+    QStringList m_ProfileList;
+
 };
 
 #endif // GUI_PREFERENCES_H

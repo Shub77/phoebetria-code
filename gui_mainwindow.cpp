@@ -560,6 +560,24 @@ void gui_MainWindow::changeEvent(QEvent* e)
     QMainWindow::changeEvent(e);
 }
 
+bool gui_MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if(ph_prefs().showTrayIconTooltips() && !Qt::WindowMinimized)
+    {
+        if(event->type() == QEvent::ToolTip)
+        {
+            return true;
+        }
+        else
+        {
+            return QMainWindow::eventFilter(obj, event);
+        }
+    }
+    else
+    {
+        return QMainWindow::eventFilter(obj, event);
+    }
+}
 
 void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
@@ -885,8 +903,6 @@ void gui_MainWindow::on_actionPreferences_triggered()
     updateAllSpeedCtrls();
 }
 
-
-
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 {
     gui_Profiles* profileDlg = new gui_Profiles(this);
@@ -1178,23 +1194,4 @@ SliderOverlay::SliderOverlay(QSlider *parent)
 {
     setPalette(Qt::transparent);
     setAttribute(Qt::WA_TransparentForMouseEvents);
-}
-
-bool gui_MainWindow::eventFilter(QObject *obj, QEvent *event)
-{
-    if(ph_prefs().showTrayIconTooltips() && !Qt::WindowMinimized)
-    {
-        if(event->type() == QEvent::ToolTip)
-        {
-            return true;
-        }
-        else
-        {
-            return QMainWindow::eventFilter(obj, event);
-        }
-    }
-    else
-    {
-        return QMainWindow::eventFilter(obj, event);
-    }
 }

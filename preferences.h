@@ -61,8 +61,8 @@ public:
     bool    minimizeToTray(bool defaultVal = true) const;
     bool    showTrayIconTooltips(bool defaultVal = true) const;
     bool    useLogScaleRpmSliders(bool defaultVal = true) const;
-    QString startupProfile(QString defaultVal = "") const;
-    QString shutdownProfile(QString defaultVal = "") const;
+    QString startupProfile(QString defaultVal = "Default") const;
+    QString shutdownProfile(QString defaultVal = "Default") const;
     bool    quitOnClose(bool defaultVal = DEFAULT_CLOSEBEHAVIOUR) const;
     QString channelName(unsigned channel, QString defaultVal = "") const;
     QString probeName(unsigned channel, QString defaultVal = "") const;
