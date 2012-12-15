@@ -71,8 +71,8 @@ bool gui_Preferences::getProfileList(void)
 
     ui->ctrl_startupProfile->clear();
     ui->ctrl_shutdownProfile->clear();
-    ui->ctrl_startupProfile->addItem("<None>");
-    ui->ctrl_shutdownProfile->addItem("<None>");
+    ui->ctrl_startupProfile->addItem("");
+    ui->ctrl_shutdownProfile->addItem("");
 
     QStringList m_ProfileList = fcp.getProfileNames();
 
