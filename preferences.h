@@ -57,23 +57,23 @@ public:
 
     static QString filepath(void);
 
-    bool    startMinimised(bool defaultVal = false) const;
-    bool    minimiseToTray(bool defaultVal = true) const;
+    bool    startMinimized(bool defaultVal = false) const;
+    bool    minimizeToTray(bool defaultVal = true) const;
     bool    showTrayIconTooltips(bool defaultVal = true) const;
     bool    useLogScaleRpmSliders(bool defaultVal = true) const;
     QString startupProfile(QString defaultVal = "") const;
     QString shutdownProfile(QString defaultVal = "") const;
-    bool    quitOnCloseButton(bool defaultVal = DEFAULT_CLOSEBEHAVIOUR) const;
+    bool    quitOnClose(bool defaultVal = DEFAULT_CLOSEBEHAVIOUR) const;
     QString channelName(unsigned channel, QString defaultVal = "") const;
     QString probeName(unsigned channel, QString defaultVal = "") const;
 
-    void setStartMinimised(bool istrue);
-    void setMinimiseToTray(bool istrue);
+    void setStartMinimized(bool istrue);
+    void setMinimizeToTray(bool istrue);
     void setShowIconTooltips(bool istrue);
     void setUseLogScaleRpmSliders(bool istrue);
+    void setQuitOnClose(bool istrue);
     void setStartupProfile(const QString& profileName);
     void setShutdownProfile(const QString& profileName);
-    void setQuitOnCloseButtons(bool istrue);
     void setChannelName(unsigned channel, const QString& name);
     void setProbeName(unsigned channel, const QString& name);
 

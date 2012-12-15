@@ -19,13 +19,13 @@
 #include <QSettings>
 #include <QFileInfo>
 
-static const char* key_startMinimised       = "UserPrefs/startMinimised";
-static const char* key_minimiseToTray       = "UserPrefs/minimiseToTray";
+static const char* key_startMinimized       = "UserPrefs/startMinimized";
+static const char* key_minimizeToTray       = "UserPrefs/minimizeToTray";
 static const char* key_showTrayIconTT       = "UserPrefs/showTrayIconTooltips";
 static const char* key_useLogScaleRpmSliders  = "UserPrefs/useLogScaleRpmSliders";
 static const char* key_startupProfile       = "UserPrefs/startupProfile";
 static const char* key_shutdownProfile      = "UserPrefs/shutdownProfile";
-static const char* key_quitOnCloseButton    = "UserPrefs/quitOnCloseButton";
+static const char* key_quitOnClose          = "UserPrefs/quitOnClose";
 
 static const char* keyBase_channelName      = "UserPrefs/channelName";
 static const char* keyBase_probeName        = "UserPrefs/probeName";
@@ -51,14 +51,14 @@ QString Preferences::filepath(void)
  Access functions
  ****************************************************************************/
 
-bool Preferences::startMinimised(bool defaultVal) const
+bool Preferences::startMinimized(bool defaultVal) const
 {
-    return m_settings.value(key_startMinimised, defaultVal).toBool();
+    return m_settings.value(key_startMinimized, defaultVal).toBool();
 }
 
-bool Preferences::minimiseToTray(bool defaultVal) const
+bool Preferences::minimizeToTray(bool defaultVal) const
 {
-    return m_settings.value(key_minimiseToTray, defaultVal).toBool();
+    return m_settings.value(key_minimizeToTray, defaultVal).toBool();
 }
 
 bool Preferences::showTrayIconTooltips(bool defaultVal) const
@@ -82,9 +82,9 @@ QString Preferences::shutdownProfile(QString defaultVal) const
     return m_settings.value(key_shutdownProfile, defaultVal).toString();
 }
 
-bool Preferences::quitOnCloseButton(bool defaultVal) const
+bool Preferences::quitOnClose(bool defaultVal) const
 {
-    return m_settings.value(key_quitOnCloseButton, defaultVal).toBool();
+    return m_settings.value(key_quitOnClose, defaultVal).toBool();
 }
 
 QString Preferences::channelName(unsigned channel, QString defaultVal) const
@@ -105,14 +105,14 @@ QString Preferences::probeName(unsigned channel, QString defaultVal) const
  Set functions
  ****************************************************************************/
 
-void Preferences::setStartMinimised(bool istrue)
+void Preferences::setStartMinimized(bool istrue)
 {
-    m_settings.setValue(key_startMinimised, istrue);
+    m_settings.setValue(key_startMinimized, istrue);
 }
 
-void Preferences::setMinimiseToTray(bool istrue)
+void Preferences::setMinimizeToTray(bool istrue)
 {
-    m_settings.setValue(key_minimiseToTray, istrue);
+    m_settings.setValue(key_minimizeToTray, istrue);
 }
 
 void Preferences::setShowIconTooltips(bool istrue)
@@ -135,9 +135,9 @@ void Preferences::setShutdownProfile(const QString& profileName)
     m_settings.setValue(key_shutdownProfile, profileName);
 }
 
-void Preferences::setQuitOnCloseButtons(bool istrue)
+void Preferences::setQuitOnClose(bool istrue)
 {
-    m_settings.setValue(key_quitOnCloseButton, istrue);
+    m_settings.setValue(key_quitOnClose, istrue);
 }
 
 void Preferences::setChannelName(unsigned channel, const QString& name)

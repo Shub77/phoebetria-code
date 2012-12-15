@@ -34,14 +34,27 @@ gui_Preferences::~gui_Preferences()
 
 void gui_Preferences::initControls(void)
 {
-    ui->ctrl_minimizeToTray->setChecked(ph_prefs().minimiseToTray());
+    ui->ctrl_minimizeOnStart->setChecked(ph_prefs().startMinimized());
+    ui->ctrl_minimizeToTray->setChecked(ph_prefs().minimizeToTray());
+    ui->ctrl_showTooltipOnMinimize->setChecked(ph_prefs().showTrayIconTooltips());
     ui->ctrl_useLogRpmScale->setChecked(ph_prefs().useLogScaleRpmSliders());
+    ui->ctrl_quitOnClose->setChecked(ph_prefs().quitOnClose());
+
+    //ui->ctrl_startupProfile->setsetChecked(ph_prefs().setStartupProfile());
+    //ui->ctrl_shutdownProfile->setChecked(ph_prefs().setShutdownProfile());
 }
 
 void gui_Preferences::commitChanges(void) const
 {
-    ph_prefs().setMinimiseToTray(ui->ctrl_minimizeToTray->isChecked());
+    ph_prefs().setStartMinimized(ui->ctrl_minimizeOnStart->isChecked());
+    ph_prefs().setMinimizeToTray(ui->ctrl_minimizeToTray->isChecked());
+    ph_prefs().setShowIconTooltips(ui->ctrl_showTooltipOnMinimize->isChecked());
     ph_prefs().setUseLogScaleRpmSliders(ui->ctrl_useLogRpmScale->isChecked());
+    ph_prefs().setQuitOnClose(ui->ctrl_quitOnClose->isChecked());
+
+    //ph_prefs().setStartupProfile(ui->ctrl_startupProfile->currentText());
+    //ph_prefs().setShutdownProfile(ui->ctrl_shutdownProfile->currentText());
+
     ph_prefs().sync();
 }
 

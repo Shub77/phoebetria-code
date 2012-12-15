@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>520</width>
-    <height>340</height>
+    <height>352</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -117,7 +117,7 @@
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="lbl_MinimiseToTray">
+          <widget class="QLabel" name="lbl_MinimizeToTray">
            <property name="text">
             <string>Minimize to Tray</string>
            </property>
@@ -131,7 +131,7 @@
           </widget>
          </item>
          <item row="5" column="0">
-          <widget class="QLabel" name="lbl_ShowTooltipOnMinimise">
+          <widget class="QLabel" name="lbl_ShowTooltipOnMinimize">
            <property name="text">
             <string>Show Tooltips while Minimized</string>
            </property>

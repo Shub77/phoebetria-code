@@ -83,6 +83,11 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     setWindowIcon(QIcon(":/icon16x16"));
 
+    if (ph_prefs().startMinimized())
+    {
+        this->setWindowState(Qt::WindowMinimized);
+    }
+
     initCtrlArrays();
 
     // Synchronise fan controller data with GUI.
@@ -535,7 +540,7 @@ void gui_MainWindow::changeEvent(QEvent* e)
     switch (e->type())
     {
     case QEvent::WindowStateChange:
-        if (this->windowState() & Qt::WindowMinimized && ph_prefs().minimiseToTray())
+        if (this->windowState() & Qt::WindowMinimized && ph_prefs().minimizeToTray())
         {
             if (QSystemTrayIcon::isSystemTrayAvailable())
             {
