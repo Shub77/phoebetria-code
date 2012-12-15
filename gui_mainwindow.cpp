@@ -50,6 +50,8 @@ static const char* style_sliderOverylay_yellow =
             "SliderOverlay::add-page:vertical { border: 0px transparant; }"
             "SliderOverlay::sub-page:vertical { border: 0px transparant; }";
 
+const double gui_MainWindow::toLogScale       = log(101) / 100;
+const double gui_MainWindow::toLinearScale    = (log(101) - log(1)) / 100;
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -357,7 +359,8 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 
         int newValue = fcdata().rpmToPercentage(channel, newRPM);
 
-        newValue = valueToLinearScale(newValue);
+        if (ph_prefs().useLogScaleRpmSliders())
+            newValue = valueToLinearScale(newValue);
 
         bool sb = m_ctrls_RpmSliders[channel]->blockSignals(true);
         m_ctrls_RpmSliders[channel]->setValue(newValue);
@@ -421,7 +424,9 @@ void gui_MainWindow::updateRpmIndicator(int channel)
     const char *style;
 
     sliderPosition = fcdata().rpmToPercentage(channel, fcdata().lastRPM(channel));
-    sliderPosition = valueToLinearScale(sliderPosition);
+
+    if (ph_prefs().useLogScaleRpmSliders())
+        sliderPosition = valueToLinearScale(sliderPosition);
 
     if (fcdata().isAuto())
     {
@@ -491,7 +496,7 @@ void gui_MainWindow::changeEvent(QEvent* e)
     switch (e->type())
     {
     case QEvent::WindowStateChange:
-        if (this->windowState() & Qt::WindowMinimized)
+        if (this->windowState() & Qt::WindowMinimized && ph_prefs().minimiseToTray())
         {
             if (QSystemTrayIcon::isSystemTrayAvailable())
             {

@@ -22,6 +22,7 @@
 static const char* key_startMinimised       = "UserPrefs/startMinimised";
 static const char* key_minimiseToTray       = "UserPrefs/minimiseToTray";
 static const char* key_showTrayIconTT       = "UserPrefs/showTrayIconTooltips";
+static const char* key_useLogScaleRpmSliders  = "UserPrefs/useLogScaleRpmSliders";
 static const char* key_startupProfile       = "UserPrefs/startupProfile";
 static const char* key_shutdownProfile      = "UserPrefs/shutdownProfile";
 static const char* key_quitOnCloseButton    = "UserPrefs/quitOnCloseButton";
@@ -64,6 +65,12 @@ bool Preferences::showTrayIconTooltips(bool defaultVal) const
 {
     return m_settings.value(key_showTrayIconTT, defaultVal).toBool();
 }
+
+bool Preferences::useLogScaleRpmSliders(bool defaultVal) const
+{
+    return m_settings.value(key_useLogScaleRpmSliders, defaultVal).toBool();
+}
+
 
 QString Preferences::startupProfile(QString defaultVal) const
 {;
@@ -111,6 +118,11 @@ void Preferences::setMinimiseToTray(bool istrue)
 void Preferences::setShowIconTooltips(bool istrue)
 {
     m_settings.setValue(key_showTrayIconTT, istrue);
+}
+
+void Preferences::setUseLogScaleRpmSliders(bool istrue)
+{
+    m_settings.setValue(key_useLogScaleRpmSliders, istrue);
 }
 
 void Preferences::setStartupProfile(const QString& profileName)

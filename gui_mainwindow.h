@@ -28,9 +28,6 @@
 #include <QDebug>
 
 
-const double TO_LOG_SCALE       = log(101) / 100;
-const double TO_LINEAR_SCALE    = (log(101) - log(1)) / 100;
-
 class SliderOverlay : public QSlider
 {
     Q_OBJECT
@@ -184,14 +181,13 @@ private:
 
     int valueToLogScale(int linearValue) const
     {
-        return ceil(log(linearValue+1) / TO_LOG_SCALE);
+        return ceil(log(linearValue+1) / toLogScale);
     }
 
     int valueToLinearScale(int linearValue) const
     {
-        return floor(exp(TO_LINEAR_SCALE*(linearValue)) - 1);
+        return floor(exp(toLinearScale*(linearValue)) - 1);
     }
-
 
     void userPressedChannelRpmSlider(int channel);
     void userReleasedChannelRpmSlider(int channel);
@@ -221,6 +217,9 @@ private:
 
     void initTargetRpmIndicators();
 
+
+    static const double toLogScale;
+    static const double toLinearScale;
 };
 
 #endif // GUI_MAINWINDOW_H
