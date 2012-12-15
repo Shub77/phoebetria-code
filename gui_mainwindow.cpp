@@ -658,13 +658,7 @@ int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
     int channelMaxRPM = maxRPM(channel);
     int channelMinRPM = floor(channelMaxRPM * 0.50 / 100) * 100;
 
-    qDebug() << "--------------";
-    qDebug() << "lin val:" << value;
-
     value = valueToLogScale(value);
-
-    qDebug() << "Log val:" << value;
-    qDebug() << "--------------";
 
     int rpm = fcdata().percentageToRpm(channel, value, RECON_RPM_STEPSIZE);
 
