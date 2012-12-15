@@ -25,6 +25,11 @@
 #include <QLayout>
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
+#include <QDebug>
+
+
+const double TO_LOG_SCALE       = log(101) / 100;
+const double TO_LINEAR_SCALE    = (log(101) - log(1)) / 100;
 
 class SliderOverlay : public QSlider
 {
@@ -179,15 +184,12 @@ private:
 
     int valueToLogScale(int linearValue) const
     {
-        // FIXME: make the scale factor constant
-        return ceil(log(linearValue+1) / log(101) * 100);
+        return ceil(log(linearValue+1) / TO_LOG_SCALE);
     }
 
     int valueToLinearScale(int linearValue) const
     {
-        // FIXME: make the scale factor constant
-        double scale = (log(101) - log(1)) / 100;
-        return floor(exp(scale*(linearValue)) - 1);
+        return floor(exp(TO_LINEAR_SCALE*(linearValue)) - 1);
     }
 
 
