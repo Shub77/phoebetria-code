@@ -108,6 +108,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
 }
 
+
+
 void gui_MainWindow::syncGuiCtrlsWithFanController(void)
 {
     FanControllerData& fcd = fcdata();
@@ -174,6 +176,11 @@ bool gui_MainWindow::customAutoAvailable(void) const
 gui_MainWindow::~gui_MainWindow()
 {
     delete ui;
+
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+    {
+        delete m_ctrls_rpmIndicator[i];
+    }
 }
 
 void gui_MainWindow::initCtrlArrays(void)
