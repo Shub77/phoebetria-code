@@ -57,7 +57,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
 {
+
     ui->setupUi(this);
+    qApp->installEventFilter(this);
 
 #if defined Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
@@ -77,16 +79,16 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     initTrayIconMenu();
 
+    if (ph_prefs().startMinimized())
+    {
+        this->setWindowState(Qt::WindowMinimized);
+    }
+
     m_trayIcon.setToolTip("Phoebetria");
     connect(&m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(onTrayIconActivated(QSystemTrayIcon::ActivationReason)));
 
     setWindowIcon(QIcon(":/icon16x16"));
-
-    if (ph_prefs().startMinimized())
-    {
-        this->setWindowState(Qt::WindowMinimized);
-    }
 
     initCtrlArrays();
 
@@ -1176,4 +1178,23 @@ SliderOverlay::SliderOverlay(QSlider *parent)
 {
     setPalette(Qt::transparent);
     setAttribute(Qt::WA_TransparentForMouseEvents);
+}
+
+bool gui_MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if(ph_prefs().showTrayIconTooltips() && !Qt::WindowMinimized)
+    {
+        if(event->type() == QEvent::ToolTip)
+        {
+            return true;
+        }
+        else
+        {
+            return QMainWindow::eventFilter(obj, event);
+        }
+    }
+    else
+    {
+        return QMainWindow::eventFilter(obj, event);
+    }
 }
