@@ -92,7 +92,11 @@
 	QComboBox::drop-down:editable:on {
     	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FFFFFF, stop: 1 #DDDDDD);
 	}
-
+	
+	QComboBox:item:selected {
+    	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #BBBBBB, stop: 1 #AAAAAA);
+	}
+	
 	QComboBox:on {
     	padding-top: 3px;
     	padding-left: 4px;

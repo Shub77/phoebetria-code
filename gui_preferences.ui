@@ -26,7 +26,13 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QTabWidget" name="tabPreference">
+      <widget class="QTabWidget" name="Controller">
+       <property name="tabPosition">
+        <enum>QTabWidget::North</enum>
+       </property>
+       <property name="tabShape">
+        <enum>QTabWidget::Rounded</enum>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -157,195 +163,98 @@
         <attribute name="title">
          <string>Controller</string>
         </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <layout class="QFormLayout" name="formLayout_2">
-           <property name="fieldGrowthPolicy">
-            <enum>QFormLayout::ExpandingFieldsGrow</enum>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="2" column="2">
+          <widget class="QLineEdit" name="ctrl_channel1TempName"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Channel 3</string>
            </property>
-           <property name="rowWrapPolicy">
-            <enum>QFormLayout::DontWrapRows</enum>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QLineEdit" name="ctrl_channel4FanName"/>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Channel 5</string>
            </property>
-           <property name="horizontalSpacing">
-            <number>5</number>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QLineEdit" name="ctrl_channel3TempName"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Channel 4</string>
            </property>
-           <property name="verticalSpacing">
-            <number>5</number>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Temerature Probe Name</string>
            </property>
-           <property name="margin">
-            <number>5</number>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="ctrl_channel3FanName"/>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="ctrl_channel1FanName"/>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="ctrl_channel2FanName"/>
+         </item>
+         <item row="6" column="1">
+          <widget class="QLineEdit" name="ctrl_channel5FanName"/>
+         </item>
+         <item row="5" column="2">
+          <widget class="QLineEdit" name="ctrl_channel4TempName"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Channel 2</string>
            </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="lbl_IntervalMs_FcCommonSettings">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Common Settings</string>
-             </property>
-             <property name="indent">
-              <number>0</number>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="ctrl_IntervalMs_FcCommonSettings">
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="singleStep">
-              <number>10</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="lbl_IntervalMs_FcAlarmTempAndMaxSpeed">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Alarm Temp and Max Speed</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="ctrl_IntervalMs_FcAlarmTempAndMaxSpeed">
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="singleStep">
-              <number>10</number>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="lbl_IntervalMs_FcCurrentTempAndSpeed">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Current Temp and Speed</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QSpinBox" name="ctrl_IntervalMs_FcCurrentTempAndSpeed">
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="singleStep">
-              <number>10</number>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="lbl_PrimaryDb_DeleteOnAnyCreateError">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Delete on any Create Errors</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QSlider" name="ctrl_PrimaryDb_DeleteOnAnyCreateError">
-             <property name="styleSheet">
-              <string notr="true">QSlider {
- min-width:71px;
- min-height:21px;
- max-width:71px;
- max-height:21px;
- }
- QSlider::groove:horizontal {
- background-image: url(:/Images/slider_new_bg.png);
- background-repeat: no-repeat;
- background-position:center;
- margin:0px;
- border:0px;
- padding:0px;
- }
- 
-QSlider::sub-page:horizontal {
- background-image: url(:/Images/slider_new_on.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-left:0px;
- }
- 
-QSlider::add-page:horizontal {
- background-image: url(:/Images/slider_new_off.png);
- background-repeat: no-repeat;
- background-position:right;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-right:0px;
- }
- 
-QSlider::handle:horizontal {
- background-image: url(:/Images/slider_toggle_new.png);
- width:35px;
- height:17px;
- margin:0px;
- border:0px;
- padding:0px;
- }
- 
-QSlider::sub-page:horizontal:disabled {
- background-image: url(:/Images/slider_temp_cel_disabled.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-left:0px;
- }
- 
-QSlider::add-page:horizontal:disabled {
- background-image: url(:/Images/slider_temp_fah_disabled.png);
- background-repeat: no-repeat;
- background-position:left;
- background-origin:content;
- margin:0px;
- border:0px;
- padding-right:0px;
- }
- 
-QSlider::handle:horizontal:disabled {
- background-image: url(:/Images/slider_toggle.png);
- width:35px;
- height:17px;
- margin:0px;
- border:0px;
- padding:0px;
- }
-</string>
-             </property>
-             <property name="maximum">
-              <number>1</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          </widget>
+         </item>
+         <item row="6" column="2">
+          <widget class="QLineEdit" name="ctrl_channel5TempName"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Channel 1</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QLineEdit" name="ctrl_channel2TempName"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Fan Name</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0" colspan="3">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
