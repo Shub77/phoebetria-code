@@ -26,6 +26,7 @@
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
 #include <QDebug>
+#include <QMenu>
 
 
 class SliderOverlay : public QSlider
@@ -153,6 +154,8 @@ private:
 
     void initWaitForReqChannelParams(void);
 
+    void initTrayIconMenu(void);
+
     bool customAutoAvailable(void) const;
 
     FanControllerData& fcdata(void) const;
@@ -216,6 +219,7 @@ private:
     QPushButton* m_ctrls_channel[FC_MAX_CHANNELS];
 
     QSystemTrayIcon m_trayIcon;
+    QMenu m_trayIconMenu;
 
     bool m_reqChannelParamsAreSet;
 

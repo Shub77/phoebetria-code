@@ -75,6 +75,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->ctrl_syncGui->hide();
 #endif
 
+    initTrayIconMenu();
+
     m_trayIcon.setToolTip("Phoebetria");
     connect(&m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(onTrayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -149,6 +151,14 @@ void gui_MainWindow::initWaitForReqChannelParams(void)
             this, SLOT(checkForReqChannelParems()));
 
     checkForReqChannelParems();
+}
+
+void gui_MainWindow::initTrayIconMenu(void)
+{
+    m_trayIconMenu.addAction("test1");
+    m_trayIconMenu.addAction("test2");
+
+    m_trayIcon.setContextMenu(&m_trayIconMenu);
 }
 
 void gui_MainWindow::checkForReqChannelParems(void)
@@ -546,12 +556,17 @@ void gui_MainWindow::changeEvent(QEvent* e)
 
 void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    (void)reason; //Unused
+    if (reason == QSystemTrayIcon::Context)
+    {
 
-    m_trayIcon.hide();
-    this->showNormal();
-    this->raise();
-    this->activateWindow();
+    }
+    else
+    {
+        m_trayIcon.hide();
+        this->showNormal();
+        this->raise();
+        this->activateWindow();
+    }
 }
 
 /* ------------------------------------------------------------------------
