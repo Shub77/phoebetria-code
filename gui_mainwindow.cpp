@@ -55,7 +55,7 @@ static const char* style_buttonOverlay[FC_MAX_CHANNELS] =
     "LabelOverlay {background: url(:/Images/channel_1.png); }",
     "LabelOverlay {background: url(:/Images/channel_2.png); }",
     "LabelOverlay {background: url(:/Images/channel_3.png); }",
-    "LabelOverlay {background: url(:/Images/channel_4.png); }",
+    "LabelOverlay {color: red; }",
     "LabelOverlay {background: url(:/Images/channel_5.png); }"
 };
 
@@ -1253,6 +1253,7 @@ void gui_MainWindow::initTempAffinityIcons()
 //        int margin = (fontInfo.pixelSize() * 6);
         //margin = m_ctrls_tempAffinityIcon[i]->width() - margin;
 
+        m_ctrls_tempAffinityIcon[i]->setStyleSheet("LabelOverlay {color: red;}");
         m_layout_tempAffinityIcon[i]->setContentsMargins(0,0,3,0);
 
 
@@ -1284,5 +1285,4 @@ LabelOverlay::LabelOverlay(QLabel *parent)
     font.setPointSize(font.pointSize()-2);
     this->setFont(font);
     this->setAlignment(Qt::AlignRight | Qt::AlignTop);
-
 }
