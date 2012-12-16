@@ -16,15 +16,20 @@
 
 #include "gui_preferences.h"
 #include "ui_gui_preferences.h"
-#include "phoebetriaapp.h"
+
 #include <QDebug>
+#include <QStringList>
+
+#include "phoebetriaapp.h"
+#include "themes.h"
 
 gui_Preferences::gui_Preferences(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::gui_Preferences)
 {
     ui->setupUi(this);
-    getProfileList();
+    populateProfileComboBoxes();
+    populateThemesComboBox();
     initControls();
 }
 
@@ -65,23 +70,18 @@ void gui_Preferences::initControls(void)
 
 }
 
-bool gui_Preferences::getProfileList(void)
+void gui_Preferences::populateProfileComboBoxes(void)
 {
     FanControllerProfile fcp;
 
-    ui->ctrl_startupProfile->clear();
-    ui->ctrl_shutdownProfile->clear();
     ui->ctrl_startupProfile->addItem("");
     ui->ctrl_shutdownProfile->addItem("");
 
-    QStringList m_ProfileList = fcp.getProfileNames();
+    QStringList profileList = fcp.getProfileNames();
 
-    bool startupProfileBS = ui->ctrl_startupProfile->blockSignals(true);
-    bool shutdownProfileBS = ui->ctrl_shutdownProfile->blockSignals(true);
-
-    for (int i = 0; i < m_ProfileList.count(); ++i)
+    for (int i = 0; i < profileList.count(); ++i)
     {
-        const QString& item = m_ProfileList.at(i);
+        const QString& item = profileList.at(i);
         // Skip reserved profile names
         if (FanControllerProfile::isReservedProfileName(item))
             continue;
@@ -91,12 +91,24 @@ bool gui_Preferences::getProfileList(void)
 
     ui->ctrl_startupProfile->setCurrentIndex(0);
     ui->ctrl_shutdownProfile->setCurrentIndex(0);
-
-    ui->ctrl_startupProfile->blockSignals(startupProfileBS);
-    ui->ctrl_shutdownProfile->blockSignals(shutdownProfileBS);
-
-    return true;
 }
+
+
+void gui_Preferences::populateThemesComboBox(void)
+{
+    QStringList names;
+
+    Themes::getCustomThemeFilenames(&names);
+
+    names.sort();
+
+    ui->ctrl_style->addItem("");
+    for (int i = 0; i < names.count(); ++i)
+    {
+        ui->ctrl_style->addItem(names.at(i));
+    }
+}
+
 
 void gui_Preferences::commitChanges(void) const
 {
