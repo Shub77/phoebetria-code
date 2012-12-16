@@ -420,9 +420,23 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 
 void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
 {
-    m_ctrls_probeTemps[channel]->setText(
-        fcdata().temperatureString(temp, true)
-    );
+
+    if (fcdata().isSoftwareAuto())
+    {
+        for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+        {
+            if (fcdata().ramp(i).probeAffinity() == channel)
+            {
+                m_ctrls_probeTemps[i]->setText(
+                            fcdata().temperatureString(temp, true));
+            }
+        }
+    }
+    else
+    {
+        m_ctrls_probeTemps[channel]->setText(
+            fcdata().temperatureString(temp, true));
+    }
 }
 
 void gui_MainWindow::updateAllCurrentTempControls(void)
@@ -560,6 +574,7 @@ void gui_MainWindow::changeEvent(QEvent* e)
     QMainWindow::changeEvent(e);
 }
 
+// FIXME: URGENT: Has no effect?
 bool gui_MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
     if(ph_prefs().showTrayIconTooltips() && !Qt::WindowMinimized)

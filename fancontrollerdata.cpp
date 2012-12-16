@@ -393,6 +393,23 @@ void FanControllerData::clearRampTemp(int channel)
 
 void FanControllerData::updateMinMax_temp(int channel, int t)
 {
+
+    if (isSoftwareAuto())
+    {
+        for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+        {
+            if (m_ramp[i].probeAffinity() == channel)
+                updateMinMax_temp_setvals(i, t);
+        }
+    }
+    else
+    {
+        updateMinMax_temp_setvals(channel, t);
+    }
+}
+
+void FanControllerData::updateMinMax_temp_setvals(int channel, int t)
+{
     FanChannelData& cd = m_channelSettings[channel];
 
     if (cd.minTemp() > t || !cd.isSet_MinTemp())

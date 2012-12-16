@@ -170,6 +170,7 @@ protected:
     void clearRampTemp(int channel);
 
     void updateMinMax_temp(int channel, int t);
+    void updateMinMax_temp_setvals(int channel, int t);
     void updateMinMax_rpm(int channel, int rpm);
 
 private:
