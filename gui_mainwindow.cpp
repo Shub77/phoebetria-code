@@ -1253,7 +1253,7 @@ void gui_MainWindow::initTempAffinityIcons()
 //        int margin = (fontInfo.pixelSize() * 6);
         //margin = m_ctrls_tempAffinityIcon[i]->width() - margin;
 
-        m_layout_tempAffinityIcon[i]->setContentsMargins(1,1,3,3);
+        m_layout_tempAffinityIcon[i]->setContentsMargins(0,0,3,0);
 
 
         m_layout_tempAffinityIcon[i]->addWidget(m_ctrls_tempAffinityIcon[i]);
