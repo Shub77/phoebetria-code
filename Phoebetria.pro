@@ -70,7 +70,8 @@ SOURCES += main.cpp \
     gui_softwareautosetup.cpp \
     softwareauto/fanramp.cpp \
     gui_profiles.cpp \
-    gui_setmanualrpm.cpp
+    gui_setmanualrpm.cpp \
+    themes.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -94,7 +95,8 @@ HEADERS  += gui_mainwindow.h \
     softwareauto/fanramp.h \
     gui_profiles.h \
     main.h \
-    gui_setmanualrpm.h
+    gui_setmanualrpm.h \
+    themes.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
