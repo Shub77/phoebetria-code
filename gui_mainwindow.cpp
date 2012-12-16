@@ -438,7 +438,7 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
             {
                 m_ctrls_probeTemps[i]->setText(
                             fcdata().temperatureString(temp, true));
-                m_ctrls_probeAffinityIcon[i]->setStyleSheet(style_buttonOverlay[i]);
+                m_ctrls_probeAffinityIcon[i]->setStyleSheet(style_buttonOverlay[channel]);
             }
         }
     }
@@ -1223,7 +1223,7 @@ void gui_MainWindow::initProbeAffinityIcons()
         m_ctrls_probeAffinityIcon[i]->setFlat(1);
         m_ctrls_probeAffinityIcon[i]->setAutoFillBackground(1);
         m_layout_probeAffinityIcon[i] = new QGridLayout(m_ctrls_channel[i]);
-        m_layout_probeAffinityIcon[i]->setContentsMargins(0,0,0,0);
+        m_layout_probeAffinityIcon[i]->setContentsMargins(32,0,0,15);
         m_layout_probeAffinityIcon[i]->addWidget(m_ctrls_probeAffinityIcon[i]);
     }
 }
