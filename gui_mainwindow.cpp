@@ -59,7 +59,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    qApp->installEventFilter(this);
+    //qApp->installEventFilter(this); // FIXME: URGENT: We're not using qApp (using PhoebetriaApp)
 
 #if defined Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/icon16x16"));
