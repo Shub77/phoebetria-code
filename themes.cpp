@@ -20,6 +20,7 @@
 #include <QFile>
 
 #include "preferences.h"
+#include "phoebetriaapp.h"
 
 Themes::Themes()
 {
@@ -80,5 +81,17 @@ QString Themes::getStyleSheet(const QString& filename)
         return QString();
 
     return QLatin1String(file.readAll());
+}
+
+bool Themes::setAppStyleSheet(const QString& filename)
+{
+    QString ss = getStyleSheet(filename);
+    ss = ss.simplified();
+    if (ss.isEmpty() || ss.isNull())
+        return false;
+
+    ph_phoebetriaApp()->setStyleSheet(ss);
+
+    return true;
 }
 

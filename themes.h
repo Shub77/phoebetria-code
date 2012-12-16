@@ -29,12 +29,21 @@ public:
     static QString themePath(void);
 
     static QString getStyleSheet(const QString& filename);
+
+    static bool setAppStyleSheet(const QString& filename);
+
     inline static QString getBuiltInStyleSheet(void);
+    inline static bool setAppToBuiltInStyleSheet(void);
 };
 
 QString Themes::getBuiltInStyleSheet(void)
 {
     return getStyleSheet(":/other/Phoebetria.qss");
+}
+
+bool Themes::setAppToBuiltInStyleSheet(void)
+{
+    return setAppStyleSheet(":/other/Phoebetria.qss");
 }
 
 #endif // THEMES_H

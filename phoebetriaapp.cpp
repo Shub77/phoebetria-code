@@ -43,7 +43,7 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     setApplicationName("Phoebetria");
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
-    setStyleSheet(Themes::getBuiltInStyleSheet());
+    Themes::setAppToBuiltInStyleSheet();
 
     DatabaseManager db;
     db.initAllDatabases();
