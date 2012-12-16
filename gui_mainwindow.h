@@ -36,12 +36,6 @@ public:
      SliderOverlay(QSlider *parent = 0);
 };
 
-class ButtonOverlay : public QPushButton
-{
-    Q_OBJECT
-public:
-     ButtonOverlay(QPushButton *parent = 0);
-};
 
 class LabelOverlay : public QLabel
 {
@@ -49,6 +43,7 @@ class LabelOverlay : public QLabel
 public:
      LabelOverlay(QLabel *parent = 0);
 };
+
 namespace Ui
 {
 class gui_MainWindow;
@@ -221,31 +216,31 @@ private:
     void updateProfileDisplay(const QString& profileName,
                               const QString& description);
 
+    void initTargetRpmOverlays();
+
+    void initProbeAffinityOverlays();
+
     Ui::gui_MainWindow *ui;
 
-    // Convenience pointers to controls
+    // Convenience pointers to controls that belong to ui->
     QLineEdit* m_ctrls_probeTemps[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_currentRPM[FC_MAX_CHANNELS];
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
-    SliderOverlay* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
-    QGridLayout* m_layout_rpmIndicator[FC_MAX_CHANNELS];
-    ButtonOverlay* m_ctrls_probeAffinityIcon[FC_MAX_CHANNELS];
-    QGridLayout* m_layout_probeAffinityIcon[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_channel[FC_MAX_CHANNELS];
-    LabelOverlay* m_ctrls_tempAffinityIcon[FC_MAX_CHANNELS];
-    QGridLayout* m_layout_tempAffinityIcon[FC_MAX_CHANNELS];
+
+
+    // These are initialised at run time by this class
+    SliderOverlay* m_ctrls_targetRpmOverlay[FC_MAX_CHANNELS];
+    QGridLayout* m_layout_targetRpmOverlay[FC_MAX_CHANNELS];
+    LabelOverlay* m_ctrls_probeAffinityOverlay[FC_MAX_CHANNELS];
+    QGridLayout* m_layout_probeAffinityOverlay[FC_MAX_CHANNELS];
 
 
     QSystemTrayIcon m_trayIcon;
     QMenu m_trayIconMenu;
 
     bool m_reqChannelParamsAreSet;
-
-    void initTargetRpmIndicators();
-    void initProbeAffinityIcons();
-    void initTempAffinityIcons();
-
 
     static const double toLogScale;
     static const double toLinearScale;
