@@ -43,6 +43,12 @@ public:
      ButtonOverlay(QPushButton *parent = 0);
 };
 
+class LabelOverlay : public QLabel
+{
+    Q_OBJECT
+public:
+     LabelOverlay(QLabel *parent = 0);
+};
 namespace Ui
 {
 class gui_MainWindow;
@@ -227,6 +233,9 @@ private:
     QGridLayout* m_layout_probeAffinityIcon[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_channel[FC_MAX_CHANNELS];
+    LabelOverlay* m_ctrls_tempAffinityIcon[FC_MAX_CHANNELS];
+    QGridLayout* m_layout_tempAffinityIcon[FC_MAX_CHANNELS];
+
 
     QSystemTrayIcon m_trayIcon;
     QMenu m_trayIconMenu;
@@ -235,6 +244,7 @@ private:
 
     void initTargetRpmIndicators();
     void initProbeAffinityIcons();
+    void initTempAffinityIcons();
 
 
     static const double toLogScale;

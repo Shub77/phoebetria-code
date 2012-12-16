@@ -52,11 +52,11 @@ static const char* style_sliderOverylay_yellow =
 
 static const char* style_buttonOverlay[FC_MAX_CHANNELS] =
 {
-    "ButtonOverlay {image: url(:/Images/channel_1.png); }",
-    "ButtonOverlay {image: url(:/Images/channel_2.png); }",
-    "ButtonOverlay {image: url(:/Images/channel_3.png); }",
-    "ButtonOverlay {image: url(:/Images/channel_4.png); }",
-    "ButtonOverlay {image: url(:/Images/channel_5.png); }"
+    "LabelOverlay {background: url(:/Images/channel_1.png); }",
+    "LabelOverlay {background: url(:/Images/channel_2.png); }",
+    "LabelOverlay {background: url(:/Images/channel_3.png); }",
+    "LabelOverlay {background: url(:/Images/channel_4.png); }",
+    "LabelOverlay {background: url(:/Images/channel_5.png); }"
 };
 
 const double gui_MainWindow::toLogScale       = log(101) / 100;
@@ -113,7 +113,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     connectCustomSignals();
     initWaitForReqChannelParams();
     initTargetRpmIndicators();
-    initProbeAffinityIcons();
+    initTempAffinityIcons();
 
     updateChannelControlTooltips();
 
@@ -438,7 +438,8 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
             {
                 m_ctrls_probeTemps[i]->setText(
                             fcdata().temperatureString(temp, true));
-                m_ctrls_probeAffinityIcon[i]->setStyleSheet(style_buttonOverlay[channel]);
+                //m_ctrls_probeAffinityIcon[i]->setStyleSheet(style_buttonOverlay[channel]);
+                m_ctrls_tempAffinityIcon[i]->setStyleSheet(style_buttonOverlay[channel]);
             }
         }
     }
@@ -1227,13 +1228,23 @@ void gui_MainWindow::initProbeAffinityIcons()
 //        m_layout_probeAffinityIcon[i]->setContentsMargins(32,0,0,15);
 //        m_layout_probeAffinityIcon[i]->addWidget(m_ctrls_probeAffinityIcon[i]);
           m_ctrls_probeAffinityIcon[i] = new ButtonOverlay();
-          m_ctrls_probeAffinityIcon[i]->setFlat(1);
-          m_ctrls_probeAffinityIcon[i]->setAutoFillBackground(1);
-          //m_ctrls_probeAffinityIcon[i]->setSizePolicy(12, 12);
           m_layout_probeAffinityIcon[i] = new QGridLayout(m_ctrls_probeTemps[i]);
           m_layout_probeAffinityIcon[i]->setContentsMargins(0,0,0,0);
           m_layout_probeAffinityIcon[i]->addWidget(m_ctrls_probeAffinityIcon[i]);
 
+    }
+}
+
+void gui_MainWindow::initTempAffinityIcons()
+{
+    /* initialize target RPM indicators overlayed with the current RPM sliders */
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
+        m_ctrls_tempAffinityIcon[i] = new LabelOverlay();
+        m_ctrls_tempAffinityIcon[i]->setStyleSheet(style_sliderOverylay_blue);
+        m_layout_tempAffinityIcon[i] = new QGridLayout(m_ctrls_probeTemps[i]);
+        m_layout_tempAffinityIcon[i]->setContentsMargins(20,0,20,0);
+        m_layout_tempAffinityIcon[i]->addWidget(m_ctrls_tempAffinityIcon[i]);
     }
 }
 
@@ -1246,6 +1257,13 @@ SliderOverlay::SliderOverlay(QSlider *parent)
 
 ButtonOverlay::ButtonOverlay(QPushButton *parent)
     : QPushButton(parent)
+{
+    setPalette(Qt::transparent);
+    setAttribute(Qt::WA_TransparentForMouseEvents);
+}
+
+LabelOverlay::LabelOverlay(QLabel *parent)
+    : QLabel(parent)
 {
     setPalette(Qt::transparent);
     setAttribute(Qt::WA_TransparentForMouseEvents);
