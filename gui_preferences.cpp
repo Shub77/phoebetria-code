@@ -88,9 +88,6 @@ void gui_Preferences::populateProfileComboBoxes(void)
         ui->ctrl_startupProfile->addItem(item);
         ui->ctrl_shutdownProfile->addItem(item);
     }
-
-    ui->ctrl_startupProfile->setCurrentIndex(0);
-    ui->ctrl_shutdownProfile->setCurrentIndex(0);
 }
 
 

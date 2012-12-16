@@ -31,6 +31,8 @@ Themes::Themes()
    dest will be cleared even if an error occurs
 
    Check dest->size() for the number of results
+
+   The results do NOT include the filepath in the names
 */
 
 void Themes::getCustomThemeFilenames(QStringList* dest)
