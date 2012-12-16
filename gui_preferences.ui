@@ -27,7 +27,10 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
    <property name="margin">
-    <number>5</number>
+    <number>10</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
    </property>
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout_2">
@@ -88,31 +91,14 @@
        </property>
        <widget class="QWidget" name="page_generalSettings">
         <layout class="QGridLayout" name="gridLayout_4">
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_minimizeOnStart">
-           <property name="text">
-            <string>Start Minimized</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QCheckBox" name="ctrl_minimizeOnStart">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="lbl_quitOnClose">
            <property name="text">
             <string>Quit on Close</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="3" column="1">
           <widget class="QCheckBox" name="ctrl_quitOnClose">
            <property name="styleSheet">
             <string notr="true"/>
@@ -122,14 +108,38 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="5" column="0" colspan="4">
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="lbl_minimizeOnStart">
+           <property name="text">
+            <string>Start Minimized</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
           <widget class="QLabel" name="lbl_MinimizeToTray">
            <property name="text">
             <string>Minimize to Tray</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="0" column="3">
+          <widget class="QCheckBox" name="ctrl_minimizeOnStart">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
           <widget class="QCheckBox" name="ctrl_minimizeToTray">
            <property name="styleSheet">
             <string notr="true"/>
@@ -139,45 +149,28 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="lbl_ShowTooltipOnMinimize">
-           <property name="text">
-            <string>Show Tooltips while Minimized</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QCheckBox" name="ctrl_showTooltipOnMinimize">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="lbl_startupProfile">
-           <property name="text">
-            <string>Startup Profile</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QComboBox" name="ctrl_startupProfile">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
+         <item row="9" column="0">
           <widget class="QLabel" name="lbl_shutdownProfile">
            <property name="text">
             <string>Shutdown Profile</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="8" column="0">
+          <widget class="QLabel" name="lbl_startupProfile">
+           <property name="text">
+            <string>Startup Profile</string>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="0">
+          <widget class="QLabel" name="lbl_selectStyle">
+           <property name="text">
+            <string>Startup Style</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1" colspan="2">
           <widget class="QComboBox" name="ctrl_shutdownProfile">
            <property name="styleSheet">
             <string notr="true"/>
@@ -187,15 +180,32 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="lbl_selectStyle">
-           <property name="text">
-            <string>Startup Style</string>
+         <item row="8" column="1" colspan="2">
+          <widget class="QComboBox" name="ctrl_startupProfile">
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="10" column="1" colspan="2">
           <widget class="QComboBox" name="ctrl_style"/>
+         </item>
+         <item row="4" column="0" colspan="2">
+          <widget class="QLabel" name="lbl_ShowTooltipOnMinimize">
+           <property name="text">
+            <string>Show Tooltips while Minimized</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QCheckBox" name="ctrl_showTooltipOnMinimize">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
