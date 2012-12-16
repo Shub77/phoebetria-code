@@ -439,7 +439,7 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
                 m_ctrls_probeTemps[i]->setText(
                             fcdata().temperatureString(temp, true));
                 //m_ctrls_probeAffinityIcon[i]->setStyleSheet(style_buttonOverlay[channel]);
-                m_ctrls_tempAffinityIcon[i]->setStyleSheet(style_buttonOverlay[channel]);
+                m_ctrls_tempAffinityIcon[i]->setText(QString::number(channel+1));
             }
         }
     }
@@ -1217,6 +1217,10 @@ void gui_MainWindow::initTargetRpmIndicators()
 
 void gui_MainWindow::initProbeAffinityIcons()
 {
+
+    return;
+
+
     /* initialize target RPM indicators overlayed with the current RPM sliders */
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
@@ -1241,10 +1245,15 @@ void gui_MainWindow::initTempAffinityIcons()
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_ctrls_tempAffinityIcon[i] = new LabelOverlay();
+        QString t(QChar(i+65));
+        m_ctrls_tempAffinityIcon[i]->setText(t);
         m_ctrls_tempAffinityIcon[i]->setStyleSheet(style_sliderOverylay_blue);
         m_layout_tempAffinityIcon[i] = new QGridLayout(m_ctrls_probeTemps[i]);
-        m_layout_tempAffinityIcon[i]->setContentsMargins(20,0,20,0);
+        int margin = m_ctrls_tempAffinityIcon[i]->font().pointSize() + 2;
+        //margin = m_ctrls_tempAffinityIcon[i]->width() - margin;
+        m_layout_tempAffinityIcon[i]->setContentsMargins(margin,-10,0,0);
         m_layout_tempAffinityIcon[i]->addWidget(m_ctrls_tempAffinityIcon[i]);
+
     }
 }
 
@@ -1265,6 +1274,9 @@ ButtonOverlay::ButtonOverlay(QPushButton *parent)
 LabelOverlay::LabelOverlay(QLabel *parent)
     : QLabel(parent)
 {
-    setPalette(Qt::transparent);
+    //setPalette(Qt::transparent);
     setAttribute(Qt::WA_TransparentForMouseEvents);
+    QFont font = this->font();
+    font.setPointSize(font.pointSize()-2);
+    this->setFont(font);
 }
