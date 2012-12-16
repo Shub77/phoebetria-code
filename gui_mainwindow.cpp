@@ -50,11 +50,14 @@ static const char* style_sliderOverylay_yellow =
             "SliderOverlay::add-page:vertical { border: 0px transparant; }"
             "SliderOverlay::sub-page:vertical { border: 0px transparant; }";
 
-static const char* style_buttonOverlay[1] = "ButtonOverlay {image: url(:/Images/channel_1.png); }";
-static const char* style_buttonOverlay[2] = "ButtonOverlay {image: url(:/Images/channel_2.png); }";
-static const char* style_buttonOverlay[3] = "ButtonOverlay {image: url(:/Images/channel_3.png); }";
-static const char* style_buttonOverlay[4] = "ButtonOverlay {image: url(:/Images/channel_4.png); }";
-static const char* style_buttonOverlay[5] = "ButtonOverlay {image: url(:/Images/channel_5.png); }";
+static const char* style_buttonOverlay[FC_MAX_CHANNELS] =
+{
+    "ButtonOverlay {image: url(:/Images/channel_1.png); }",
+    "ButtonOverlay {image: url(:/Images/channel_2.png); }",
+    "ButtonOverlay {image: url(:/Images/channel_3.png); }",
+    "ButtonOverlay {image: url(:/Images/channel_4.png); }",
+    "ButtonOverlay {image: url(:/Images/channel_5.png); }"
+};
 
 const double gui_MainWindow::toLogScale       = log(101) / 100;
 const double gui_MainWindow::toLinearScale    = (log(101) - log(1)) / 100;
@@ -110,6 +113,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     connectCustomSignals();
     initWaitForReqChannelParams();
     initTargetRpmIndicators();
+    initProbeAffinityIcons();
 
     updateChannelControlTooltips();
 
@@ -241,7 +245,6 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_channel[2] = ui->ctrl_channel3Select;
     m_ctrls_channel[3] = ui->ctrl_channel4Select;
     m_ctrls_channel[4] = ui->ctrl_channel5Select;
-
 }
 
 FanControllerData& gui_MainWindow::fcdata(void) const
@@ -435,8 +438,7 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
             {
                 m_ctrls_probeTemps[i]->setText(
                             fcdata().temperatureString(temp, true));
-                //FIXME: set stylesheet for corrisponding probe affinity
-                //m_ctrls_probeAffinityIcon[i]->setStyleSheet(style_ButtonOverlay[]);
+                m_ctrls_probeAffinityIcon[i]->setStyleSheet(style_buttonOverlay[i]);
             }
         }
     }
