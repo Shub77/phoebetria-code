@@ -28,6 +28,7 @@ gui_Preferences::gui_Preferences(QWidget *parent) :
     ui(new Ui::gui_Preferences)
 {
     ui->setupUi(this);
+    ui->ctrl_preferenceTabList->setCurrentRow(0);
     populateProfileComboBoxes();
     populateThemesComboBox();
     initControls();
@@ -147,4 +148,10 @@ void gui_Preferences::commitChanges(void) const
 void gui_Preferences::on_ctrl_actionButtons_accepted()
 {
     commitChanges();
+}
+
+void gui_Preferences::on_ctrl_preferenceTabList_itemSelectionChanged()
+{
+    ui->ctrl_preferenceTabs->setCurrentIndex(ui->ctrl_preferenceTabList->currentRow());
+    ui->ctrl_preferencesTabLabel->setText(ui->ctrl_preferenceTabList->currentItem()->text());
 }

@@ -41,6 +41,8 @@ protected:
 private slots:
     void on_ctrl_actionButtons_accepted();
 
+    void on_ctrl_preferenceTabList_itemSelectionChanged();
+
 private:
     Ui::gui_Preferences *ui;
 
