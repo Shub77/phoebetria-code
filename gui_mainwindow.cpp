@@ -438,8 +438,10 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
             {
                 m_ctrls_probeTemps[i]->setText(
                             fcdata().temperatureString(temp, true));
-                //m_ctrls_probeAffinityIcon[i]->setStyleSheet(style_buttonOverlay[channel]);
-                m_ctrls_tempAffinityIcon[i]->setText(QString::number(channel+1));
+                if (i != channel)
+                    m_ctrls_tempAffinityIcon[i]->setText(QString::number(channel+1));
+                else
+                    m_ctrls_tempAffinityIcon[i]->setText("");
             }
         }
     }
@@ -1253,7 +1255,7 @@ void gui_MainWindow::initTempAffinityIcons()
 //        int margin = (fontInfo.pixelSize() * 6);
         //margin = m_ctrls_tempAffinityIcon[i]->width() - margin;
 
-        m_ctrls_tempAffinityIcon[i]->setStyleSheet("LabelOverlay {color: red;}");
+        m_ctrls_tempAffinityIcon[i]->setStyleSheet("LabelOverlay {color: #f98;}");
         m_layout_tempAffinityIcon[i]->setContentsMargins(0,0,3,0);
 
 
@@ -1282,7 +1284,7 @@ LabelOverlay::LabelOverlay(QLabel *parent)
     //setPalette(Qt::transparent);
     setAttribute(Qt::WA_TransparentForMouseEvents);
     QFont font = this->font();
-    font.setPointSize(font.pointSize()-2);
+    font.setPointSize(font.pointSize()-1);
     this->setFont(font);
     this->setAlignment(Qt::AlignRight | Qt::AlignTop);
 }
