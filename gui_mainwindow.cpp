@@ -1204,8 +1204,27 @@ void gui_MainWindow::initTargetRpmIndicators()
     }
 }
 
+void gui_MainWindow::initProbeAffinityIcons()
+{
+    /* initialize target RPM indicators overlayed with the current RPM sliders */
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
+        m_ctrls_probeAffinityIcon[i] = new ButtonOverlay();
+        m_layout_probeAffinityIcon[i] = new QGridLayout(m_ctrls_channel[i]);
+        m_layout_probeAffinityIcon[i]->setContentsMargins(0,0,0,0);
+        m_layout_probeAffinityIcon[i]->addWidget(m_ctrls_probeAffinityIcon[i]);
+    }
+}
+
 SliderOverlay::SliderOverlay(QSlider *parent)
     : QSlider(parent)
+{
+    setPalette(Qt::transparent);
+    setAttribute(Qt::WA_TransparentForMouseEvents);
+}
+
+ButtonOverlay::ButtonOverlay(QPushButton *parent)
+    : QPushButton(parent)
 {
     setPalette(Qt::transparent);
     setAttribute(Qt::WA_TransparentForMouseEvents);

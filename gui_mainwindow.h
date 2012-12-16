@@ -36,6 +36,13 @@ public:
      SliderOverlay(QSlider *parent = 0);
 };
 
+class ButtonOverlay : public QPushButton
+{
+    Q_OBJECT
+public:
+     ButtonOverlay(QPushButton *parent = 0);
+};
+
 namespace Ui
 {
 class gui_MainWindow;
@@ -216,6 +223,8 @@ private:
     QSlider* m_ctrls_RpmSliders[FC_MAX_CHANNELS];
     SliderOverlay* m_ctrls_rpmIndicator[FC_MAX_CHANNELS];
     QGridLayout* m_layout_rpmIndicator[FC_MAX_CHANNELS];
+    ButtonOverlay* m_ctrls_probeAffinityIcon[FC_MAX_CHANNELS];
+    QGridLayout* m_layout_probeAffinityIcon[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_channel[FC_MAX_CHANNELS];
 
@@ -225,6 +234,7 @@ private:
     bool m_reqChannelParamsAreSet;
 
     void initTargetRpmIndicators();
+    void initProbeAffinityIcons();
 
 
     static const double toLogScale;
