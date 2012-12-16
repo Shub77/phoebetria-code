@@ -1219,12 +1219,21 @@ void gui_MainWindow::initProbeAffinityIcons()
     /* initialize target RPM indicators overlayed with the current RPM sliders */
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
-        m_ctrls_probeAffinityIcon[i] = new ButtonOverlay();
-        m_ctrls_probeAffinityIcon[i]->setFlat(1);
-        m_ctrls_probeAffinityIcon[i]->setAutoFillBackground(1);
-        m_layout_probeAffinityIcon[i] = new QGridLayout(m_ctrls_channel[i]);
-        m_layout_probeAffinityIcon[i]->setContentsMargins(32,0,0,15);
-        m_layout_probeAffinityIcon[i]->addWidget(m_ctrls_probeAffinityIcon[i]);
+          /* This created the probe affinity in the channel icon */
+//        m_ctrls_probeAffinityIcon[i] = new ButtonOverlay();
+//        m_ctrls_probeAffinityIcon[i]->setFlat(1);
+//        m_ctrls_probeAffinityIcon[i]->setAutoFillBackground(1);
+//        m_layout_probeAffinityIcon[i] = new QGridLayout(m_ctrls_channel[i]);
+//        m_layout_probeAffinityIcon[i]->setContentsMargins(32,0,0,15);
+//        m_layout_probeAffinityIcon[i]->addWidget(m_ctrls_probeAffinityIcon[i]);
+          m_ctrls_probeAffinityIcon[i] = new ButtonOverlay();
+          m_ctrls_probeAffinityIcon[i]->setFlat(1);
+          m_ctrls_probeAffinityIcon[i]->setAutoFillBackground(1);
+          //m_ctrls_probeAffinityIcon[i]->setSizePolicy(12, 12);
+          m_layout_probeAffinityIcon[i] = new QGridLayout(m_ctrls_probeTemps[i]);
+          m_layout_probeAffinityIcon[i]->setContentsMargins(0,0,0,0);
+          m_layout_probeAffinityIcon[i]->addWidget(m_ctrls_probeAffinityIcon[i]);
+
     }
 }
 
