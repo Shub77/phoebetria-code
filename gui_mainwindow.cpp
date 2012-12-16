@@ -50,6 +50,12 @@ static const char* style_sliderOverylay_yellow =
             "SliderOverlay::add-page:vertical { border: 0px transparant; }"
             "SliderOverlay::sub-page:vertical { border: 0px transparant; }";
 
+static const char* style_buttonOverlay[1] = "ButtonOverlay {image: url(:/Images/channel_1.png); }";
+static const char* style_buttonOverlay[2] = "ButtonOverlay {image: url(:/Images/channel_2.png); }";
+static const char* style_buttonOverlay[3] = "ButtonOverlay {image: url(:/Images/channel_3.png); }";
+static const char* style_buttonOverlay[4] = "ButtonOverlay {image: url(:/Images/channel_4.png); }";
+static const char* style_buttonOverlay[5] = "ButtonOverlay {image: url(:/Images/channel_5.png); }";
+
 const double gui_MainWindow::toLogScale       = log(101) / 100;
 const double gui_MainWindow::toLinearScale    = (log(101) - log(1)) / 100;
 
@@ -429,6 +435,8 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
             {
                 m_ctrls_probeTemps[i]->setText(
                             fcdata().temperatureString(temp, true));
+                //FIXME: set stylesheet for corrisponding probe affinity
+                //m_ctrls_probeAffinityIcon[i]->setStyleSheet(style_ButtonOverlay[]);
             }
         }
     }
@@ -1210,6 +1218,8 @@ void gui_MainWindow::initProbeAffinityIcons()
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_ctrls_probeAffinityIcon[i] = new ButtonOverlay();
+        m_ctrls_probeAffinityIcon[i]->setFlat(1);
+        m_ctrls_probeAffinityIcon[i]->setAutoFillBackground(1);
         m_layout_probeAffinityIcon[i] = new QGridLayout(m_ctrls_channel[i]);
         m_layout_probeAffinityIcon[i]->setContentsMargins(0,0,0,0);
         m_layout_probeAffinityIcon[i]->addWidget(m_ctrls_probeAffinityIcon[i]);
