@@ -1249,9 +1249,13 @@ void gui_MainWindow::initTempAffinityIcons()
         m_ctrls_tempAffinityIcon[i]->setText(t);
         m_ctrls_tempAffinityIcon[i]->setStyleSheet(style_sliderOverylay_blue);
         m_layout_tempAffinityIcon[i] = new QGridLayout(m_ctrls_probeTemps[i]);
-        int margin = m_ctrls_tempAffinityIcon[i]->font().pointSize() + 2;
+//        QFontInfo fontInfo(m_ctrls_tempAffinityIcon[i]->font());
+//        int margin = (fontInfo.pixelSize() * 6);
         //margin = m_ctrls_tempAffinityIcon[i]->width() - margin;
-        m_layout_tempAffinityIcon[i]->setContentsMargins(margin,-10,0,0);
+
+        m_layout_tempAffinityIcon[i]->setContentsMargins(1,1,0,0);
+
+
         m_layout_tempAffinityIcon[i]->addWidget(m_ctrls_tempAffinityIcon[i]);
 
     }
@@ -1279,4 +1283,6 @@ LabelOverlay::LabelOverlay(QLabel *parent)
     QFont font = this->font();
     font.setPointSize(font.pointSize()-2);
     this->setFont(font);
+    this->setAlignment(Qt::AlignRight | Qt::AlignTop);
+
 }
