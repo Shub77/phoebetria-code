@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>430</width>
-    <height>510</height>
+    <width>436</width>
+    <height>509</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>430</width>
-    <height>510</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -668,34 +668,7 @@ QPushButton:disabled {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider#ctrl_channel1speedSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider#ctrl_channel1speedSlider::handle:vertical {
-	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
- 	height:15px;
- 	margin:-6px;
- 	border:1px solid #777;
-	border-radius:4px;
- }
-
- QSlider#ctrl_channel1speedSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider#ctrl_channel1speedSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
+              <string notr="true"/>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -787,30 +760,26 @@ QPushButton:hover {
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_23">
-           <item>
-            <widget class="QPushButton" name="ctrl_channel1AlarmTemp">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>51</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>51</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Alarm Temperature</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QPushButton" name="ctrl_channel1AlarmTemp">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>51</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>51</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Alarm Temperature</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -876,34 +845,7 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider#ctrl_channel2speedSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider#ctrl_channel2speedSlider::handle:vertical {
-	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
- 	height:15px;
- 	margin:-6px;
- 	border:1px solid #777;
-	border-radius:4px;
- }
-
- QSlider#ctrl_channel2speedSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider#ctrl_channel2speedSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
+              <string notr="true"/>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -998,30 +940,26 @@ QPushButton:hover {
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_25">
-           <item>
-            <widget class="QPushButton" name="ctrl_channel2AlarmTemp">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>51</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>51</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Alarm Temperature</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QPushButton" name="ctrl_channel2AlarmTemp">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>51</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>51</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Alarm Temperature</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -1087,34 +1025,7 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider#ctrl_channel3speedSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider#ctrl_channel3speedSlider::handle:vertical {
-	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
- 	height:15px;
- 	margin:-6px;
- 	border:1px solid #777;
-	border-radius:4px;
- }
-
- QSlider#ctrl_channel3speedSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider#ctrl_channel3speedSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
+              <string notr="true"/>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -1209,30 +1120,26 @@ QPushButton:hover {
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_27">
-           <item>
-            <widget class="QPushButton" name="ctrl_channel3AlarmTemp">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>51</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>51</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Alarm Temperature</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QPushButton" name="ctrl_channel3AlarmTemp">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>51</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>51</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Alarm Temperature</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -1298,34 +1205,7 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider#ctrl_channel4speedSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider#ctrl_channel4speedSlider::handle:vertical {
-	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
- 	height:15px;
- 	margin:-6px;
- 	border:1px solid #777;
-	border-radius:4px;
- }
-
- QSlider#ctrl_channel4speedSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider#ctrl_channel4speedSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
+              <string notr="true"/>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -1420,30 +1300,26 @@ QPushButton:hover {
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_29">
-           <item>
-            <widget class="QPushButton" name="ctrl_channel4AlarmTemp">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>51</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>51</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Alarm Temperature</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QPushButton" name="ctrl_channel4AlarmTemp">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>51</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>51</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Alarm Temperature</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -1509,34 +1385,7 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QSlider#ctrl_channel5speedSlider::groove:vertical {
-     border: 1px solid #bbb;
-     background: darkBlue;
-     width: 20px;
-     border-radius: 4px;
- }
-
- QSlider#ctrl_channel5speedSlider::handle:vertical {
-	background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
- 	height:15px;
- 	margin:-6px;
- 	border:1px solid #777;
-	border-radius:4px;
- }
-
- QSlider#ctrl_channel5speedSlider::add-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 border: 1px solid #777;
-	 border-radius: 4px;
- }
-
- QSlider#ctrl_channel5speedSlider::sub-page:vertical {
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
-	 background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
-     border: 1px solid #777;
-	 border-radius: 4px;
- }</string>
+              <string notr="true"/>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -1631,30 +1480,26 @@ QPushButton:hover {
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_34">
-           <item>
-            <widget class="QPushButton" name="ctrl_channel5AlarmTemp">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>51</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>51</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Alarm Temperature</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QPushButton" name="ctrl_channel5AlarmTemp">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>51</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>51</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Alarm Temperature</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -1668,7 +1513,7 @@ QPushButton:hover {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>430</width>
+     <width>436</width>
      <height>22</height>
     </rect>
    </property>

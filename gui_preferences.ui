@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>650</width>
-    <height>300</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>650</width>
-    <height>300</height>
+    <height>350</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -25,14 +25,14 @@
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QGridLayout" name="gridLayout_5">
+   <property name="margin">
+    <number>10</number>
+   </property>
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
-    <number>5</number>
-   </property>
-   <item>
+   <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout_2">
      <property name="margin">
       <number>5</number>
@@ -40,11 +40,11 @@
      <property name="spacing">
       <number>5</number>
      </property>
-     <item row="1" column="0">
+     <item row="1" column="0" alignment="Qt::AlignLeft">
       <widget class="QListWidget" name="ctrl_preferenceTabList">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
@@ -72,20 +72,14 @@
        </item>
       </widget>
      </item>
-     <item row="0" column="1" colspan="2">
-      <widget class="QLabel" name="ctrl_preferencesTabLabel">
-       <property name="font">
-        <font>
-         <pointsize>18</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1" colspan="2">
       <widget class="QStackedWidget" name="ctrl_preferenceTabs">
+       <property name="minimumSize">
+        <size>
+         <width>450</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="frameShape">
         <enum>QFrame::WinPanel</enum>
        </property>
@@ -93,35 +87,18 @@
         <enum>QFrame::Sunken</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
-       <widget class="QWidget" name="page_3">
-        <layout class="QFormLayout" name="formLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_minimizeOnStart">
-           <property name="text">
-            <string>Start Minimized</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QCheckBox" name="ctrl_minimizeOnStart">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
+       <widget class="QWidget" name="page_generalSettings">
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="3" column="0">
           <widget class="QLabel" name="lbl_quitOnClose">
            <property name="text">
             <string>Quit on Close</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="3" column="1">
           <widget class="QCheckBox" name="ctrl_quitOnClose">
            <property name="styleSheet">
             <string notr="true"/>
@@ -131,55 +108,38 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="lbl_startupProfile">
+         <item row="5" column="0" colspan="4">
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="lbl_minimizeOnStart">
            <property name="text">
-            <string>Startup Profile</string>
+            <string>Start Minimized</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QComboBox" name="ctrl_startupProfile">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="lbl_shutdownProfile">
-           <property name="text">
-            <string>Shutdown Profile</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QComboBox" name="ctrl_shutdownProfile">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="editable">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0">
-          <widget class="QLabel" name="lbl_selectStyle">
-           <property name="text">
-            <string>Startup Style</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="1">
-          <widget class="QComboBox" name="ctrl_style"/>
-         </item>
-         <item row="2" column="0">
+         <item row="0" column="0">
           <widget class="QLabel" name="lbl_MinimizeToTray">
            <property name="text">
             <string>Minimize to Tray</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="0" column="3">
+          <widget class="QCheckBox" name="ctrl_minimizeOnStart">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
           <widget class="QCheckBox" name="ctrl_minimizeToTray">
            <property name="styleSheet">
             <string notr="true"/>
@@ -189,14 +149,55 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
+         <item row="9" column="0">
+          <widget class="QLabel" name="lbl_shutdownProfile">
+           <property name="text">
+            <string>Shutdown Profile</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="lbl_startupProfile">
+           <property name="text">
+            <string>Startup Profile</string>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="0">
+          <widget class="QLabel" name="lbl_selectStyle">
+           <property name="text">
+            <string>Startup Style</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1" colspan="2">
+          <widget class="QComboBox" name="ctrl_shutdownProfile">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1" colspan="2">
+          <widget class="QComboBox" name="ctrl_startupProfile">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="1" colspan="2">
+          <widget class="QComboBox" name="ctrl_style"/>
+         </item>
+         <item row="4" column="0" colspan="2">
           <widget class="QLabel" name="lbl_ShowTooltipOnMinimize">
            <property name="text">
             <string>Show Tooltips while Minimized</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="4" column="2">
           <widget class="QCheckBox" name="ctrl_showTooltipOnMinimize">
            <property name="styleSheet">
             <string notr="true"/>
@@ -208,95 +209,16 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page_2">
+       <widget class="QWidget" name="page_channelSettings">
         <layout class="QGridLayout" name="gridLayout">
-         <item row="5" column="2">
-          <widget class="QLineEdit" name="ctrl_channel5FanName"/>
-         </item>
-         <item row="2" column="3">
-          <widget class="QLineEdit" name="ctrl_channel2TempName"/>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Channel 2</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="3">
-          <widget class="QLineEdit" name="ctrl_channel5TempName"/>
-         </item>
-         <item row="3" column="2">
-          <widget class="QLineEdit" name="ctrl_channel3FanName"/>
-         </item>
-         <item row="6" column="1" colspan="2">
+         <item row="2" column="0" colspan="4">
           <widget class="QLabel" name="lbl_useLogRpmScale">
            <property name="text">
             <string>RPM sliders use logarithmic scale</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="3">
-          <widget class="QLineEdit" name="ctrl_channel4TempName"/>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Channel 5</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QLineEdit" name="ctrl_channel2FanName"/>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>Fan Name</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Channel 3</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="2">
-          <widget class="QLineEdit" name="ctrl_channel4FanName"/>
-         </item>
-         <item row="3" column="3">
-          <widget class="QLineEdit" name="ctrl_channel3TempName"/>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Channel 4</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Temerature Probe Name</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Channel 1</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="ctrl_channel1FanName"/>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="ctrl_channel1TempName"/>
-         </item>
-         <item row="6" column="3">
+         <item row="2" column="4">
           <widget class="QCheckBox" name="ctrl_useLogRpmScale">
            <property name="styleSheet">
             <string notr="true"/>
@@ -306,7 +228,7 @@
            </property>
           </widget>
          </item>
-         <item row="7" column="0" colspan="5">
+         <item row="3" column="0" colspan="6">
           <spacer name="verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -319,39 +241,119 @@
            </property>
           </spacer>
          </item>
-         <item row="3" column="0">
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+         <item row="0" column="0" rowspan="2" colspan="6">
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="title">
+            <string/>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
+           <property name="flat">
+            <bool>false</bool>
            </property>
-          </spacer>
-         </item>
-         <item row="3" column="4">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <property name="margin">
+             <number>5</number>
+            </property>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="ctrl_channel3FanName"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Channel 2</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="ctrl_channel1FanName"/>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="ctrl_channel5FanName"/>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="ctrl_channel2FanName"/>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="ctrl_channel4FanName"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Channel 3</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Channel 4</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Channel 5</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Channel 1</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLineEdit" name="ctrl_channel1TempName"/>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLineEdit" name="ctrl_channel2TempName"/>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLineEdit" name="ctrl_channel3TempName"/>
+            </item>
+            <item row="4" column="2">
+             <widget class="QLineEdit" name="ctrl_channel4TempName"/>
+            </item>
+            <item row="6" column="2">
+             <widget class="QLineEdit" name="ctrl_channel5TempName"/>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>Fan Name</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Temperature Probe</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
         </layout>
        </widget>
       </widget>
      </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QLabel" name="ctrl_preferencesTabLabel">
+       <property name="font">
+        <font>
+         <pointsize>18</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
-   <item>
+   <item row="1" column="0">
     <widget class="QDialogButtonBox" name="ctrl_actionButtons">
      <property name="minimumSize">
       <size>
