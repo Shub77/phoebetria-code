@@ -263,7 +263,7 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
             threshold = m_ramp[channel].hysteresisUp();
     }
 
-    if (rDelta >= threshold || !cd.isSet_manualRPM())
+    if (rDelta >= threshold)
     {
         int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel]);
 
