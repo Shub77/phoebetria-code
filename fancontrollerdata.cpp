@@ -236,16 +236,37 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
 
     //tempF = rand() % 256; // for testing
 
-    int rDelta = abs(m_rTemps[channel] - tempF);
-    // if temperature has changed by 2 or more degrees F
-    // FIXME: TODO: Make user adjustable
-    if (rDelta >= 2 || m_rTemps[channel] == FC_RTEMP_NOTSET
+    int newRpm = m_ramp[channel].temperatureToRpm(tempF);
+    if (newRpm == -1) return;   // Do nothing if ramp not initialised
+
+    int rDelta;
+    int direction;
+
+    if (m_rTemps[channel] == FC_RTEMP_NOTSET)
+    {
+        rDelta = direction = 0;
+    }
+    else
+    {
+        rDelta = m_rTemps[channel] - tempF;
+        direction = rDelta > 0 ? -1 : 1;
+        rDelta = abs(rDelta);
+    }
+
+    int threshold;
+    if (direction < 0)
+    {
+        threshold = newRpm == 0 ? m_ramp[channel].hysteresisFanOff()
+                                : m_ramp[channel].hysteresisDown();
+    }
+    else
+        threshold = m_ramp[channel].hysteresisUp();
+
+
+    if (rDelta >= threshold || m_rTemps[channel] == FC_RTEMP_NOTSET
             || !cd.isSet_manualRPM())
     {
         int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel]);
-        int newRpm = m_ramp[channel].temperatureToRpm(tempF);
-
-        if (newRpm == -1) return;   // Do nothing if ramp not initialised
 
         if (newRpm != currRpm || m_rTemps[channel] == FC_RTEMP_NOTSET
                 || !cd.isSet_manualRPM())
@@ -258,6 +279,9 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
             ph_fanControllerIO().setChannelSettings(channel,
                                                     alarmTemp(channel),
                                                     newRpm);
+
+            if (newRpm == 0) qDebug() << "Turning fan off. Threshold:" << threshold;
+
 #ifdef QT_DEBUG
             qDebug() << "S/W Auto -- Channel/Temp/RPM ="
                      << channel << tempF << newRpm;
