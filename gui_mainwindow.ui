@@ -736,14 +736,14 @@ QPushButton:disabled {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_1.png)
+	image: url(:/Images/icon_channels_lightblue_1.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_1_hover.png)
+	image: url(:/Images/icon_channels_darkblue_1.png)
 }</string>
              </property>
              <property name="iconSize">
@@ -913,14 +913,14 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_2.png)
+	image: url(:/Images/icon_channels_lightblue_2.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_2_hover.png)
+	image: url(:/Images/icon_channels_darkblue_2.png)
 }</string>
              </property>
              <property name="text">
@@ -1093,14 +1093,14 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_3.png)
+	image: url(:/Images/icon_channels_lightblue_3.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_3_hover.png)
+	image: url(:/Images/icon_channels_darkblue_3.png)
 }</string>
              </property>
              <property name="text">
@@ -1273,14 +1273,14 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_4.png)
+	image: url(:/Images/icon_channels_lightblue_4.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_4_hover.png)
+	image: url(:/Images/icon_channels_darkblue_4.png)
 }</string>
              </property>
              <property name="text">
@@ -1453,14 +1453,14 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_5.png)
+	image: url(:/Images/icon_channels_lightblue_5.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/channel_5_hover.png)
+	image: url(:/Images/icon_channels_darkblue_5.png)
 }</string>
              </property>
              <property name="text">

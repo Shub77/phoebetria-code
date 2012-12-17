@@ -59,6 +59,16 @@
         <file>Images/icons/128x128/phoebetria_red.png</file>
         <file>Images/icons/256x256/phoebetria.png</file>
         <file>Images/icons/256x256/phoebetria_red.png</file>
+        <file>Images/icon_channels_darkblue_1.png</file>
+        <file>Images/icon_channels_darkblue_2.png</file>
+        <file>Images/icon_channels_darkblue_3.png</file>
+        <file>Images/icon_channels_darkblue_4.png</file>
+        <file>Images/icon_channels_darkblue_5.png</file>
+        <file>Images/icon_channels_lightblue_1.png</file>
+        <file>Images/icon_channels_lightblue_2.png</file>
+        <file>Images/icon_channels_lightblue_3.png</file>
+        <file>Images/icon_channels_lightblue_4.png</file>
+        <file>Images/icon_channels_lightblue_5.png</file>
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>
