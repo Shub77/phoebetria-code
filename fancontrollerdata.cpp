@@ -241,37 +241,35 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
 
     int rDelta;
     int direction;
+    int threshold;
 
     if (m_rTemps[channel] == FC_RTEMP_NOTSET)
     {
         rDelta = direction = 0;
+        threshold = 0;
     }
     else
     {
         rDelta = m_rTemps[channel] - tempF;
         direction = rDelta > 0 ? -1 : 1;
         rDelta = abs(rDelta);
+
+        if (direction < 0)
+        {
+            threshold = newRpm == 0 ? m_ramp[channel].hysteresisFanOff()
+                                    : m_ramp[channel].hysteresisDown();
+        }
+        else
+            threshold = m_ramp[channel].hysteresisUp();
     }
 
-    int threshold;
-    if (direction < 0)
-    {
-        threshold = m_ramp[channel].hysteresisDown();
-    }
-    else
-        threshold = m_ramp[channel].hysteresisUp();
-
-
-
-    if (rDelta >= threshold || m_rTemps[channel] == FC_RTEMP_NOTSET
-            || !cd.isSet_manualRPM())
+    if (rDelta >= threshold || !cd.isSet_manualRPM())
     {
         int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel]);
 
-        if (direction < 0 && newRpm == 0 && rDelta < m_ramp[channel].hysteresisFanOff())
+        if (direction > 0 && newRpm == 0)
         {
-            /* If temperature has dropped but the delta is not equal to or
-               larger than hysterisisFanOff(), do nothing
+            /* If temperature is increasing ignore "fan off"
              */
         }
         else if (newRpm != currRpm || m_rTemps[channel] == FC_RTEMP_NOTSET
