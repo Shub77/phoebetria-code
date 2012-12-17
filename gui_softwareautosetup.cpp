@@ -24,7 +24,8 @@
 gui_SoftwareAutoSetup::gui_SoftwareAutoSetup(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::gui_SoftwareAutoSetup),
-    m_ignoreSignals(false)
+    m_ignoreSignals(false),
+    m_wasAccepted(false)
 {
     ui->setupUi(this);
 
@@ -353,6 +354,8 @@ void gui_SoftwareAutoSetup::on_buttonBox_accepted()
             m_fcdata->setRamp(i, m_ramp[i]);
         }
     }
+
+    m_wasAccepted = true;
 }
 
 void gui_SoftwareAutoSetup::on_ctrl_isFanAlwaysOn_clicked(bool checked)

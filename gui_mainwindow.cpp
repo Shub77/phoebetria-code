@@ -1109,9 +1109,12 @@ void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
 
     dlg.exec();
 
-    fcdata().clearRampTemps();
-    ph_resetSchedulerElapsedTime();
-    syncGuiCtrlsWithFanController();
+    if (dlg.userAccepted())
+    {
+        fcdata().clearRampTemps();
+        ph_resetSchedulerElapsedTime();
+        syncGuiCtrlsWithFanController();
+    }
 }
 
 void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)

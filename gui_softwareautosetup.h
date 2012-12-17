@@ -39,6 +39,8 @@ public:
     
     void init(FanControllerData* fcdata);
 
+    inline bool userAccepted(void) const;
+
 protected:
 
     void setupAxes(const FanControllerData & fcdata, int channel);
@@ -100,6 +102,8 @@ private:
     FanSpeedRamp m_ramp[FC_MAX_CHANNELS];
 
     FanControllerData* m_fcdata;
+
+    bool m_wasAccepted;
 };
 
 bool gui_SoftwareAutoSetup::ignoreSignals(bool ignore)
@@ -109,6 +113,10 @@ bool gui_SoftwareAutoSetup::ignoreSignals(bool ignore)
     return r;
 }
 
+bool gui_SoftwareAutoSetup::userAccepted(void) const
+{
+    return m_wasAccepted;
+}
 
 
 #endif // GUI_SOFTWAREAUTOSETUP_H
