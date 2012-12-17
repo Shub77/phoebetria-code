@@ -20,6 +20,7 @@
 #include <QString>
 
 #include "fanramp.h"
+#include "timestampedtemperature.h"
 
 class FanChannelData
 {
@@ -38,6 +39,8 @@ public:
     inline int alarmTemp(void) const;
     inline int manualRPM(void) const;
     inline int lastTemp(void) const;
+    inline qint64 elapsedSinceLastTempChecked(void);
+    inline void setLastTempCheckedTimeToNow(void);
     inline int maxTemp(void) const;
     inline int minTemp(void) const;
     inline int lastRPM(void) const;
@@ -76,7 +79,7 @@ private:
     int m_maxRPM;
     int m_alarmTemp;
 
-    int m_lastTemp;
+    TimestampedTemperature m_lastTemp;
     int m_maxTemp;
     int m_minTemp;
 
@@ -105,7 +108,17 @@ int FanChannelData::manualRPM(void) const
 
 int FanChannelData::lastTemp(void) const
 {
-    return m_lastTemp;
+    return m_lastTemp.temperature();
+}
+
+qint64 FanChannelData::elapsedSinceLastTempChecked(void)
+{
+    return m_lastTemp.elapsedSinceChecked();
+}
+
+void FanChannelData::setLastTempCheckedTimeToNow(void)
+{
+    m_lastTemp.setCheckedTimeToNow();
 }
 
 int FanChannelData::maxTemp(void) const
@@ -151,7 +164,7 @@ void FanChannelData::setManualRPM(int to)
 
 void FanChannelData::setLastTemp(int to)
 {
-    m_lastTemp = to;
+    m_lastTemp.setTemperature(to);
 }
 
 void FanChannelData::setMinTemp(int to)
@@ -199,7 +212,7 @@ bool FanChannelData::isSet_manualRPM(void) const
 
 bool FanChannelData::isSet_lastTemp(void) const
 {
-    return m_lastTemp != temperatureNotSetValue;
+    return m_lastTemp.isSet();
 }
 
 bool FanChannelData::isSet_MinTemp(void) const
@@ -240,7 +253,7 @@ bool FanChannelData::reqRampParamsAreSet(void) const
 
 void FanChannelData::clearRpmAndTemp(void)
 {
-    m_lastTemp = temperatureNotSetValue;
+    m_lastTemp.clear();
     m_lastRPM = rpmNotSetValue;
     m_manualRPM = rpmNotSetValue;
 }

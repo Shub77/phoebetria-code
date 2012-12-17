@@ -25,6 +25,7 @@
 
 #include "fanprofiles.h"
 #include "fanramp.h"
+#include "timestampedtemperature.h"
 
 class FanControllerData : public QObject
 {
@@ -36,24 +37,6 @@ class FanControllerData : public QObject
         FanControllerState();
         FanControllerProfile m_state;
         bool m_isSet;
-    };
-
-    class RampTemps
-    {
-    public:
-
-        RampTemps();
-
-        bool isSet(void) const
-            { return temperature != tempNotSetValue; }
-        void clear(void)
-            { temperature = tempNotSetValue; }
-
-        int temperature;
-        QDateTime timeUpdated;
-
-    protected:
-        static int tempNotSetValue;
     };
 
 public:
@@ -201,7 +184,7 @@ private:
 
     FanChannelData m_channelSettings[FC_MAX_CHANNELS];
     FanSpeedRamp m_ramp[FC_MAX_CHANNELS];
-    RampTemps m_rTemps[FC_MAX_CHANNELS];
+    TimestampedTemperature m_rTemps[FC_MAX_CHANNELS];
 
     bool m_rampsReady;
 

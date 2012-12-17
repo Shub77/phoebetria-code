@@ -32,7 +32,6 @@ FanChannelData::FanChannelData()
     m_maxLoggedRPM  = rpmNotSetValue;
     m_lastRPM       = rpmNotSetValue;
     m_minLoggedRPM  = rpmNotSetValue;
-    m_lastTemp      = temperatureNotSetValue;
     m_maxTemp       = maxLoggedTempNotSetValue;
     m_minTemp       = minLoggedTempNotSetValue;
     m_alarmTemp     = temperatureNotSetValue;
