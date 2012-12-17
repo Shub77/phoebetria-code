@@ -450,6 +450,8 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
                 "           ,speed_rampEnd"
                 "           ,speed_stepSize"
                 "           ,tHysteresisUp"
+                "           ,tHysteresisDown"
+                "           ,tHysteresisFanOff"
                 "           ,rampType"
                 "           ,maxFanSpeed"
                 "        )"
@@ -471,6 +473,8 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
                 "           ,:speed_rampEnd"
                 "           ,:speed_stepSize"
                 "           ,:tHysteresisUp"
+                "           ,:tHysteresisDown"
+                "           ,:tHysteresisFanOff"
                 "           ,:rampType"
                 "           ,:maxFanSpeed"
                 "        )"
@@ -492,6 +496,8 @@ bool MainDb::writeChannelSpeedRamp(int profileId,
     qry.bindValue(":speed_rampEnd",         ramp.speed_rampEnd());
     qry.bindValue(":speed_stepSize",        ramp.speedStepSize());
     qry.bindValue(":tHysteresisUp",         ramp.hysteresisUp());
+    qry.bindValue(":tHysteresisDown",       ramp.hysteresisDown());
+    qry.bindValue(":tHysteresisFanOff",     ramp.hysteresisFanOff());
     qry.bindValue(":rampType", ramp.isFixedRpm() ? "fixedRPM" : "linear");
     qry.bindValue(":maxFanSpeed",           ramp.maxUsableRpm());
 

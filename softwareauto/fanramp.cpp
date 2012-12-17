@@ -155,8 +155,8 @@ bool FanSpeedRamp::initWithDefaultData(const FanControllerData& fcd, int channel
     m_rampParameters.probeAffinity           = channel;
 
     m_rampParameters.tHysteresisUp           = 1;   // degrees F
-    m_rampParameters.tHysteresisDown         = 1;   // degrees F
-    m_rampParameters.tHysteresisFanOff       = 2;   // degrees F
+    m_rampParameters.tHysteresisDown         = 2;   // degrees F
+    m_rampParameters.tHysteresisFanOff       = 3;   // degrees F
 
     generateCurve(m_rampParameters, 0, 255, &m_ramp);
 
