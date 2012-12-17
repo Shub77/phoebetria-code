@@ -45,6 +45,9 @@ icon128.files += Images/icons/128x128/phoebetria.png
 icon256.path = $${ICONDIR}/256x256/apps
 icon256.files += Images/icons/256x256/phoebetria.png
 
+icon512.path = $${ICONDIR}/512x512/apps
+icon512.files += Images/icons/512x512/phoebetria.png
+
 pixmap.path = $${DATADIR}/pixmaps
 pixmap.files += Images/icons/48x48/phoebetria.png
 

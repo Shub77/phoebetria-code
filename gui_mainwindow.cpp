@@ -98,7 +98,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     if (fc->isConnected() == false)
     {
-        ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
+        ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/icons/128x128/phoebetria_red.png);");
+
     }
 
     connectCustomSignals();
