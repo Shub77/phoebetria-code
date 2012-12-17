@@ -74,7 +74,8 @@ SOURCES += main.cpp \
     softwareauto/fanramp.cpp \
     gui_profiles.cpp \
     gui_setmanualrpm.cpp \
-    themes.cpp
+    themes.cpp \
+    timestampedtemperature.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -99,7 +100,8 @@ HEADERS  += gui_mainwindow.h \
     gui_profiles.h \
     main.h \
     gui_setmanualrpm.h \
-    themes.h
+    themes.h \
+    timestampedtemperature.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \

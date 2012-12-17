@@ -78,6 +78,11 @@ void gui_Preferences::populateProfileComboBoxes(void)
     ui->ctrl_startupProfile->addItem("");
     ui->ctrl_shutdownProfile->addItem("");
 
+    // FIXME:   For shutdown profiles, it would be best not to have
+    //          SW Auto profiles in that combo box. Rewriting
+    //          fcp.getProfileNames() to accept flags may be a solution to
+    //          this problem, although two loops would then be required
+
     QStringList profileList = fcp.getProfileNames();
 
     for (int i = 0; i < profileList.count(); ++i)

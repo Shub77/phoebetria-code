@@ -21,19 +21,11 @@
 
 #include <QDebug>
 
-int FanControllerData::RampTemps::tempNotSetValue = -1;
 
 FanControllerData::FanControllerState::FanControllerState() :
     m_isSet(false)
 {
 }
-
-FanControllerData::RampTemps::RampTemps() :
-    temperature(tempNotSetValue),
-    timeUpdated()
-{
-}
-
 
 FanControllerData::FanControllerData(QObject *parent)
     : QObject(parent),
@@ -212,6 +204,8 @@ void FanControllerData::updateManualRPM(int channel, int to, bool emitSignal)
 
 void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 {
+    doSoftwareAuto(channel, to);
+
     FanChannelData& cd = m_channelSettings[channel];
     if (cd.lastTemp() != to || !cd.isSet_lastTemp())
     {
@@ -220,8 +214,6 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 
         updateMinMax_temp(channel, to);
     }
-
-    doSoftwareAuto(channel, to);
 }
 
 void FanControllerData::doSoftwareAuto(int channel, int tempF)
@@ -233,7 +225,26 @@ void FanControllerData::doSoftwareAuto(int channel, int tempF)
     {
         if (isRampInitialised(i) && m_ramp[i].probeAffinity() == channel)
         {
-            doSoftwareAutoChannel(i, tempF);
+            // Delay doing software auto until 10 seconds have elapsed since
+            // the temperature was changed; this is to hopefully smooth out
+            // brief fluctuations in temperature
+
+            // TODO: FIXME: This might be better if an average over the last
+            //              10 (or less) seconds were kept
+            //
+
+            // TODO: FIXME: Actually, always do the SW Auto, but use the
+            //              elapsed time to set/clear a "okToTurnFanOn" flag
+
+            if (m_channelSettings[i].elapsedSinceLastTempChecked() > 10000
+                    || !m_rTemps[i].isSet())
+            {
+                qDebug() << "Do SW Auto channel:" << i;
+
+                m_channelSettings[i].setLastTempCheckedTimeToNow();
+
+                doSoftwareAutoChannel(i, tempF);
+            }
         }
     }
 }
@@ -258,11 +269,10 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
     }
     else
     {
-        rDelta = m_rTemps[channel].temperature - tempF;
+        rDelta = m_rTemps[channel].temperature() - tempF;
         direction = rDelta > 0 ? -1 : 1;
         rDelta = abs(rDelta);
-        int elapsed = QDateTime::currentMSecsSinceEpoch()
-                    - m_rTemps[channel].timeUpdated.toMSecsSinceEpoch();
+        int elapsed = m_rTemps[channel].elapsedSinceSet();
 
         if (elapsed > 300000)
         {
@@ -275,7 +285,7 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
                changed, so reset it here so hysteresis no longer gets ignored
                until the next interval elapses
              */
-            m_rTemps[channel].timeUpdated = QDateTime::currentDateTime();
+            m_rTemps[channel].setTimeUpdatedToNow();
         }
         else if (direction < 0)
         {
@@ -286,9 +296,9 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
             threshold = m_ramp[channel].hysteresisUp();
     }
 
-    if (rDelta >= threshold)
+    if (rDelta >= threshold || !m_rTemps[channel].isSet())
     {
-        int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel].temperature);
+        int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel].temperature());
 
         if (direction > 0 && newRpm == 0)
         {
@@ -299,8 +309,7 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
                 || !cd.isSet_manualRPM())
         {
             updateMinMax_rpm(channel, newRpm);
-            m_rTemps[channel].temperature = tempF; // Save tF for next time
-            m_rTemps[channel].timeUpdated = QDateTime::currentDateTime();
+            m_rTemps[channel].setTemperature(tempF); // Save tF for next time
 
             emit manualRPM_changed(channel, newRpm);
 
