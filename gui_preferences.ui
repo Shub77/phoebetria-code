@@ -74,7 +74,7 @@
        </layout>
       </widget>
      </item>
-     <item row="1" column="0" alignment="Qt::AlignLeft">
+     <item row="1" column="0">
       <widget class="QListWidget" name="ctrl_preferenceTabList">
        <property name="minimumSize">
         <size>
