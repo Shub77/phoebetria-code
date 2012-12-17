@@ -183,7 +183,9 @@ private:
     void updateSpeedControl(int channel, int RPM, bool updateSlider = true);
     void updateAllSpeedCtrls(bool useManualRpm = false);
 
-    void updateRpmIndicator(int channel);
+    void updateTargetRpmOverlay(int channel);
+
+    void updateProbeAffinityOverlays(void);
 
     void updateToggleControls(void);
 
@@ -229,12 +231,14 @@ private:
     QPushButton* m_ctrls_alarmTemps[FC_MAX_CHANNELS];
     QPushButton* m_ctrls_channel[FC_MAX_CHANNELS];
 
+    LabelOverlay* m_ctrls_probeAffinityOverlay[FC_MAX_CHANNELS];
+    QHBoxLayout* m_layout_probeAffinityOverlay[FC_MAX_CHANNELS];
+
 
     // These are initialised at run time by this class
     SliderOverlay* m_ctrls_targetRpmOverlay[FC_MAX_CHANNELS];
     QGridLayout* m_layout_targetRpmOverlay[FC_MAX_CHANNELS];
-    LabelOverlay* m_ctrls_probeAffinityOverlay[FC_MAX_CHANNELS];
-    QGridLayout* m_layout_probeAffinityOverlay[FC_MAX_CHANNELS];
+
 
 
     QSystemTrayIcon m_trayIcon;

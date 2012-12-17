@@ -59,6 +59,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
+    initCtrlArrays();
+
     //qApp->installEventFilter(this); // FIXME: URGENT: We're not using qApp (using PhoebetriaApp)
 
 #if defined Q_WS_WIN
@@ -90,8 +92,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     setWindowIcon(QIcon(":/icon16x16"));
 
-    initCtrlArrays();
-
     // Synchronise fan controller data with GUI.
 
     FanControllerIO* fc = &ph_fanControllerIO();
@@ -101,12 +101,16 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
         ui->ctrl_logoAndStatus->setStyleSheet("background-image: url(:/Images/phoebetria_icon_error.png);");
     }
 
+    connectCustomSignals();
+
+    initWaitForReqChannelParams();
+
     initTargetRpmOverlays();
     initProbeAffinityOverlays();
 
     updateChannelControlTooltips();
 
-    initWaitForReqChannelParams();
+
 
     if (!MainDb::isValid())
     {
@@ -120,7 +124,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
         this->ui->ctrl_ModifyProfile->setEnabled(false);
     }
 
-    connectCustomSignals();
+
 }
 
 
@@ -133,7 +137,9 @@ void gui_MainWindow::syncGuiCtrlsWithFanController(void)
     updateAllSpeedCtrls(!fcdata().isAuto());
     updateAllAlarmCtrls(fcd.isCelcius());
     updateToggleControls();
+    updateProbeAffinityOverlays();
     enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
+
 }
 
 
@@ -416,12 +422,11 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
     }
 
     updateSpeedControlTooltip(channel);
-    updateRpmIndicator(channel);
+    updateTargetRpmOverlay(channel);
 }
 
 void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
 {
-
     if (fcdata().isSoftwareAuto())
     {
         for (int i = 0; i < FC_MAX_CHANNELS; ++i)
@@ -430,10 +435,6 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
             {
                 m_ctrls_probeTemps[i]->setText(
                             fcdata().temperatureString(temp, true));
-                if (i != channel)
-                    m_ctrls_probeAffinityOverlay[i]->setText(QString::number(channel+1));
-                else
-                    m_ctrls_probeAffinityOverlay[i]->setText("");
             }
         }
     }
@@ -482,7 +483,7 @@ void gui_MainWindow::updateAllSpeedCtrls(bool useManualRpm)
     }
 }
 
-void gui_MainWindow::updateRpmIndicator(int channel)
+void gui_MainWindow::updateTargetRpmOverlay(int channel)
 {
     int sliderPosition;
 
@@ -517,6 +518,33 @@ void gui_MainWindow::updateRpmIndicator(int channel)
     m_ctrls_targetRpmOverlay[channel]->setStyleSheet(style);
     m_ctrls_targetRpmOverlay[channel]->setValue(sliderPosition);
 
+}
+
+void gui_MainWindow::updateProbeAffinityOverlays(void)
+{
+    if (fcdata().isSoftwareAuto())
+    {
+        for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
+        {
+            for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+            {
+                if (fcdata().ramp(i).probeAffinity() == channel)
+                {
+                    if (i != channel)
+                        m_ctrls_probeAffinityOverlay[i]->setText(QString::number(channel+1));
+                    else
+                        m_ctrls_probeAffinityOverlay[i]->setText("");
+                }
+            }
+        }
+    }
+    else
+    {
+        for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
+        {
+            m_ctrls_probeAffinityOverlay[channel]->setText("");
+        }
+    }
 }
 
 
@@ -631,6 +659,7 @@ void gui_MainWindow::onControlModeChanged(bool isAuto)
     ui->ctrl_isManualBtn->setChecked(isAuto ? 0 : 1);
     ui->ctrl_isManualBtn->blockSignals(bs);
     updateToggleControls();
+    updateProbeAffinityOverlays();
     enableSpeedControls(!(isAuto || fcdata().isSoftwareAuto()));    
 }
 
@@ -1197,6 +1226,7 @@ void gui_MainWindow::on_ctrl_syncGui_clicked()
 
 void gui_MainWindow::initTargetRpmOverlays()
 {
+
     /* initialize target RPM indicators overlayed with the current RPM sliders */
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
@@ -1215,12 +1245,13 @@ void gui_MainWindow::initProbeAffinityOverlays()
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_ctrls_probeAffinityOverlay[i] = new LabelOverlay();
-        m_layout_probeAffinityOverlay[i] = new QGridLayout(m_ctrls_probeTemps[i]);
-        m_layout_probeAffinityOverlay[i]->setContentsMargins(0,0,3,0);
-
         m_ctrls_probeAffinityOverlay[i]->setStyleSheet("LabelOverlay {color: #f98;}");
 
+        m_layout_probeAffinityOverlay[i] = new QHBoxLayout(m_ctrls_probeTemps[i]);
+        m_layout_probeAffinityOverlay[i]->setContentsMargins(0,0,3,0);
         m_layout_probeAffinityOverlay[i]->addWidget(m_ctrls_probeAffinityOverlay[i]);
+
+        m_ctrls_probeAffinityOverlay[i]->setText(QString::number(i));
 
     }
 }
