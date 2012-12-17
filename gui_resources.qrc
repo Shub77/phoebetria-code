@@ -52,6 +52,8 @@
         <file>Images/icon_checkbox_checked.png</file>
         <file>Images/icon_arrow_down.png</file>
         <file>Images/icon_arrow_up.png</file>
+        <file>Images/pref_gears.png</file>
+        <file>Images/pref_sliders.png</file>
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>
