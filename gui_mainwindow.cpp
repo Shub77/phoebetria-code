@@ -626,21 +626,49 @@ bool gui_MainWindow::eventFilter(QObject *obj, QEvent *event)
     }
 }
 
+void gui_MainWindow::closeEvent(QCloseEvent *e)
+{
+    if (!ph_prefs().quitOnClose())
+    {
+            //FIXME: Implement user prefenece for minimize or hide.
+            //hide();
+            //FIXME: Having this set after first use, susequent uses minimizes, opens then minimizes again.  (OSX only?)
+            showMinimized();
+            e->ignore();
+    }
+    else
+    {
+            e->accept();
+    }
+}
+
 void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if (reason == QSystemTrayIcon::Context)
     {
-
+        // FIXME: Implement handling of context menu etc
     }
     else
     {
-        //FIXME: Prevented tray icon menu from displaying and caused crash.
-        //m_trayIcon.hide();
+#ifndef WS_OS_X
+        /* This causes a crash on OSX but is needed on Windows and KDE at least
+           for "normal" operation. In Windows 7, if the tray icon is not hidden
+           then it stays in the tray even after maximizing the application.
+           Closing the application (with the close button) then still leaves
+           the tray icon and Phoebetria still running. The main window can be
+           re-opened by double clicking the tray icon. This is useful to know
+           when we have preferences that change the behaviour (this may be
+           related to closeEvent() as well).
+          */
+        m_trayIcon.hide();
+#endif
         this->showNormal();
         this->raise();
         this->activateWindow();
     }
 }
+
+
 
 /* ------------------------------------------------------------------------
    Slots for common settings
@@ -1252,23 +1280,6 @@ void gui_MainWindow::initProbeAffinityOverlays()
         m_layout_probeAffinityOverlay[i] = new QHBoxLayout(m_ctrls_probeTemps[i]);
         m_layout_probeAffinityOverlay[i]->setContentsMargins(0,0,3,0);
         m_layout_probeAffinityOverlay[i]->addWidget(m_ctrls_probeAffinityOverlay[i]);
-    }
-}
-
-void gui_MainWindow::closeEvent(QCloseEvent *e)
-{
-    if (!ph_prefs().quitOnClose())
-    {
-            //FIXME: Implement user prefenece for minimize or hide.
-            //hide();
-            //FIXME: Having this set after first use, susequent uses minimizes, opens then minimizes again.  (OSX only?)
-            showMinimized();
-            e->ignore();
-    }
-    else
-    {
-
-            close();
     }
 }
 
