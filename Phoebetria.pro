@@ -75,7 +75,8 @@ SOURCES += main.cpp \
     gui_profiles.cpp \
     gui_setmanualrpm.cpp \
     themes.cpp \
-    timestampedtemperature.cpp
+    timestampedtemperature.cpp \
+    temperaturetrend.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -101,7 +102,8 @@ HEADERS  += gui_mainwindow.h \
     main.h \
     gui_setmanualrpm.h \
     themes.h \
-    timestampedtemperature.h
+    timestampedtemperature.h \
+    temperaturetrend.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
