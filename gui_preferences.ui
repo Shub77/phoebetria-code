@@ -56,60 +56,6 @@
      <property name="spacing">
       <number>5</number>
      </property>
-     <item row="0" column="0">
-      <widget class="QListWidget" name="ctrl_preferenceTabList">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>200</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="sizeIncrement">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>40</width>
-         <height>35</height>
-        </size>
-       </property>
-       <property name="spacing">
-        <number>10</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>General Settings</string>
-        </property>
-        <property name="icon">
-         <iconset resource="gui_resources.qrc">
-          <normaloff>:/Images/pref_gears.png</normaloff>:/Images/pref_gears.png</iconset>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Channel Settings</string>
-        </property>
-        <property name="icon">
-         <iconset resource="gui_resources.qrc">
-          <normaloff>:/Images/pref_sliders.png</normaloff>:/Images/pref_sliders.png</iconset>
-        </property>
-       </item>
-      </widget>
-     </item>
      <item row="0" column="1" colspan="2">
       <widget class="QStackedWidget" name="ctrl_preferenceTabs">
        <property name="minimumSize">
@@ -125,10 +71,96 @@
         <enum>QFrame::Sunken</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="page_generalSettings">
         <layout class="QGridLayout" name="gridLayout_4">
+         <item row="10" column="0" colspan="2">
+          <widget class="QLabel" name="lbl_startupProfile">
+           <property name="text">
+            <string>Startup Profile</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QCheckBox" name="ctrl_showTooltipOnMinimize">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="0" colspan="2">
+          <widget class="QLabel" name="lbl_shutdownProfile">
+           <property name="text">
+            <string>Shutdown Profile</string>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="2" colspan="2">
+          <widget class="QComboBox" name="ctrl_shutdownProfile">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QCheckBox" name="ctrl_minimizeToTray">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="2" colspan="2">
+          <widget class="QComboBox" name="ctrl_startupProfile">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="ctrl_minimizeOnStart">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0" colspan="6">
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
          <item row="3" column="0">
           <widget class="QLabel" name="lbl_ShowTooltipOnMinimize">
            <property name="text">
@@ -166,102 +198,6 @@
           <widget class="QLabel" name="lbl_minimizeOnStart">
            <property name="text">
             <string>Start Minimized</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QCheckBox" name="ctrl_minimizeOnStart">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="12" column="2" colspan="2">
-          <widget class="QComboBox" name="ctrl_style"/>
-         </item>
-         <item row="10" column="2" colspan="2">
-          <widget class="QComboBox" name="ctrl_startupProfile">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0" colspan="6">
-          <widget class="Line" name="line">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="12" column="0" colspan="2">
-          <widget class="QLabel" name="lbl_selectStyle">
-           <property name="text">
-            <string>Startup Style</string>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="2" colspan="2">
-          <widget class="QComboBox" name="ctrl_shutdownProfile">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="editable">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="0" colspan="2">
-          <widget class="QLabel" name="lbl_shutdownProfile">
-           <property name="text">
-            <string>Shutdown Profile</string>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="0" colspan="2">
-          <widget class="QLabel" name="lbl_startupProfile">
-           <property name="text">
-            <string>Startup Profile</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QCheckBox" name="ctrl_showTooltipOnMinimize">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="ctrl_minimizeToTray">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
            </property>
           </widget>
          </item>
@@ -402,6 +338,83 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="page_appearanceSettings">
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_selectStyle">
+           <property name="text">
+            <string>Startup Style</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="ctrl_style"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QListWidget" name="ctrl_preferenceTabList">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="sizeIncrement">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>General Settings</string>
+        </property>
+        <property name="icon">
+         <iconset resource="gui_resources.qrc">
+          <normaloff>:/Images/pref_gears.png</normaloff>:/Images/pref_gears.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Channel Settings</string>
+        </property>
+        <property name="icon">
+         <iconset resource="gui_resources.qrc">
+          <normaloff>:/Images/pref_sliders.png</normaloff>:/Images/pref_sliders.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Appearance</string>
+        </property>
+        <property name="icon">
+         <iconset resource="gui_resources.qrc">
+          <normaloff>:/Images/pref_appearance.png</normaloff>:/Images/pref_appearance.png</iconset>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>

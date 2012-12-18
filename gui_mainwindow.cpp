@@ -634,7 +634,8 @@ void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
     }
     else
     {
-        m_trayIcon.hide();
+        //FIXME: Prevented tray icon menu from displaying and caused crash.
+        //m_trayIcon.hide();
         this->showNormal();
         this->raise();
         this->activateWindow();
@@ -1258,14 +1259,10 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
 {
     if (!ph_prefs().quitOnClose())
     {
-            QMessageBox::information(this, tr("Systray"),
-                                     tr("The program will keep running in the "
-                                        "system tray. To terminate the program, "
-                                        "choose <b>Quit</b> in the context menu "
-                                        "of the system tray entry."));
-            showMinimized();
             //FIXME: Implement user prefenece for minimize or hide.
             //hide();
+            //FIXME: Having this set after first use, susequent uses minimizes, opens then minimizes again.  (OSX only?)
+            showMinimized();
             e->ignore();
     }
     else
