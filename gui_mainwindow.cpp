@@ -57,22 +57,20 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
 {
-
     ui->setupUi(this);
     initCtrlArrays();
 
     //qApp->installEventFilter(this); // FIXME: URGENT: We're not using qApp (using PhoebetriaApp)
 
 #if defined Q_WS_WIN
-    m_trayIcon.setIcon(QIcon(":/icon16x16"));
+    m_trayIcon.setIcon(QIcon(":/Images/icons/16x16/phoebetria.png"));
 #elif defined Q_WS_MAC
-    m_trayIcon.setIcon(QIcon(":/icon22x22"));
+    m_trayIcon.setIcon(QIcon(":/Images/icons/22x22/phoebetria.png"));
 #elif defined Q_WS_X11
-    m_trayIcon.setIcon(QIcon(":/icon22x22"));
+    m_trayIcon.setIcon(QIcon(":/Images/icons/22x22/phoebetria.png");
 #else
-    m_trayIcon.setIcon(QIcon(":/icon16x16"));
+    m_trayIcon.setIcon(QIcon(":/Images/icons/16x16/phoebetria.png"));
 #endif
-
 
 #ifndef QT_DEBUG
     ui->pushButton->hide();
@@ -1256,6 +1254,19 @@ void gui_MainWindow::initProbeAffinityOverlays()
     }
 }
 
+void gui_MainWindow::closeEvent(QCloseEvent *e)
+{
+    if (!ph_prefs().quitOnClose())
+    {
+        hide();
+        e->ignore();
+    }
+    else
+    {
+        close();
+    }
+}
+
 SliderOverlay::SliderOverlay(QSlider *parent)
     : QSlider(parent)
 {
@@ -1272,3 +1283,4 @@ LabelOverlay::LabelOverlay(QLabel *parent)
     this->setFont(font);
     this->setAlignment(Qt::AlignRight | Qt::AlignTop);
 }
+

@@ -66,6 +66,7 @@ protected:
 public slots:
 
     void changeEvent(QEvent* e);
+    void closeEvent(QCloseEvent *e);
     void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
 
     // **** Slots for common settings
