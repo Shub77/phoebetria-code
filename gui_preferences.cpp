@@ -158,5 +158,4 @@ void gui_Preferences::on_ctrl_actionButtons_accepted()
 void gui_Preferences::on_ctrl_preferenceTabList_itemSelectionChanged()
 {
     ui->ctrl_preferenceTabs->setCurrentIndex(ui->ctrl_preferenceTabList->currentRow());
-    ui->ctrl_preferencesTabLabel->setText(ui->ctrl_preferenceTabList->currentItem()->text());
 }
