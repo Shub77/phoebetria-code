@@ -21,6 +21,7 @@
 
 #include "fanramp.h"
 #include "timestampedtemperature.h"
+#include "temperaturetrend.h"
 
 class FanChannelData
 {
@@ -40,7 +41,7 @@ public:
     inline int manualRPM(void) const;
     inline int lastTemp(void) const;
     inline qint64 elapsedSinceLastTempChecked(void);
-    inline void setLastTempCheckedTimeToNow(void);
+    inline void setLastTempCheckedTimeToNow(void);    
     inline int maxTemp(void) const;
     inline int minTemp(void) const;
     inline int lastRPM(void) const;
@@ -52,6 +53,7 @@ public:
     inline void setAlarmTemp(int to);
     inline void setManualRPM(int to);
     inline void setLastTemp(int to);
+    inline void updateTempTrend(int currentTempF);
     inline void setMinTemp(int to);
     inline void setMaxTemp(int to);
     inline void setLastRPM(int to);
@@ -88,6 +90,8 @@ private:
     int m_maxLoggedRPM;
 
     int m_manualRPM;
+
+    TemperatureTrend m_tempTrend;
 };
 
 
@@ -165,6 +169,11 @@ void FanChannelData::setManualRPM(int to)
 void FanChannelData::setLastTemp(int to)
 {
     m_lastTemp.setTemperature(to);
+}
+
+void FanChannelData::updateTempTrend(int currentTempF)
+{
+    m_tempTrend.addSampleTemperature(currentTempF);
 }
 
 void FanChannelData::setMinTemp(int to)

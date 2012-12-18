@@ -204,9 +204,10 @@ void FanControllerData::updateManualRPM(int channel, int to, bool emitSignal)
 
 void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 {
-    doSoftwareAuto(channel, to);
-
     FanChannelData& cd = m_channelSettings[channel];
+
+    cd.updateTempTrend(to);
+
     if (cd.lastTemp() != to || !cd.isSet_lastTemp())
     {
         cd.setLastTemp(to);
@@ -214,6 +215,8 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 
         updateMinMax_temp(channel, to);
     }
+
+    doSoftwareAuto(channel, to);
 }
 
 void FanControllerData::doSoftwareAuto(int channel, int tempF)
