@@ -21,6 +21,7 @@
 
 #include <QDebug>
 
+#define SHOW_SW_WAUTO_DETAILS
 
 FanControllerData::FanControllerState::FanControllerState() :
     m_isSet(false)
@@ -206,7 +207,7 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 {
     FanChannelData& cd = m_channelSettings[channel];
 
-    cd.updateTempTrend(to);
+    cd.addTempAvgSample(to);
 
     if (cd.lastTemp() != to || !cd.isSet_lastTemp())
     {
@@ -216,38 +217,19 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
         updateMinMax_temp(channel, to);
     }
 
-    doSoftwareAuto(channel, to);
+    if (m_isSoftwareAuto)
+    {
+        doSoftwareAuto(channel, cd.tempAveraged());
+    }
 }
 
 void FanControllerData::doSoftwareAuto(int channel, int tempF)
 {
-    if (!m_isSoftwareAuto)
-        return;
-
     for (int i = 0; i < FC_MAX_CHANNELS; ++i)
     {
         if (isRampInitialised(i) && m_ramp[i].probeAffinity() == channel)
         {
-            // Delay doing software auto until 10 seconds have elapsed since
-            // the temperature was changed; this is to hopefully smooth out
-            // brief fluctuations in temperature
-
-            // TODO: FIXME: This might be better if an average over the last
-            //              10 (or less) seconds were kept
-            //
-
-            // TODO: FIXME: Actually, always do the SW Auto, but use the
-            //              elapsed time to set/clear a "okToTurnFanOn" flag
-
-            if (m_channelSettings[i].elapsedSinceLastTempChecked() > 10000
-                    || !m_rTemps[i].isSet())
-            {
-                qDebug() << "Do SW Auto channel:" << i;
-
-                m_channelSettings[i].setLastTempCheckedTimeToNow();
-
-                doSoftwareAutoChannel(i, tempF);
-            }
+            doSoftwareAutoChannel(i, tempF);
         }
     }
 }
@@ -256,8 +238,7 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
 {
     FanChannelData& cd = m_channelSettings[channel];
 
-    //tempF = rand() % 256; // for testing
-
+    int currRpm;
     int newRpm = m_ramp[channel].temperatureToRpm(tempF);
     if (newRpm == -1) return;   // Do nothing if ramp not initialised
 
@@ -269,12 +250,15 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
     {
         rDelta = direction = 0;
         threshold = 0;
+        currRpm = 0;
     }
     else
     {
         rDelta = m_rTemps[channel].temperature() - tempF;
         direction = rDelta > 0 ? -1 : 1;
         rDelta = abs(rDelta);
+        currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel].temperature());
+
         int elapsed = m_rTemps[channel].elapsedSinceSet();
 
         if (elapsed > 300000)
@@ -296,14 +280,14 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
                                     : m_ramp[channel].hysteresisDown();
         }
         else
+        {
             threshold = m_ramp[channel].hysteresisUp();
+        }
     }
 
     if (rDelta >= threshold || !m_rTemps[channel].isSet())
     {
-        int currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel].temperature());
-
-        if (direction > 0 && newRpm == 0)
+        if (!m_rTemps[channel].isSet() && m_rTemps[channel].temperature() < tempF)
         {
             /* If temperature is increasing ignore "fan off"
              */
@@ -311,6 +295,7 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
         else if (newRpm != currRpm || !m_rTemps[channel].isSet()
                 || !cd.isSet_manualRPM())
         {
+
             updateMinMax_rpm(channel, newRpm);
             m_rTemps[channel].setTemperature(tempF); // Save tF for next time
 
@@ -319,13 +304,14 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
             ph_fanControllerIO().setChannelSettings(channel,
                                                     alarmTemp(channel),
                                                     newRpm);
+#if defined QT_DEBUG && defined SHOW_SW_WAUTO_DETAILS
+            if (newRpm == 0)
+                qDebug() << "Turning fan off. Threshold:" << threshold;
 
-            if (newRpm == 0) qDebug() << "Turning fan off. Threshold:" << threshold;
-
-#ifdef QT_DEBUG
-            qDebug() << "S/W Auto -- Channel/Temp/RPM ="
-                     << channel << tempF << newRpm;
+                qDebug() << "S/W Auto -- Channel/Temp/RPM ="
+                         << channel << tempF << newRpm;
 #endif
+
         }
     }
 }

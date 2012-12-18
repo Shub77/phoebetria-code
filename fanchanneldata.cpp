@@ -29,6 +29,7 @@ const int FanChannelData::manualRPMNotSetValue_Preferred = 65535;
 
 FanChannelData::FanChannelData()
 {
+    m_lastTemp      = temperatureNotSetValue;
     m_maxLoggedRPM  = rpmNotSetValue;
     m_lastRPM       = rpmNotSetValue;
     m_minLoggedRPM  = rpmNotSetValue;

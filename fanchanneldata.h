@@ -20,8 +20,7 @@
 #include <QString>
 
 #include "fanramp.h"
-#include "timestampedtemperature.h"
-#include "temperaturetrend.h"
+#include "averager.h"
 
 class FanChannelData
 {
@@ -40,8 +39,7 @@ public:
     inline int alarmTemp(void) const;
     inline int manualRPM(void) const;
     inline int lastTemp(void) const;
-    inline qint64 elapsedSinceLastTempChecked(void);
-    inline void setLastTempCheckedTimeToNow(void);    
+    inline int tempAveraged(void) const;
     inline int maxTemp(void) const;
     inline int minTemp(void) const;
     inline int lastRPM(void) const;
@@ -53,7 +51,7 @@ public:
     inline void setAlarmTemp(int to);
     inline void setManualRPM(int to);
     inline void setLastTemp(int to);
-    inline void updateTempTrend(int currentTempF);
+    inline void addTempAvgSample(int currentTempF);
     inline void setMinTemp(int to);
     inline void setMaxTemp(int to);
     inline void setLastRPM(int to);
@@ -81,7 +79,7 @@ private:
     int m_maxRPM;
     int m_alarmTemp;
 
-    TimestampedTemperature m_lastTemp;
+    int m_lastTemp;
     int m_maxTemp;
     int m_minTemp;
 
@@ -91,7 +89,7 @@ private:
 
     int m_manualRPM;
 
-    TemperatureTrend m_tempTrend;
+    Averager m_tempAverager;
 };
 
 
@@ -112,17 +110,12 @@ int FanChannelData::manualRPM(void) const
 
 int FanChannelData::lastTemp(void) const
 {
-    return m_lastTemp.temperature();
+    return m_lastTemp;
 }
 
-qint64 FanChannelData::elapsedSinceLastTempChecked(void)
+int FanChannelData::tempAveraged(void) const
 {
-    return m_lastTemp.elapsedSinceChecked();
-}
-
-void FanChannelData::setLastTempCheckedTimeToNow(void)
-{
-    m_lastTemp.setCheckedTimeToNow();
+    return m_tempAverager.average();
 }
 
 int FanChannelData::maxTemp(void) const
@@ -168,12 +161,12 @@ void FanChannelData::setManualRPM(int to)
 
 void FanChannelData::setLastTemp(int to)
 {
-    m_lastTemp.setTemperature(to);
+    m_lastTemp = to;
 }
 
-void FanChannelData::updateTempTrend(int currentTempF)
+void FanChannelData::addTempAvgSample(int currentTempF)
 {
-    m_tempTrend.addSampleTemperature(currentTempF);
+    m_tempAverager.addSampleValue(currentTempF);
 }
 
 void FanChannelData::setMinTemp(int to)
@@ -221,7 +214,7 @@ bool FanChannelData::isSet_manualRPM(void) const
 
 bool FanChannelData::isSet_lastTemp(void) const
 {
-    return m_lastTemp.isSet();
+    return m_lastTemp != rpmNotSetValue;
 }
 
 bool FanChannelData::isSet_MinTemp(void) const
@@ -262,7 +255,7 @@ bool FanChannelData::reqRampParamsAreSet(void) const
 
 void FanChannelData::clearRpmAndTemp(void)
 {
-    m_lastTemp.clear();
+    m_lastTemp = temperatureNotSetValue;
     m_lastRPM = rpmNotSetValue;
     m_manualRPM = rpmNotSetValue;
 }

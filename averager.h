@@ -14,30 +14,18 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TEMPERATURETREND_H
-#define TEMPERATURETREND_H
+#ifndef AVERAGER_H
+#define AVERAGER_H
 
-class TemperatureTrend
+class Averager
 {
 public:
-    TemperatureTrend();
-    ~TemperatureTrend();
+    Averager();
+    ~Averager();
 
-    typedef enum
-    {
-        Decreasing,
-        Stable,
-        Increasing
+    void addSampleValue(int value);
 
-    } TrendDirection;
-
-    void addSampleTemperature(int tF);
-
-    inline bool isStable(void) const;
-    inline bool isIncreasing(void) const;
-    inline bool isDecreasing(void) const;
-
-    inline TrendDirection direction(void) const;
+    inline int average(void) const;
 
 protected:
 
@@ -50,29 +38,13 @@ private:
     int* m_samples;
     int m_pos;
     int m_storedAverage;
-    int m_prevTemperatureF;
+
 
 };
 
-
-bool TemperatureTrend::isStable(void) const
+int Averager::average(void) const
 {
-    return m_storedAverage == 0;
+    return m_storedAverage;
 }
 
-bool TemperatureTrend::isIncreasing(void) const
-{
-    return m_storedAverage == 1;
-}
-
-bool TemperatureTrend::isDecreasing(void) const
-{
-    return m_storedAverage == -1;
-}
-
-TemperatureTrend::TrendDirection TemperatureTrend::direction(void) const
-{
-    return (TrendDirection)(m_storedAverage + 1);
-}
-
-#endif // TEMPERATURETREND_H
+#endif // AVERAGER_H
