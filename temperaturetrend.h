@@ -23,11 +23,21 @@ public:
     TemperatureTrend();
     ~TemperatureTrend();
 
+    typedef enum
+    {
+        Decreasing,
+        Stable,
+        Increasing
+
+    } TrendDirection;
+
     void addSampleTemperature(int tF);
 
     inline bool isStable(void) const;
     inline bool isIncreasing(void) const;
     inline bool isDecreasing(void) const;
+
+    inline TrendDirection direction(void) const;
 
 protected:
 
@@ -60,5 +70,9 @@ bool TemperatureTrend::isDecreasing(void) const
     return m_storedAverage == -1;
 }
 
+TemperatureTrend::TrendDirection TemperatureTrend::direction(void) const
+{
+    return (TrendDirection)(m_storedAverage + 1);
+}
 
 #endif // TEMPERATURETREND_H
