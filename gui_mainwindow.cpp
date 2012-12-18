@@ -1256,15 +1256,21 @@ void gui_MainWindow::initProbeAffinityOverlays()
 
 void gui_MainWindow::closeEvent(QCloseEvent *e)
 {
-    if (!ph_prefs().quitOnClose())
-    {
-        hide();
-        e->ignore();
-    }
-    else
-    {
-        close();
-    }
+      //FIXME: find a minimize function before implementing...
+//    if (!ph_prefs().quitOnClose())
+//    {
+//            QMessageBox::information(this, tr("Systray"),
+//                                     tr("The program will keep running in the "
+//                                        "system tray. To terminate the program, "
+//                                        "choose <b>Quit</b> in the context menu "
+//                                        "of the system tray entry."));
+//            hide();
+//            e->ignore();
+//    }
+//    else
+//    {
+            close();
+//    }
 }
 
 SliderOverlay::SliderOverlay(QSlider *parent)
@@ -1283,4 +1289,3 @@ LabelOverlay::LabelOverlay(QLabel *parent)
     this->setFont(font);
     this->setAlignment(Qt::AlignRight | Qt::AlignTop);
 }
-
