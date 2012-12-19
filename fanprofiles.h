@@ -54,6 +54,7 @@ public:
     bool save(const QString& profileName);
     bool load(const QString& profileName);
 
+    inline QString profileDescription(void);
     QString profileDescription(const QString& profileName);
 
     static int importFromIni(QDir &dir);
@@ -166,6 +167,11 @@ void FanControllerProfile::setRamp(int channel, const FanSpeedRamp& other)
 {
     m_ramp[channel] = other;
     m_ramp[channel].generateCurve();
+}
+
+QString FanControllerProfile::profileDescription(void)
+{
+    return profileDescription(m_name);
 }
 
 #endif // PHOEBETRIA_FAN_PROFILES_H

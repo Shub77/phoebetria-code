@@ -125,13 +125,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QString profile= ph_prefs().startupProfile();
     if (!profile.isEmpty())
     {
-        FanControllerProfile fcp;
-        if (fcp.load(profile))
-        {
-            if (ph_fanControllerIO().setFromProfile(fcp))
-                ph_fanControllerData().syncWithProfile(fcp);
-            syncGuiCtrlsWithFanController();
-        }
+        loadProfile(profile);
     }
 }
 
@@ -999,13 +993,14 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
 
     if (profileDlg->action() & gui_Profiles::LoadProfile)
     {
-        if (loadProfile(profileDlg->selectedName()))
+        if (!loadProfile(profileDlg->selectedName()))
         {
-            fcdata().softReset();
-            ph_resetSchedulerElapsedTime();
-            initWaitForReqChannelParams();
-            syncGuiCtrlsWithFanController();
-            updatePD = true;
+            QMessageBox::critical(
+                        this,
+                        tr("Load profile failed"),
+                        tr("An error occurred load the profile.\n"
+                           "The profile has not been loaded!")
+                        );
         }
     }
     else if (profileDlg->action() & gui_Profiles::SaveProfile)
@@ -1051,11 +1046,15 @@ bool gui_MainWindow::loadProfile(const QString& profileName)
         if (fc->setFromProfile(fcp))
         {
             fcdata().syncWithProfile(fcp);
+            fcdata().softReset();
+            ph_resetSchedulerElapsedTime();
+            initWaitForReqChannelParams();
+            syncGuiCtrlsWithFanController();
+            updateProfileDisplay(fcp.profileName(),
+                                 fcp.profileDescription());
         }
         else
         {
-            // TODO: Display error message
-
             r = false;
         }
     }
