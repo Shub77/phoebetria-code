@@ -28,7 +28,17 @@ CloseHelper::CloseHelper(QObject *parent)
 
 void CloseHelper::onLastWindowClosed(void)
 {
-    if (ph_fanControllerData().isSoftwareAuto())
+    QString profile = ph_prefs().shutdownProfile();
+    if (!profile.isEmpty())
+    {
+        FanControllerProfile fcp;
+        bool r = fcp.load(profile);
+        if (r)
+        {
+            ph_fanControllerIO().setFromProfile(fcp);
+        }
+    }
+    else if (ph_fanControllerData().isSoftwareAuto())
     {
         ph_fanControllerData().updateIsSwAuto(false, true);
     }
