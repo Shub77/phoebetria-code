@@ -1,3 +1,10 @@
+/* -------- QWidget -------- */
+	QWidget
+	{
+		border-color: #1e1e1e;
+	}
+	
+
 /* -------- Main Window Background -------- */
 	QWidget#centralWidget
 	{
