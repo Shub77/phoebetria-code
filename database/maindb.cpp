@@ -57,6 +57,36 @@ QStringList MainDb::profileNames()
     return profileList;
 }
 
+NameAndControlModeList MainDb::profileNamesAndModes(void)
+{
+    NameAndControlModeList profileList;
+    QSqlQuery query(QSqlDatabase::database(dbConnectionName()));
+
+    if (!query.exec(QLatin1String("select name, isSoftwareAuto, isAuto"
+                                  " from Profile")))
+    {
+        m_lastSqlError = query.lastError();
+        return profileList;   // return empty list
+    }
+
+    while (query.next())
+    {
+        NameAndControlMode nacm;
+        nacm.name = query.value(0).toString();
+        if (query.value(1).toBool())
+            nacm.controlMode = FanControllerMode_SoftwareAuto;
+        else if (query.value(2).toBool())
+            nacm.controlMode = FanControllerMode_Auto;
+        else
+            nacm.controlMode = FanControllerMode_Manual;
+
+        profileList.append(nacm);
+    }
+
+    return profileList;
+}
+
+
 QString MainDb::profileDescription(const QString& profileName)
 {
     QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));

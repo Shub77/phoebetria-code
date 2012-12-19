@@ -44,6 +44,7 @@ public:
     QString defualtProfileLocation(void) const;
 
     static QStringList getProfileNames(void);
+    static NameAndControlModeList getProfileNamesAndModes(void);
 
     void setProfileName(const QString& name);
     void setFilenameAndPath(const QString& filenameAndPath);

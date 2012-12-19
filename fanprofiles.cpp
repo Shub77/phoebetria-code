@@ -76,6 +76,21 @@ QStringList FanControllerProfile::getProfileNames(void)
     return result;
 }
 
+NameAndControlModeList FanControllerProfile::getProfileNamesAndModes(void)
+{
+    MainDb mdb;
+    NameAndControlModeList result = mdb.profileNamesAndModes();
+
+    if (mdb.lastSqlError().type() != QSqlError::NoError)
+    {
+        qDebug() << "Error reading profile names."
+                 << __FILE__ << ":" << __LINE__;
+
+        // TODO: Implement mechanism for passing error back to caller
+    }
+    return result;
+}
+
 /* Set from the current controller settings
  */
 void FanControllerProfile::setFromCurrentData(const FanControllerData& data)

@@ -78,21 +78,22 @@ void gui_Preferences::populateProfileComboBoxes(void)
     ui->ctrl_startupProfile->addItem("");
     ui->ctrl_shutdownProfile->addItem("");
 
-    // FIXME:   For shutdown profiles, it would be best not to have
-    //          SW Auto profiles in that combo box. Rewriting
-    //          fcp.getProfileNames() to accept flags may be a solution to
-    //          this problem, although two loops would then be required
-
-    QStringList profileList = fcp.getProfileNames();
+    NameAndControlModeList profileList = fcp.getProfileNamesAndModes();
 
     for (int i = 0; i < profileList.count(); ++i)
     {
-        const QString& item = profileList.at(i);
+        const NameAndControlMode& item = profileList.at(i);
         // Skip reserved profile names
-        if (FanControllerProfile::isReservedProfileName(item))
+        if (FanControllerProfile::isReservedProfileName(item.name))
             continue;
-        ui->ctrl_startupProfile->addItem(item);
-        ui->ctrl_shutdownProfile->addItem(item);
+
+        ui->ctrl_startupProfile->addItem(item.name);
+
+        if (item.controlMode != FanControllerMode_Unknown
+                && item.controlMode != FanControllerMode_SoftwareAuto)
+        {
+            ui->ctrl_shutdownProfile->addItem(item.name);
+        }
     }
 }
 

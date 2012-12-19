@@ -18,8 +18,10 @@
 #define PHOEBETRIA_PRIMARYDB_H
 
 #include <QStringList>
+#include <QList>
 #include <QtSql>
 #include "dbmanager.h"
+#include "bfx-recon/bfxrecon.h"
 
 /* Fwd Decls
  */
@@ -37,6 +39,7 @@ public:
     static void init(void);
 
     QStringList profileNames();
+    NameAndControlModeList profileNamesAndModes(void);
 
     QString profileDescription(const QString& profileName);
 
