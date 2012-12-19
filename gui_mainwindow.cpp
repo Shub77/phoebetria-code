@@ -1026,6 +1026,8 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
         updateProfileDisplay(profileDlg->selectedName(),
                              profileDlg->selectedDescription());
     }
+
+    delete profileDlg;
 }
 
 bool gui_MainWindow::loadProfile(const QString& profileName)
