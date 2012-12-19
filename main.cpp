@@ -21,8 +21,6 @@
 #include "phoebetriaapp.h"
 #include "device-io.h"
 
-
-
 CloseHelper::CloseHelper(QObject *parent)
     : QObject(parent)
 {
