@@ -25,6 +25,8 @@ public:
 
     void addSampleValue(int value);
 
+    void clear(void);
+
     inline int average(void) const;
 
 protected:

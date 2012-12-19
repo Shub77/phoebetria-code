@@ -21,7 +21,7 @@
 
 #include <QDebug>
 
-const int Averager::m_sampleSize = 3;
+const int Averager::m_sampleSize = 5;
 
 Averager::Averager() :
     m_samples(NULL),
@@ -48,6 +48,16 @@ void Averager::addSampleValue(int value)
     m_pos %= m_sampleSize;
 
     updateStoredAverage();
+}
+
+void Averager::clear(void)
+{
+    m_storedAverage = 0;
+    m_pos = 0;
+
+    for (int i = 0; i < m_sampleSize; ++i)
+        m_samples[i]  = 0;
+
 }
 
 
