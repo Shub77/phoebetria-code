@@ -105,16 +105,6 @@
            </property>
           </widget>
          </item>
-         <item row="11" column="2" colspan="2">
-          <widget class="QComboBox" name="ctrl_shutdownProfile">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="editable">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="2">
           <widget class="QCheckBox" name="ctrl_minimizeToTray">
            <property name="sizePolicy">
@@ -128,13 +118,6 @@
            </property>
            <property name="text">
             <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="2" colspan="2">
-          <widget class="QComboBox" name="ctrl_startupProfile">
-           <property name="styleSheet">
-            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -205,6 +188,23 @@
           <widget class="QLabel" name="lbl_quitOnClose">
            <property name="text">
             <string>Quit on Close</string>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="2" colspan="4">
+          <widget class="QComboBox" name="ctrl_startupProfile">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="2" colspan="4">
+          <widget class="QComboBox" name="ctrl_shutdownProfile">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
            </property>
           </widget>
          </item>

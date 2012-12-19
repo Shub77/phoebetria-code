@@ -44,6 +44,8 @@ QString Themes::getBuiltInStyleSheet(void)
 bool Themes::setAppToBuiltInStyleSheet(void)
 {
     return setAppStyleSheet(":/other/Phoebetria.qss");
+    //FIXME: Testing
+    //return setAppStyleSheet(":/other/Phoebetria-Dark.qss");
 }
 
 #endif // THEMES_H
