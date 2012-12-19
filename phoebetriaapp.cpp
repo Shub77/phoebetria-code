@@ -55,7 +55,6 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     m_fanControllerIO.connectSignals();
 
     m_fanControllerIO.fanControllerData().connectSignals();
-
 }
 
 void PhoebetriaApp::commitData(QSessionManager& manager)

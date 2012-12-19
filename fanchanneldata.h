@@ -258,6 +258,7 @@ void FanChannelData::clearRpmAndTemp(void)
     m_lastTemp = temperatureNotSetValue;
     m_lastRPM = rpmNotSetValue;
     m_manualRPM = rpmNotSetValue;
+    m_tempAverager.clear();
 }
 
 #endif // FANCHANNELDATA_H
