@@ -1280,6 +1280,7 @@ void gui_MainWindow::initProbeAffinityOverlays()
         m_layout_probeAffinityOverlay[i] = new QHBoxLayout(m_ctrls_probeTemps[i]);
         m_layout_probeAffinityOverlay[i]->setContentsMargins(0,0,3,0);
         m_layout_probeAffinityOverlay[i]->addWidget(m_ctrls_probeAffinityOverlay[i]);
+        m_ctrls_probeAffinityOverlay[i]->setStyleSheet("LabelOverlay { background-color: rgba(255,255,255,255) transparant; border: 0px transparant; border-radius: 5; }");
     }
 }
 

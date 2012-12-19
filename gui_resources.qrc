@@ -54,7 +54,7 @@
         <file alias="Acknowledgments">ACKNOWLEDGEMENTS.html</file>
     </qresource>
     <qresource prefix="/other">
-        <file>Phoebetria-Dark.qss</file>
         <file>Phoebetria.qss</file>
+        <file>Phoebetria-Dark.qss</file>
     </qresource>
 </RCC>
