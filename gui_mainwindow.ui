@@ -77,6 +77,9 @@
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
        </widget>
       </item>
       <item>
@@ -196,33 +199,7 @@
                    <string>Toggle temperature scale</string>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_fahrenheit.png)
-}
-
-QPushButton:hover {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_fahrenheit_lite.png)
-}
-
-QPushButton:checked {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_celcius.png)
-}
-
-QPushButton:hover:checked {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_celcius_lite.png)
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string notr="true"/>
@@ -256,33 +233,7 @@ QPushButton:hover:checked {
                    <string>Toggle alarm</string>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_volume_on.png)
-}
-
-QPushButton:hover {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_volume_on_lite.png)
-}
-
-QPushButton:checked {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_volume_off.png)
-}
-
-QPushButton:hover:checked {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_volume_off_lite.png)
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string notr="true"/>
@@ -340,40 +291,7 @@ QPushButton:hover:checked {
                    <string>Toggle profile state</string>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_auto.png)
-}
-
-QPushButton:hover {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_auto_lite.png)
-}
-
-QPushButton:checked {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_manual.png)
-}
-
-QPushButton:hover:checked {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_manual_lite.png)
-}
-
-QPushButton::disabled {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_software_lite.png)
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string/>
@@ -407,26 +325,7 @@ QPushButton::disabled {
                    <string>Manage profiles</string>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_fan.png)
-}
-
-QPushButton:hover {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_fan_lite.png)
-}
-
-QPushButton:disabled {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_fan_lite.png)
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string notr="true"/>
@@ -481,33 +380,7 @@ QPushButton:disabled {
                    <string>Toggle software profile state</string>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_hardware.png)
-}
-
-QPushButton:hover {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_hardware_lite.png)
-}
-
-QPushButton:checked {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_software.png)
-}
-
-QPushButton:hover:checked {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_software_lite.png)
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string/>
@@ -538,26 +411,7 @@ QPushButton:hover:checked {
                    <string>Manage software profiles</string>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_wrench.png)
-}
-
-QPushButton:hover {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_wrench_lite.png)
-}
-
-QPushButton:disabled {
-	border: none;
-	margin: 0px;
-    padding: 0px;
-	image: url(:/Images/icon_wrench_lite.png)
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string/>
@@ -591,7 +445,7 @@ QPushButton:disabled {
        <number>2</number>
       </property>
       <item>
-       <widget class="QGroupBox" name="groupBox_2">
+       <widget class="QGroupBox" name="groupBox_channel1">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
           <horstretch>0</horstretch>
@@ -608,14 +462,15 @@ QPushButton:disabled {
          <bool>true</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true"> QGroupBox {     
- background-image: url(:/Images/mesh.png);
- }</string>
+         <string notr="true"/>
         </property>
         <property name="title">
          <string/>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>-1</number>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
@@ -668,7 +523,34 @@ QPushButton:disabled {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true"/>
+              <string notr="true">	QSlider::groove:vertical {
+     	border: 1px solid #bbb;
+     	background: darkBlue;
+     	width: 20px;
+     	border-radius: 4px;
+ 	}
+
+ 	QSlider::handle:vertical {
+		background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 		height:15px;
+ 		margin:-6px;
+ 		border:1px solid #777;
+		border-radius:4px;
+ 	}
+
+ 	QSlider::add-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}
+
+ 	QSlider::sub-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}</string>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -736,15 +618,24 @@ QPushButton:disabled {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_1.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_1.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
+             </property>
+             <property name="text">
+              <string>1</string>
              </property>
              <property name="iconSize">
               <size>
@@ -785,7 +676,7 @@ QPushButton:hover {
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_3">
+       <widget class="QGroupBox" name="groupBox_channel2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
           <horstretch>0</horstretch>
@@ -805,6 +696,9 @@ QPushButton:hover {
          <string/>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>-1</number>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
@@ -845,7 +739,34 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true"/>
+              <string notr="true">	QSlider::groove:vertical {
+     	border: 1px solid #bbb;
+     	background: darkBlue;
+     	width: 20px;
+     	border-radius: 4px;
+ 	}
+
+ 	QSlider::handle:vertical {
+		background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 		height:15px;
+ 		margin:-6px;
+ 		border:1px solid #777;
+		border-radius:4px;
+ 	}
+
+ 	QSlider::add-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}
+
+ 	QSlider::sub-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}</string>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -913,18 +834,24 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_2.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_2.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
              <property name="text">
-              <string/>
+              <string>2</string>
              </property>
              <property name="iconSize">
               <size>
@@ -965,7 +892,7 @@ QPushButton:hover {
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_4">
+       <widget class="QGroupBox" name="groupBox_channel3">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
           <horstretch>0</horstretch>
@@ -985,6 +912,9 @@ QPushButton:hover {
          <string/>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>-1</number>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
@@ -1025,7 +955,34 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true"/>
+              <string notr="true">	QSlider::groove:vertical {
+     	border: 1px solid #bbb;
+     	background: darkBlue;
+     	width: 20px;
+     	border-radius: 4px;
+ 	}
+
+ 	QSlider::handle:vertical {
+		background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 		height:15px;
+ 		margin:-6px;
+ 		border:1px solid #777;
+		border-radius:4px;
+ 	}
+
+ 	QSlider::add-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}
+
+ 	QSlider::sub-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}</string>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -1093,18 +1050,24 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_3.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_3.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
              <property name="text">
-              <string/>
+              <string>3</string>
              </property>
              <property name="iconSize">
               <size>
@@ -1145,7 +1108,7 @@ QPushButton:hover {
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_5">
+       <widget class="QGroupBox" name="groupBox_channel4">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
           <horstretch>0</horstretch>
@@ -1165,6 +1128,9 @@ QPushButton:hover {
          <string/>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>-1</number>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_15">
            <item>
@@ -1205,7 +1171,34 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true"/>
+              <string notr="true">	QSlider::groove:vertical {
+     	border: 1px solid #bbb;
+     	background: darkBlue;
+     	width: 20px;
+     	border-radius: 4px;
+ 	}
+
+ 	QSlider::handle:vertical {
+		background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 		height:15px;
+ 		margin:-6px;
+ 		border:1px solid #777;
+		border-radius:4px;
+ 	}
+
+ 	QSlider::add-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}
+
+ 	QSlider::sub-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}</string>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -1273,18 +1266,24 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_4.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_4.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
              <property name="text">
-              <string/>
+              <string>4</string>
              </property>
              <property name="iconSize">
               <size>
@@ -1325,7 +1324,7 @@ QPushButton:hover {
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_6">
+       <widget class="QGroupBox" name="groupBox_channel5">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
           <horstretch>0</horstretch>
@@ -1345,6 +1344,9 @@ QPushButton:hover {
          <string/>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>-1</number>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_31">
            <item>
@@ -1385,7 +1387,34 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true"/>
+              <string notr="true">	QSlider::groove:vertical {
+     	border: 1px solid #bbb;
+     	background: darkBlue;
+     	width: 20px;
+     	border-radius: 4px;
+ 	}
+
+ 	QSlider::handle:vertical {
+		background-color: qlineargradient(spread:pad, x1:1, y1:1.1, x2:1, y2:0, stop:0 #000, stop:1 #FFF);
+ 		height:15px;
+ 		margin:-6px;
+ 		border:1px solid #777;
+		border-radius:4px;
+ 	}
+
+ 	QSlider::add-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}
+
+ 	QSlider::sub-page:vertical {
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #026, stop: 1 #69c);
+	 	background: qlineargradient(x0: 1, y0: 1, x2: 0, y2: 1, stop: 0 #69c, stop: 1 #026);
+     	border: 1px solid #777;
+	 	border-radius: 4px;
+ 	}</string>
              </property>
              <property name="maximum">
               <number>100</number>
@@ -1448,23 +1477,36 @@ QPushButton:hover {
                <height>30</height>
               </size>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>-1</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_5.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_5.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
              <property name="text">
-              <string/>
+              <string>5</string>
              </property>
              <property name="iconSize">
               <size>

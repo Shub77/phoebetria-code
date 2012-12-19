@@ -28,6 +28,168 @@
 	 	border-radius: 4px;
  	}
  
+/* -------- Main Window Profile Button -------- */
+	QPushButton#ctrl_tempScaleToggleBtn {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_fahrenheit.png)
+	}
+
+	QPushButton#ctrl_tempScaleToggleBtn:hover {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_fahrenheit_lite.png)
+	}
+
+	QPushButton#ctrl_tempScaleToggleBtn:checked {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_celcius.png)
+	}
+
+	QPushButton#ctrl_tempScaleToggleBtn:hover:checked {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_celcius_lite.png)
+	}
+
+	QPushButton#ctrl_isAudibleAlarmBtn {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_volume_on.png)
+	}
+
+	QPushButton#ctrl_isAudibleAlarmBtn:hover {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_volume_on_lite.png)
+	}
+
+	QPushButton#ctrl_isAudibleAlarmBtn:checked {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_volume_off.png)
+	}
+
+	QPushButton#ctrl_isAudibleAlarmBtn:hover:checked {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_volume_off_lite.png)
+	}
+	
+	QPushButton#ctrl_isManualBtn {
+	border: none;
+	margin: 0px;
+    padding: 0px;
+	image: url(:/Images/icon_auto.png)
+	}
+
+	QPushButton#ctrl_isManualBtn:hover {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_auto_lite.png)
+	}
+
+	QPushButton#ctrl_isManualBtn:checked {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_manual.png)
+	}
+
+	QPushButton#ctrl_isManualBtn:hover:checked {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_manual_lite.png)
+	}
+
+	QPushButton#ctrl_isManualBtn::disabled {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_software_lite.png)
+	}
+
+	QPushButton#ctrl_ModifyProfile {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_fan.png)
+	}
+
+	QPushButton#ctrl_ModifyProfile:hover {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_fan_lite.png)
+	}
+
+	QPushButton#ctrl_ModifyProfile:disabled {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_fan_lite.png)
+	}
+
+	QPushButton#ctrl_isSoftwareControlBtn {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_hardware.png)
+	}
+
+	QPushButton#ctrl_isSoftwareControlBtn:hover {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_hardware_lite.png)
+	}
+
+	QPushButton#ctrl_isSoftwareControlBtn:checked {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_software.png)
+	}
+
+	QPushButton#ctrl_isSoftwareControlBtn:hover:checked {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_software_lite.png)
+	}
+
+	QPushButton#ctrl_configSoftwareAutoBtn {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_wrench.png)
+	}
+
+	QPushButton#ctrl_configSoftwareAutoBtn:hover {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_wrench_lite.png)
+	}
+
+	QPushButton#ctrl_configSoftwareAutoBtn:disabled {
+		border: none;
+		margin: 0px;
+		padding: 0px;
+		image: url(:/Images/icon_wrench_lite.png)
+	}
+
 /* -------- CheckBox -------- */
  	QCheckBox {
      	spacing: 0px;
@@ -126,23 +288,27 @@
  
  
 /* -------- QSpinBox -------- */
-	QSpinBox {
+	QSpinBox, QDoubleSpinBox
+	{
     	border: 1px solid gray;
     	border-radius: 3px;
     	padding: 1px 18px 1px 3px;
 		margin: 0px;
 	}
 
-	QSpinBox:on {
+	QSpinBox:on, QDoubleSpinBox:on
+	{
     	padding-top: 3px;
     	padding-left: 4px;
 	}
 
-	QSpinBox:editable {
+	QSpinBox:editable, QDoubleSpinBox:editable
+	{
     	background: white;
 	}
 
- 	QSpinBox::up-button {
+ 	QSpinBox::up-button, QDoubleSpinBox::up-button
+ 	{
      	subcontrol-origin: border;
      	subcontrol-position: top right;
      	width: 15px;
@@ -152,28 +318,33 @@
 	 	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #DDDDDD, stop: 1 #FFFFFF);
  	}
 
- 	QSpinBox::up-button:hover {
+ 	QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover
+ 	{
      	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #CCCCCC, stop: 1 #FFFFFF);
  	}
 
- 	QSpinBox::up-button:pressed {
+ 	QSpinBox::up-button:pressed, QDoubleSpinBox::up-button:hover
+ 	{
      	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #CCCCCC, stop: 1 #CCCCCC);
  	}
 
- 	QSpinBox::up-arrow {
+ 	QSpinBox::up-arrow, QDoubleSpinBox::up-arrow
+ 	{
      	image: url(:/Images/icon_arrow_up.png);;
      	width: 7px;
      	height: 7px;
  	}
 
- 	QSpinBox::up-arrow:disabled,
- 	QSpinBox::up-arrow:off {
+ 	QSpinBox::up-arrow:disabled, QSpinBox::up-arrow:off,
+ 	QDoubleSpinBox::up-arrow:disabled, QDoubleSpinBox::up-arrow:off
+ 	{
      	image: url(:/Images/transparant.png);
      	width: 0px;
      	height: 0px;
  	}
 
- 	QSpinBox::down-button {
+ 	QSpinBox::down-button, QDoubleSpinBox::down-button
+ 	{
      	subcontrol-origin: border;
      	subcontrol-position: bottom right;
      	width: 15px;
@@ -183,27 +354,27 @@
 	 	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FFFFFF, stop: 1 #DDDDDD);
  	}
 
- 	QSpinBox::down-button:hover {
+ 	QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover
+ 	{
      	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FFFFFF, stop: 1 #CCCCCC);
  	}
 
- 	QSpinBox::down-button:pressed {
+ 	QSpinBox::down-button:pressed, QDoubleSpinBox::down-button:pressed
+ 	{
      	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #CCCCCC, stop: 1 #CCCCCC);
  	}
 
-	QSpinBox::down-arrow {
+	QSpinBox::down-arrow, QDoubleSpinBox::down-arrow
+	{
     	image: url(:/Images/icon_arrow_down.png);
     	width: 7px;
     	height: 7px;
  	}
 
- 	QSpinBox::down-arrow:disabled,
- 	QSpinBox::down-arrow:off {
+ 	QSpinBox::down-arrow:disabled, QSpinBox::down-arrow:off,
+ 	QDoubleSpinBox::down-arrow:disabled, QDoubleSpinBox::down-arrow:off
+ 	{
     	image: url(:/Images/transparant.png);
     	width: 0px;
     	height: 0px;
 	}
-    
-    LabelOverlay {
-        color: #f98;
-    }
