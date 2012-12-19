@@ -736,15 +736,24 @@ QPushButton:disabled {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_1.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_1.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
+             </property>
+             <property name="text">
+              <string>1</string>
              </property>
              <property name="iconSize">
               <size>
@@ -913,18 +922,24 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_2.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_2.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
              <property name="text">
-              <string/>
+              <string>2</string>
              </property>
              <property name="iconSize">
               <size>
@@ -1093,18 +1108,24 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_3.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_3.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
              <property name="text">
-              <string/>
+              <string>3</string>
              </property>
              <property name="iconSize">
               <size>
@@ -1273,18 +1294,24 @@ QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_4.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_4.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
              <property name="text">
-              <string/>
+              <string>4</string>
              </property>
              <property name="iconSize">
               <size>
@@ -1448,23 +1475,36 @@ QPushButton:hover {
                <height>30</height>
               </size>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>-1</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_lightblue_5.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }
 
 QPushButton:hover {
 	border: none;
 	margin: 0px;
     padding: 0px;
-	image: url(:/Images/icon_channels_darkblue_5.png)
+	font-size: 20px;
+	font-weight: bold;
+	color: lightgrey;
+	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
              <property name="text">
-              <string/>
+              <string>5</string>
              </property>
              <property name="iconSize">
               <size>
