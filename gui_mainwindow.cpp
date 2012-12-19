@@ -109,8 +109,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     updateChannelControlTooltips();
 
-
-
     if (!MainDb::isValid())
     {
         QMessageBox::critical(
@@ -123,7 +121,18 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
         this->ui->ctrl_ModifyProfile->setEnabled(false);
     }
 
-
+    /* Load startup profile */
+    QString profile= ph_prefs().startupProfile();
+    if (!profile.isEmpty())
+    {
+        FanControllerProfile fcp;
+        if (fcp.load(profile))
+        {
+            if (ph_fanControllerIO().setFromProfile(fcp))
+                ph_fanControllerData().syncWithProfile(fcp);
+            syncGuiCtrlsWithFanController();
+        }
+    }
 }
 
 
