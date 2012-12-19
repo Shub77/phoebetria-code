@@ -213,33 +213,33 @@
 /* -------- Main Window Icon Toggles -------- */	
 	QPushButton#ctrl_tempScaleToggleBtn {
 		height: 30px;
-		background: #777;
-		image: url(:/Images/icon_fahrenheit.png)
+		background: #333;
+		image: url(:/Images/icon_fahrenheit_lite.png)
 	}
 
 	QPushButton#ctrl_tempScaleToggleBtn:checked {
-		background: #777;
-		image: url(:/Images/icon_celcius.png)
+		background: #333;
+		image: url(:/Images/icon_celcius_lite.png)
 	}
 
 	QPushButton#ctrl_isAudibleAlarmBtn {
-		background: #777;
-		image: url(:/Images/icon_volume_on.png)
+		background: #333;
+		image: url(:/Images/icon_volume_on_lite.png)
 	}
 
 	QPushButton#ctrl_isAudibleAlarmBtn:checked {
-		background: #777;
-		image: url(:/Images/icon_volume_off.png)
+		background: #333;
+		image: url(:/Images/icon_volume_off_lite.png)
 	}
 
 	QPushButton#ctrl_isManualBtn {
-    	background: #777;
-		image: url(:/Images/icon_auto.png)
+    	background: #333;
+		image: url(:/Images/icon_auto_lite.png)
 	}
 
 	QPushButton#ctrl_isManualBtn:checked {
-		background: #777;
-		image: url(:/Images/icon_manual.png)
+		background: #333;
+		image: url(:/Images/icon_manual_lite.png)
 	}
 
 	QPushButton#ctrl_isManualBtn::disabled {
@@ -248,8 +248,8 @@
 	}
 
 	QPushButton#ctrl_ModifyProfile {
-		background: #777;
-		image: url(:/Images/icon_fan.png)
+		background: #333;
+		image: url(:/Images/icon_fan_lite.png)
 	}
 
 	QPushButton#ctrl_ModifyProfile:disabled {
@@ -258,18 +258,18 @@
 	}
 
 	QPushButton#ctrl_isSoftwareControlBtn {
-		background: #777;
-		image: url(:/Images/icon_hardware.png)
+		background: #333;
+		image: url(:/Images/icon_hardware_lite.png)
 	}
 
 	QPushButton#ctrl_isSoftwareControlBtn:checked {
-		background: #777;
-		image: url(:/Images/icon_software.png)
+		background: #333;
+		image: url(:/Images/icon_software_lite.png)
 	}
 
 	QPushButton#ctrl_configSoftwareAutoBtn {
 		background: #333;
-		image: url(:/Images/icon_wrench.png)
+		image: url(:/Images/icon_wrench_lite.png)
 	}
 
 	QPushButton#ctrl_configSoftwareAutoBtn:disabled {
@@ -368,16 +368,9 @@
 	{
 		background: #444;
 		border: 1px solid #000;
-		background-color: QLinearGradient(
-			x1:0, y1:0,
-			x2:0, y2:1,
-			stop:1 #212121,
-			stop:0.4 #343434/*,
-			stop:0.2 #343434,
-			stop:0.1 #ffaa00*/
-		);
-		margin-bottom:-1px;
-		padding-bottom:1px;
+		background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:1 #212121, stop:0.4 #343434);
+		margin-bottom: 1px;
+		padding-bottom: 1px;
 	}
 
 
