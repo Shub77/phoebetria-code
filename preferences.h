@@ -66,6 +66,7 @@ public:
     bool    quitOnClose(bool defaultVal = DEFAULT_CLOSEBEHAVIOUR) const;
     QString channelName(unsigned channel, QString defaultVal = "") const;
     QString probeName(unsigned channel, QString defaultVal = "") const;
+    QString stylesheet(void) const;
 
     void setStartMinimized(bool istrue);
     void setMinimizeToTray(bool istrue);
@@ -76,7 +77,7 @@ public:
     void setShutdownProfile(const QString& profileName);
     void setChannelName(unsigned channel, const QString& name);
     void setProbeName(unsigned channel, const QString& name);
-
+    void setStylesheet(const QString& filenameAndPath);
 
     inline void sync(void);
 

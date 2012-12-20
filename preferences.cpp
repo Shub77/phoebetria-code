@@ -19,6 +19,8 @@
 #include <QSettings>
 #include <QFileInfo>
 
+#include "themes.h"
+
 static const char* key_startMinimized       = "UserPrefs/startMinimized";
 static const char* key_minimizeToTray       = "UserPrefs/minimizeToTray";
 static const char* key_showTrayIconTT       = "UserPrefs/showTrayIconTooltips";
@@ -29,6 +31,8 @@ static const char* key_quitOnClose          = "UserPrefs/quitOnClose";
 
 static const char* keyBase_channelName      = "UserPrefs/channelName";
 static const char* keyBase_probeName        = "UserPrefs/probeName";
+
+static const char* key_stylesheet       = "UserPrefs/stylesheet";
 
 Preferences::Preferences(QObject *parent) :
     QObject(parent),
@@ -101,6 +105,13 @@ QString Preferences::probeName(unsigned channel, QString defaultVal) const
     return m_settings.value(keyName, defaultVal).toString();
 }
 
+QString Preferences::stylesheet(void) const
+{
+    return m_settings.value(key_stylesheet,
+                            Themes::getBuiltInStyleSheetName()
+                            ).toString();
+}
+
 /****************************************************************************
  Set functions
  ****************************************************************************/
@@ -154,6 +165,10 @@ void Preferences::setProbeName(unsigned channel, const QString& name)
     m_settings.setValue(keyName, name);
 }
 
+void Preferences::setStylesheet(const QString& filenameAndPath)
+{
+    m_settings.setValue(key_stylesheet, filenameAndPath);
+}
 
 /****************************************************************************
  Private

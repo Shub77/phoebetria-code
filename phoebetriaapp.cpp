@@ -17,6 +17,7 @@
 #include "phoebetriaapp.h"
 #include "dbmanager.h"
 #include "themes.h"
+#include "preferences.h"
 
 FanControllerIO PhoebetriaApp::m_fanControllerIO;
 EventDispatcher PhoebetriaApp::m_dispatcher;
@@ -43,7 +44,7 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     setApplicationName("Phoebetria");
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
-    Themes::setAppToBuiltInStyleSheet();
+    Themes::setAppStyleSheet(m_prefs.stylesheet());
 
     DatabaseManager db;
     db.initAllDatabases();

@@ -36,7 +36,7 @@ Themes::Themes()
    The results do NOT include the filepath in the names
 */
 
-void Themes::getCustomThemeFilenames(QStringList* dest)
+void Themes::getCustomThemeList(ThemeNameAndFilenameList *dest)
 {
     dest->clear();
 
@@ -48,11 +48,19 @@ void Themes::getCustomThemeFilenames(QStringList* dest)
     QFileInfoList files = dir.entryInfoList(QDir::Files);
 
     int m = files.size();
+
+
     for (int i = 0; i < m; ++i)
     {
         QString filename(files.at(i).fileName());
         if (filename.endsWith(".qss"))
-            dest->append(filename);
+        {
+            ThemeNameAndFilename item;
+            item.name = filename;
+            item.fileNameAndPath = prependPath(filename);
+
+            dest->append(item);
+        }
     }
 
 }

@@ -100,16 +100,23 @@ void gui_Preferences::populateProfileComboBoxes(void)
 
 void gui_Preferences::populateThemesComboBox(void)
 {
-    QStringList names;
+    ThemeNameAndFilenameList items;
 
-    Themes::getCustomThemeFilenames(&names);
+    Themes::getCustomThemeList(&items);
 
-    names.sort();
+    // Add the built in stylesheets
+    ui->ctrl_style->addItem("Phoebetria (Standard)",
+                            Themes::getBuiltInStyleSheetName(Phoebetria_Stylesheet_Standard));
 
-    ui->ctrl_style->addItem("");
-    for (int i = 0; i < names.count(); ++i)
+    ui->ctrl_style->addItem("Phoebetria (Dark)",
+                            Themes::getBuiltInStyleSheetName(Phoebetria_Stylesheet_Dark));
+
+    int c = items.count();
+    for (int i = 0; i < c; ++i)
     {
-        ui->ctrl_style->addItem(names.at(i));
+        ThemeNameAndFilename td = items.at(i);
+        ui->ctrl_style->addItem(td.name, td.fileNameAndPath);
+
     }
 }
 
@@ -147,6 +154,14 @@ void gui_Preferences::commitChanges(void) const
     ph_prefs().setProbeName(2, ui->ctrl_channel3TempName->text());
     ph_prefs().setProbeName(3, ui->ctrl_channel4TempName->text());
     ph_prefs().setProbeName(4, ui->ctrl_channel5TempName->text());
+
+    int idx = ui->ctrl_style->currentIndex();
+    if (idx >= 0)
+    {
+        QString themeFilename =  ui->ctrl_style->itemData(idx).toString();
+        ph_prefs().setStylesheet(themeFilename);
+        Themes::setAppStyleSheet(themeFilename);
+    }
 
     ph_prefs().sync();
 }

@@ -17,14 +17,29 @@
 #ifndef THEMES_H
 #define THEMES_H
 
-#include <QStringList>
+#include <QString>
+#include <QList>
+
+typedef struct
+{
+    QString name;
+    QString fileNameAndPath;
+} ThemeNameAndFilename;
+
+enum BuiltInStyleSheets
+{
+    Phoebetria_Stylesheet_Standard,
+    Phoebetria_Stylesheet_Dark
+};
+
+typedef QList<ThemeNameAndFilename> ThemeNameAndFilenameList;
 
 class Themes
 {
 public:
     Themes();
 
-    static void getCustomThemeFilenames(QStringList *dest);
+    static void getCustomThemeList(ThemeNameAndFilenameList *dest);
 
     static QString themePath(void);
 
@@ -32,20 +47,30 @@ public:
 
     static bool setAppStyleSheet(const QString& filename);
 
-    inline static QString getBuiltInStyleSheet(void);
-    inline static bool setAppToBuiltInStyleSheet(void);
+    inline static QString prependPath(const QString& filename);
+
+    inline static QString getBuiltInStyleSheetName(enum BuiltInStyleSheets style = Phoebetria_Stylesheet_Standard);
+    inline static bool setAppToBuiltInStyleSheet(BuiltInStyleSheets style = Phoebetria_Stylesheet_Standard);
 };
 
-QString Themes::getBuiltInStyleSheet(void)
+
+QString Themes::prependPath(const QString& filename)
 {
-    return getStyleSheet(":/other/Phoebetria.qss");
+    return themePath() + filename;
 }
 
-bool Themes::setAppToBuiltInStyleSheet(void)
+QString Themes::getBuiltInStyleSheetName(enum BuiltInStyleSheets style)
 {
-    //return setAppStyleSheet(":/other/Phoebetria.qss");
-    //FIXME: Testing
-    return setAppStyleSheet(":/other/Phoebetria-Dark.qss");
+    if (style == Phoebetria_Stylesheet_Standard)
+        return QString(":/other/Phoebetria.qss");
+    else
+        return QString(":/other/Phoebetria-Dark.qss");
+}
+
+bool Themes::setAppToBuiltInStyleSheet(enum BuiltInStyleSheets style)
+{
+    QString ss = getBuiltInStyleSheetName(style);
+    return setAppStyleSheet(ss);
 }
 
 #endif // THEMES_H
