@@ -60,8 +60,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->setupUi(this);
     initCtrlArrays();
 
-    //qApp->installEventFilter(this); // FIXME: URGENT: We're not using qApp (using PhoebetriaApp)
-
 #if defined Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/Images/icons/16x16/phoebetria.png"));
 #elif defined Q_WS_MAC
@@ -629,26 +627,6 @@ void gui_MainWindow::changeEvent(QEvent* e)
     }
 
     QMainWindow::changeEvent(e);
-}
-
-// FIXME: URGENT: Has no effect?
-bool gui_MainWindow::eventFilter(QObject *obj, QEvent *event)
-{
-    if(ph_prefs().showTrayIconTooltips() && !Qt::WindowMinimized)
-    {
-        if(event->type() == QEvent::ToolTip)
-        {
-            return true;
-        }
-        else
-        {
-            return QMainWindow::eventFilter(obj, event);
-        }
-    }
-    else
-    {
-        return QMainWindow::eventFilter(obj, event);
-    }
 }
 
 void gui_MainWindow::closeEvent(QCloseEvent *e)

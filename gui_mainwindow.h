@@ -60,9 +60,6 @@ public:
 
     void setSoftwareAutoOn(bool yes = true);
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *ev);
-
 public slots:
 
     void syncGuiCtrlsWithFanController(void);
