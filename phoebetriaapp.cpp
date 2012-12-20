@@ -38,16 +38,17 @@ void ShutdownHelper::wait(unsigned long ms)
 
 
 PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
-    : QApplication(argc, argv)
+    : QApplication(argc, argv),
+      m_currentStyle_filename()
 {
     setOrganizationName("Phoebetria");
     setApplicationName("Phoebetria");
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
-    Themes::setAppStyleSheet(m_prefs.stylesheet());
-
     DatabaseManager db;
     db.initAllDatabases();
+
+    setTheme(m_prefs.stylesheet());
 
     m_globalTimer.start(200);
     m_dispatcher.start(200);
@@ -90,4 +91,20 @@ bool PhoebetriaApp::shutdown(void)
         ShutdownHelper::wait(200);
     }
     return true;
+}
+
+bool PhoebetriaApp::setTheme(const QString& styleFilename)
+{
+    bool r = false;
+    if (Themes::setAppStyleSheet(styleFilename))
+    {
+        m_currentStyle_filename = styleFilename;
+        r = true;
+    }
+    return r;
+}
+
+const QString& PhoebetriaApp::getCurrentThemeFilename(void) const
+{
+    return m_currentStyle_filename;
 }
