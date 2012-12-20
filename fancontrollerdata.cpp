@@ -21,7 +21,7 @@
 
 #include <QDebug>
 
-#define SHOW_SW_WAUTO_DETAILS
+//#define SHOW_SW_WAUTO_DETAILS
 
 FanControllerData::FanControllerState::FanControllerState() :
     m_isSet(false)
