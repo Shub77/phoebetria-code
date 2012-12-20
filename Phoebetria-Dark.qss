@@ -1,10 +1,9 @@
 /* -------- QWidget -------- */
-/*	QWidget
+	QWidget
 	{
 		border-color: #1e1e1e;
 	}
 	
-*/
 /* -------- Main Window Background -------- */
 	QWidget#centralWidget
 	{
@@ -16,7 +15,8 @@
 /* -------- QGroupBox -------- */
 	QGroupBox
 	{
-		border: #1e1e1e
+		border: 1px inset #1e1e1e;
+		border-radius: 6px;
 	}
 
 	QGroupBox:focus
