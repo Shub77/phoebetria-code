@@ -675,8 +675,24 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
             bool r = fcp.load(profile);
             if (r)
             {
-                ph_fanControllerIO().setFromProfile(fcp);
-                profileChanged = true;
+                if (fcp.isSoftwareAuto())
+                {
+                    QMessageBox::critical(
+                                NULL,
+                                tr("Not swithing to shutdown profile."),
+                                tr("The chosen profile is a Software Auto"
+                                        " profile that requires Phoebetria to be running.\n\n"
+                                           "Profile name: %1\n\n"
+                                   "Removing the profile from preferences."
+                                   ).arg(profile)
+                                );
+                    ph_prefs().setShutdownProfile("");
+                }
+                else
+                {
+                    ph_fanControllerIO().setFromProfile(fcp);
+                    profileChanged = true;
+                }
             }
             else
             {
