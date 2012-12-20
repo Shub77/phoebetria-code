@@ -10,6 +10,20 @@
                         
                                 CHANGE LOG
 
+Version 1.3
+12-Dec-2012
+====================
+This is a major feature release and is a direct result of the solid 
+framework built into the previous releases. We’ve included a new 
+preference panel that allows you to set some basic environment settings, 
+name fans and temperatures, set startup and shutdown profiles and use 
+custom themes. If you know how to write custom stylesheets for the web 
+then creating your own custom themes will be familiar. The RPM 
+indicators have been modified to move with the current rpm until they 
+reach their target RPM. The RPM sliders now use a logarithmic scale 
+instead of the previous linear scale; this can be toggled in 
+preferences. Software auto has been tweaked to operate more smoothly
+and reliably, and finally the usual bug fixes.
 
 Version 1.2.1
 12-Dec-2012
