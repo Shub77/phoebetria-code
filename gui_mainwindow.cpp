@@ -125,7 +125,18 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QString profile= ph_prefs().startupProfile();
     if (!profile.isEmpty())
     {
-        loadProfile(profile);
+        if (!loadProfile(profile))
+        {
+            QMessageBox::critical(
+                        NULL,
+                        tr("Could not switch to startup profile."),
+                        tr("Could not switch to the startup profile."
+                                   " The profile may not exist.\n\n"
+                                   "Profile name: %1\n\n"
+                                   "Please check preferences."
+                           ).arg(profile)
+                        );
+        }
     }
 }
 
@@ -658,10 +669,11 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
             {
                 QMessageBox::critical(
                             NULL,
-                            tr("Could not set shutdown profile."),
+                            tr("Could not swith to shutdown profile."),
                             tr("Could not switch to the shutdown profile."
                                        " The profile may not exist.\n\n"
                                        "Profile name: %1\n\n"
+                                       "Please check preferences."
                                ).arg(profile)
                             );
             }

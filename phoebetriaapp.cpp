@@ -15,6 +15,9 @@
 */
 
 #include "phoebetriaapp.h"
+
+#include <QMessageBox>
+
 #include "dbmanager.h"
 #include "themes.h"
 #include "preferences.h"
@@ -48,7 +51,19 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
     DatabaseManager db;
     db.initAllDatabases();
 
-    setTheme(m_prefs.stylesheet());
+    if (!setTheme(m_prefs.stylesheet()))
+    {
+        QMessageBox::critical(
+                    NULL,
+                    tr("Could not set style."),
+                    tr("Could not set the application style."
+                               " It may not exist. Please check preferences.\n\n"
+                               "Style filename: %1\n\n"
+                               "Setting to the standard profile instead."
+                       ).arg(m_prefs.stylesheet())
+                    );
+        setTheme(Themes::getBuiltInStyleSheetName());
+    }
 
     m_globalTimer.start(200);
     m_dispatcher.start(200);

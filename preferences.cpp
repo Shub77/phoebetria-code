@@ -107,9 +107,13 @@ QString Preferences::probeName(unsigned channel, QString defaultVal) const
 
 QString Preferences::stylesheet(void) const
 {
-    return m_settings.value(key_stylesheet,
+    QString fn = m_settings.value(key_stylesheet,
                             Themes::getBuiltInStyleSheetName()
                             ).toString();
+    if (fn.isEmpty())
+        fn = Themes::getBuiltInStyleSheetName();
+
+    return fn;
 }
 
 /****************************************************************************
