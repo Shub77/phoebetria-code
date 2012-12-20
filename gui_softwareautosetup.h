@@ -50,7 +50,6 @@ protected:
     void setupChannelComboBox(void);
 
     void xferSettings_toGui(const FanControllerData &fcdata, int channel);
-    void xferSettings_fromGui(const FanControllerData &fcdata);
 
     void drawPlot(void);
 
@@ -89,6 +88,12 @@ private slots:
     void on_ctrl_fanOnTemp_valueChanged(int arg1);
 
     void on_ctrl_fanOnSpeed_valueChanged(int arg1);
+
+    void on_ctrl_hysteresisUp_editingFinished();
+
+    void on_ctrl_hysteresisDown_editingFinished();
+
+    void on_ctrl_hysteresisFanOff_editingFinished();
 
 private:
     Ui::gui_SoftwareAutoSetup *ui;

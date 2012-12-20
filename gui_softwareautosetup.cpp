@@ -29,6 +29,17 @@ gui_SoftwareAutoSetup::gui_SoftwareAutoSetup(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->ctrl_explanation->setText(
+                "The values for hysteresis are temperature thresholds that aim to stop"
+                " the fan speeds changing due to small fluctuations in"
+                " temperature. For example, if Hysteresis Up is set to 2"
+                " then the probe temperature will have to increase by 2"
+                " degrees before the RPM is increased."
+//                "\n\nHysteresis Up is the threshold temperature for increasing RPM\n"
+//                "Hysteresis Down is for decreasing RPM\n"
+//                "Hysteresis Fan Off is the threshold for turning the fan off (if applicable)"
+                );
+
     // FIXME: Temporarily hide controls for pre-release preview release
     ui->ctrl_isFanConstantSpeed->hide();
 }
@@ -161,38 +172,13 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
     ui->ctrl_fanOnTemp->setEnabled              (setup.allowFanToTurnOff);
 
     ui->ctrl_channelName->setText               (ph_prefs().channelName(channel));
+
+    ui->ctrl_hysteresisUp->setValue             (setup.tHysteresisUp);
+    ui->ctrl_hysteresisDown->setValue           (setup.tHysteresisDown);
+    ui->ctrl_hysteresisFanOff->setValue         (setup.tHysteresisFanOff);
+
     ignoreSignals(bs);
 
-}
-
-void gui_SoftwareAutoSetup::xferSettings_fromGui(const FanControllerData& fcdata)
-{
-#if 0
-    FanSpeedRampParameters* setup = m_ramp.setup();
-
-    int t_fanOn     = fcdata.toCurrTempScale(ui->ctrl_fanOnTemp->value());
-    int t_rampStart = fcdata.toCurrTempScale(ui->ctrl_rampStartTemp->value());
-    int t_rampMid   = fcdata.toCurrTempScale(ui->ctrl_rampMidTemp->value());
-    int t_rampEnd   = fcdata.toCurrTempScale(ui->ctrl_rampEndTemp->value());
-    int t_fanToMax  = fcdata.toCurrTempScale(ui->fan_fanToMaxTemp->value());
-
-    setup->minUsableRpm             = ui->ctrl_minRpm->value();
-
-    setup->temperatureF_fanOn       = t_fanOn;
-    setup->temperatureF_rampStart   = t_rampStart;
-    setup->temperatureF_rampMid     = t_rampMid;
-    setup->temperatureF_rampEnd     = t_rampEnd;
-    setup->temperatureF_fanToMax    = t_fanToMax;
-
-    setup->speed_fanOn              = ui->ctrl_fanOnSpeed->value();
-    setup->speed_rampStart          = ui->ctrl_rampStartSpeed->value();
-    setup->speed_rampMid            = ui->ctrl_rampMidSpeed->value();
-    setup->speed_rampEnd            = ui->ctrl_rampEndSpeed->value();
-
-    setup->fixedRpm                 = ui->ctrl_isFanConstantSpeed->isChecked();
-    setup->probeAffinity            = ui->ctrl_probeAffinity->value();
-    setup->allowFanToTurnOff        = !ui->ctrl_isFanAlwaysOn->isChecked();
-#endif
 }
 
 void gui_SoftwareAutoSetup::drawPlot(void)
@@ -367,4 +353,17 @@ void gui_SoftwareAutoSetup::on_ctrl_isFanAlwaysOn_clicked(bool checked)
     regenerateCurve();
 }
 
+void gui_SoftwareAutoSetup::on_ctrl_hysteresisUp_editingFinished()
+{
+    m_ramp[m_currChannel].setHysteresisUp(ui->ctrl_hysteresisUp->value());
+}
 
+void gui_SoftwareAutoSetup::on_ctrl_hysteresisDown_editingFinished()
+{
+    m_ramp[m_currChannel].setHysteresisDown(ui->ctrl_hysteresisDown->value());
+}
+
+void gui_SoftwareAutoSetup::on_ctrl_hysteresisFanOff_editingFinished()
+{
+    m_ramp[m_currChannel].setHysteresisFanOff(ui->ctrl_hysteresisFanOff->value());
+}
