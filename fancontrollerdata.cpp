@@ -259,7 +259,7 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
         rDelta = abs(rDelta);
         currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel].temperature());
 
-        int elapsed = m_rTemps[channel].elapsedSinceSet();
+        qint64 elapsed = m_rTemps[channel].elapsedSinceSet();
 
         if (elapsed > 300000)
         {
@@ -642,14 +642,17 @@ void FanControllerData::onReset(void)
     clearAllChannelRpmAndTemp();
     clearRampTemps();
 
+    emit gui_sync();
 
-    //qDebug() << "FanControllerData::onReset() called";
+    qDebug() << "FanControllerData::onReset() called";
 }
 
 void FanControllerData::softReset(void)
 {
     clearAllChannelRpmAndTemp();
     clearRampTemps();
+
+    emit gui_sync();
 }
 
 

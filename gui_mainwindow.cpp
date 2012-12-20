@@ -308,6 +308,11 @@ void gui_MainWindow::connectCustomSignals(void)
 
     connect(&fcd, SIGNAL(maxLoggedTemp_changed(int,int)),
             this, SLOT(onMaxLoggedTempChanged(int,int)));
+
+
+
+    connect(&fcd, SIGNAL(gui_sync()),
+            this, SLOT(syncGuiCtrlsWithFanController()));
 }
 
 void gui_MainWindow::enableSpeedControls(bool enabled)

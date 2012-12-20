@@ -57,13 +57,15 @@ public:
     explicit gui_MainWindow(QWidget *parent = 0);
     ~gui_MainWindow();
 
-    void syncGuiCtrlsWithFanController(void);
+
     void setSoftwareAutoOn(bool yes = true);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *ev);
 
 public slots:
+
+    void syncGuiCtrlsWithFanController(void);
 
     void changeEvent(QEvent* e);
     void closeEvent(QCloseEvent *e);

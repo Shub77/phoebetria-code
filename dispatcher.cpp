@@ -222,14 +222,14 @@ void EventDispatcher::onTimer(void)
         emit task(Tick);
         emit task(CheckForDeviceData);
 
-        unsigned long msSinceLastCalled;
+        qint64 msSinceLastCalled;
 
         msSinceLastCalled = QDateTime::currentDateTime().toMSecsSinceEpoch()
                             - m_timeLastCalled.toMSecsSinceEpoch();
 
-        if (msSinceLastCalled > 30000)
+        if (msSinceLastCalled > 20000)
         {
-            if (msSinceLastCalled > 120000)
+            if (msSinceLastCalled > 40000)
             {
                 emit refresh_critical();
             }

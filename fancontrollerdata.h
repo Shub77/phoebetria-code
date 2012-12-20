@@ -211,6 +211,8 @@ signals:
     void controlMode_changed (bool isAuto);
     void alarmIsAudible_changed (bool isAudibleAlarm);
 
+    void gui_sync(void);
+
 public slots:
 
 
