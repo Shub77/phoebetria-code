@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>518</width>
-    <height>562</height>
+    <height>564</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -355,7 +355,6 @@
         </spacer>
        </item>
       </layout>
-      <zorder>verticalSpacer</zorder>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -456,6 +455,29 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>ctrl_channel</tabstop>
+  <tabstop>ctrl_channelName</tabstop>
+  <tabstop>ctrl_minRpm</tabstop>
+  <tabstop>ctrl_probeAffinity</tabstop>
+  <tabstop>ctrl_fanOnTemp</tabstop>
+  <tabstop>ctrl_rampStartTemp</tabstop>
+  <tabstop>ctrl_rampMidTemp</tabstop>
+  <tabstop>ctrl_rampEndTemp</tabstop>
+  <tabstop>fan_fanToMaxTemp</tabstop>
+  <tabstop>ctrl_fanOnSpeed</tabstop>
+  <tabstop>ctrl_rampStartSpeed</tabstop>
+  <tabstop>ctrl_rampMidSpeed</tabstop>
+  <tabstop>ctrl_rampEndSpeed</tabstop>
+  <tabstop>ctrl_isFanAlwaysOn</tabstop>
+  <tabstop>ctrl_isFanConstantSpeed</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>ctrl_hysteresisUp</tabstop>
+  <tabstop>ctrl_hysteresisDown</tabstop>
+  <tabstop>ctrl_hysteresisFanOff</tabstop>
+  <tabstop>ctrl_explanation</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

@@ -32,6 +32,11 @@ gui_Preferences::gui_Preferences(QWidget *parent) :
     populateProfileComboBoxes();
     populateThemesComboBox();
     initControls();
+
+    // FIXME: Hiding controls for non-working preferences
+
+    ui->lbl_ShowTooltipOnMinimize->hide();
+    ui->ctrl_showTooltipOnMinimize->hide();
 }
 
 gui_Preferences::~gui_Preferences()

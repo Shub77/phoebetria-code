@@ -80,7 +80,7 @@
         <enum>QFrame::Sunken</enum>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page_generalSettings">
         <layout class="QGridLayout" name="gridLayout_4">
@@ -93,6 +93,9 @@
          </item>
          <item row="3" column="2">
           <widget class="QCheckBox" name="ctrl_showTooltipOnMinimize">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -155,6 +158,9 @@
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="lbl_ShowTooltipOnMinimize">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>Show Tooltips while Minimized</string>
            </property>
@@ -352,7 +358,7 @@
          <item row="0" column="0">
           <widget class="QLabel" name="lbl_selectStyle">
            <property name="text">
-            <string>Startup Style</string>
+            <string>Style</string>
            </property>
           </widget>
          </item>
