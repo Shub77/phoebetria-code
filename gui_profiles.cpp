@@ -101,9 +101,34 @@ void gui_Profiles::on_ctrl_EraseProfile_clicked()
     }
 
     QMessageBox msgbox;
-    QString text = QString("You have selected to delete profile:\n"
+    QString text;
+    bool changeStartupProfile = false;
+    bool changeShutdownProfile = false;
+
+    if (m_profileName == ph_prefs().startupProfile())
+    {
+        text = QString ("You have selected to delete profile: "
+                "%1\n\n"
+                "This is currently set as your startup profile.\n"
+                "Your preferences will be modified appropriately if you continue.\n\n"
+                "Would you like to continue?\n").arg(m_profileName);
+        changeStartupProfile = true;
+    }
+    else if (m_profileName == ph_prefs().shutdownProfile())
+    {
+        text = QString ("You have selected to delete profile:"
+                "%1\n\n"
+                "This is currently set as your shutdown profile. "
+                "Your preferences will be modified appropriately if you continue.\n\n"
+                "Would you like to continue?\n").arg(m_profileName);
+        changeShutdownProfile = true;
+    }
+    else
+    {
+        text = QString("You have selected to delete profile: "
                            "%1\n\n"
                            "Would you like to continue?\n").arg(m_profileName);
+    }
     msgbox.setWindowTitle("Erase Profile");
     msgbox.setText(text);
     msgbox.addButton(QMessageBox::Ok);
@@ -120,8 +145,23 @@ void gui_Profiles::on_ctrl_EraseProfile_clicked()
                 m_profileName.clear();
                 m_profileDescription.clear();
                 m_action |= RefreshProfileDisplay;
+
+                if (changeStartupProfile)
+                    ph_prefs().setStartupProfile("");
+                if (changeShutdownProfile)
+                    ph_prefs().setShutdownProfile("");
+
                 return;
-            };
+            }
+            else
+            {
+                QMessageBox::critical(
+                            this,
+                            tr("Erase failed"),
+                            tr("An error occurred deleting the profile.\n"
+                               "The profile has NOT been deleted!")
+                            );
+            }
             break;
         case QMessageBox::Cancel:
             break;
