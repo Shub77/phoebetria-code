@@ -469,7 +469,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
-          <number>-1</number>
+          <number>6</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -697,7 +697,7 @@ QPushButton:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
-          <number>-1</number>
+          <number>6</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -913,7 +913,7 @@ QPushButton:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <property name="spacing">
-          <number>-1</number>
+          <number>6</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1129,7 +1129,7 @@ QPushButton:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <property name="spacing">
-          <number>-1</number>
+          <number>6</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_15">
@@ -1345,7 +1345,7 @@ QPushButton:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
-          <number>-1</number>
+          <number>6</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_31">
@@ -1556,7 +1556,7 @@ QPushButton:hover {
      <x>0</x>
      <y>0</y>
      <width>436</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -1606,6 +1606,42 @@ QPushButton:hover {
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>ctrl_logoAndStatus</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>ctrl_syncGui</tabstop>
+  <tabstop>ctrl_tempScaleToggleBtn</tabstop>
+  <tabstop>ctrl_isAudibleAlarmBtn</tabstop>
+  <tabstop>ctrl_isManualBtn</tabstop>
+  <tabstop>ctrl_ModifyProfile</tabstop>
+  <tabstop>ctrl_isSoftwareControlBtn</tabstop>
+  <tabstop>ctrl_configSoftwareAutoBtn</tabstop>
+  <tabstop>ctrl_probe1Temp</tabstop>
+  <tabstop>ctrl_channel1speedSlider</tabstop>
+  <tabstop>ctrl_channel1speed</tabstop>
+  <tabstop>ctrl_channel1Select</tabstop>
+  <tabstop>ctrl_channel1AlarmTemp</tabstop>
+  <tabstop>ctrl_probe2Temp</tabstop>
+  <tabstop>ctrl_channel2speedSlider</tabstop>
+  <tabstop>ctrl_channel2speed</tabstop>
+  <tabstop>ctrl_channel2Select</tabstop>
+  <tabstop>ctrl_channel2AlarmTemp</tabstop>
+  <tabstop>ctrl_probe3Temp</tabstop>
+  <tabstop>ctrl_channel3speedSlider</tabstop>
+  <tabstop>ctrl_channel3speed</tabstop>
+  <tabstop>ctrl_channel3Select</tabstop>
+  <tabstop>ctrl_channel3AlarmTemp</tabstop>
+  <tabstop>ctrl_probe4Temp</tabstop>
+  <tabstop>ctrl_channel4speedSlider</tabstop>
+  <tabstop>ctrl_channel4speed</tabstop>
+  <tabstop>ctrl_channel4Select</tabstop>
+  <tabstop>ctrl_channel4AlarmTemp</tabstop>
+  <tabstop>ctrl_probe5Temp</tabstop>
+  <tabstop>ctrl_channel5speedSlider</tabstop>
+  <tabstop>ctrl_channel5speed</tabstop>
+  <tabstop>ctrl_channel5Select</tabstop>
+  <tabstop>ctrl_channel5AlarmTemp</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
