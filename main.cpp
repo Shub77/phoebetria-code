@@ -15,11 +15,16 @@
 */
 
 #include "main.h"
+
 #include <QApplication>
+#include <QMessageBox>
+
+#include <stdlib.h>
 
 #include "gui_mainwindow.h"
 #include "phoebetriaapp.h"
 #include "device-io.h"
+
 
 CloseHelper::CloseHelper(QObject *parent)
     : QObject(parent)
@@ -28,21 +33,6 @@ CloseHelper::CloseHelper(QObject *parent)
 
 void CloseHelper::onLastWindowClosed(void)
 {
-    QString profile = ph_prefs().shutdownProfile();
-    if (!profile.isEmpty())
-    {
-        FanControllerProfile fcp;
-        bool r = fcp.load(profile);
-        if (r)
-        {
-            ph_fanControllerIO().setFromProfile(fcp);
-        }
-    }
-    else if (ph_fanControllerData().isSoftwareAuto())
-    {
-        ph_fanControllerData().updateIsSwAuto(false, true);
-    }
-
     ph_shutdown();
 }
 
