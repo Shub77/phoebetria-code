@@ -643,12 +643,17 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
     {
         QString profile = ph_prefs().shutdownProfile();
 
+        bool profileChanged = false;
+
         if (!profile.isEmpty())
         {
             FanControllerProfile fcp;
             bool r = fcp.load(profile);
             if (r)
+            {
                 ph_fanControllerIO().setFromProfile(fcp);
+                profileChanged = true;
+            }
             else
             {
                 QMessageBox::critical(
@@ -657,13 +662,12 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
                             tr("Could not switch to the shutdown profile."
                                        " The profile may not exist.\n\n"
                                        "Profile name: %1\n\n"
-                                       "Switching to auto instead.\n"
                                ).arg(profile)
                             );
-                ph_fanControllerData().updateIsSwAuto(false, true);
             }
         }
-        else if (ph_fanControllerData().isSoftwareAuto())
+
+        if (ph_fanControllerData().isSoftwareAuto() && !profileChanged)
         {
             ph_fanControllerData().updateIsSwAuto(false, true);
         }
