@@ -160,7 +160,7 @@ private slots:
 
     void on_ctrl_syncGui_clicked();
 
-    void on_action_trayIconMenu_Quit();
+    void trayIconMenu_Quit_Selected();
 
 private:
 

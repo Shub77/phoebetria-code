@@ -183,7 +183,7 @@ void gui_MainWindow::initWaitForReqChannelParams(void)
 
 void gui_MainWindow::initTrayIconMenu(void)
 {
-    m_trayIconMenu.addAction("Quit", this, SLOT(on_action_trayIconMenu_Quit()));
+    m_trayIconMenu.addAction("Quit", this, SLOT(trayIconMenu_Quit_Selected()));
 
     m_trayIcon.setContextMenu(&m_trayIconMenu);
 }
@@ -1359,7 +1359,7 @@ void gui_MainWindow::on_ctrl_syncGui_clicked()
     syncGuiCtrlsWithFanController();
 }
 
-void gui_MainWindow::on_action_trayIconMenu_Quit()
+void gui_MainWindow::trayIconMenu_Quit_Selected()
 {
     this->close();
 }
