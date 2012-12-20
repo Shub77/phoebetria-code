@@ -339,15 +339,22 @@ void gui_MainWindow::updateSpeedControlTooltip(int channel)
     tooltip += *fcdata().targetRpmString(channel, &targetRpmStr);
     tooltip += "\n";
 
+    int probeChannel;
+
+    if (fcdata().isSoftwareAuto())
+        probeChannel = fcdata().ramp(channel).probeAffinity();
+    else
+        probeChannel = channel;
+
     tooltip += tr("Min Temp: ");
     tooltip += fcdata().temperatureString(
-                   fcdata().minTemp(channel),
+                   fcdata().minTemp(probeChannel),
                    true);
 
     tooltip += "\n";
     tooltip += tr("Max Temp: ");
     tooltip += fcdata().temperatureString(
-                   fcdata().maxTemp(channel),
+                   fcdata().maxTemp(probeChannel),
                    true);
 
     tooltip += "\n";
