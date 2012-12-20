@@ -122,7 +122,9 @@ void gui_SoftwareAutoSetup::setupChannelComboBox(void)
     bool bs = blockSignals(true);
 
     for (int i = 0; i < channelCount; ++i)
-        ui->ctrl_channel->insertItem(i, tr("Channel %1").arg(i+1), i);
+        ui->ctrl_channel->insertItem(i,
+                                     tr("Channel %1").arg(i+1),
+                                     ph_prefs().channelName(i));
 
     blockSignals(bs);
 }
@@ -160,6 +162,7 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
     ui->ctrl_fanOnSpeed->setEnabled             (setup.allowFanToTurnOff);
     ui->ctrl_fanOnTemp->setEnabled              (setup.allowFanToTurnOff);
 
+    ui->ctrl_channelName->setText               (ph_prefs().channelName(channel));
     ignoreSignals(bs);
 
 }
