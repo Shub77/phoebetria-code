@@ -16,9 +16,9 @@
 /* -------- QGroupBox -------- */
 	QGroupBox
 	{
-		border: #1e1e1e;
+		border: #1e1e1e
 	}
-	
+
 	QGroupBox:focus
 	{
 		border: 2px solid qlineargradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
@@ -365,6 +365,12 @@
 
 
 /* -------- QMenuBar -------- */
+	QMenuBar
+	{	
+		color: white;
+		background: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:1 #212121, stop:0.4 #343434);
+	}
+
 	QMenuBar::item
 	{
 		background: transparent;
