@@ -183,8 +183,7 @@ void gui_MainWindow::initWaitForReqChannelParams(void)
 
 void gui_MainWindow::initTrayIconMenu(void)
 {
-    m_trayIconMenu.addAction("test1");
-    m_trayIconMenu.addAction("test2");
+    m_trayIconMenu.addAction("Quit", this, SLOT(on_action_trayIconMenu_Quit()));
 
     m_trayIcon.setContextMenu(&m_trayIconMenu);
 }
@@ -647,8 +646,22 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
             //FIXME: Implement user prefenece for minimize or hide.
             //hide();
             //FIXME: Having this set after first use, susequent uses minimizes, opens then minimizes again.  (OSX only?)
+
+#ifdef Q_OS_OSX
+        showMinimized();
+        e->ignore();
+#else
+        if (this->isMinimized())
+        {
+            e->accept();
+        }
+        else
+        {
             showMinimized();
             e->ignore();
+        }
+#endif
+
     }
     else
     {
@@ -1317,6 +1330,12 @@ void gui_MainWindow::on_ctrl_syncGui_clicked()
 {
     syncGuiCtrlsWithFanController();
 }
+
+void gui_MainWindow::on_action_trayIconMenu_Quit()
+{
+    this->close();
+}
+
 
 void gui_MainWindow::initTargetRpmOverlays()
 {

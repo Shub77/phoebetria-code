@@ -158,6 +158,8 @@ private slots:
 
     void on_ctrl_syncGui_clicked();
 
+    void on_action_trayIconMenu_Quit();
+
 private:
 
     void initCtrlArrays(void);
