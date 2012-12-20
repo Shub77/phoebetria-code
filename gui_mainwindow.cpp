@@ -839,6 +839,7 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
         fcdata().updateManualRPM(channel, val, false);
         fc->setChannelSettings(channel, fcdata().alarmTemp(channel), val);
         updateSpeedControl(channel, val, true);
+        updateProfileDisplay("", "");
     }
 }
 
@@ -854,6 +855,7 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
         FanControllerIO* fc = &ph_fanControllerIO();
         fc->setChannelSettings(channel, fcdata().alarmTemp(channel), val);
         updateSpeedControl(channel, val, true);
+        updateProfileDisplay("", "");
     }
 }
 
@@ -900,14 +902,13 @@ void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
                                            maxProbTemp,
                                            1,
                                            &ok);
-    if (fcdata().isCelcius())
-    {
-        userTemperature = FanControllerData::toFahrenheit(userTemperature);
-    }
 
     if (userTemperature != currentAlarmTemp)
     {
-
+        if (fcdata().isCelcius())
+        {
+            userTemperature = FanControllerData::toFahrenheit(userTemperature);
+        }
         fcdata().updateAlarmTemp(channel, userTemperature, false);
 
         int RpmToSet;
@@ -918,6 +919,7 @@ void gui_MainWindow::userClickedAlarmTempCtrl(int channel)
 
         fc->setChannelSettings(channel, userTemperature, RpmToSet);
         updateAlarmTempControl(channel, userTemperature, fcdata().isCelcius());
+        updateProfileDisplay("", "");
     }
 }
 
@@ -1147,6 +1149,7 @@ void gui_MainWindow::on_ctrl_tempScaleToggleBtn_toggled(bool checked)
 
     updateAllAlarmCtrls(isC);
     updateAllCurrentTempControls();
+    updateProfileDisplay("", "");
 }
 
 void gui_MainWindow::on_ctrl_isManualBtn_toggled(bool checked)
@@ -1167,6 +1170,8 @@ void gui_MainWindow::on_ctrl_isManualBtn_toggled(bool checked)
         ph_resetSchedulerElapsedTime();
     }
     syncGuiCtrlsWithFanController();
+
+    updateProfileDisplay("", "");
 }
 
 void gui_MainWindow::on_ctrl_isAudibleAlarmBtn_toggled(bool checked)
@@ -1180,6 +1185,8 @@ void gui_MainWindow::on_ctrl_isAudibleAlarmBtn_toggled(bool checked)
                        fcdata().isAuto(),
                        isAudible
                       );
+
+    updateProfileDisplay("", "");
 }
 
 void gui_MainWindow::on_ctrl_configSoftwareAutoBtn_clicked()
@@ -1204,6 +1211,7 @@ void gui_MainWindow::on_ctrl_isSoftwareControlBtn_toggled(bool checked)
     fcdata().clearRampTemps();
     ph_resetSchedulerElapsedTime();
     syncGuiCtrlsWithFanController();
+    updateProfileDisplay("", "");
 }
 
 
@@ -1262,6 +1270,8 @@ void gui_MainWindow::askUserForManualSpeed(int channel)
 
         ph_resetSchedulerElapsedTime();
         syncGuiCtrlsWithFanController();
+
+        updateProfileDisplay("", "");
     }
 }
 
