@@ -67,7 +67,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 #elif defined Q_WS_MAC
     m_trayIcon.setIcon(QIcon(":/Images/icons/22x22/phoebetria.png"));
 #elif defined Q_WS_X11
-    m_trayIcon.setIcon(QIcon(":/Images/icons/22x22/phoebetria.png");
+    m_trayIcon.setIcon(QIcon(":/Images/icons/22x22/phoebetria.png"));
 #else
     m_trayIcon.setIcon(QIcon(":/Images/icons/16x16/phoebetria.png"));
 #endif
