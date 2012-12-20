@@ -1061,6 +1061,11 @@ void gui_MainWindow::on_actionAbout_triggered()
     aboutDlg.exec();
 }
 
+void gui_MainWindow::on_actionQuit_triggered()
+{
+    this->close();
+}
+
 void gui_MainWindow::on_actionPreferences_triggered()
 {
     gui_Preferences preferencesDlg(this);

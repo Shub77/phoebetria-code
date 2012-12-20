@@ -162,6 +162,8 @@ private slots:
 
     void trayIconMenu_Quit_Selected();
 
+    void on_actionQuit_triggered();
+
 private:
 
     void initCtrlArrays(void);
