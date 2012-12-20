@@ -78,11 +78,7 @@ QString Themes::themePath(void)
 
 QString Themes::getStyleSheet(const QString& filename)
 {
-    QString fileToOpen;
-
-    fileToOpen = filename;
-
-    QFile file(fileToOpen);
+    QFile file(filename);
     if (!file.open(QFile::ReadOnly))
         return QString();
 

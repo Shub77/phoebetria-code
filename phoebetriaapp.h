@@ -76,11 +76,17 @@ public:
     void resetScheduler(void)
         { m_dispatcher.resetElapsedTime(); }
 
+    bool setTheme(const QString& styleFilename);
+
+    const QString& getCurrentThemeFilename(void) const;
+
 private:
     static FanControllerIO m_fanControllerIO;
     static EventDispatcher m_dispatcher;
     static QTimer m_globalTimer;
     static Preferences m_prefs;
+
+    QString m_currentStyle_filename;
 };
 
 

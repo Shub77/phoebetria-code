@@ -116,7 +116,17 @@ void gui_Preferences::populateThemesComboBox(void)
     {
         ThemeNameAndFilename td = items.at(i);
         ui->ctrl_style->addItem(td.name, td.fileNameAndPath);
+    }
 
+    QString currThemeFilename = ph_phoebetriaApp()->getCurrentThemeFilename();
+
+    if (!currThemeFilename.isEmpty())
+    {
+        int index = ui->ctrl_style->findData(currThemeFilename);
+        if (index != -1)
+        {
+            ui->ctrl_style->setCurrentIndex(index);
+        }
     }
 }
 
@@ -160,7 +170,7 @@ void gui_Preferences::commitChanges(void) const
     {
         QString themeFilename =  ui->ctrl_style->itemData(idx).toString();
         ph_prefs().setStylesheet(themeFilename);
-        Themes::setAppStyleSheet(themeFilename);
+        ph_phoebetriaApp()->setTheme(themeFilename);
     }
 
     ph_prefs().sync();
