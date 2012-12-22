@@ -197,7 +197,6 @@ void gui_MainWindow::initTrayIconMenu(void)
     {
         m_trayIconMenu_profileActions[i] = pMenu->addAction("");
         m_trayIconMenu_profileActions[i]->setVisible(false);
-        m_trayIconMenu_profileActions[i]->setData(QString::number(i));
 
         connect(m_trayIconMenu_profileActions[i],
                 SIGNAL(triggered()),
@@ -239,6 +238,7 @@ void gui_MainWindow::updateTrayIconProfileList(void)
     for (; i < MaxTrayMenuProfiles; ++i)
     {
         m_trayIconMenu_profileActions[i]->setVisible(false);
+        m_trayIconMenu_profileActions[i]->setData(QVariant());
     }
 
 }
@@ -1408,7 +1408,7 @@ void gui_MainWindow::trayIconMenu_Quit_Selected()
 void gui_MainWindow::trayIconMenu_Profile_Selected(void)
 {
     QAction *a = qobject_cast<QAction *>(sender());
-    if (a)
+    if (a && a->data().isValid())
     {
         //qDebug() << "Load profile: " << a->data().toString();
         QString pName = a->data().toString();
