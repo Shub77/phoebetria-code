@@ -20,7 +20,10 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QCloseEvent>
+
 #include <cmath>
+#include <algorithm>
+
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
 #include "phoebetriaapp.h"
@@ -75,8 +78,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->ctrl_syncGui->hide();
 #endif
 
-    initTrayIconMenu();
-
     if (ph_prefs().startMinimized())
     {
         this->setWindowState(Qt::WindowMinimized);
@@ -118,22 +119,27 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
                     );
         this->ui->ctrl_ModifyProfile->setEnabled(false);
     }
-
-    /* Load startup profile */
-    QString profile= ph_prefs().startupProfile();
-    if (!profile.isEmpty())
+    else
     {
-        if (!loadProfile(profile))
+        initTrayIconMenu();
+        updateTrayIconProfileList();
+
+        /* Load startup profile */
+        QString profile= ph_prefs().startupProfile();
+        if (!profile.isEmpty())
         {
-            QMessageBox::critical(
-                        NULL,
-                        tr("Could not switch to startup profile."),
-                        tr("Could not switch to the startup profile."
-                                   " The profile may not exist.\n\n"
-                                   "Profile name: %1\n\n"
-                                   "Please check preferences."
-                           ).arg(profile)
-                        );
+            if (!loadProfile(profile))
+            {
+                QMessageBox::critical(
+                            NULL,
+                            tr("Could not switch to startup profile."),
+                            tr("Could not switch to the startup profile."
+                                       " The profile may not exist.\n\n"
+                                       "Profile name: %1\n\n"
+                                       "Please check preferences."
+                               ).arg(profile)
+                            );
+            }
         }
     }
 }
@@ -183,7 +189,58 @@ void gui_MainWindow::initTrayIconMenu(void)
 {
     m_trayIconMenu.addAction("Quit", this, SLOT(trayIconMenu_Quit_Selected()));
 
+    m_trayIconMenu.addSeparator();
+
+    QMenu *pMenu = m_trayIconMenu.addMenu("Switch profile");
+
+    for (int i = 0; i < MaxTrayMenuProfiles; ++i)
+    {
+        m_trayIconMenu_profileActions[i] = pMenu->addAction("");
+        m_trayIconMenu_profileActions[i]->setVisible(false);
+        m_trayIconMenu_profileActions[i]->setData(QString::number(i));
+
+        connect(m_trayIconMenu_profileActions[i],
+                SIGNAL(triggered()),
+                this,
+                SLOT(trayIconMenu_Profile_Selected()));
+
+
+        pMenu->addAction(m_trayIconMenu_profileActions[i]);
+    }
+
     m_trayIcon.setContextMenu(&m_trayIconMenu);
+}
+
+void gui_MainWindow::updateTrayIconProfileList(void)
+{
+    int i;
+    int nameCount;
+
+    QStringList pNames = FanControllerProfile::getProfileNames();
+    pNames.sort();
+    nameCount = pNames.count();
+
+    int n = std::min(nameCount, (int)MaxTrayMenuProfiles);
+
+    if (n == MaxTrayMenuProfiles)
+    {
+        // TODO: Warn that not all profiles will be added
+    }
+
+    for (i = 0; i < n; ++i)
+    {
+        const QString& n = pNames.at(i);
+        if (FanControllerProfile::isReservedProfileName(n))
+            continue;
+        m_trayIconMenu_profileActions[i]->setText(n);
+        m_trayIconMenu_profileActions[i]->setData(n);
+        m_trayIconMenu_profileActions[i]->setVisible(true);
+    }
+    for (; i < MaxTrayMenuProfiles; ++i)
+    {
+        m_trayIconMenu_profileActions[i]->setVisible(false);
+    }
+
 }
 
 void gui_MainWindow::checkForReqChannelParems(void)
@@ -1098,6 +1155,7 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
     {
         updateProfileDisplay(profileDlg->selectedName(),
                              profileDlg->selectedDescription());
+        updateTrayIconProfileList();
     }
 
     delete profileDlg;
@@ -1345,6 +1403,20 @@ void gui_MainWindow::on_ctrl_syncGui_clicked()
 void gui_MainWindow::trayIconMenu_Quit_Selected()
 {
     this->close();
+}
+
+void gui_MainWindow::trayIconMenu_Profile_Selected(void)
+{
+    QAction *a = qobject_cast<QAction *>(sender());
+    if (a)
+    {
+        //qDebug() << "Load profile: " << a->data().toString();
+        QString pName = a->data().toString();
+        if (!pName.isEmpty())
+        {
+            loadProfile(pName);
+        }
+    }
 }
 
 

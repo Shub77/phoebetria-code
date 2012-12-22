@@ -53,6 +53,9 @@ class gui_MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    static const double toLogScale;
+    static const double toLinearScale;
+
 public:
     explicit gui_MainWindow(QWidget *parent = 0);
     ~gui_MainWindow();
@@ -157,9 +160,11 @@ private slots:
 
     void on_ctrl_syncGui_clicked();
 
+    void on_actionQuit_triggered();
+
     void trayIconMenu_Quit_Selected();
 
-    void on_actionQuit_triggered();
+    void trayIconMenu_Profile_Selected();
 
 private:
 
@@ -168,6 +173,7 @@ private:
     void initWaitForReqChannelParams(void);
 
     void initTrayIconMenu(void);
+    void updateTrayIconProfileList(void);
 
     bool customAutoAvailable(void) const;
 
@@ -238,20 +244,20 @@ private:
     LabelOverlay* m_ctrls_probeAffinityOverlay[FC_MAX_CHANNELS];
     QHBoxLayout* m_layout_probeAffinityOverlay[FC_MAX_CHANNELS];
 
-
     // These are initialised at run time by this class
     SliderOverlay* m_ctrls_targetRpmOverlay[FC_MAX_CHANNELS];
     QGridLayout* m_layout_targetRpmOverlay[FC_MAX_CHANNELS];
 
-
-
     QSystemTrayIcon m_trayIcon;
+
     QMenu m_trayIconMenu;
+
+    enum { MaxTrayMenuProfiles = 15 };
+    QAction* m_trayIconMenu_profileActions[MaxTrayMenuProfiles];
 
     bool m_reqChannelParamsAreSet;
 
-    static const double toLogScale;
-    static const double toLinearScale;
+
 };
 
 #endif // GUI_MAINWINDOW_H
