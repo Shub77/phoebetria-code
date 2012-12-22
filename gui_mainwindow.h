@@ -119,9 +119,6 @@ private slots:
     void on_ctrl_channel4AlarmTemp_clicked();
     void on_ctrl_channel5AlarmTemp_clicked();
 
-    void on_actionAbout_triggered();
-    void on_actionPreferences_triggered();
-
     void on_ctrl_ModifyProfile_clicked();
 
     void on_ctrl_tempScaleToggleBtn_toggled(bool checked);
@@ -160,11 +157,19 @@ private slots:
 
     void on_ctrl_syncGui_clicked();
 
-    void on_actionQuit_triggered();
+    // LOAD PROFILE MENU ACTIONS
+    void initLoadProfileActions(void);
 
+    // FILE MENU
+    void when_actionPreferences_selected();
+    void when_actionQuit_selected();
+
+    // HELP MENU
+    void when_actionAbout_selected();
+
+    // TRAY CONTEXT MENU
     void trayIconMenu_Quit_Selected();
-
-    void trayIconMenu_Profile_Selected();
+    void loadProfile_MenuItem_Selected();
 
 private:
 
@@ -172,8 +177,10 @@ private:
 
     void initWaitForReqChannelParams(void);
 
+    void initMenus(void);
+
     void initTrayIconMenu(void);
-    void updateTrayIconProfileList(void);
+    void updateLoadProfileActions(void);
 
     bool customAutoAvailable(void) const;
 
@@ -252,8 +259,8 @@ private:
 
     QMenu m_trayIconMenu;
 
-    enum { MaxTrayMenuProfiles = 15 };
-    QAction* m_trayIconMenu_profileActions[MaxTrayMenuProfiles];
+    enum { MaxTrayMenuProfiles = 10 };
+    QAction* m_LoadProfileActions[MaxTrayMenuProfiles];
 
     bool m_reqChannelParamsAreSet;
 

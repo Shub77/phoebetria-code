@@ -62,6 +62,42 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     initCtrlArrays();
+    initTargetRpmOverlays();
+    initProbeAffinityOverlays();
+
+    if (!MainDb::isValid())
+    {
+        QMessageBox::critical(
+                    this,
+                    tr("Profile database error."),
+                    tr("The profile database could not be initialised"
+                       " or another error has occurred. Profile management"
+                       " will not work!")
+                    );
+        this->ui->ctrl_ModifyProfile->setEnabled(false);
+    }
+    else
+    {
+        initMenus();
+
+        /* Load startup profile */
+        QString profile= ph_prefs().startupProfile();
+        if (!profile.isEmpty())
+        {
+            if (!loadProfile(profile))
+            {
+                QMessageBox::critical(
+                            NULL,
+                            tr("Could not switch to startup profile."),
+                            tr("Could not switch to the startup profile."
+                                       " The profile may not exist.\n\n"
+                                       "Profile name: %1\n\n"
+                                       "Please check preferences."
+                               ).arg(profile)
+                            );
+            }
+        }
+    }
 
 #if defined Q_WS_WIN
     m_trayIcon.setIcon(QIcon(":/Images/icons/16x16/phoebetria.png"));
@@ -103,48 +139,50 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     initWaitForReqChannelParams();
 
-    initTargetRpmOverlays();
-    initProbeAffinityOverlays();
-
     updateChannelControlTooltips();
-
-    if (!MainDb::isValid())
-    {
-        QMessageBox::critical(
-                    this,
-                    tr("Profile database error."),
-                    tr("The profile database could not be initialised"
-                       " or another error has occurred. Profile management"
-                       " will not work!")
-                    );
-        this->ui->ctrl_ModifyProfile->setEnabled(false);
-    }
-    else
-    {
-        initTrayIconMenu();
-        updateTrayIconProfileList();
-
-        /* Load startup profile */
-        QString profile= ph_prefs().startupProfile();
-        if (!profile.isEmpty())
-        {
-            if (!loadProfile(profile))
-            {
-                QMessageBox::critical(
-                            NULL,
-                            tr("Could not switch to startup profile."),
-                            tr("Could not switch to the startup profile."
-                                       " The profile may not exist.\n\n"
-                                       "Profile name: %1\n\n"
-                                       "Please check preferences."
-                               ).arg(profile)
-                            );
-            }
-        }
-    }
 }
 
+void gui_MainWindow::initMenus(void)
+{
+    /* Initialise these first because we're also using the actions in both the
+       File/Load Profile submenu */
 
+    initLoadProfileActions();
+    updateLoadProfileActions();
+
+    initTrayIconMenu();
+
+    QAction* action;
+    QMenu* menu;
+
+    // FILE MENU
+    menu = ui->menuBar->addMenu(tr("File"));
+
+    // File/Load Profile
+    QMenu *subMenu = menu->addMenu(tr("Load Profile"));
+    for (int i = 0; i < MaxTrayMenuProfiles; ++i)
+    {
+        subMenu->addAction(m_LoadProfileActions[i]);
+    }
+
+    // File/Preferences
+    action = menu->addAction(tr("Preferences"));
+    action->setMenuRole(QAction::PreferencesRole);
+    connect(action, SIGNAL(triggered()), this, SLOT(when_actionPreferences_selected()));
+
+    // File/Quit
+    menu->addSeparator();
+    action = menu->addAction(tr("Quit"));
+    action->setMenuRole(QAction::QuitRole);
+    connect(action, SIGNAL(triggered()), this, SLOT(when_actionQuit_selected()));
+
+    // HELP MENU
+    menu = ui->menuBar->addMenu(tr("Help"));
+    action = menu->addAction(tr("About"));
+    action->setMenuRole(QAction::AboutRole);
+    connect(action, SIGNAL(triggered()), this, SLOT(when_actionAbout_selected()));
+
+}
 
 void gui_MainWindow::syncGuiCtrlsWithFanController(void)
 {
@@ -185,32 +223,38 @@ void gui_MainWindow::initWaitForReqChannelParams(void)
     checkForReqChannelParems();
 }
 
+void gui_MainWindow::initLoadProfileActions(void)
+{
+    for (int i = 0; i < MaxTrayMenuProfiles; ++i)
+    {
+        m_LoadProfileActions[i] = new QAction(this);
+        m_LoadProfileActions[i]->setVisible(false);
+        connect(m_LoadProfileActions[i],
+                SIGNAL(triggered()),
+                this,
+                SLOT(loadProfile_MenuItem_Selected()));
+    }
+}
+
+// pre: m_trayIconMenu_profileActions[] has been initialised
 void gui_MainWindow::initTrayIconMenu(void)
 {
-    m_trayIconMenu.addAction("Quit", this, SLOT(trayIconMenu_Quit_Selected()));
 
-    m_trayIconMenu.addSeparator();
-
-    QMenu *pMenu = m_trayIconMenu.addMenu("Switch profile");
+    QMenu *pMenu = m_trayIconMenu.addMenu(tr("Load profile"));
 
     for (int i = 0; i < MaxTrayMenuProfiles; ++i)
     {
-        m_trayIconMenu_profileActions[i] = pMenu->addAction("");
-        m_trayIconMenu_profileActions[i]->setVisible(false);
-
-        connect(m_trayIconMenu_profileActions[i],
-                SIGNAL(triggered()),
-                this,
-                SLOT(trayIconMenu_Profile_Selected()));
-
-
-        pMenu->addAction(m_trayIconMenu_profileActions[i]);
+        pMenu->addAction(m_LoadProfileActions[i]);
     }
+
+    m_trayIconMenu.addSeparator();
+
+    m_trayIconMenu.addAction("Quit", this, SLOT(trayIconMenu_Quit_Selected()));
 
     m_trayIcon.setContextMenu(&m_trayIconMenu);
 }
 
-void gui_MainWindow::updateTrayIconProfileList(void)
+void gui_MainWindow::updateLoadProfileActions(void)
 {
     int i;
     int nameCount;
@@ -219,28 +263,40 @@ void gui_MainWindow::updateTrayIconProfileList(void)
     pNames.sort();
     nameCount = pNames.count();
 
-    int n = std::min(nameCount, (int)MaxTrayMenuProfiles);
+    // We want -1 to leave room for a "more" action
+    int n = std::min(nameCount, (int)MaxTrayMenuProfiles - 1);
 
-    if (n == MaxTrayMenuProfiles)
-    {
-        // TODO: Warn that not all profiles will be added
-    }
-
+    /* The data will be set to true if the action name is == to the
+       profile name. If it's set to false, then the action name (text)
+       will be ignored by the slot and the manage profiles dialog
+       opened instead.
+     */
     for (i = 0; i < n; ++i)
     {
         const QString& n = pNames.at(i);
         if (FanControllerProfile::isReservedProfileName(n))
+        {
             continue;
-        m_trayIconMenu_profileActions[i]->setText(n);
-        m_trayIconMenu_profileActions[i]->setData(n);
-        m_trayIconMenu_profileActions[i]->setVisible(true);
+        }
+        m_LoadProfileActions[i]->setText(n);
+        m_LoadProfileActions[i]->setData(true);
+        m_LoadProfileActions[i]->setVisible(true);
     }
-    for (; i < MaxTrayMenuProfiles; ++i)
+    if (i == MaxTrayMenuProfiles - 1)
     {
-        m_trayIconMenu_profileActions[i]->setVisible(false);
-        m_trayIconMenu_profileActions[i]->setData(QVariant());
+        m_LoadProfileActions[i]->setText(tr("More..."));
+        m_LoadProfileActions[i]->setData(false);
+        m_LoadProfileActions[i]->setVisible(true);
+        i++;
     }
-
+    else
+    {
+        for (; i < MaxTrayMenuProfiles; ++i)
+        {
+            m_LoadProfileActions[i]->setVisible(false);
+            m_LoadProfileActions[i]->setData(QVariant());
+        }
+    }
 }
 
 void gui_MainWindow::checkForReqChannelParems(void)
@@ -1090,18 +1146,18 @@ void gui_MainWindow::on_ctrl_channel5AlarmTemp_clicked()
     userClickedAlarmTempCtrl(4);
 }
 
-void gui_MainWindow::on_actionAbout_triggered()
+void gui_MainWindow::when_actionAbout_selected()
 {
     gui_About aboutDlg(this);
     aboutDlg.exec();
 }
 
-void gui_MainWindow::on_actionQuit_triggered()
+void gui_MainWindow::when_actionQuit_selected()
 {
     this->close();
 }
 
-void gui_MainWindow::on_actionPreferences_triggered()
+void gui_MainWindow::when_actionPreferences_selected()
 {
     gui_Preferences preferencesDlg(this);
     preferencesDlg.exec();
@@ -1155,7 +1211,7 @@ void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
     {
         updateProfileDisplay(profileDlg->selectedName(),
                              profileDlg->selectedDescription());
-        updateTrayIconProfileList();
+        updateLoadProfileActions();
     }
 
     delete profileDlg;
@@ -1405,16 +1461,22 @@ void gui_MainWindow::trayIconMenu_Quit_Selected()
     this->close();
 }
 
-void gui_MainWindow::trayIconMenu_Profile_Selected(void)
+void gui_MainWindow::loadProfile_MenuItem_Selected(void)
 {
     QAction *a = qobject_cast<QAction *>(sender());
     if (a && a->data().isValid())
     {
-        //qDebug() << "Load profile: " << a->data().toString();
-        QString pName = a->data().toString();
-        if (!pName.isEmpty())
+        if (a->data().toBool() == true)
         {
-            loadProfile(pName);
+            QString pName = a->text();
+            if (!pName.isEmpty())
+            {
+                loadProfile(pName);
+            }
+        }
+        else
+        {
+            on_ctrl_ModifyProfile_clicked();
         }
     }
 }
