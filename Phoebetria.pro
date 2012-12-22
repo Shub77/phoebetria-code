@@ -6,6 +6,9 @@
 
 QT       += core gui sql
 
+#Added in anticipation of QT 5
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 TARGET = Phoebetria
 TEMPLATE = app
 
@@ -112,6 +115,9 @@ FORMS    += gui_mainwindow.ui \
     gui_profiles.ui \
     gui_setmanualrpm.ui
 
+RESOURCES += \
+    gui_resources.qrc
+
 #-------------------------------------------------
 # Config for the HID API library
 #-------------------------------------------------
@@ -131,6 +137,7 @@ win32 {
     SOURCES += hidapi/windows/hid.c
     LIBS += -lsetupapi
     RC_FILE = Windows/Phoebetria.rc
+    CONFIG += exceptions rtti
 }
 
 unix:!macx {
@@ -150,9 +157,6 @@ macx {
     APP_QML_FILES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_QML_FILES
 }
-
-RESOURCES += \
-    gui_resources.qrc
 
 OTHER_FILES +=
 
