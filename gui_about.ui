@@ -43,41 +43,58 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QGraphicsView" name="graphicsView">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>64</width>
-             <height>64</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>64</width>
-             <height>64</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-image: url(:/Images/icons/64x64/phoebetria.png);</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Sunken</enum>
-           </property>
-           <property name="verticalScrollBarPolicy">
-            <enum>Qt::ScrollBarAlwaysOff</enum>
-           </property>
-           <property name="horizontalScrollBarPolicy">
-            <enum>Qt::ScrollBarAlwaysOff</enum>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QGraphicsView" name="graphicsView">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>64</width>
+               <height>64</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>64</width>
+               <height>64</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-image: url(:/Images/icons/64x64/phoebetria.png);</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>13</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
          <item>
           <spacer name="horizontalSpacer">
@@ -89,7 +106,7 @@
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>6</width>
+             <width>13</width>
              <height>20</height>
             </size>
            </property>
@@ -164,9 +181,39 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="ctrl_qtVersion">
+             <property name="text">
+              <string>Qt Version:</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
         </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -191,7 +238,7 @@
             <string>Controller software for the BitFenix Recon fan controller.</string>
            </property>
            <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
            </property>
           </widget>
          </item>
@@ -199,6 +246,9 @@
           <widget class="QLabel" name="ctrl_build_2">
            <property name="text">
             <string>© Copyright 2012</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>

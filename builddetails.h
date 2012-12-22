@@ -31,6 +31,7 @@ public:
 
     static QString versionStr(void);
     static QString buildDateTimeStr(void);
+    static QString qtVersion(void);
 
 };
 

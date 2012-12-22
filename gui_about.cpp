@@ -27,6 +27,7 @@ gui_About::gui_About(QWidget *parent) :
     this->setFixedSize(this->size());   // Disable resizing
     ui->ctrl_version->setText("Version " + BuildDetails::versionStr());
     ui->ctrl_build->setText("Build date: " + BuildDetails::buildDateTimeStr());
+    ui->ctrl_qtVersion->setText("Qt Version: " + BuildDetails::qtVersion());
 }
 
 gui_About::~gui_About()

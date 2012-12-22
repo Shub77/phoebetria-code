@@ -25,3 +25,12 @@ QString BuildDetails::buildDateTimeStr(void)
 
     return s;
 }
+
+QString BuildDetails::qtVersion(void)
+{
+    QString s;
+
+    s = QT_VERSION_STR;
+
+    return s;
+}
