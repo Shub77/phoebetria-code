@@ -965,9 +965,10 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
     FanControllerIO* fc = &ph_fanControllerIO();
     fc->blockSignals(false);
     int val = rpmSliderValueToRPM(channel, m_ctrls_RpmSliders[channel]->value());
-    // TODO: this should probably be last manual setting
-    if (val != fcdata().lastRPM(channel) || val == 0)
+
+    if (val != fcdata().manualRPM(channel) || val == 0)
     {
+        qDebug() << "Last value:" << fcdata().manualRPM(channel) << "New:" << val;
         fcdata().updateManualRPM(channel, val, false);
         fc->setChannelSettings(channel, fcdata().alarmTemp(channel), val);
         updateSpeedControl(channel, val, true);
@@ -979,9 +980,9 @@ void gui_MainWindow::userChangedChannelRpmSlider(int channel, int value)
 {
     int val = rpmSliderValueToRPM(channel, value);
     m_ctrls_currentRPM[channel]->setText(QString::number((int)val));
-    // TODO: this should probably be last manual setting
+
     if ( !m_ctrls_RpmSliders[channel]->isSliderDown()
-            && (val != fcdata().lastRPM(channel) || val == 0))
+            && (val != fcdata().manualRPM(channel) || val == 0))
     {
         fcdata().updateManualRPM(channel, val, false);
         FanControllerIO* fc = &ph_fanControllerIO();
@@ -1001,6 +1002,7 @@ int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
 
     int rpm = fcdata().percentageToRpm(channel, value, RECON_RPM_STEPSIZE);
 
+    qDebug() << "Slider RPM:" << rpm;
     return rpm < channelMinRPM ? 0 : rpm;
 }
 
