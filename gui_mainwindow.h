@@ -209,7 +209,7 @@ private:
     void updateToggleControls(void);
 
     void updateCurrentTempControl(int channel, int temp);
-    void updateAllCurrentTempControls(void);
+    void updateAllTemperatureControls(void);
     void updateAlarmTempControl(int channel, int temp, bool isCelcius);
     void updateAllAlarmCtrls(bool isCelcius);
 

@@ -192,6 +192,7 @@ void gui_MainWindow::syncGuiCtrlsWithFanController(void)
     updateSpeedControlTooltips();
     updateAllSpeedCtrls(!fcdata().isAuto());
     updateAllAlarmCtrls(fcd.isCelcius());
+    updateAllTemperatureControls();
     updateToggleControls();
     updateProbeAffinityOverlays();
     enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
@@ -589,7 +590,7 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
     }
 }
 
-void gui_MainWindow::updateAllCurrentTempControls(void)
+void gui_MainWindow::updateAllTemperatureControls(void)
 {
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
@@ -1297,7 +1298,7 @@ void gui_MainWindow::on_ctrl_tempScaleToggleBtn_toggled(bool checked)
                       );
 
     updateAllAlarmCtrls(isC);
-    updateAllCurrentTempControls();
+    updateAllTemperatureControls();
     updateProfileDisplay("", "");
 }
 
