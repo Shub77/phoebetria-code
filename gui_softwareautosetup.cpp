@@ -166,7 +166,7 @@ void gui_SoftwareAutoSetup::xferSettings_toGui(const FanControllerData& fcdata,
     ui->ctrl_rampEndSpeed->setValue             (setup.speed_rampEnd);
 
     ui->ctrl_isFanConstantSpeed->setChecked     (setup.fixedRpm);
-    ui->ctrl_probeAffinity->setValue            (setup.probeAffinity);
+    ui->ctrl_probeAffinity->setValue            (setup.probeAffinity+1);
     ui->ctrl_isFanAlwaysOn->setChecked          (!setup.allowFanToTurnOff);
     ui->ctrl_fanOnSpeed->setEnabled             (setup.allowFanToTurnOff);
     ui->ctrl_fanOnTemp->setEnabled              (setup.allowFanToTurnOff);
@@ -329,7 +329,7 @@ void gui_SoftwareAutoSetup::on_ctrl_channel_currentIndexChanged(int index)
 
 void gui_SoftwareAutoSetup::on_ctrl_probeAffinity_valueChanged(int arg1)
 {
-    m_ramp[m_currChannel].setProbeAffinity(arg1);
+    m_ramp[m_currChannel].setProbeAffinity(arg1-1);
 }
 
 void gui_SoftwareAutoSetup::on_buttonBox_accepted()
