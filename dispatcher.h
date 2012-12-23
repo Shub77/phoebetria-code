@@ -55,7 +55,12 @@ public:
         ReqTempAndCurrRpmAndMaxRpm,
 
         //!< Log data
-        LogData
+        LogData,
+
+        //!< Reset fan ramp temps (all channels) to "not set"
+        ResetFanRampTemps
+
+
 
     } TaskId; //!< Signal "types" that can be issued.
 

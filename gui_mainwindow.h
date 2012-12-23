@@ -171,6 +171,8 @@ private slots:
     void trayIconMenu_Quit_Selected();
     void loadProfile_MenuItem_Selected();
 
+    void on_pushButton_2_clicked();
+
 private:
 
     void initCtrlArrays(void);

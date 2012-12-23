@@ -151,6 +151,8 @@ int EventDispatcher::initTasks(void)
 
     addTask(Task(ReqAllDeviceRelated, intervalToTick(30000)));
 
+    addTask(Task(ResetFanRampTemps, intervalToTick(30000)));
+
     addTask(Task(ReqDeviceFlags, intervalToTick(5000)));
 
     addTask(Task(ReqTempAndCurrRpmAndMaxRpm, intervalToTick(5000)));

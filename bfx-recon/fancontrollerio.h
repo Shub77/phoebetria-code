@@ -197,6 +197,8 @@ public:
     bool connect(void);
     bool isConnected(void) const;
     void disconnect(void);
+    void reset(void);
+
 
     FanControllerData& fanControllerData(void)
     {

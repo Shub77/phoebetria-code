@@ -219,7 +219,8 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 
     if (m_isSoftwareAuto)
     {
-        doSoftwareAuto(channel, cd.tempAveraged());
+        //doSoftwareAuto(channel, cd.tempAveraged());
+        doSoftwareAuto(channel, to);
     }
 }
 
@@ -246,6 +247,8 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
     int direction;
     int threshold;
 
+    bool forceUpdate = false;
+
     if (!m_rTemps[channel].isSet())
     {
         rDelta = direction = 0;
@@ -259,22 +262,7 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
         rDelta = abs(rDelta);
         currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel].temperature());
 
-        qint64 elapsed = m_rTemps[channel].elapsedSinceSet();
-
-        if (elapsed > 300000)
-        {
-            /* If more than 300000ms have elapsed since the channel RPM was
-               last updated, ignore hysteresis values
-             */
-            threshold = 0;
-            direction = 0;
-            /* timeUpdated may not be reset in the code below if rpm hasn't
-               changed, so reset it here so hysteresis no longer gets ignored
-               until the next interval elapses
-             */
-            m_rTemps[channel].setTimeUpdatedToNow();
-        }
-        else if (direction < 0)
+        if (direction < 0)
         {
             threshold = newRpm == 0 ? m_ramp[channel].hysteresisFanOff()
                                     : m_ramp[channel].hysteresisDown();
@@ -285,25 +273,27 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
         }
     }
 
-    if (rDelta >= threshold || !m_rTemps[channel].isSet())
+    if (rDelta >= threshold || !m_rTemps[channel].isSet() || forceUpdate)
     {
-        if (!m_rTemps[channel].isSet() && m_rTemps[channel].temperature() < tempF)
+//        if (!m_rTemps[channel].isSet() && m_rTemps[channel].temperature() < tempF)
+//        {
+//            /* If temperature is increasing ignore "fan off"
+//             */
+//        }
+//        else
+        if (newRpm != currRpm || !m_rTemps[channel].isSet()
+                || !cd.isSet_manualRPM() || forceUpdate)
         {
-            /* If temperature is increasing ignore "fan off"
-             */
-        }
-        else if (newRpm != currRpm || !m_rTemps[channel].isSet()
-                || !cd.isSet_manualRPM())
-        {
-
             updateMinMax_rpm(channel, newRpm);
             m_rTemps[channel].setTemperature(tempF); // Save tF for next time
 
-            emit manualRPM_changed(channel, newRpm);
+            //emit manualRPM_changed(channel, newRpm);
+
 
             ph_fanControllerIO().setChannelSettings(channel,
                                                     alarmTemp(channel),
                                                     newRpm);
+
 #if defined QT_DEBUG && defined SHOW_SW_WAUTO_DETAILS
             if (newRpm == 0)
                 qDebug() << "Turning fan off. Threshold:" << threshold;
@@ -432,6 +422,9 @@ void FanControllerData::clearMinMax(void)
 
 void FanControllerData::clearRampTemps(void)
 {
+    if (!m_isSoftwareAuto)
+        return;
+
     for (int i = 0; i < FC_MAX_CHANNELS; ++i)
         m_rTemps[i].clear();
 }
@@ -637,10 +630,30 @@ void FanControllerData::initAllRamps(void)
 
 void FanControllerData::onReset(void)
 {
+
+    bool bs = ph_dispatcher().blockSignals(true);
+    bool bs2 = ph_fanControllerIO().blockSignals(true);
+    bool bs3 = blockSignals(true);
+
+    ph_fanControllerIO().reset();
+
+    if (m_isSoftwareAuto)
+    {
+        // Set to Auto to force Recon to recalibrate itself
+        //
+//        ph_fanControllerIO().setDeviceFlags(
+//                    m_isCelcius,
+//                    true,
+//                    isAudibleAlarm());
+    }
     updateIsSwAuto(m_isSoftwareAuto);
     clearMinMax();
     clearAllChannelRpmAndTemp();
     clearRampTemps();
+
+    blockSignals(bs3);
+    ph_fanControllerIO().blockSignals(bs2);
+    ph_dispatcher().blockSignals(bs);
 
     emit gui_sync();
 

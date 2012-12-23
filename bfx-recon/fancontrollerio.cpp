@@ -271,6 +271,10 @@ void FanControllerIO::disconnect(void)
     // TODO emit deviceDisconnected();
 }
 
+void FanControllerIO::reset(void)
+{
+    clearRequestQueue();
+}
 
 void FanControllerIO::onDispatcherSignal(EventDispatcher::TaskId taskId)
 {
@@ -327,6 +331,10 @@ void FanControllerIO::onDispatcherSignal(EventDispatcher::TaskId taskId)
     {
         for (int i = 0; i < MAX_FAN_CHANNELS; ++i)
             requestTempAndSpeed(i);
+    }
+    else if (taskId == EventDispatcher::ResetFanRampTemps)
+    {
+        ph_fanControllerData().clearRampTemps();
     }
 }
 

@@ -44,7 +44,7 @@ Averager::~Averager()
 void Averager::addSampleValue(int value)
 {
 
-    m_samples[m_pos++] = value;
+    *(m_samples + m_pos++) = value;
     m_pos %= m_sampleSize;
 
     updateStoredAverage();

@@ -112,6 +112,7 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 #ifndef QT_DEBUG
     ui->pushButton->hide();
     ui->ctrl_syncGui->hide();
+    ui->pushButton_2->hide();
 #endif
 
     if (ph_prefs().startMinimized())
@@ -431,7 +432,15 @@ void gui_MainWindow::enableSpeedControls(bool enabled)
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_ctrls_RpmSliders[i]->setEnabled(enabled);
-        m_ctrls_currentRPM[i]->setEnabled(enabled);
+
+        // !!!!!!!!!!!!
+        // !!!!!!!!!!!!!
+        // COMMENTED OUT LINE BELOW FOR DEBUGGING
+        // !!!!!!!!!!!!!
+        // !!!!!!!!!!!!!
+        // !!!!!!!!!!!!!
+
+        //m_ctrls_currentRPM[i]->setEnabled(enabled);
     }
 }
 
@@ -1528,4 +1537,9 @@ LabelOverlay::LabelOverlay(QLabel *parent)
     font.setPointSize(font.pointSize()-1);
     this->setFont(font);
     this->setAlignment(Qt::AlignRight | Qt::AlignTop);
+}
+
+void gui_MainWindow::on_pushButton_2_clicked()
+{
+    ph_fanControllerData().onReset();
 }
