@@ -27,11 +27,13 @@ public:
 
     void addSampleValue(int value);
 
-    void clear(void);
+    void setAllSamplesToValue(int value);
 
     QList<int> getSampleValues(void) const;
 
     inline int average(void) const;
+
+    inline bool sampleSetComplete(void) const;
 
 protected:
 
@@ -44,6 +46,7 @@ private:
     int* m_samples;
     int m_pos;
     int m_storedAverage;
+    unsigned long m_totalRealSamples;
 
 
 };
@@ -51,6 +54,11 @@ private:
 int Averager::average(void) const
 {
     return m_storedAverage;
+}
+
+bool Averager::sampleSetComplete(void) const
+{
+    return m_totalRealSamples >= (unsigned long)m_sampleSize;
 }
 
 #endif // AVERAGER_H

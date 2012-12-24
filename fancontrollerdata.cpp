@@ -219,8 +219,11 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 
     if (m_isSoftwareAuto)
     {
-        //doSoftwareAuto(channel, cd.tempAveraged());
-        doSoftwareAuto(channel, to);
+        int tempToUse;
+        tempToUse = cd.tempAveraged_isOk() ? cd.tempAveraged() : to;
+
+        //qDebug() << "Channel" << channel << "temp:" << tempToUse;
+        doSoftwareAuto(channel, tempToUse);
     }
 }
 

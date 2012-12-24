@@ -26,7 +26,8 @@ const int Averager::m_sampleSize = 5;
 Averager::Averager() :
     m_samples(NULL),
     m_pos(0),
-    m_storedAverage(0)
+    m_storedAverage(0),
+    m_totalRealSamples(0)
 {
     m_samples = new int[m_sampleSize];
     for (int i = 0; i < m_sampleSize; ++i)
@@ -43,22 +44,24 @@ Averager::~Averager()
 
 void Averager::addSampleValue(int value)
 {
-    if (m_pos >= m_sampleSize)
-        m_pos %= m_sampleSize;
-
     *(m_samples + m_pos) = value;
     m_pos++;
+    m_pos %= m_sampleSize;
+
+    m_totalRealSamples++;
 
     updateStoredAverage();
 }
 
-void Averager::clear(void)
+void Averager::setAllSamplesToValue(int value)
 {
-    m_storedAverage = 0;
     m_pos = 0;
 
     for (int i = 0; i < m_sampleSize; ++i)
-        m_samples[i]  = 0;
+        m_samples[i]  = value;
+
+    m_totalRealSamples = 0;
+    updateStoredAverage();
 
 }
 

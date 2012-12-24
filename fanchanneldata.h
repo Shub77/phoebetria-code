@@ -40,6 +40,7 @@ public:
     inline int manualRPM(void) const;
     inline int lastTemp(void) const;
     inline int tempAveraged(void) const;
+    inline bool tempAveraged_isOk(void) const;
     inline int maxTemp(void) const;
     inline int minTemp(void) const;
     inline int lastRPM(void) const;
@@ -116,6 +117,11 @@ int FanChannelData::lastTemp(void) const
 int FanChannelData::tempAveraged(void) const
 {
     return m_tempAverager.average();
+}
+
+bool FanChannelData::tempAveraged_isOk(void) const
+{
+    return m_tempAverager.sampleSetComplete();
 }
 
 int FanChannelData::maxTemp(void) const
@@ -214,7 +220,7 @@ bool FanChannelData::isSet_manualRPM(void) const
 
 bool FanChannelData::isSet_lastTemp(void) const
 {
-    return m_lastTemp != rpmNotSetValue;
+    return m_lastTemp != temperatureNotSetValue;
 }
 
 bool FanChannelData::isSet_MinTemp(void) const
@@ -255,10 +261,15 @@ bool FanChannelData::reqRampParamsAreSet(void) const
 
 void FanChannelData::clearRpmAndTemp(void)
 {
+    if (isSet_lastTemp())
+        m_tempAverager.setAllSamplesToValue(m_lastTemp);
+    else
+        m_tempAverager.setAllSamplesToValue(0);
+
     m_lastTemp = temperatureNotSetValue;
     m_lastRPM = rpmNotSetValue;
     m_manualRPM = rpmNotSetValue;
-    m_tempAverager.clear();
+
 }
 
 #endif // FANCHANNELDATA_H
