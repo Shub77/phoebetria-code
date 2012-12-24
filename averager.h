@@ -17,6 +17,8 @@
 #ifndef AVERAGER_H
 #define AVERAGER_H
 
+#include <QList>
+
 class Averager
 {
 public:
@@ -26,6 +28,8 @@ public:
     void addSampleValue(int value);
 
     void clear(void);
+
+    QList<int> getSampleValues(void) const;
 
     inline int average(void) const;
 

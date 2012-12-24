@@ -43,9 +43,11 @@ Averager::~Averager()
 
 void Averager::addSampleValue(int value)
 {
+    if (m_pos >= m_sampleSize)
+        m_pos %= m_sampleSize;
 
-    *(m_samples + m_pos++) = value;
-    m_pos %= m_sampleSize;
+    *(m_samples + m_pos) = value;
+    m_pos++;
 
     updateStoredAverage();
 }
@@ -58,6 +60,16 @@ void Averager::clear(void)
     for (int i = 0; i < m_sampleSize; ++i)
         m_samples[i]  = 0;
 
+}
+
+QList<int> Averager::getSampleValues(void) const
+{
+    QList<int> r;
+
+    for (int i = 0; i < m_sampleSize; ++i)
+        r.append(m_samples[i]);
+
+    return r;
 }
 
 
