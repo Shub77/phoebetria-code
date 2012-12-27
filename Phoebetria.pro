@@ -79,7 +79,8 @@ SOURCES += main.cpp \
     gui_setmanualrpm.cpp \
     themes.cpp \
     timestampedtemperature.cpp \
-    averager.cpp
+    averager.cpp \
+    appinfo.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -106,7 +107,8 @@ HEADERS  += gui_mainwindow.h \
     gui_setmanualrpm.h \
     themes.h \
     timestampedtemperature.h \
-    averager.h
+    averager.h \
+    appinfo.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \

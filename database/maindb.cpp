@@ -399,6 +399,24 @@ int MainDb::getProfileId(const QString& name)
     return qry.first() ? qry.value(0).toInt() : -1;
 }
 
+QString MainDb::schemaVersion(void)
+{
+    QSqlQuery qry(QSqlDatabase::database(dbConnectionName()));
+
+    bool ok = qry.exec("select value from DatabaseInfo"
+                       " where name = 'schemaVersion'");
+
+    if (!ok)
+    {
+        m_lastSqlError = qry.lastError();
+
+        return "Error: " + m_lastSqlError.driverText();
+    }
+
+    return qry.first() ? qry.value(0).toString()
+                       : "Error: Version query returned no result";
+}
+
 // ProfileId is the primary key (p_id) for the profile
 bool MainDb::writeProfileChannelSettings(int profileId,
                                          int channel,

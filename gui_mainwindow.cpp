@@ -18,7 +18,9 @@
 #include <QStandardItemModel>
 #include <QInputDialog>
 #include <QFileDialog>
+#include <QLayout>
 #include <QMessageBox>
+#include <QTextBrowser>
 #include <QCloseEvent>
 
 #include <cmath>
@@ -36,6 +38,7 @@
 #include "gui_profiles.h"
 #include "gui_setmanualrpm.h"
 #include "maindb.h"
+#include "appinfo.h"
 
 static const char* style_sliderOverylay_blue =
             "SliderOverlay::groove:vertical { border: 0px transparant; width: 0px; }"
@@ -156,7 +159,7 @@ void gui_MainWindow::initMenus(void)
     QAction* action;
     QMenu* menu;
 
-    // FILE MENU
+    // FILE MENU ------------------------------------------------------
     menu = ui->menuBar->addMenu(tr("File"));
 
     // File/Load Profile
@@ -172,16 +175,24 @@ void gui_MainWindow::initMenus(void)
     connect(action, SIGNAL(triggered()), this, SLOT(when_actionPreferences_selected()));
 
     // File/Quit
-    menu->addSeparator();
+
     action = menu->addAction(tr("Quit"));
     action->setMenuRole(QAction::QuitRole);
     connect(action, SIGNAL(triggered()), this, SLOT(when_actionQuit_selected()));
 
-    // HELP MENU
+    // HELP MENU -----------------------------------------------------
     menu = ui->menuBar->addMenu(tr("Help"));
+
+    // Help/Technical Report
+    action = menu->addAction(tr("Technical Report"));
+    connect (action, SIGNAL(triggered()), this, SLOT(when_actionTechReport_selected()));
+
+    // Help/About
+    menu->addSeparator();
     action = menu->addAction(tr("About"));
     action->setMenuRole(QAction::AboutRole);
     connect(action, SIGNAL(triggered()), this, SLOT(when_actionAbout_selected()));
+
 
 }
 
@@ -1155,6 +1166,29 @@ void gui_MainWindow::when_actionAbout_selected()
 {
     gui_About aboutDlg(this);
     aboutDlg.exec();
+}
+
+void gui_MainWindow::when_actionTechReport_selected()
+{
+    QDialog dlg(this);
+
+    dlg.resize(QSize(600, 400));
+    dlg.setWindowTitle(tr("Technical Report"));
+
+    QTextBrowser* tb = new QTextBrowser();
+    QFont font = tb->font();
+    font.setFamily("Courier New");
+    font.setPointSize(9);
+    tb->setFont(font);
+
+    tb->setText(AppInfo::basicInfoReport());
+
+    QVBoxLayout* vLayout = new QVBoxLayout();
+    vLayout->addWidget(tb);
+
+    dlg.setLayout(vLayout);
+
+    dlg.exec();
 }
 
 void gui_MainWindow::when_actionQuit_selected()

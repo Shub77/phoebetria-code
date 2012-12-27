@@ -14,41 +14,37 @@
     along with the program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "main.h"
+#ifndef PHOEBETRIA_APPINFO_H
+#define PHOEBETRIA_APPINFO_H
 
-#include <QApplication>
-#include <QMessageBox>
+#include <QString>
+#include <QStringList>
 
-#include <stdlib.h>
-
-#include "gui_mainwindow.h"
-#include "phoebetriaapp.h"
-#include "device-io.h"
-
-
-CloseHelper::CloseHelper(QObject *parent)
-    : QObject(parent)
+class AppInfo
 {
-}
+public:
+    AppInfo();
 
-void CloseHelper::onLastWindowClosed(void)
-{
-    ph_shutdown();
-}
+    static QString basicInfoReport(void);
+
+    static QString qtVersion(void);
+    static QString phoebetriaVersion(void);
+    static QString platformInfo(void);
+
+    static QString connectedToDevice(void);
+    static QStringList hidDevices(void);
 
 
-int main(int argc, char *argv[])
-{
-    PhoebetriaApp a(argc, argv);
-    gui_MainWindow w;
-    CloseHelper chelper;
+    static bool mainDatabaseExists(void);
+    static bool mainDatabaseIsConnected(void);
+    static QString mainDatabaseVersion(void);
+    static QString mainDatabasePath(void);
 
-    /* Connect to the lastWindowClosed signal so that we can do cleanup
-       and/or save preferences, etc
-      */
-    QObject::connect(&a, SIGNAL(lastWindowClosed()),
-                     &chelper, SLOT(onLastWindowClosed()));
-    w.show();
+//    static installLocation(void);
 
-    return a.exec();
-}
+private:
+    static QString winVersionAsString(void);
+
+};
+
+#endif // PHOEBETRIA_APPINFO_H

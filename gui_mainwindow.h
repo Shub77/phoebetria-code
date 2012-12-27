@@ -165,6 +165,7 @@ private slots:
     void when_actionQuit_selected();
 
     // HELP MENU
+    void when_actionTechReport_selected();
     void when_actionAbout_selected();
 
     // TRAY CONTEXT MENU

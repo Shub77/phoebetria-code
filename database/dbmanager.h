@@ -18,6 +18,7 @@
 #define PHOEBETRIA_DATABASE_H
 
 #include <QStringList>
+#include <QList>
 #include <QtSql>
 
 class DatabaseManager : public QSqlDatabase
@@ -33,17 +34,19 @@ public:
 
     typedef struct
     {
-        const QString connName;
+        const char* connName;
         const char* filename;
     } DbDetails;
+
+    typedef QList<DbDetails> DbDetailsList;
 
     DatabaseManager();
     DatabaseManager(const QSqlDatabase& other);
 
     static void initAllDatabases(void);
 
-    inline static const QString *dbConnectionName(DatabaseId dbId);
-    inline static const QString *primaryDbConnName(void);
+    inline static QString dbConnectionName(DatabaseId dbId);
+    inline static QString primaryDbConnName(void);
 
     inline static QString dbFilenameWithPath(DatabaseId dbId);
 
@@ -55,6 +58,8 @@ public:
                                    const QString& tablename);
 
     inline static QString pathToDatabases(void);
+
+    static DbDetailsList connections(void);
 
 protected:
 
@@ -69,12 +74,12 @@ private:
 
 
 
-const QString* DatabaseManager::dbConnectionName(DatabaseId dbId)
+QString DatabaseManager::dbConnectionName(DatabaseId dbId)
 {
-    return &m_dbConnectionDetails[dbId].connName;
+    return m_dbConnectionDetails[dbId].connName;
 }
 
-const QString* DatabaseManager::primaryDbConnName(void)
+QString DatabaseManager::primaryDbConnName(void)
 {
     return dbConnectionName(PrimaryDb);
 }

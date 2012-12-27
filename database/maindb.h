@@ -51,7 +51,11 @@ public:
 
     int getProfileId(const QString& name);
 
+    QString schemaVersion(void);
+
     static bool isValid(void);
+
+    static bool verifyDbAndPathExist(void);
 
 protected:
 
@@ -86,8 +90,6 @@ protected:
     static QSqlError recreateDb(const QString &connectionName);
     static QSqlError enableFkSupport(const QString &connectionName);
 
-    static bool verifyDbAndPathExist(void);
-
     static int importOldStyleProfiles(void);
 
 private:
@@ -100,7 +102,7 @@ private:
 
 QString MainDb::dbConnectionName(void)
 {
-    return QString(*DatabaseManager::primaryDbConnName());
+    return DatabaseManager::primaryDbConnName();
 }
 
 QSqlError MainDb::lastSqlError(void) const

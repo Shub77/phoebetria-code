@@ -29,13 +29,10 @@
 
 QString DatabaseManager::m_dbPath = Preferences::filepath();
 
-
-/* These *MUST* be in the same order as PhoebetriaDbMgr::DatabaseId
- */
 const DatabaseManager::DbDetails DatabaseManager::m_dbConnectionDetails[]  =
 {
-    { QString("primaryDb"), "phoebetria.sqlite" },
-    { QString("logDb"), "sessionlog.sqlite" }
+    { "primaryDb", "phoebetria.sqlite" },
+    { "logDb", "sessionlog.sqlite" }
 };
 
 
@@ -100,7 +97,15 @@ QStringList DatabaseManager::tableFields(const QString &dbConnectionName,
     return fields;
 }
 
+DatabaseManager::DbDetailsList DatabaseManager::connections(void)
+{
+    DbDetailsList supportedConnections;
 
-
-
+    int count = sizeof m_dbConnectionDetails / sizeof m_dbConnectionDetails[0];
+    for (int i = 0; i < count; ++i)
+    {
+        supportedConnections.append(m_dbConnectionDetails[i]);
+    }
+    return supportedConnections;
+}
 
