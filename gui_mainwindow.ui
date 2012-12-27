@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>436</width>
-    <height>509</height>
+    <width>455</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -476,7 +476,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
-          <number>6</number>
+          <number>-1</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -704,7 +704,7 @@ QPushButton:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
-          <number>6</number>
+          <number>-1</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -920,7 +920,7 @@ QPushButton:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <property name="spacing">
-          <number>6</number>
+          <number>-1</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1136,7 +1136,7 @@ QPushButton:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <property name="spacing">
-          <number>6</number>
+          <number>-1</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_15">
@@ -1352,7 +1352,7 @@ QPushButton:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
-          <number>6</number>
+          <number>-1</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_31">
@@ -1562,8 +1562,8 @@ QPushButton:hover {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>436</width>
-     <height>21</height>
+     <width>455</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
