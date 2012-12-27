@@ -10,6 +10,23 @@
                         
                                 CHANGE LOG
 
+Version 1.3.1
+27-Dec-2012
+====================
+This is a minor release, however users of software auto are strongly 
+encouraged to upgrade (two bug fixes are related to software auto).
+In addition to bug fixes, quick load menus for profiles were added: 
+one on the main menu and another as a context menu when minimized to
+tray. 
+
+* Fixed bug setting probe affinity in the GUI
+* Added Qt Version to the about dialog
+* Removed Status bar from the main dialog
+* Menus are now added programatically
+* Added "More..." option to Load Profile menus if the number of 
+  profiles > 9
+* Added "Load Profile" sub-menu to File menu
+
 Version 1.3
 21-Dec-2012
 ====================
