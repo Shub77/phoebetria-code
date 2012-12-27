@@ -434,14 +434,7 @@ void gui_MainWindow::enableSpeedControls(bool enabled)
     {
         m_ctrls_RpmSliders[i]->setEnabled(enabled);
 
-        // !!!!!!!!!!!!
-        // !!!!!!!!!!!!!
-        // COMMENTED OUT LINE BELOW FOR DEBUGGING
-        // !!!!!!!!!!!!!
-        // !!!!!!!!!!!!!
-        // !!!!!!!!!!!!!
-
-        //m_ctrls_currentRPM[i]->setEnabled(enabled);
+        m_ctrls_currentRPM[i]->setEnabled(enabled);
     }
 }
 

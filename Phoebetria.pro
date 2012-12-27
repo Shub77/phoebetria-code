@@ -122,7 +122,7 @@ RESOURCES += \
 # Config for the HID API library
 #-------------------------------------------------
 
-INCLUDEPATH += hidapi/hidapi \
+INCLUDEPATH += hidapi/hidapi/ \
                database/ \
                softwareauto/ \
                QCustomPlot/
@@ -143,7 +143,7 @@ win32 {
 unix:!macx {
     CONFIG += link_pkgconfig
     PKGCONFIG += libusb-1.0
-    SOURCES += hidapi/linux/hid-libusb.c
+    SOURCES += hidapi/libusb/hid.c
     LIBS += -lusb-1.0 -ludev -lrt
 }
 macx {

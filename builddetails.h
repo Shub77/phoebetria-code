@@ -22,7 +22,8 @@
 #define PHOEBETRIA_VERSION  1
 #define PHOEBETRIA_MAJOR_REVISION   3
 #define PHOEBETRIA_MINOR_REVISION   1
-#define PHOEBETRIA_STATUS_STR       "Pre-release 20121224"
+
+#define PHOEBETRIA_STATUS_STR       ""
 
 class BuildDetails
 {
