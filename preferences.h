@@ -30,14 +30,6 @@
     tooltips on minimize[y/n]       ??
     show tray icon tooltips[y/n]    ??
 
-    start minimized[y/n]
-    minimize to tray[y/n]
-    startup profile [string]
-    shutdown profile [string]
-    close vs. quite [y/n]
-    channel names
-    probe names
-
     */
 
 #if defined Q_WS_MAC
@@ -59,6 +51,7 @@ public:
 
     bool    startMinimized(bool defaultVal = false) const;
     bool    minimizeToTray(bool defaultVal = true) const;
+    bool    alwaysShowTrayIcon(bool defaultVal = false) const;
     bool    showTrayIconTooltips(bool defaultVal = true) const;
     bool    useLogScaleRpmSliders(bool defaultVal = true) const;
     QString startupProfile(QString defaultVal = "") const;
@@ -70,6 +63,7 @@ public:
 
     void setStartMinimized(bool istrue);
     void setMinimizeToTray(bool istrue);
+    void setAlwaysShowTrayIcon(bool istrue);
     void setShowIconTooltips(bool istrue);
     void setUseLogScaleRpmSliders(bool istrue);
     void setQuitOnClose(bool istrue);

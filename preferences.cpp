@@ -23,6 +23,7 @@
 
 static const char* key_startMinimized       = "UserPrefs/startMinimized";
 static const char* key_minimizeToTray       = "UserPrefs/minimizeToTray";
+static const char* key_alwaysShowTrayIcon   = "UserPrefs/alwaysShowTrayIcon";
 static const char* key_showTrayIconTT       = "UserPrefs/showTrayIconTooltips";
 static const char* key_useLogScaleRpmSliders  = "UserPrefs/useLogScaleRpmSliders";
 static const char* key_startupProfile       = "UserPrefs/startupProfile";
@@ -63,6 +64,11 @@ bool Preferences::startMinimized(bool defaultVal) const
 bool Preferences::minimizeToTray(bool defaultVal) const
 {
     return m_settings.value(key_minimizeToTray, defaultVal).toBool();
+}
+
+bool Preferences::alwaysShowTrayIcon(bool defaultVal) const
+{
+    return m_settings.value(key_alwaysShowTrayIcon, defaultVal).toBool();
 }
 
 bool Preferences::showTrayIconTooltips(bool defaultVal) const
@@ -128,6 +134,11 @@ void Preferences::setStartMinimized(bool istrue)
 void Preferences::setMinimizeToTray(bool istrue)
 {
     m_settings.setValue(key_minimizeToTray, istrue);
+}
+
+void Preferences::setAlwaysShowTrayIcon(bool istrue)
+{
+    m_settings.setValue(key_alwaysShowTrayIcon, istrue);
 }
 
 void Preferences::setShowIconTooltips(bool istrue)

@@ -760,13 +760,10 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
 {
     if (!ph_prefs().quitOnClose())
     {
-            //FIXME: Implement user prefenece for minimize or hide.
-            //hide();
-            //FIXME: Having this set after first use, susequent uses minimizes, opens then minimizes again.  (OSX only?)
 
-#ifdef Q_OS_OSX
-        showMinimized();
+#ifdef Q_WS_MAC
         e->ignore();
+        hide();
 #else
         if (this->isMinimized())
         {
@@ -838,11 +835,11 @@ void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
 {
     if (reason == QSystemTrayIcon::Context)
     {
-        // FIXME: Implement handling of context menu etc
+        // FIXME: Implement handling of context termin etc
     }
     else
     {
-#ifndef WS_OS_X
+#ifndef Q_WS_MAC
         /* This causes a crash on OSX but is needed on Windows and KDE at least
            for "normal" operation. In Windows 7, if the tray icon is not hidden
            then it stays in the tray even after maximizing the application.

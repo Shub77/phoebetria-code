@@ -48,6 +48,7 @@ void gui_Preferences::initControls(void)
 {
     ui->ctrl_minimizeOnStart->setChecked(ph_prefs().startMinimized());
     ui->ctrl_minimizeToTray->setChecked(ph_prefs().minimizeToTray());
+    ui->ctrl_alwaysShowTrayIcon->setChecked(ph_prefs().alwaysShowTrayIcon());
     ui->ctrl_showTooltipOnMinimize->setChecked(ph_prefs().showTrayIconTooltips());
     ui->ctrl_useLogRpmScale->setChecked(ph_prefs().useLogScaleRpmSliders());
     ui->ctrl_quitOnClose->setChecked(ph_prefs().quitOnClose());
@@ -140,6 +141,7 @@ void gui_Preferences::commitChanges(void) const
 {
     ph_prefs().setStartMinimized(ui->ctrl_minimizeOnStart->isChecked());
     ph_prefs().setMinimizeToTray(ui->ctrl_minimizeToTray->isChecked());
+    ph_prefs().setAlwaysShowTrayIcon(ui->ctrl_alwaysShowTrayIcon->isChecked());
     ph_prefs().setShowIconTooltips(ui->ctrl_showTooltipOnMinimize->isChecked());
     ph_prefs().setUseLogScaleRpmSliders(ui->ctrl_useLogRpmScale->isChecked());
     ph_prefs().setQuitOnClose(ui->ctrl_quitOnClose->isChecked());
