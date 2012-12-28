@@ -18,6 +18,8 @@
 
 #include <QSysInfo>
 #include <QDebug>
+#include <QFile>
+#include <QByteArray>
 
 #include "builddetails.h"
 #include "phoebetriaapp.h"
@@ -185,7 +187,20 @@ QString AppInfo::osVersionAsString(void)
 #elif defined Q_OS_MAC
     os = "Machintosh";
 #elif defined Q_OS_LINUX
-    os = "Linux";
+    QFile f;
+
+    f.setFileName("/proc/version");
+    if (f.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QByteArray ba = f.readAll();
+        os = ba.simplified();
+    }
+
+    if (os.isEmpty())
+    {
+        os = "Linux";
+    }
+
 #else
     os = "Unknown";
 #endif
