@@ -25,6 +25,7 @@
 #include "phoebetriaapp.h"
 #include "hidapi.h"
 #include "maindb.h"
+#include "phoebetriaapp.h"
 
 AppInfo::AppInfo()
 {
@@ -34,24 +35,35 @@ QString AppInfo::basicInfoReport(void)
 {
     QString report;
     QString trueStr("true");
-    QString falseStr("false");
+    QString falseStr("FALSE");
 
     report += "===================================================================\n";
+    report += "Phoebetria:      " + phoebetriaVersion() + "\n";
+    report += "Using Qt:        " + qtVersion() + "\n";
+    report += "OS:              " + platformInfo() + "\n";
+    report += "Recon:           " + connectedToDevice() + "\n";
     report += "\n";
-    report += "Phoebetria:  " + phoebetriaVersion() + "\n";
-    report += "Using Qt:    " + qtVersion() + "\n";
-    report += "OS:          " + platformInfo() + "\n";
-    report += "Recon:       " + connectedToDevice() + "\n";
+    report += "===================================================================\n";
+    report += "Database\n";
+    report += "\n";
+    report += "Main DB Exists: " + (mainDatabaseExists() ? trueStr : falseStr) + "\n";
+    report += "Driver ok:      " + (databaseDriverLoaded() ? trueStr : falseStr) + "\n";
+    report += "Connected:      " + (mainDatabaseIsConnected() ? trueStr : falseStr) + "\n";
+    report += "DB Version:     " + mainDatabaseVersion() + "\n";
     report += "\n";
     report += "===================================================================\n";
     report += "\n";
-    report += "Phoebetria Primary Database\n";
-    report += "Exists:     " + (mainDatabaseExists() ? trueStr : falseStr) + "\n";
-    report += "Connected:  " + (mainDatabaseIsConnected() ? trueStr : falseStr) + "\n";
-    report += "DB Version: " + mainDatabaseVersion() + "\n";
+    report += "Misc.\n";
     report += "\n";
+    report += "Max. elapsed time between device polling: "
+            + QString::number(maxFanControllerPollTime()) + " ms\n\n";
+    report += "Item                   Ch0      Ch1      Ch2      Ch3      Ch4\n";
+    report += "Last probe temps: " + channelTemps(false) + "\n";
+    report += "Avg. probe temps: " + channelTemps(true) + "\n";
+    report += "...\n";
     report += "===================================================================\n";
     report += "\n";
+
     report += "HID Devices:\n";
 
     QStringList dl = AppInfo::hidDevices();
@@ -87,6 +99,46 @@ QString AppInfo::connectedToDevice(void)
     return isConn ? "Device Connected" : "Device NOT Connected";
 }
 
+unsigned long AppInfo::maxFanControllerPollTime(void)
+{
+    return ph_fanControllerIO().maxPollDelta();
+}
+
+QString AppInfo::channelTemp(int channel, bool getAverage)
+{
+    const FanChannelData& cd = ph_fanControllerData().fanChannelSettings(channel);
+    int T;
+
+    if (getAverage)
+        T = cd.tempAveraged();
+    else
+        T = cd.lastTemp();
+
+    if (ph_fanControllerData().isCelcius())
+        T = ph_fanControllerData().toCelcius(T);
+
+    QString s = QString("%1").arg(T, 8);
+    return s;
+}
+
+QString AppInfo::channelTemps(bool getAverage)
+{
+    QString s;
+
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+    {
+        if (i != 0)
+            s += " ";
+        s += channelTemp(i, getAverage);
+    }
+    if (ph_fanControllerData().isCelcius())
+        s += " C";
+    else
+        s += " F";
+
+    return s;
+}
+
 QStringList AppInfo::hidDevices(void)
 {
     struct hid_device_info *devs, *curr_dev;
@@ -119,6 +171,11 @@ QStringList AppInfo::hidDevices(void)
     }
     hid_free_enumeration(devs);
     return result;
+}
+
+bool AppInfo::databaseDriverLoaded(void)
+{
+    return DatabaseManager::driverIsAvailable();
 }
 
 bool AppInfo::mainDatabaseExists(void)

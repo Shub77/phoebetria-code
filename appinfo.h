@@ -31,10 +31,15 @@ public:
     static QString phoebetriaVersion(void);
     static QString platformInfo(void);
 
+    static unsigned long maxFanControllerPollTime(void);
+
+    static QString channelTemp(int channel, bool getAverage);
+    static QString channelTemps(bool getAverage);
+
     static QString connectedToDevice(void);
     static QStringList hidDevices(void);
 
-
+    static bool databaseDriverLoaded(void);
     static bool mainDatabaseExists(void);
     static bool mainDatabaseIsConnected(void);
     static QString mainDatabaseVersion(void);
