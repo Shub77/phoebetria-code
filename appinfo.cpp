@@ -75,19 +75,7 @@ QString AppInfo::phoebetriaVersion(void)
 
 QString AppInfo::platformInfo(void)
 {
-    QString os;
-
-#if defined Q_OS_WIN || defined Q_OS_WIN32
-    os = winVersionAsString();
-#elif defined Q_OS_MAC
-    os = "Macintosh";
-#elif defined Q_OS_LINUX
-    os = "Linux";
-#else
-    os = "Unknown";
-#endif
-
-    return os;
+    return osVersionAsString();
 }
 
 QString AppInfo::connectedToDevice(void)
@@ -158,9 +146,11 @@ QString AppInfo::mainDatabasePath(void)
  Private member functions
  *********************************************************************/
 
-QString AppInfo::winVersionAsString(void)
+QString AppInfo::osVersionAsString(void)
 {
-    QString os;
+     QString os;
+
+#if defined Q_OS_WIN || defined Q_OS_WIN32
 
     enum QSysInfo::WinVersion v;
     v = QSysInfo::windowsVersion();
@@ -190,7 +180,15 @@ QString AppInfo::winVersionAsString(void)
     default:
         os = "Windows (Unknown Version)";
         break;
-
     }
+
+#elif defined Q_OS_MAC
+    os = "Machintosh";
+#elif defined Q_OS_LINUX
+    os = "Linux";
+#else
+    os = "Unknown";
+#endif
+
     return os;
 }

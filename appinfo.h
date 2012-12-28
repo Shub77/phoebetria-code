@@ -43,7 +43,7 @@ public:
 //    static installLocation(void);
 
 private:
-    static QString winVersionAsString(void);
+    static QString osVersionAsString(void);
 
 };
 
