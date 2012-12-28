@@ -194,6 +194,7 @@ QString AppInfo::osVersionAsString(void)
     {
         QByteArray ba = f.readAll();
         os = ba.simplified();
+        f.close();
     }
 
     if (os.isEmpty())
