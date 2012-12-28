@@ -118,6 +118,11 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->pushButton_2->hide();
 #endif
 
+    if (ph_prefs().alwaysShowTrayIcon())
+    {
+        m_trayIcon.show();
+    }
+
     if (ph_prefs().startMinimized())
     {
         this->setWindowState(Qt::WindowMinimized);
