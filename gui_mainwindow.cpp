@@ -854,7 +854,7 @@ void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
            when we have preferences that change the behaviour (this may be
            related to closeEvent() as well).
           */
-        if !(ph_prefs().alwaysShowTrayIcon())
+        if (!ph_prefs().alwaysShowTrayIcon())
         {
             m_trayIcon.hide();
         }
