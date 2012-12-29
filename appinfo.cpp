@@ -150,21 +150,21 @@ QStringList AppInfo::hidDevices(void)
          ; curr_dev
          ; curr_dev = curr_dev->next)
     {
-        deviceStr  = "Manufacturer: ";
+        deviceStr  = "Manufacturer:  ";
         deviceStr += QString::fromWCharArray(curr_dev->manufacturer_string);
-        deviceStr += "\nProduct: ";
+        deviceStr += "\nProduct:       ";
         deviceStr += QString::fromWCharArray(curr_dev->product_string);
 
-        deviceStr += "\nVendor Id: ";
-        deviceStr += QString::number(curr_dev->vendor_id, 16);
+        deviceStr += "\nVendor Id:     ";
+        deviceStr += QString("%1").arg(curr_dev->vendor_id, 4, 16, QChar('0'));
 
-        deviceStr += "\nProduct Id: ";
-        deviceStr += QString::number(curr_dev->product_id, 16);
+        deviceStr += "\nProduct Id:    ";
+        deviceStr += QString("%1").arg(curr_dev->product_id, 4, 16, QChar('0'));
 
         deviceStr += "\nSerial Number: ";
         deviceStr += QString::fromWCharArray(curr_dev->serial_number);
 
-        deviceStr += "\nRelease: ";
+        deviceStr += "\nRelease:       ";
         deviceStr += QString::number(curr_dev->release_number);
 
         result.append(deviceStr);
