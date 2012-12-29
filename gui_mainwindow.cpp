@@ -188,9 +188,9 @@ void gui_MainWindow::initMenus(void)
     // HELP MENU -----------------------------------------------------
     menu = ui->menuBar->addMenu(tr("Help"));
 
-    // Help/Technical Report
-    action = menu->addAction(tr("Technical Report"));
-    connect (action, SIGNAL(triggered()), this, SLOT(when_actionTechReport_selected()));
+    // Help/Disgnostic Report
+    action = menu->addAction(tr("Diagnostic Report"));
+    connect (action, SIGNAL(triggered()), this, SLOT(when_actionDiagnosticReport_selected()));
 
     // Help/About
     menu->addSeparator();
@@ -1173,12 +1173,12 @@ void gui_MainWindow::when_actionAbout_selected()
     aboutDlg.exec();
 }
 
-void gui_MainWindow::when_actionTechReport_selected()
+void gui_MainWindow::when_actionDiagnosticReport_selected()
 {
     QDialog dlg(this);
 
     dlg.resize(QSize(600, 400));
-    dlg.setWindowTitle(tr("Technical Report"));
+    dlg.setWindowTitle(tr("Diagnostic Report"));
 
     QTextBrowser* tb = new QTextBrowser();
     QFont font = tb->font();
