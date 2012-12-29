@@ -118,9 +118,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->pushButton_2->hide();
 #endif
 
-    if (ph_prefs().alwaysShowTrayIcon())
+    if (ph_prefs().alwaysShowTrayIcon() && QSystemTrayIcon::isSystemTrayAvailable())
     {
-        m_trayIcon.show();
+            m_trayIcon.show();
     }
 
     if (ph_prefs().startMinimized())
@@ -854,7 +854,10 @@ void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
            when we have preferences that change the behaviour (this may be
            related to closeEvent() as well).
           */
-        m_trayIcon.hide();
+        if !(ph_prefs().alwaysShowTrayIcon())
+        {
+            m_trayIcon.hide();
+        }
 #endif
         this->showNormal();
         this->raise();
