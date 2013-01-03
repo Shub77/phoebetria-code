@@ -113,7 +113,7 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
         report += "</tr>";
         for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
         {
-            const FanSpeedRamp ramp = fcp.ramp(channel);
+            const FanSpeedRamp& ramp = fcp.ramp(channel);
             bool isCelcius = ph_fanControllerData().isCelcius();
 
             QString channelAlarm = FanControllerData::temperatureString(fcp.alarmTemp(channel), true, isCelcius);
