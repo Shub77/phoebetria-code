@@ -568,12 +568,13 @@ void FanControllerData::setMaxLoggedRPM(int channel, int to)
 }
 
 QString FanControllerData::temperatureString(int temperature,
-        bool addScaleSymbol)
+                                             bool addScaleSymbol,
+                                             bool isCelcius)
 {
     QString r;
-    int t = m_isCelcius ? toCelcius(temperature) : temperature;
+    int t = isCelcius ? toCelcius(temperature) : temperature;
     r = QString::number(t);
-    if (addScaleSymbol) r += (m_isCelcius ? " C" : " F");
+    if (addScaleSymbol) r += (isCelcius ? " C" : " F");
     return r;
 }
 

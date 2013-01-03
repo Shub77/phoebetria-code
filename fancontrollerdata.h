@@ -151,7 +151,9 @@ public:
     // END TODO: make these protected or even private
 
 
-    QString temperatureString(int temperature, bool addScaleSymbol);
+    static QString temperatureString(int temperature, bool addScaleSymbol, bool isCelcius);
+    QString temperatureString(int temperature, bool addScaleSymbol) const
+    { return temperatureString(temperature, addScaleSymbol, m_isCelcius); }
 
     static int toCelcius(int tempInF);
     static double toCelciusReal(int tempInF);

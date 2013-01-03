@@ -69,7 +69,6 @@ bool gui_Profiles::getProfileList(void)
 void gui_Profiles::on_ctrl_profileList_itemClicked()
 {
     FanControllerProfile fcp;
-    FanControllerData fcd;
 
     m_profileName = ui->ctrl_profileList->currentItem()->text();
     m_profileDescription = fcp.profileDescription(m_profileName);
@@ -114,19 +113,17 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
         report += "</tr>";
         for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
         {
-            /*  Tried with and without ....
-            FanSpeedRamp ramp[FC_MAX_CHANNELS];
-            ramp[channel] = fcd.ramp(channel);
-            */
+            const FanSpeedRamp ramp = fcp.ramp(channel);
+            bool isCelcius = ph_fanControllerData().isCelcius();
 
-            QString channelAlarm = fcd.temperatureString(fcp.alarmTemp(channel), fcp.isCelcius());
-            QString temperatureF_fanOn = fcd.temperatureString(fcd.ramp(channel).temperatureF_fanOn(), fcp.isCelcius());
-            QString tempRampStart = fcd.temperatureString(fcd.ramp(channel).temperatureF_rampStart(), fcp.isCelcius());
-            QString speedRampStart = QString::number(fcd.ramp(channel).speed_rampStart());
+            QString channelAlarm = FanControllerData::temperatureString(fcp.alarmTemp(channel), true, isCelcius);
+            QString temperatureF_fanOn = FanControllerData::temperatureString(ramp.temperatureF_fanOn(), true, isCelcius);
+            QString tempRampStart = FanControllerData::temperatureString(ramp.temperatureF_rampStart(), true, isCelcius);
+            QString speedRampStart = QString::number(ramp.speed_rampStart());
 
             report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
             report += "<td width=100 align=left>" + channelAlarm + "</td>";
-            report += "<td width=100 align=left>" + boolToText(fcd.ramp(channel).allowFanToTurnOff()) + "</td>";
+            report += "<td width=100 align=left>" + boolToText(ramp.allowFanToTurnOff()) + "</td>";
             report += "<td width=100 align=left>" + temperatureF_fanOn + "</td>";
             report += "<td width=100 align=left>" + tempRampStart + " / " + speedRampStart+ "</td>";
             report += "</tr>";
@@ -135,12 +132,15 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
     }
     else
     {
+        const FanControllerData& fcd = ph_fanControllerData();
+
         report += "<table border=0>";
         report += "<tr><th width=120 align=left>Channel</p></th><th width=100 align=left>RPM</th><th align=left width=100>Alert Temp</th></tr>";
+
         for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
         {
             QString channelRPM = QString::number(fcp.speed(channel));
-            QString channelAlarm = fcd.temperatureString(fcp.alarmTemp(channel), fcp.isCelcius());
+            QString channelAlarm = fcd.temperatureString(fcp.alarmTemp(channel), true);
 
             report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
             report += "<td width=100 align=left>" + channelRPM + "</td>";
