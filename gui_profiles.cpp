@@ -128,7 +128,6 @@ QString gui_Profiles::getPreviewReportCommon(const FanControllerProfile& fcp) co
 
 QString gui_Profiles::getPreviewReportManual(const FanControllerProfile& fcp) const
 {
-    const FanControllerData& fcd = ph_fanControllerData();
     QString report;
 
     bool isCelcius = fcp.isCelcius();
@@ -139,7 +138,7 @@ QString gui_Profiles::getPreviewReportManual(const FanControllerProfile& fcp) co
     for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
     {
         QString channelRPM = QString::number(fcp.speed(channel));
-        QString channelAlarm = fcd.temperatureString(fcp.alarmTemp(channel), true, isCelcius);
+        QString channelAlarm = FanControllerData::temperatureString(fcp.alarmTemp(channel), true, isCelcius);
 
         report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
         report += "<td width=100 align=left>" + channelRPM + "</td>";
@@ -192,7 +191,7 @@ QString gui_Profiles::getPreviewReportSWAuto(const FanControllerProfile& fcp) co
         report += "<td width=100 align=left>" + tempRampStart + " / " + speedRampStart+ "</td>";
         report += "<td width=100 align=left>" + tempRampMid + " / " + speedRampMid+ "</td>";
         report += "<td width=100 align=left>" + tempRampEnd + " / " + speedRampEnd+ "</td>";
-        report += "<td width=100 align=left>" + QString::number(ramp.temperatureF_fanToMax()) +"</td>";
+        report += "<td width=100 align=left>" + FanControllerData::temperatureString(ramp.temperatureF_fanToMax(), true, isCelcius) +"</td>";
         report += "<td width=100 align=left>" + QString::number(ramp.minUsableRpm()) +"</td>";
         report += "<td width=100 align=left>" + QString::number(ramp.maxUsableRpm()) +"</td>";
         report += "<td width=100 align=left>" + QString::number(ramp.hysteresisUp()) +"</td>";
