@@ -120,12 +120,24 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
             QString temperatureF_fanOn = FanControllerData::temperatureString(ramp.temperatureF_fanOn(), true, isCelcius);
             QString tempRampStart = FanControllerData::temperatureString(ramp.temperatureF_rampStart(), true, isCelcius);
             QString speedRampStart = QString::number(ramp.speed_rampStart());
+            QString tempRampMid = FanControllerData::temperatureString(ramp.temperatureF_rampMid(), true, isCelcius);
+            QString speedRampMid = QString::number(ramp.speed_rampMid());
+            QString tempRampEnd = FanControllerData::temperatureString(ramp.temperatureF_rampEnd(), true, isCelcius);
+            QString speedRampEnd = QString::number(ramp.speed_rampEnd());
 
             report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
             report += "<td width=100 align=left>" + channelAlarm + "</td>";
             report += "<td width=100 align=left>" + boolToText(ramp.allowFanToTurnOff()) + "</td>";
             report += "<td width=100 align=left>" + temperatureF_fanOn + "</td>";
             report += "<td width=100 align=left>" + tempRampStart + " / " + speedRampStart+ "</td>";
+            report += "<td width=100 align=left>" + tempRampMid + " / " + speedRampMid+ "</td>";
+            report += "<td width=100 align=left>" + tempRampEnd + " / " + speedRampEnd+ "</td>";
+            report += "<td width=100 align=left>" + QString::number(ramp.temperatureF_fanToMax()) +"</td>";
+            report += "<td width=100 align=left>" + QString::number(ramp.minUsableRpm()) +"</td>";
+            report += "<td width=100 align=left>" + QString::number(ramp.maxUsableRpm()) +"</td>";
+            report += "<td width=100 align=left>" + QString::number(ramp.hysteresisUp()) +"</td>";
+            report += "<td width=100 align=left>" + QString::number(ramp.hysteresisDown()) +"</td>";
+            report += "<td width=100 align=left>" + QString::number(ramp.hysteresisFanOff()) +"</td>";
             report += "</tr>";
         }
         report += "</table>";
