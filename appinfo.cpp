@@ -37,41 +37,45 @@ QString AppInfo::basicInfoReport(void)
     QString trueStr("true");
     QString falseStr("FALSE");
 
-    report += "===================================================================\n";
-    report += "Phoebetria:      " + phoebetriaVersion() + "\n";
-    report += "Using Qt:        " + qtVersion() + "\n";
-    report += "OS:              " + platformInfo() + "\n";
-    report += "Recon:           " + connectedToDevice() + "\n";
-    report += "\n";
-    report += "===================================================================\n";
-    report += "Database\n";
-    report += "\n";
-    report += "Main DB Exists: " + (mainDatabaseExists() ? trueStr : falseStr) + "\n";
-    report += "Driver ok:      " + (databaseDriverLoaded() ? trueStr : falseStr) + "\n";
-    report += "Connected:      " + (mainDatabaseIsConnected() ? trueStr : falseStr) + "\n";
-    report += "DB Version:     " + mainDatabaseVersion() + "\n";
-    report += "\n";
-    report += "===================================================================\n";
-    report += "\n";
-    report += "Misc.\n";
-    report += "\n";
-    report += "Max. elapsed time between device polling: "
-            + QString::number(maxFanControllerPollTime()) + " ms\n\n";
-    report += "Item                   Ch0      Ch1      Ch2      Ch3      Ch4\n";
-    report += "Last probe temps: " + channelTemps(false) + "\n";
-    report += "Avg. probe temps: " + channelTemps(true) + "\n";
-    report += "...\n";
-    report += "===================================================================\n";
-    report += "\n";
-
-    report += "HID Devices:\n";
+    report = "<html><body>";
+    report += "<table border=0>";
+    report += "<tr><td width=120 align=left><h3>Phoebetria:</h3></td><td width=500 align=left><h3>" + phoebetriaVersion() + "</h3></td></tr>";
+    report += "<tr><td width=120 align=left>Using Qt:</td><td width=200 align=left>" + qtVersion() + "</td></tr>";
+    report += "<tr><td width=120 align=left>OS:</td><td width=200 align=left>" + platformInfo() + "</td></tr>";
+    report += "<tr><td width=120 align=left>Recon:</td><td width=200 align=left>" + connectedToDevice() + "</td></tr>";
+    report += "</table>";
+    report += "<hr>";
+    report += "<table border=0>";
+    report += "<tr><td width=120 align=left><h3>Database</h3></td></tr>";
+    report += "<tr><td width=120 align=left>Main DB Exists:</td><td width=200 align=left>" + (mainDatabaseExists() ? trueStr : falseStr) + "</td></tr>";
+    report += "<tr><td width=120 align=left>Driver ok:</td><td width=200 align=left>" + (databaseDriverLoaded() ? trueStr : falseStr) + "</td></tr>";
+    report += "<tr><td width=120 align=left>Connected:</td><td width=200 align=left>" + (mainDatabaseIsConnected() ? trueStr : falseStr) + "</td></tr>";
+    report += "<tr><td width=120 align=left>DB Version:</td><td width=200 align=left>" + mainDatabaseVersion() + "</td></tr>";
+    report += "</table>";
+    report += "<hr>";
+    report += "<table border=0>";
+    report += "<tr><td width=120 align=left><h3>Miscellaneous</h3></td></tr>";
+    report += "</table><table border=0>";
+    report += "<tr><td width=300 align=left>Max. elapsed time between device polling: "
+            + QString::number(maxFanControllerPollTime()) + " ms</td></tr>";
+    report += "</table>";
+    report += "<p></p>";
+    report += "<table border=0>";
+    report += "<tr><th width=120 align=left>Item</th><th width=80 align=left>Ch0</th><th width=80 align=left>Ch1</th>";
+    report += "<th width=80 align=left>Ch2</th><th width=80 align=left>Ch3</th><th width=80 align=left>Ch4</th></tr>";
+    report += "<tr><td width=120 align=left>Last probe temps:</td>" + channelTemps(false);
+    report += "</tr><tr><td width=120 align=left>Avg. probe temps:</td>" + channelTemps(true);
+    report += "</tr></table>";
+    report += "<hr>";
+    report += "<table border=0>";
+    report += "<tr><td width=120 align=left><h3>HID Devices</h3></td></tr>";
 
     QStringList dl = AppInfo::hidDevices();
     for (int i = 0; i < dl.count(); i++)
     {
-        report += "\n" + dl.at(i) + "\n";
+        report += dl.at(i);
     }
-    report += "===================================================================\n";
+    report += "</table>";
 
     return report;
 }
@@ -117,7 +121,7 @@ QString AppInfo::channelTemp(int channel, bool getAverage)
     if (ph_fanControllerData().isCelcius())
         T = ph_fanControllerData().toCelcius(T);
 
-    QString s = QString("%1").arg(T, 8);
+    QString s = QString("<td width=100 align=left>%1</td>").arg(T);
     return s;
 }
 
@@ -131,10 +135,12 @@ QString AppInfo::channelTemps(bool getAverage)
             s += " ";
         s += channelTemp(i, getAverage);
     }
-    if (ph_fanControllerData().isCelcius())
-        s += " C";
-    else
-        s += " F";
+
+//    FIXME: For some reason these are placed on a new line
+//    if (ph_fanControllerData().isCelcius())
+//        s += " C";
+//    else
+//        s += " F";
 
     return s;
 }
@@ -150,22 +156,24 @@ QStringList AppInfo::hidDevices(void)
          ; curr_dev
          ; curr_dev = curr_dev->next)
     {
-        deviceStr  = "Manufacturer:  ";
-        deviceStr += QString::fromWCharArray(curr_dev->manufacturer_string);
-        deviceStr += "\nProduct:       ";
-        deviceStr += QString::fromWCharArray(curr_dev->product_string);
+        deviceStr  = "<tr><td width=120 align=left>Manufacturer:</td><td width=400 align=left>";
+        deviceStr += QString::fromWCharArray(curr_dev->manufacturer_string)+"</td></tr></tr>";
 
-        deviceStr += "\nVendor Id:     ";
-        deviceStr += QString("%1").arg(curr_dev->vendor_id, 4, 16, QChar('0'));
+        deviceStr += "<tr><td width=120 align=left>Product:</td><td width=400 align=left>";
+        deviceStr += QString::fromWCharArray(curr_dev->product_string)+"</td></tr>";
 
-        deviceStr += "\nProduct Id:    ";
-        deviceStr += QString("%1").arg(curr_dev->product_id, 4, 16, QChar('0'));
+        deviceStr += "<tr><td width=120 align=left>Vendor Id:</td><td width=400 align=left>";
+        deviceStr += QString("%1").arg(curr_dev->vendor_id, 4, 16, QChar('0'))+"</td></tr>";
 
-        deviceStr += "\nSerial Number: ";
-        deviceStr += QString::fromWCharArray(curr_dev->serial_number);
+        deviceStr += "<tr><td width=120 align=left>Product Id:</td><td width=400 align=left>";
+        deviceStr += QString("%1").arg(curr_dev->product_id, 4, 16, QChar('0'))+"</td></tr>";
 
-        deviceStr += "\nRelease:       ";
-        deviceStr += QString::number(curr_dev->release_number);
+        deviceStr += "<tr><td width=120 align=left>Serial Number:</td><td width=400 align=left>";
+        deviceStr += QString::fromWCharArray(curr_dev->serial_number)+"</td></tr>";
+
+        deviceStr += "<tr><td width=120 align=left>Release:</td><td width=400 align=left>";
+        deviceStr += QString::number(curr_dev->release_number)+"</td></tr>";
+        deviceStr += "<p></p>";
 
         result.append(deviceStr);
     }
@@ -242,7 +250,23 @@ QString AppInfo::osVersionAsString(void)
     }
 
 #elif defined Q_OS_MAC
-    os = "Machintosh";
+     enum QSysInfo::MacVersion v;
+     v = QSysInfo::MacintoshVersion;
+     switch (v)
+     {
+     case QSysInfo::MV_10_6:
+         os = "OS X 10.6 (Snow Leopard)";
+         break;
+     case QSysInfo::MV_10_7:
+         os = "OS X 10.7 (Lion)";
+         break;
+     case QSysInfo::MV_10_8:
+         os = "OS X 10.8 (Mountain Lion)";
+         break;
+     default:
+         os = "OS X (Unknown Version)";
+         break;
+     }
 #elif defined Q_OS_LINUX
     QFile f;
 

@@ -90,7 +90,7 @@ QString gui_Profiles::showPreviewReport(const FanControllerProfile& fcp) const
 {
     QString report;
 
-    report = "</body></html>";
+    report = "<body><html>";
     report += getPreviewReportCommon(fcp);
 
     if (fcp.isSoftwareAuto())
@@ -102,7 +102,7 @@ QString gui_Profiles::showPreviewReport(const FanControllerProfile& fcp) const
         report += getPreviewReportManual(fcp);
     }
 
-    report += "<html><body>";
+    report += "</html></body>";
 
     return report;
 }
@@ -112,7 +112,7 @@ QString gui_Profiles::getPreviewReportCommon(const FanControllerProfile& fcp) co
     QString report;
 
     report += "<table border=0>";
-    report += "<tr><td width=120 align=left><h3>Profile Name:</h3</td><td width=100 align=left><h3>" + m_profileName + "</h3></td></tr>";
+    report += "<tr><td width=120 align=left><h3>Profile Name:</h3></td><td width=100 align=left><h3>" + m_profileName + "</h3></td></tr>";
     report += "</table>";
     report += "<p></p>";
     report += "<table border=0>";
@@ -164,7 +164,7 @@ QString gui_Profiles::getPreviewReportSWAuto(const FanControllerProfile& fcp) co
     report += "<th width=100 align=left>Temp Fan Max</th>";
     report += "<th width=100 align=left>Min RPM</th>";
     report += "<th width=100 align=left>Max RPM</p></th>";
-    report += "<th width=100 align=left>Probe Afinity</th>";
+    report += "<th width=100 align=left>Probe Affinity</th>";
     report += "<th width=100 align=left>Hysteresis Up</th>";
     report += "<th width=100 align=left>Hysteresis Down</p></th>";
     report += "<th width=100 align=left>Hysteresis Off</th>";
