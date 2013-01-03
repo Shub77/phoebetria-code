@@ -93,19 +93,61 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
     report += "<tr><td width=120 align=left>Software Auto:</td><td width=100 align=left>" + boolToText(fcp.isSoftwareAuto()) + "</td></tr>";
     report += "</table>";
     report += "<p></p>";
-    report += "<table border=0>";
-    report += "<tr><th width=120 align=left>Channel</p></th><th width=100 align=left>RPM</th><th align=left width=100>Alert Temp</th></tr>";
-    report += "</table><table border=0>";
-    for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
-    {
-        QString channelRPM = QString::number(fcp.speed(channel));
-        QString channelAlarm = fcd.temperatureString(fcp.alarmTemp(channel), fcp.isCelcius());
 
-        report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
-        report += "<td width=100 align=left>" + channelRPM + "</td>";
-        report += "<td width=100 align=left>" + channelAlarm + "</td></tr>";
+    if (fcp.isSoftwareAuto())
+    {
+        report += "<table border=0><tr>";
+        report += "<th width=120 align=left>Channel</p></th>";
+        report += "<th width=100 align=left>Alert Temp</th>";
+        report += "<th width=100 align=left>Turn Off</th>";
+        report += "<th width=100 align=left>Temp Fan On</p></th>";
+        report += "<th width=100 align=left>Temp/Speed Start</th>";
+        report += "<th width=100 align=left>Temp/Speed Mid</th>";
+        report += "<th width=100 align=left>Temp/Speed End</p></th>";
+        report += "<th width=100 align=left>Temp Fan Max</th>";
+        report += "<th width=100 align=left>Min RPM</th>";
+        report += "<th width=100 align=left>Max RPM</p></th>";
+        report += "<th width=100 align=left>Probe Afinity</th>";
+        report += "<th width=100 align=left>Hysteresis Up</th>";
+        report += "<th width=100 align=left>Hysteresis Down</p></th>";
+        report += "<th width=100 align=left>Hysteresis Off</th>";
+        report += "</tr>";
+        for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
+        {
+            /*  Tried with and without ....
+            FanSpeedRamp ramp[FC_MAX_CHANNELS];
+            ramp[channel] = fcd.ramp(channel);
+            */
+
+            QString channelAlarm = fcd.temperatureString(fcp.alarmTemp(channel), fcp.isCelcius());
+            QString temperatureF_fanOn = fcd.temperatureString(fcd.ramp(channel).temperatureF_fanOn(), fcp.isCelcius());
+            QString tempRampStart = fcd.temperatureString(fcd.ramp(channel).temperatureF_rampStart(), fcp.isCelcius());
+            QString speedRampStart = QString::number(fcd.ramp(channel).speed_rampStart());
+
+            report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
+            report += "<td width=100 align=left>" + channelAlarm + "</td>";
+            report += "<td width=100 align=left>" + boolToText(fcd.ramp(channel).allowFanToTurnOff()) + "</td>";
+            report += "<td width=100 align=left>" + temperatureF_fanOn + "</td>";
+            report += "<td width=100 align=left>" + tempRampStart + " / " + speedRampStart+ "</td>";
+            report += "</tr>";
+        }
+        report += "</table>";
     }
-    report += "</table>";
+    else
+    {
+        report += "<table border=0>";
+        report += "<tr><th width=120 align=left>Channel</p></th><th width=100 align=left>RPM</th><th align=left width=100>Alert Temp</th></tr>";
+        for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
+        {
+            QString channelRPM = QString::number(fcp.speed(channel));
+            QString channelAlarm = fcd.temperatureString(fcp.alarmTemp(channel), fcp.isCelcius());
+
+            report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
+            report += "<td width=100 align=left>" + channelRPM + "</td>";
+            report += "<td width=100 align=left>" + channelAlarm + "</td></tr>";
+        }
+        report += "</table>";
+    }
     report += "</body></html>";
 
     QFont font = ui->ctrl_profilePreview->font();
