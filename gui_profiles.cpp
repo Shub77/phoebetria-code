@@ -75,6 +75,39 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
 
     ui->ctrl_profileName->setText(m_profileName);
     ui->ctrl_profileDescription->setPlainText(m_profileDescription);
+
+    QString report;
+
+    fcp.load(m_profileName);
+
+    report += "<html><body>";
+    report += "<table border=0>";
+    report += "<tr><td width=100 align=left><h3>Profile Name:</h3</td><td width=100 align=left><h3>" + m_profileName + "</h3></td></tr>";
+    report += "</table>";
+    report += "<p></p>";
+    report += "<table border=0>";
+    report += "<tr><td width=100 align=left>Temperature Scale:</td><td width=100 align=left>" + boolToText(fcp.isCelcius()) + "</td></tr>";
+    report += "<tr><td width=100 align=left>Audible Alarm:</td><td width=100 align=left>" + boolToTempScale(fcp.isAudibleAlarm()) + "</td></tr>";
+    report += "<tr><td width=100 align=left>Recon Auto:</td><td width=100 align=left>" + boolToText(fcp.isAuto()) + "</td></tr>";
+    report += "<tr><td width=100 align=left>Software Auto:</td><td width=100 align=left>" + boolToText(fcp.isSoftwareAuto()) + "</td></tr>";
+    report += "</table>";
+    report += "<p></p>";
+    report += "<table border=0>";
+    report += "<tr><th width=100 align=left>Channel</p></th><th width=100 align=left>RPM</th><th align=left width=100>Alert Temp</th></tr>";
+    report += "</table><table border=0>";
+    for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
+    {
+        report += "<tr><td width=100 align=left>" + ph_prefs().channelName(channel) + "</td>";
+        report += "<td width=100 align=left>" + QString::number(fcp.speed(channel)) + "</td>";
+        report += "<td width=100 align=left>" + QString::number(fcp.alarmTemp(channel)) + "</td></tr>";
+    }
+    report += "</table>";
+    report += "</body></html>";
+
+    QFont font = ui->ctrl_profilePreview->font();
+    font.setPointSize(9);
+    ui->ctrl_profilePreview->setFont(font);
+    ui->ctrl_profilePreview->setHtml(report);
 }
 
 

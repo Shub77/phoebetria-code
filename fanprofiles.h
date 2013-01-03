@@ -65,6 +65,8 @@ public:
     bool isAuto(void) const;
     bool isAudibleAlarm(void) const;
     bool isSoftwareAuto(void) const;
+    int alarmTemp(int channel) const;
+    int speed(int channel) const;
 
     const BasicChannelData& getChannelSettings(int channel) const;
 
@@ -161,6 +163,16 @@ inline const FanSpeedRamp& FanControllerProfile::ramp(int channel) const
 inline void FanControllerProfile::setDescription(const QString& desc)
 {
     m_description = desc;
+}
+
+inline int FanControllerProfile::alarmTemp(int channel) const
+{
+    return m_channelSettings[channel].alarmTemp;
+}
+
+inline int FanControllerProfile::speed(int channel) const
+{
+    return m_channelSettings[channel].speed;
 }
 
 void FanControllerProfile::setRamp(int channel, const FanSpeedRamp& other)

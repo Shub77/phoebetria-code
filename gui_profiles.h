@@ -70,6 +70,8 @@ private:
     QStringList m_ProfileList;
     QString m_profileDescription;
     QString m_profileName;
+    QString boolToText(bool b);
+    QString boolToTempScale(bool b);
 
     unsigned m_action;
 };
@@ -87,6 +89,30 @@ const QString& gui_Profiles::selectedDescription(void) const
 inline unsigned gui_Profiles::action(void) const
 {
     return m_action;
+}
+
+inline QString gui_Profiles::boolToText(bool b)
+{
+    if (b)
+    {
+        return "True";
+    }
+    else
+    {
+        return "False";
+    }
+}
+
+inline QString gui_Profiles::boolToTempScale(bool b)
+{
+    if (b)
+    {
+        return "Celcius";
+    }
+    else
+    {
+        return "Fahrenheit";
+    }
 }
 
 #endif // GUI_PROFILES_H
