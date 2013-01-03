@@ -131,13 +131,15 @@ QString gui_Profiles::getPreviewReportManual(const FanControllerProfile& fcp) co
     const FanControllerData& fcd = ph_fanControllerData();
     QString report;
 
+    bool isCelcius = fcp.isCelcius();
+
     report += "<table border=0>";
     report += "<tr><th width=120 align=left>Channel</p></th><th width=100 align=left>RPM</th><th align=left width=100>Alert Temp</th></tr>";
 
     for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
     {
         QString channelRPM = QString::number(fcp.speed(channel));
-        QString channelAlarm = fcd.temperatureString(fcp.alarmTemp(channel), true);
+        QString channelAlarm = fcd.temperatureString(fcp.alarmTemp(channel), true, isCelcius);
 
         report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
         report += "<td width=100 align=left>" + channelRPM + "</td>";
@@ -172,7 +174,7 @@ QString gui_Profiles::getPreviewReportSWAuto(const FanControllerProfile& fcp) co
     for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
     {
         const FanSpeedRamp& ramp = fcp.ramp(channel);
-        bool isCelcius = ph_fanControllerData().isCelcius();
+        bool isCelcius = fcp.isCelcius();
 
         QString channelAlarm = FanControllerData::temperatureString(fcp.alarmTemp(channel), true, isCelcius);
         QString temperatureF_fanOn = FanControllerData::temperatureString(ramp.temperatureF_fanOn(), true, isCelcius);
