@@ -70,8 +70,6 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
 {
     FanControllerProfile fcp;
 
-    m_previewReport.clear();
-
     m_profileName = ui->ctrl_profileList->currentItem()->text();
     m_profileDescription = fcp.profileDescription(m_profileName);
 
@@ -80,26 +78,33 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
 
     fcp.load(m_profileName);
 
-    m_previewReport += "</body></html>";
-    m_previewReport += getPreviewReportCommon(fcp);
-
-    if (fcp.isSoftwareAuto())
-    {
-        m_previewReport += getPreviewReportSWAuto(fcp);
-    }
-    else
-    {
-        m_previewReport += getPreviewReportManual(fcp);
-    }
-
-    m_previewReport += "<html><body>";
-
     QFont font = ui->ctrl_profilePreview->font();
     font.setPointSize(9);
 
     ui->ctrl_profilePreview->setFont(font);
-    ui->ctrl_profilePreview->setHtml(m_previewReport);
+    ui->ctrl_profilePreview->setHtml(showPreviewReport(fcp));
 
+}
+
+QString gui_Profiles::showPreviewReport(const FanControllerProfile& fcp) const
+{
+    QString report;
+
+    report = "</body></html>";
+    report += getPreviewReportCommon(fcp);
+
+    if (fcp.isSoftwareAuto())
+    {
+        report += getPreviewReportSWAuto(fcp);
+    }
+    else
+    {
+        report += getPreviewReportManual(fcp);
+    }
+
+    report += "<html><body>";
+
+    return report;
 }
 
 QString gui_Profiles::getPreviewReportCommon(const FanControllerProfile& fcp) const
@@ -120,6 +125,7 @@ QString gui_Profiles::getPreviewReportCommon(const FanControllerProfile& fcp) co
 
     return report;
 }
+
 QString gui_Profiles::getPreviewReportManual(const FanControllerProfile& fcp) const
 {
     const FanControllerData& fcd = ph_fanControllerData();

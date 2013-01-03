@@ -66,6 +66,7 @@ private:
     Ui::gui_Profiles *ui;
 
     bool getProfileList(void);
+    QString showPreviewReport(const FanControllerProfile& fcp) const;
     QString getPreviewReportCommon(const FanControllerProfile& fcp) const;
     QString getPreviewReportManual(const FanControllerProfile& fcp) const;
     QString getPreviewReportSWAuto(const FanControllerProfile& fcp) const;
@@ -73,7 +74,6 @@ private:
     QStringList m_ProfileList;
     QString m_profileDescription;
     QString m_profileName;
-    QString m_previewReport;
     QString boolToText(bool b) const;
     QString boolToTempScale(bool b) const;
 
