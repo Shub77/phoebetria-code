@@ -86,8 +86,8 @@ void gui_Profiles::on_ctrl_profileList_itemClicked()
     report += "</table>";
     report += "<p></p>";
     report += "<table border=0>";
-    report += "<tr><td width=100 align=left>Temperature Scale:</td><td width=100 align=left>" + boolToText(fcp.isCelcius()) + "</td></tr>";
-    report += "<tr><td width=100 align=left>Audible Alarm:</td><td width=100 align=left>" + boolToTempScale(fcp.isAudibleAlarm()) + "</td></tr>";
+    report += "<tr><td width=100 align=left>Temperature Scale:</td><td width=100 align=left>" + boolToTempScale(fcp.isCelcius()) + "</td></tr>";
+    report += "<tr><td width=100 align=left>Audible Alarm:</td><td width=100 align=left>" + boolToText(fcp.isAudibleAlarm()) + "</td></tr>";
     report += "<tr><td width=100 align=left>Recon Auto:</td><td width=100 align=left>" + boolToText(fcp.isAuto()) + "</td></tr>";
     report += "<tr><td width=100 align=left>Software Auto:</td><td width=100 align=left>" + boolToText(fcp.isSoftwareAuto()) + "</td></tr>";
     report += "</table>";
