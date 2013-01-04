@@ -161,6 +161,7 @@ QString FanControllerProfile::profileDescription(const QString& profileName)
     return mdb.profileDescription(profileName);
 }
 
+
 // returns the number of files imported
 // pre dir.exists() == true
 int FanControllerProfile::importFromIni(QDir& dir)
@@ -236,4 +237,117 @@ bool FanControllerProfile::loadFromIni(const QString& filenameAndPath,
     }
 
     return r && (settings.status() == QSettings::NoError);
+}
+
+QString FanControllerProfile::htmlReport(void)
+{
+    QString report;
+
+    report = "<body><html>";
+    report += getPreviewReportCommon();
+
+    if (isSoftwareAuto())
+        report += getPreviewReportSWAuto();
+    else
+        report += getPreviewReportManual();
+
+    report += "</html></body>";
+
+    return report;
+}
+
+QString FanControllerProfile::getPreviewReportCommon(void) const
+{
+    QString report;
+
+    report += "<table border=0>";
+    report += "<tr><td width=120 align=left><h3>Profile Name:</h3></td><td width=100 align=left><h3>" + profileName() + "</h3></td></tr>";
+    report += "</table>";
+    report += "<p></p>";
+    report += "<table border=0>";
+    report += "<tr><td width=120 align=left>Temperature Scale:</td><td width=100 align=left>" + boolToTempScale(isCelcius()) + "</td></tr>";
+    report += "<tr><td width=120 align=left>Audible Alarm:</td><td width=100 align=left>" + boolToText(isAudibleAlarm()) + "</td></tr>";
+    report += "<tr><td width=120 align=left>Recon Auto:</td><td width=100 align=left>" + boolToText(isAuto()) + "</td></tr>";
+    report += "<tr><td width=120 align=left>Software Auto:</td><td width=100 align=left>" + boolToText(isSoftwareAuto()) + "</td></tr>";
+    report += "</table>";
+    report += "<p></p>";
+
+    return report;
+}
+
+QString FanControllerProfile::getPreviewReportManual(void) const
+{
+    QString report;
+
+    report += "<table border=0>";
+    report += "<tr><th width=120 align=left>Channel</p></th><th width=100 align=left>RPM</th><th align=left width=100>Alert Temp</th></tr>";
+
+    for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
+    {
+        QString channelRPM = QString::number(speed(channel));
+        QString channelAlarm = FanControllerData::temperatureString(alarmTemp(channel), true, isCelcius());
+
+        report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
+        report += "<td width=100 align=left>" + channelRPM + "</td>";
+        report += "<td width=100 align=left>" + channelAlarm + "</td></tr>";
+    }
+    report += "</table>";
+
+    return report;
+}
+
+QString FanControllerProfile::getPreviewReportSWAuto(void) const
+{
+    QString report;
+
+    report += "<table border=0><tr>";
+    report += "<th width=120 align=left>Channel</p></th>";
+    report += "<th width=100 align=left>Alert Temp</th>";
+    report += "<th width=100 align=left>Turn Off</th>";
+    report += "<th width=100 align=left>Temp Fan On</p></th>";
+    report += "<th width=100 align=left>Temp/Speed Start</th>";
+    report += "<th width=100 align=left>Temp/Speed Mid</th>";
+    report += "<th width=100 align=left>Temp/Speed End</p></th>";
+    report += "<th width=100 align=left>Temp Fan Max</th>";
+    report += "<th width=100 align=left>Min RPM</th>";
+    report += "<th width=100 align=left>Max RPM</p></th>";
+    report += "<th width=100 align=left>Probe Affinity</th>";
+    report += "<th width=100 align=left>Hysteresis Up</th>";
+    report += "<th width=100 align=left>Hysteresis Down</p></th>";
+    report += "<th width=100 align=left>Hysteresis Off</th>";
+    report += "</tr>";
+
+    for (int channel = 0; channel < FC_MAX_CHANNELS; ++channel)
+    {
+        const FanSpeedRamp& framp = ramp(channel);
+
+        QString channelAlarm = FanControllerData::temperatureString(alarmTemp(channel), true, isCelcius());
+        QString temperatureF_fanOn = FanControllerData::temperatureString(framp.temperatureF_fanOn(), true, isCelcius());
+        QString tempRampStart = FanControllerData::temperatureString(framp.temperatureF_rampStart(), true, isCelcius());
+        QString speedRampStart = QString::number(framp.speed_rampStart());
+        QString tempRampMid = FanControllerData::temperatureString(framp.temperatureF_rampMid(), true, isCelcius());
+        QString speedRampMid = QString::number(framp.speed_rampMid());
+        QString tempRampEnd = FanControllerData::temperatureString(framp.temperatureF_rampEnd(), true, isCelcius());
+        QString speedRampEnd = QString::number(framp.speed_rampEnd());
+
+        report += "<tr><td width=120 align=left>" + ph_prefs().channelName(channel) + "</td>";
+        report += "<td width=100 align=left>" + channelAlarm + "</td>";
+        report += "<td width=100 align=left>" + boolToText(framp.allowFanToTurnOff()) + "</td>";
+        report += "<td width=100 align=left>" + temperatureF_fanOn + "</td>";
+        report += "<td width=100 align=left>" + tempRampStart + " / " + speedRampStart+ "</td>";
+        report += "<td width=100 align=left>" + tempRampMid + " / " + speedRampMid+ "</td>";
+        report += "<td width=100 align=left>" + tempRampEnd + " / " + speedRampEnd+ "</td>";
+        report += "<td width=100 align=left>" + FanControllerData::temperatureString(framp.temperatureF_fanToMax(), true, isCelcius()) +"</td>";
+        report += "<td width=100 align=left>" + QString::number(framp.minUsableRpm()) +"</td>";
+        report += "<td width=100 align=left>" + QString::number(framp.maxUsableRpm()) +"</td>";
+        report += "<td width=100 align=left>" + QString::number(framp.hysteresisUp()) +"</td>";
+        report += "<td width=100 align=left>" + QString::number(framp.hysteresisDown()) +"</td>";
+        report += "<td width=100 align=left>" + QString::number(framp.hysteresisFanOff()) +"</td>";
+        report += "</tr>";
+    }
+
+    report += "</table>";
+
+    return report;
+
 }

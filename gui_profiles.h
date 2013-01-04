@@ -66,16 +66,10 @@ private:
     Ui::gui_Profiles *ui;
 
     bool getProfileList(void);
-    QString showPreviewReport(const FanControllerProfile& fcp) const;
-    QString getPreviewReportCommon(const FanControllerProfile& fcp) const;
-    QString getPreviewReportManual(const FanControllerProfile& fcp) const;
-    QString getPreviewReportSWAuto(const FanControllerProfile& fcp) const;
 
     QStringList m_ProfileList;
     QString m_profileDescription;
     QString m_profileName;
-    QString boolToText(bool b) const;
-    QString boolToTempScale(bool b) const;
 
     unsigned m_action;
 };
@@ -93,30 +87,6 @@ const QString& gui_Profiles::selectedDescription(void) const
 inline unsigned gui_Profiles::action(void) const
 {
     return m_action;
-}
-
-inline QString gui_Profiles::boolToText(bool b) const
-{
-    if (b)
-    {
-        return "True";
-    }
-    else
-    {
-        return "False";
-    }
-}
-
-inline QString gui_Profiles::boolToTempScale(bool b) const
-{
-    if (b)
-    {
-        return "Celcius";
-    }
-    else
-    {
-        return "Fahrenheit";
-    }
 }
 
 #endif // GUI_PROFILES_H

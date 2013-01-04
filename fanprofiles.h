@@ -68,6 +68,8 @@ public:
     int alarmTemp(int channel) const;
     int speed(int channel) const;
 
+    QString htmlReport(void);
+
     const BasicChannelData& getChannelSettings(int channel) const;
 
     inline static bool isReservedProfileName(const QString& name);
@@ -87,6 +89,13 @@ protected:
     void initCommon(void);
 
     static bool loadFromIni(const QString& filenameAndPath, FanControllerProfile &dest);
+
+    QString getPreviewReportCommon(void) const;
+    QString getPreviewReportManual(void) const;
+    QString getPreviewReportSWAuto(void) const;
+
+    QString boolToText(bool isTrue) const;
+    QString boolToTempScale(bool isCelcius) const;
 
 private:
 
@@ -185,5 +194,16 @@ QString FanControllerProfile::profileDescription(void)
 {
     return profileDescription(m_name);
 }
+
+inline QString FanControllerProfile::boolToText(bool isTrue) const
+{
+    return isTrue ? "True" : "False";
+}
+
+inline QString FanControllerProfile::boolToTempScale(bool isCelcius) const
+{
+    return isCelcius ? "Celcius" : "Fahrenheit";
+}
+
 
 #endif // PHOEBETRIA_FAN_PROFILES_H
