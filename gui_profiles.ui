@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>484</height>
+    <width>452</width>
+    <height>501</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -26,65 +26,154 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="spacing">
-    <number>6</number>
-   </property>
-   <item row="1" column="3">
-    <widget class="QLineEdit" name="ctrl_profileName"/>
-   </item>
-   <item row="3" column="3">
-    <widget class="QLabel" name="lbl_profileDescription_2">
-     <property name="text">
-      <string>Description</string>
+   <item row="0" column="0">
+    <widget class="QSplitter" name="splitter">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
      </property>
-    </widget>
-   </item>
-   <item row="4" column="3">
-    <widget class="QPlainTextEdit" name="ctrl_profileDescription"/>
-   </item>
-   <item row="1" column="0" rowspan="4" colspan="3">
-    <widget class="QListWidget" name="ctrl_profileList">
-     <property name="sortingEnabled">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="opaqueResize">
       <bool>true</bool>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="lbl_profileList">
-     <property name="text">
-      <string>Profile</string>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QLabel" name="lbl_profileName">
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0" colspan="4">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="ctrl_profileClose">
-       <property name="toolTip">
-        <string>Close</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
+     <widget class="QWidget" name="">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="lbl_profileList">
+           <property name="text">
+            <string>Profile</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="ctrl_profileList">
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="lbl_profileName">
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="ctrl_profileName"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="lbl_profileDescription_2">
+             <property name="text">
+              <string>Description</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPlainTextEdit" name="ctrl_profileDescription"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="lbl_profileDescription">
+         <property name="text">
+          <string>Preview</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextBrowser" name="ctrl_profilePreview"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="ctrl_LoadProfile">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Load</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ctrl_SaveProfile">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ctrl_EraseProfile">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Delete</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ctrl_profileClose">
+           <property name="toolTip">
+            <string>Close</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 	border: none;
 	margin: 0px;
     padding: 0px;
@@ -104,84 +193,42 @@ QPushButton:disabled {
     padding: 0px;
 	image: url(:/Images/icon_close_lite.png)
 }</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item row="9" column="3">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>-1</number>
-     </property>
-     <item>
-      <widget class="QPushButton" name="ctrl_LoadProfile">
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Load</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="ctrl_SaveProfile">
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Save</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="ctrl_EraseProfile">
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Delete</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="lbl_profileDescription">
-     <property name="text">
-      <string>Preview</string>
-     </property>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
-   <item row="6" column="0" colspan="4">
-    <widget class="QTextBrowser" name="ctrl_profilePreview"/>
-   </item>
   </layout>
+  <zorder>ctrl_profileName</zorder>
+  <zorder>lbl_profileDescription_2</zorder>
+  <zorder>ctrl_profileDescription</zorder>
+  <zorder>ctrl_profileList</zorder>
+  <zorder>lbl_profileList</zorder>
+  <zorder>lbl_profileName</zorder>
+  <zorder>ctrl_profilePreview</zorder>
+  <zorder>ctrl_profileDescription</zorder>
+  <zorder>ctrl_profileDescription</zorder>
+  <zorder>lbl_profileDescription_2</zorder>
  </widget>
  <resources/>
  <connections/>
