@@ -1182,7 +1182,7 @@ void gui_MainWindow::when_actionDiagnosticReport_selected()
 
     QTextBrowser* tb = new QTextBrowser();
     QFont font = tb->font();
-    font.setFamily("Courier New");
+    //font.setFamily("Courier New");
     font.setPointSize(9);
     tb->setFont(font);
 

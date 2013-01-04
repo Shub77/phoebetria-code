@@ -44,7 +44,7 @@ QString AppInfo::basicInfoReport(void)
     report += "<tr><td width=120 align=left>OS:</td><td width=200 align=left>" + platformInfo() + "</td></tr>";
     report += "<tr><td width=120 align=left>Recon:</td><td width=200 align=left>" + connectedToDevice() + "</td></tr>";
     report += "</table>";
-    report += "<hr>";
+    report += "<p></p>";
     report += "<table border=0>";
     report += "<tr><td width=120 align=left><h3>Database</h3></td></tr>";
     report += "<tr><td width=120 align=left>Main DB Exists:</td><td width=200 align=left>" + (mainDatabaseExists() ? trueStr : falseStr) + "</td></tr>";
@@ -61,8 +61,8 @@ QString AppInfo::basicInfoReport(void)
     report += "</table>";
     report += "<p></p>";
     report += "<table border=0>";
-    report += "<tr><th width=120 align=left>Item</th><th width=80 align=left>Ch0</th><th width=80 align=left>Ch1</th>";
-    report += "<th width=80 align=left>Ch2</th><th width=80 align=left>Ch3</th><th width=80 align=left>Ch4</th></tr>";
+    report += "<tr><th width=120 align=left>Item</th><th width=60 align=left>Ch0</th><th width=60 align=left>Ch1</th>";
+    report += "<th width=60 align=left>Ch2</th><th width=60 align=left>Ch3</th><th width=60 align=left>Ch4</th></tr>";
     report += "<tr><td width=120 align=left>Last probe temps:</td>" + channelTemps(false);
     report += "</tr><tr><td width=120 align=left>Avg. probe temps:</td>" + channelTemps(true);
     report += "</tr></table>";
@@ -137,10 +137,10 @@ QString AppInfo::channelTemps(bool getAverage)
     }
 
 //    FIXME: For some reason these are placed on a new line
-//    if (ph_fanControllerData().isCelcius())
-//        s += " C";
-//    else
-//        s += " F";
+    if (ph_fanControllerData().isCelcius())
+        s += "<td width=30 align=left>&deg;C</td>";
+    else
+        s += "<td width=30 align=left>&deg;F</td>";
 
     return s;
 }
