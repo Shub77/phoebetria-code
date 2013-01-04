@@ -100,6 +100,7 @@ public:
     void updateTempF(int channel, int to, bool emitSignal = true);
     void doSoftwareAuto(int channel, int tempF);
     void doSoftwareAutoChannel(int channel, int tempF);
+    int getSwAutoThreshold(int channel, int tDirection, int newRpm);
     void updateRPM(int channel, int to, bool emitSignal = true);
     void updateIsCelcius(bool isCelcius, bool emitSignal = true);
     void updateIsAuto(bool isAuto, bool emitSignal = true);

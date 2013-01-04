@@ -250,8 +250,6 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
     int direction;
     int threshold;
 
-    bool forceUpdate = false;
-
     if (!m_rTemps[channel].isSet())
     {
         rDelta = direction = 0;
@@ -265,33 +263,17 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
         rDelta = abs(rDelta);
         currRpm = m_ramp[channel].temperatureToRpm(m_rTemps[channel].temperature());
 
-        if (direction < 0)
-        {
-            threshold = newRpm == 0 ? m_ramp[channel].hysteresisFanOff()
-                                    : m_ramp[channel].hysteresisDown();
-        }
-        else
-        {
-            threshold = m_ramp[channel].hysteresisUp();
-        }
+        threshold = getSwAutoThreshold(channel, direction, newRpm);
     }
 
-    if (rDelta >= threshold || !m_rTemps[channel].isSet() || forceUpdate)
+    if (rDelta >= threshold || !m_rTemps[channel].isSet())
     {
-//        if (!m_rTemps[channel].isSet() && m_rTemps[channel].temperature() < tempF)
-//        {
-//            /* If temperature is increasing ignore "fan off"
-//             */
-//        }
-//        else
-        if (newRpm != currRpm || !m_rTemps[channel].isSet()
-                || !cd.isSet_manualRPM() || forceUpdate)
+        if (newRpm != currRpm
+                || !m_rTemps[channel].isSet()
+                || !cd.isSet_manualRPM() )
         {
             updateMinMax_rpm(channel, newRpm);
             m_rTemps[channel].setTemperature(tempF); // Save tF for next time
-
-            //emit manualRPM_changed(channel, newRpm);
-
 
             ph_fanControllerIO().setChannelSettings(channel,
                                                     alarmTemp(channel),
@@ -307,6 +289,23 @@ void FanControllerData::doSoftwareAutoChannel(int channel, int tempF)
 
         }
     }
+}
+
+int FanControllerData::getSwAutoThreshold(int channel, int tDirection, int newRpm)
+{
+    int threshold;
+
+    if (tDirection < 0)
+    {
+        threshold = newRpm == 0 ? m_ramp[channel].hysteresisFanOff()
+                                : m_ramp[channel].hysteresisDown();
+    }
+    else
+    {
+        threshold = m_ramp[channel].hysteresisUp();
+    }
+
+    return threshold;
 }
 
 
