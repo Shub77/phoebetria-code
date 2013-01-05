@@ -340,6 +340,7 @@ QString FanControllerProfile::htmlReportSwAuto(void) const
         report += "<td width=100 align=left>" + FanControllerData::temperatureString(framp.temperatureF_fanToMax(), true, isCelcius()) +"</td>";
         report += "<td width=100 align=left>" + QString::number(framp.minUsableRpm()) +"</td>";
         report += "<td width=100 align=left>" + QString::number(framp.maxUsableRpm()) +"</td>";
+        report += "<td width=100 align=left>" + QString::number(framp.probeAffinity()) +"</td>";
         report += "<td width=100 align=left>" + QString::number(framp.hysteresisUp()) +"</td>";
         report += "<td width=100 align=left>" + QString::number(framp.hysteresisDown()) +"</td>";
         report += "<td width=100 align=left>" + QString::number(framp.hysteresisFanOff()) +"</td>";
