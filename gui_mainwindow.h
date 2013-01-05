@@ -213,6 +213,7 @@ private:
     void updateAllTemperatureControls(void);
     void updateAlarmTempControl(int channel, int temp, bool isCelcius);
     void updateAllAlarmCtrls(bool isCelcius);
+    void updateTrayIconTooltip(void);
 
     int rpmSliderValueToRPM(int channel, int value) const;
 

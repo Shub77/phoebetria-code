@@ -109,6 +109,8 @@ public:
 
     bool ramp_reqParamsForInitAreSet(void) const;
 
+    QString currStatusAsText(void) const;
+
     FanSpeedRamp ramp(int channel) const
         { return m_ramp[channel]; }
 

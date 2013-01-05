@@ -212,7 +212,7 @@ void gui_MainWindow::syncGuiCtrlsWithFanController(void)
     updateToggleControls();
     updateProbeAffinityOverlays();
     enableSpeedControls(!(fcdata().isAuto() || fcdata().isSoftwareAuto()));
-
+    updateTrayIconTooltip();
 }
 
 
@@ -577,6 +577,7 @@ void gui_MainWindow::updateSpeedControl(int channel, int RPM, bool updateSlider)
 
     updateSpeedControlTooltip(channel);
     updateTargetRpmOverlay(channel);
+    updateTrayIconTooltip();
 }
 
 void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
@@ -598,6 +599,8 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
         m_ctrls_probeTemps[channel]->setText(
             fcdata().temperatureString(temp, true));
     }
+
+    updateTrayIconTooltip();
 }
 
 void gui_MainWindow::updateAllTemperatureControls(void)
@@ -627,6 +630,16 @@ void gui_MainWindow::updateAllAlarmCtrls(bool isCelcius)
     {
         updateAlarmTempControl(i, fcdata().alarmTemp(i), isCelcius);
     }
+}
+
+void gui_MainWindow::updateTrayIconTooltip(void)
+{
+    if (!m_trayIcon.isVisible())
+        return;
+
+    QString s;
+    s += ph_fanControllerData().currStatusAsText();
+    m_trayIcon.setToolTip(s);
 }
 
 void gui_MainWindow::updateAllSpeedCtrls(bool useManualRpm)
@@ -750,6 +763,7 @@ void gui_MainWindow::changeEvent(QEvent* e)
             {
                 QTimer::singleShot(0, this, SLOT(hide()));
                 m_trayIcon.show();
+                updateTrayIconTooltip();
             }
         }
 

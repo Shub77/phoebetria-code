@@ -618,6 +618,32 @@ bool FanControllerData::ramp_reqParamsForInitAreSet(void) const
     return r;
 }
 
+QString FanControllerData::currStatusAsText(void) const
+{
+    QString s;
+
+    if (ph_fanControllerIO().isConnected())
+        s = "Connected";
+    else
+    {
+        s = "Not connected!";
+        return s;
+    }
+
+    for (int i = 0; i < FC_MAX_CHANNELS; ++i)
+    {
+        if (i != FC_MAX_CHANNELS)
+            s += "\n";
+        s += "Ch " + QString::number(i + 1) + ": ";
+        s += temperatureString(lastTemp(i), true) + "; ";
+        s += QString::number(lastRPM(i)) + " RPM";
+
+    }
+
+    return s;
+}
+
+
 void FanControllerData::initAllRamps(void)
 {
     int cc = channelCount();
