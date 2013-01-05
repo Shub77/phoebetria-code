@@ -90,9 +90,9 @@ protected:
 
     static bool loadFromIni(const QString& filenameAndPath, FanControllerProfile &dest);
 
-    QString getPreviewReportCommon(void) const;
-    QString getPreviewReportManual(void) const;
-    QString getPreviewReportSWAuto(void) const;
+    QString htmlReportCommon(void) const;
+    QString htmlReportManual(void) const;
+    QString htmlReportSwAuto(void) const;
 
     QString boolToText(bool isTrue) const;
     QString boolToTempScale(bool isCelcius) const;

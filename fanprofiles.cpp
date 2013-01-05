@@ -244,19 +244,19 @@ QString FanControllerProfile::htmlReport(void)
     QString report;
 
     report = "<body><html>";
-    report += getPreviewReportCommon();
+    report += htmlReportCommon();
 
     if (isSoftwareAuto())
-        report += getPreviewReportSWAuto();
+        report += htmlReportSwAuto();
     else
-        report += getPreviewReportManual();
+        report += htmlReportManual();
 
     report += "</html></body>";
 
     return report;
 }
 
-QString FanControllerProfile::getPreviewReportCommon(void) const
+QString FanControllerProfile::htmlReportCommon(void) const
 {
     QString report;
 
@@ -275,7 +275,7 @@ QString FanControllerProfile::getPreviewReportCommon(void) const
     return report;
 }
 
-QString FanControllerProfile::getPreviewReportManual(void) const
+QString FanControllerProfile::htmlReportManual(void) const
 {
     QString report;
 
@@ -296,7 +296,7 @@ QString FanControllerProfile::getPreviewReportManual(void) const
     return report;
 }
 
-QString FanControllerProfile::getPreviewReportSWAuto(void) const
+QString FanControllerProfile::htmlReportSwAuto(void) const
 {
     QString report;
 

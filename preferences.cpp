@@ -100,15 +100,27 @@ bool Preferences::quitOnClose(bool defaultVal) const
 QString Preferences::channelName(unsigned channel, QString defaultVal) const
 {
     QString keyName = channelNameKeyString(channel);
+    QString name;
 
-    return m_settings.value(keyName, defaultVal).toString();
+    name = m_settings.value(keyName, defaultVal).toString();
+
+    if (name.isEmpty()) {
+        name = "Channel " + QString::number(channel);
+    }
+    return name;
 }
 
 QString Preferences::probeName(unsigned channel, QString defaultVal) const
 {
     QString keyName = probeNameKeyString(channel);
+    QString name;
 
-    return m_settings.value(keyName, defaultVal).toString();
+    name = m_settings.value(keyName, defaultVal).toString();
+
+    if (name.isEmpty()) {
+        name = "Probe " + QString::number(channel);
+    }
+    return name;
 }
 
 QString Preferences::stylesheet(void) const
