@@ -105,7 +105,7 @@ QString Preferences::channelName(unsigned channel, QString defaultVal) const
     name = m_settings.value(keyName, defaultVal).toString();
 
     if (name.isEmpty()) {
-        name = "Channel " + QString::number(channel);
+        name = "Channel " + QString::number(channel+1);
     }
     return name;
 }
@@ -118,7 +118,7 @@ QString Preferences::probeName(unsigned channel, QString defaultVal) const
     name = m_settings.value(keyName, defaultVal).toString();
 
     if (name.isEmpty()) {
-        name = "Probe " + QString::number(channel);
+        name = "Probe " + QString::number(channel+1);
     }
     return name;
 }
