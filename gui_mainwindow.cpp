@@ -589,6 +589,7 @@ void gui_MainWindow::updateCurrentTempControl(int channel, int temp)
             {
                 m_ctrls_probeTemps[i]->setText(
                             fcdata().temperatureString(temp, true));
+                m_ctrls_probeTemps[i]->setToolTip(ph_prefs().probeName(channel));
             }
         }
     }
