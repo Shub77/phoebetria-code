@@ -1446,6 +1446,18 @@ void gui_MainWindow::askUserForManualSpeed(int channel)
         {
             val = dlg.getUserValue();
         }
+
+        if (val % 100 != 0)
+        {
+            QMessageBox::warning(
+                        this,
+                        "Unsupported RPM",
+                        "RPMs that are not multiples of 100 are not officially"
+                        " supported. It is likely that your Recon fan speed"
+                        " will not stabilise."
+                        );
+        }
+
         fcdata().clearAllChannelRpmAndTemp();
         fcdata().updateManualRPM(channel, val, false);
         updateSpeedControl(channel, val, true);
