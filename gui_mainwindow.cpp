@@ -261,7 +261,7 @@ void gui_MainWindow::initLoadProfileActions(void)
 void gui_MainWindow::initTrayIconMenu(void)
 {
 #ifdef Q_WS_MAC
-    m_trayIconMenu.addAction("Restore", this, SLOT(showNormal()));
+    m_trayIconMenu.addAction("Open Phoebetria", this, SLOT(showNormal()));
     m_trayIconMenu.addSeparator();
 #endif
 
