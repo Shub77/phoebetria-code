@@ -260,6 +260,10 @@ void gui_MainWindow::initLoadProfileActions(void)
 // pre: m_trayIconMenu_profileActions[] has been initialised
 void gui_MainWindow::initTrayIconMenu(void)
 {
+#ifdef Q_WS_MAC
+    m_trayIconMenu.addAction("Restore", this, SLOT(showNormal()));
+    m_trayIconMenu.addSeparator();
+#endif
 
     QMenu *pMenu = m_trayIconMenu.addMenu(tr("Load profile"));
 
@@ -788,8 +792,8 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
     {
 
 #ifdef Q_WS_MAC
-        e->ignore();
         hide();
+        e->ignore();
 #else
         if (this->isMinimized())
         {
@@ -865,7 +869,17 @@ void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
     }
     else
     {
-#ifndef Q_WS_MAC
+
+#ifdef Q_WS_MAC
+        switch (reason) {
+        case QSystemTrayIcon::Trigger:
+        case QSystemTrayIcon::DoubleClick:
+            break;
+        case QSystemTrayIcon::MiddleClick:
+            break;
+        default:;
+        }
+#else
         /* This causes a crash on OSX but is needed on Windows and KDE at least
            for "normal" operation. In Windows 7, if the tray icon is not hidden
            then it stays in the tray even after maximizing the application.
@@ -879,10 +893,11 @@ void gui_MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reaso
         {
             m_trayIcon.hide();
         }
-#endif
         this->showNormal();
         this->raise();
         this->activateWindow();
+#endif
+
     }
 }
 
