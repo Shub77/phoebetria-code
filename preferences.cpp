@@ -29,6 +29,9 @@ static const char* key_useLogScaleRpmSliders  = "UserPrefs/useLogScaleRpmSliders
 static const char* key_startupProfile       = "UserPrefs/startupProfile";
 static const char* key_shutdownProfile      = "UserPrefs/shutdownProfile";
 static const char* key_quitOnClose          = "UserPrefs/quitOnClose";
+static const char* key_windowGeometry       = "UserPrefs/windowGeometry";
+static const char* key_windowState          = "UserPrefs/windowState";
+
 
 static const char* keyBase_channelName      = "UserPrefs/channelName";
 static const char* keyBase_probeName        = "UserPrefs/probeName";
@@ -95,6 +98,16 @@ QString Preferences::shutdownProfile(QString defaultVal) const
 bool Preferences::quitOnClose(bool defaultVal) const
 {
     return m_settings.value(key_quitOnClose, defaultVal).toBool();
+}
+
+QByteArray Preferences::windowGeometry(QByteArray defaultVal) const
+{
+    return m_settings.value(key_windowGeometry, defaultVal).toByteArray();
+}
+
+QByteArray Preferences::windowState(QByteArray defaultVal) const
+{
+    return m_settings.value(key_windowState, defaultVal).toByteArray();
 }
 
 QString Preferences::channelName(unsigned channel, QString defaultVal) const
@@ -176,6 +189,16 @@ void Preferences::setShutdownProfile(const QString& profileName)
 void Preferences::setQuitOnClose(bool istrue)
 {
     m_settings.setValue(key_quitOnClose, istrue);
+}
+
+void Preferences::setWindowGeometry(const QByteArray& windowGeometry)
+{
+    m_settings.setValue(key_windowGeometry, windowGeometry);
+}
+
+void Preferences::setWindowState(const QByteArray& windowState)
+{
+    m_settings.setValue(key_windowState, windowState);
 }
 
 void Preferences::setChannelName(unsigned channel, const QString& name)

@@ -64,6 +64,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui(new Ui::gui_MainWindow)
 {
     ui->setupUi(this);
+    restoreGeometry(ph_prefs().windowGeometry());
+    restoreState(ph_prefs().windowState());
+
     initCtrlArrays();
     initTargetRpmOverlays();
     initProbeAffinityOverlays();
@@ -778,6 +781,9 @@ void gui_MainWindow::changeEvent(QEvent* e)
 
 void gui_MainWindow::closeEvent(QCloseEvent *e)
 {
+    ph_prefs().setWindowGeometry(saveGeometry());
+    ph_prefs().setWindowState(saveState());
+
     if (!ph_prefs().quitOnClose())
     {
 

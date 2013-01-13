@@ -57,6 +57,8 @@ public:
     QString startupProfile(QString defaultVal = "") const;
     QString shutdownProfile(QString defaultVal = "") const;
     bool    quitOnClose(bool defaultVal = DEFAULT_CLOSEBEHAVIOUR) const;
+    QByteArray windowGeometry(QByteArray defaultVal = "") const;
+    QByteArray windowState(QByteArray defaultVal = "") const;
     QString channelName(unsigned channel, QString defaultVal = "") const;
     QString probeName(unsigned channel, QString defaultVal = "") const;
     QString stylesheet(void) const;
@@ -67,6 +69,8 @@ public:
     void setShowIconTooltips(bool istrue);
     void setUseLogScaleRpmSliders(bool istrue);
     void setQuitOnClose(bool istrue);
+    void setWindowGeometry(const QByteArray& windowGeometry);
+    void setWindowState(const QByteArray& windowState);
     void setStartupProfile(const QString& profileName);
     void setShutdownProfile(const QString& profileName);
     void setChannelName(unsigned channel, const QString& name);
