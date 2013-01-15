@@ -59,6 +59,12 @@ public:
     bool    quitOnClose(bool defaultVal = DEFAULT_CLOSEBEHAVIOUR) const;
     QByteArray windowGeometry(QByteArray defaultVal = "") const;
     QByteArray windowState(QByteArray defaultVal = "") const;
+    QByteArray windowProfileGeometry(QByteArray defaultVal = "") const;
+    QByteArray splitterProfileState(QByteArray defaultVal = "") const;
+    QByteArray windowSWAutoGeometry(QByteArray defaultVal = "") const;
+    QByteArray windowAboutGeometry(QByteArray defaultVal = "") const;
+    QByteArray windowPrefsGeometry(QByteArray defaultVal = "") const;
+    QByteArray windowAppInfoGeometry(QByteArray defaultVal = "") const;
     QString channelName(unsigned channel, QString defaultVal = "") const;
     QString probeName(unsigned channel, QString defaultVal = "") const;
     QString stylesheet(void) const;
@@ -71,6 +77,12 @@ public:
     void setQuitOnClose(bool istrue);
     void setWindowGeometry(const QByteArray& windowGeometry);
     void setWindowState(const QByteArray& windowState);
+    void setWindowProfileGeometry(const QByteArray& windowGeometry);
+    void setSplitterProfileState(const QByteArray& splitterState);
+    void setWindowSWAutoGeometry(const QByteArray& windowGeometry);
+    void setWindowAboutGeometry(const QByteArray& windowGeometry);
+    void setWindowPrefsGeometry(const QByteArray& windowGeometry);
+    void setWindowAppInfoGeometry(const QByteArray& windowGeometry);
     void setStartupProfile(const QString& profileName);
     void setShutdownProfile(const QString& profileName);
     void setChannelName(unsigned channel, const QString& name);

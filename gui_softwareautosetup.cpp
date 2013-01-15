@@ -28,6 +28,7 @@ gui_SoftwareAutoSetup::gui_SoftwareAutoSetup(QWidget *parent) :
     m_wasAccepted(false)
 {
     ui->setupUi(this);
+    restoreGeometry(ph_prefs().windowSWAutoGeometry());
 
     ui->ctrl_explanation->setText(
                 "The values for hysteresis are temperature thresholds that aim to stop"
@@ -334,6 +335,8 @@ void gui_SoftwareAutoSetup::on_ctrl_probeAffinity_valueChanged(int arg1)
 
 void gui_SoftwareAutoSetup::on_buttonBox_accepted()
 {
+    ph_prefs().setWindowSWAutoGeometry(saveGeometry());
+
     for (int i = 0; i < FC_MAX_CHANNELS; ++i)
     {
         if (m_ramp[i].isInitialised() && m_ramp[i].isModified())

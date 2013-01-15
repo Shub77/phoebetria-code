@@ -19,6 +19,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QWidget>
 
 class AppInfo
 {

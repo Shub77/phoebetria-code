@@ -20,6 +20,7 @@
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QWidget>
 
 #include "fanprofiles.h"
 
@@ -29,6 +30,8 @@ gui_Profiles::gui_Profiles(QWidget *parent) :
     m_action(0)
 {
     ui->setupUi(this);
+    restoreGeometry(ph_prefs().windowProfileGeometry());
+    ui->splitter->restoreState(ph_prefs().splitterProfileState());
 
     init();
 }
@@ -221,5 +224,7 @@ void gui_Profiles::on_ctrl_SaveProfile_clicked()
 
 void gui_Profiles::on_ctrl_profileClose_clicked()
 {
+    ph_prefs().setWindowProfileGeometry(saveGeometry());
+    ph_prefs().setSplitterProfileState(ui->splitter->saveState());
     this->close();
 }

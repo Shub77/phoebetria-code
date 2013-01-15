@@ -16,6 +16,7 @@
 
 #include "gui_about.h"
 #include "ui_gui_about.h"
+#include "phoebetriaapp.h"
 
 #include "builddetails.h"
 
@@ -24,6 +25,7 @@ gui_About::gui_About(QWidget *parent) :
     ui(new Ui::gui_About)
 {
     ui->setupUi(this);
+    restoreGeometry(ph_prefs().windowAboutGeometry());
     this->setFixedSize(this->size());   // Disable resizing
     ui->ctrl_version->setText("Version " + BuildDetails::versionStr());
     ui->ctrl_build->setText("Build date: " + BuildDetails::buildDateTimeStr());
@@ -37,5 +39,6 @@ gui_About::~gui_About()
 
 void gui_About::on_ctrl_aboutClose_clicked()
 {
-        this->close();
+    ph_prefs().setWindowAboutGeometry(saveGeometry());
+    this->close();
 }

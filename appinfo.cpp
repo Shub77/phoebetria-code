@@ -208,7 +208,6 @@ QString AppInfo::mainDatabasePath(void)
     return DatabaseManager::dbFilenameWithPath(DatabaseManager::PrimaryDb);
 }
 
-
 /*********************************************************************
  Private member functions
  *********************************************************************/
@@ -289,3 +288,4 @@ QString AppInfo::osVersionAsString(void)
 
     return os;
 }
+

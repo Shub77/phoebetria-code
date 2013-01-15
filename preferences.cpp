@@ -31,7 +31,12 @@ static const char* key_shutdownProfile      = "UserPrefs/shutdownProfile";
 static const char* key_quitOnClose          = "UserPrefs/quitOnClose";
 static const char* key_windowGeometry       = "UserPrefs/windowGeometry";
 static const char* key_windowState          = "UserPrefs/windowState";
-
+static const char* key_windowProfileGeometry       = "UserPrefs/windowProfileGeometry";
+static const char* key_splitterProfileState       = "UserPrefs/windowProfileGeometry";
+static const char* key_windowSWAutoGeometry       = "UserPrefs/windowSWAutoGeometry";
+static const char* key_windowAboutGeometry       = "UserPrefs/windowAboutGeometry";
+static const char* key_windowPrefsGeometry       = "UserPrefs/windowPrefsGeometry";
+static const char* key_windowAppInfoGeometry       = "UserPrefs/windowAppInfoGeometry";
 
 static const char* keyBase_channelName      = "UserPrefs/channelName";
 static const char* keyBase_probeName        = "UserPrefs/probeName";
@@ -109,6 +114,39 @@ QByteArray Preferences::windowState(QByteArray defaultVal) const
 {
     return m_settings.value(key_windowState, defaultVal).toByteArray();
 }
+
+QByteArray Preferences::windowProfileGeometry(QByteArray defaultVal) const
+{
+    return m_settings.value(key_windowProfileGeometry, defaultVal).toByteArray();
+}
+
+QByteArray Preferences::splitterProfileState(QByteArray defaultVal) const
+{
+    return m_settings.value(key_splitterProfileState, defaultVal).toByteArray();
+}
+
+QByteArray Preferences::windowSWAutoGeometry(QByteArray defaultVal) const
+{
+    return m_settings.value(key_windowSWAutoGeometry, defaultVal).toByteArray();
+}
+
+QByteArray Preferences::windowAboutGeometry(QByteArray defaultVal) const
+{
+    return m_settings.value(key_windowAboutGeometry, defaultVal).toByteArray();
+}
+
+
+QByteArray Preferences::windowPrefsGeometry(QByteArray defaultVal) const
+{
+    return m_settings.value(key_windowPrefsGeometry, defaultVal).toByteArray();
+}
+
+
+QByteArray Preferences::windowAppInfoGeometry(QByteArray defaultVal) const
+{
+    return m_settings.value(key_windowAppInfoGeometry, defaultVal).toByteArray();
+}
+
 
 QString Preferences::channelName(unsigned channel, QString defaultVal) const
 {
@@ -199,6 +237,36 @@ void Preferences::setWindowGeometry(const QByteArray& windowGeometry)
 void Preferences::setWindowState(const QByteArray& windowState)
 {
     m_settings.setValue(key_windowState, windowState);
+}
+
+void Preferences::setWindowProfileGeometry(const QByteArray& windowGeometry)
+{
+    m_settings.setValue(key_windowProfileGeometry, windowGeometry);
+}
+
+void Preferences::setSplitterProfileState(const QByteArray& splitterState)
+{
+    m_settings.setValue(key_splitterProfileState, splitterState);
+}
+
+void Preferences::setWindowSWAutoGeometry(const QByteArray& windowGeometry)
+{
+    m_settings.setValue(key_windowSWAutoGeometry, windowGeometry);
+}
+
+void Preferences::setWindowAboutGeometry(const QByteArray& windowGeometry)
+{
+    m_settings.setValue(key_windowAboutGeometry, windowGeometry);
+}
+
+void Preferences::setWindowPrefsGeometry(const QByteArray& windowGeometry)
+{
+    m_settings.setValue(key_windowPrefsGeometry, windowGeometry);
+}
+
+void Preferences::setWindowAppInfoGeometry(const QByteArray& windowGeometry)
+{
+    m_settings.setValue(key_windowAppInfoGeometry, windowGeometry);
 }
 
 void Preferences::setChannelName(unsigned channel, const QString& name)
