@@ -39,6 +39,11 @@ gui_About::~gui_About()
 
 void gui_About::on_ctrl_aboutClose_clicked()
 {
-    ph_prefs().setWindowAboutGeometry(saveGeometry());
     this->close();
+}
+
+void gui_About::done(int result)
+{
+    ph_prefs().setWindowAboutGeometry(saveGeometry());
+    QDialog::done(result);
 }

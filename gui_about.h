@@ -23,6 +23,8 @@ private slots:
 
 private:
     Ui::gui_About *ui;
+
+    void done(int result);
 };
 
 #endif // GUI_ABOUT_H
