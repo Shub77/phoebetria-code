@@ -63,8 +63,6 @@ public:
 
     void setSoftwareAutoOn(bool yes = true);
 
-    QByteArray dialogAppInfoGeometry;
-
 public slots:
 
     void syncGuiCtrlsWithFanController(void);
@@ -269,6 +267,8 @@ private:
     QAction* m_LoadProfileActions[MaxTrayMenuProfiles];
 
     bool m_reqChannelParamsAreSet;
+
+    QByteArray m_dialogAppInfoGeometry;
 
 
 };

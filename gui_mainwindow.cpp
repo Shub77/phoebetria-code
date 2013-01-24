@@ -1211,17 +1211,17 @@ void gui_MainWindow::when_actionAbout_selected()
 
 void gui_MainWindow::when_actionDiagnosticReport_selected()
 {
-    dialogAppInfoGeometry = ph_prefs().windowAppInfoGeometry();
+    m_dialogAppInfoGeometry = ph_prefs().windowAppInfoGeometry();
 
     QDialog dlg(this);
 
-    if (dialogAppInfoGeometry.isEmpty())
+    if (m_dialogAppInfoGeometry.isEmpty())
     {
         dlg.resize(QSize(600, 400));
     }
     else
     {
-        dlg.restoreGeometry(dialogAppInfoGeometry);
+        dlg.restoreGeometry(m_dialogAppInfoGeometry);
     }
 
     dlg.setWindowTitle(tr("Diagnostic Report"));
