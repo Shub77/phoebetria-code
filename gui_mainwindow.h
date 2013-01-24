@@ -268,9 +268,6 @@ private:
 
     bool m_reqChannelParamsAreSet;
 
-    QByteArray m_dialogAppInfoGeometry;
-
-
 };
 
 #endif // GUI_MAINWINDOW_H

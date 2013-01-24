@@ -1211,7 +1211,7 @@ void gui_MainWindow::when_actionAbout_selected()
 
 void gui_MainWindow::when_actionDiagnosticReport_selected()
 {
-    m_dialogAppInfoGeometry = ph_prefs().windowAppInfoGeometry();
+    QByteArray m_dialogAppInfoGeometry = ph_prefs().windowAppInfoGeometry();
 
     QDialog dlg(this);
 
