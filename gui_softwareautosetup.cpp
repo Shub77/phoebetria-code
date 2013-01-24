@@ -335,8 +335,6 @@ void gui_SoftwareAutoSetup::on_ctrl_probeAffinity_valueChanged(int arg1)
 
 void gui_SoftwareAutoSetup::on_buttonBox_accepted()
 {
-    ph_prefs().setWindowSWAutoGeometry(saveGeometry());
-
     for (int i = 0; i < FC_MAX_CHANNELS; ++i)
     {
         if (m_ramp[i].isInitialised() && m_ramp[i].isModified())
@@ -369,4 +367,10 @@ void gui_SoftwareAutoSetup::on_ctrl_hysteresisDown_editingFinished()
 void gui_SoftwareAutoSetup::on_ctrl_hysteresisFanOff_editingFinished()
 {
     m_ramp[m_currChannel].setHysteresisFanOff(ui->ctrl_hysteresisFanOff->value());
+}
+
+void gui_SoftwareAutoSetup::done(int result)
+{
+    ph_prefs().setWindowSWAutoGeometry(saveGeometry());
+    QDialog::done(result);
 }

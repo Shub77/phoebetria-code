@@ -72,6 +72,8 @@ private:
     QString m_profileName;
 
     unsigned m_action;
+
+    void done(int result);
 };
 
 const QString& gui_Profiles::selectedName(void) const

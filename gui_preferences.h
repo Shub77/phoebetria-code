@@ -48,6 +48,7 @@ private:
 
     void populateProfileComboBoxes(void);
     void populateThemesComboBox(void);
+    void done(int result);
 };
 
 #endif // GUI_PREFERENCES_H

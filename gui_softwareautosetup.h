@@ -109,6 +109,8 @@ private:
     FanControllerData* m_fcdata;
 
     bool m_wasAccepted;
+
+    void done(int result);
 };
 
 bool gui_SoftwareAutoSetup::ignoreSignals(bool ignore)

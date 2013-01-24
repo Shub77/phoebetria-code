@@ -224,7 +224,12 @@ void gui_Profiles::on_ctrl_SaveProfile_clicked()
 
 void gui_Profiles::on_ctrl_profileClose_clicked()
 {
+    this->close();
+}
+
+void gui_Profiles::done(int result)
+{
     ph_prefs().setWindowProfileGeometry(saveGeometry());
     ph_prefs().setSplitterProfileState(ui->splitter->saveState());
-    this->close();
+    QDialog::done(result);
 }

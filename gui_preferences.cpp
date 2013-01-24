@@ -28,6 +28,7 @@ gui_Preferences::gui_Preferences(QWidget *parent) :
     ui(new Ui::gui_Preferences)
 {
     ui->setupUi(this);
+    restoreGeometry(ph_prefs().windowPrefsGeometry());
     ui->ctrl_preferenceTabList->setCurrentRow(0);
     populateProfileComboBoxes();
     populateThemesComboBox();
@@ -191,4 +192,10 @@ void gui_Preferences::on_ctrl_actionButtons_accepted()
 void gui_Preferences::on_ctrl_preferenceTabList_itemSelectionChanged()
 {
     ui->ctrl_preferenceTabs->setCurrentIndex(ui->ctrl_preferenceTabList->currentRow());
+}
+
+void gui_Preferences::done(int result)
+{
+    ph_prefs().setWindowPrefsGeometry(saveGeometry());
+    QDialog::done(result);
 }
