@@ -1211,9 +1211,19 @@ void gui_MainWindow::when_actionAbout_selected()
 
 void gui_MainWindow::when_actionDiagnosticReport_selected()
 {
+    dialogAppInfoGeometry = ph_prefs().windowAppInfoGeometry();
+
     QDialog dlg(this);
 
-    dlg.resize(QSize(600, 400));
+    if (dialogAppInfoGeometry.isEmpty())
+    {
+        dlg.resize(QSize(600, 400));
+    }
+    else
+    {
+        dlg.restoreGeometry(dialogAppInfoGeometry);
+    }
+
     dlg.setWindowTitle(tr("Diagnostic Report"));
 
     QTextBrowser* tb = new QTextBrowser();
@@ -1230,6 +1240,8 @@ void gui_MainWindow::when_actionDiagnosticReport_selected()
     dlg.setLayout(vLayout);
 
     dlg.exec();
+    ph_prefs().setWindowAppInfoGeometry(dlg.saveGeometry());
+
 }
 
 void gui_MainWindow::when_actionQuit_selected()

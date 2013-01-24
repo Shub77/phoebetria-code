@@ -34,3 +34,4 @@ QString BuildDetails::qtVersion(void)
 
     return s;
 }
+

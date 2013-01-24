@@ -63,6 +63,8 @@ public:
 
     void setSoftwareAutoOn(bool yes = true);
 
+    QByteArray dialogAppInfoGeometry;
+
 public slots:
 
     void syncGuiCtrlsWithFanController(void);
