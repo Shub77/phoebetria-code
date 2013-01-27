@@ -80,7 +80,7 @@
         <enum>QFrame::Sunken</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page_generalSettings">
         <layout class="QGridLayout" name="gridLayout_4">
@@ -293,7 +293,7 @@
              <widget class="QLineEdit" name="ctrl_channel3FanName"/>
             </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="lbl_channel2Name">
               <property name="text">
                <string>Channel 2</string>
               </property>
@@ -312,28 +312,28 @@
              <widget class="QLineEdit" name="ctrl_channel4FanName"/>
             </item>
             <item row="3" column="0">
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="lbl_channel3Name">
               <property name="text">
                <string>Channel 3</string>
               </property>
              </widget>
             </item>
             <item row="4" column="0">
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="lbl_channel4Name">
               <property name="text">
                <string>Channel 4</string>
               </property>
              </widget>
             </item>
             <item row="6" column="0">
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="lbl_channel5Name">
               <property name="text">
                <string>Channel 5</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="lbl_channel1Name">
               <property name="text">
                <string>Channel 1</string>
               </property>
@@ -355,14 +355,14 @@
              <widget class="QLineEdit" name="ctrl_channel5TempName"/>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_6">
+             <widget class="QLabel" name="lbl_channelNameHeader">
               <property name="text">
                <string>Fan Name</string>
               </property>
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="lbl_channelTempHeader">
               <property name="text">
                <string>Temperature Probe</string>
               </property>
@@ -456,6 +456,29 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>ctrl_preferenceTabList</tabstop>
+  <tabstop>ctrl_minimizeToTray</tabstop>
+  <tabstop>ctrl_alwaysShowTrayIcon</tabstop>
+  <tabstop>ctrl_minimizeOnStart</tabstop>
+  <tabstop>ctrl_quitOnClose</tabstop>
+  <tabstop>ctrl_showTooltipOnMinimize</tabstop>
+  <tabstop>ctrl_startupProfile</tabstop>
+  <tabstop>ctrl_shutdownProfile</tabstop>
+  <tabstop>ctrl_channel1FanName</tabstop>
+  <tabstop>ctrl_channel1TempName</tabstop>
+  <tabstop>ctrl_channel2FanName</tabstop>
+  <tabstop>ctrl_channel2TempName</tabstop>
+  <tabstop>ctrl_channel3FanName</tabstop>
+  <tabstop>ctrl_channel3TempName</tabstop>
+  <tabstop>ctrl_channel4FanName</tabstop>
+  <tabstop>ctrl_channel4TempName</tabstop>
+  <tabstop>ctrl_channel5FanName</tabstop>
+  <tabstop>ctrl_channel5TempName</tabstop>
+  <tabstop>ctrl_useLogRpmScale</tabstop>
+  <tabstop>ctrl_style</tabstop>
+  <tabstop>ctrl_actionButtons</tabstop>
+ </tabstops>
  <resources>
   <include location="gui_resources.qrc"/>
  </resources>

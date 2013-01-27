@@ -823,7 +823,7 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
                 {
                     QMessageBox::critical(
                                 NULL,
-                                tr("Not swithing to shutdown profile."),
+                                tr("Not switching to shutdown profile."),
                                 tr("The chosen profile is a Software Auto"
                                         " profile that requires Phoebetria to be running.\n\n"
                                            "Profile name: %1\n\n"
@@ -842,7 +842,7 @@ void gui_MainWindow::closeEvent(QCloseEvent *e)
             {
                 QMessageBox::critical(
                             NULL,
-                            tr("Could not swith to shutdown profile."),
+                            tr("Could not switch to shutdown profile."),
                             tr("Could not switch to the shutdown profile."
                                        " The profile may not exist.\n\n"
                                        "Profile name: %1\n\n"

@@ -40,7 +40,7 @@
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -94,7 +94,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget_2">
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="QLabel" name="lbl_profileDescription">
@@ -219,17 +219,17 @@ QPushButton:disabled {
     </widget>
    </item>
   </layout>
-  <zorder>ctrl_profileName</zorder>
-  <zorder>lbl_profileDescription_2</zorder>
-  <zorder>ctrl_profileDescription</zorder>
-  <zorder>ctrl_profileList</zorder>
-  <zorder>lbl_profileList</zorder>
-  <zorder>lbl_profileName</zorder>
-  <zorder>ctrl_profilePreview</zorder>
-  <zorder>ctrl_profileDescription</zorder>
-  <zorder>ctrl_profileDescription</zorder>
-  <zorder>lbl_profileDescription_2</zorder>
  </widget>
+ <tabstops>
+  <tabstop>ctrl_profileList</tabstop>
+  <tabstop>ctrl_profileName</tabstop>
+  <tabstop>ctrl_profileDescription</tabstop>
+  <tabstop>ctrl_profilePreview</tabstop>
+  <tabstop>ctrl_LoadProfile</tabstop>
+  <tabstop>ctrl_SaveProfile</tabstop>
+  <tabstop>ctrl_EraseProfile</tabstop>
+  <tabstop>ctrl_profileClose</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
