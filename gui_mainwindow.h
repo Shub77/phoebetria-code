@@ -26,7 +26,9 @@
 #include <QSystemTrayIcon>
 #include "fancontrollerdata.h"
 #include <QDebug>
+#include <QTranslator>
 #include <QMenu>
+
 
 
 class SliderOverlay : public QSlider
@@ -60,7 +62,7 @@ public:
     explicit gui_MainWindow(QWidget *parent = 0);
     ~gui_MainWindow();
 
-
+    QTranslator translator;
     void setSoftwareAutoOn(bool yes = true);
 
 public slots:

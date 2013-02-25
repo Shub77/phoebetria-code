@@ -20,6 +20,7 @@
 #include <QFileInfo>
 
 #include "themes.h"
+#include "languages.h"
 
 static const char* key_startMinimized       = "UserPrefs/startMinimized";
 static const char* key_minimizeToTray       = "UserPrefs/minimizeToTray";
@@ -37,6 +38,7 @@ static const char* key_windowSWAutoGeometry       = "UserPrefs/windowSWAutoGeome
 static const char* key_windowAboutGeometry       = "UserPrefs/windowAboutGeometry";
 static const char* key_windowPrefsGeometry       = "UserPrefs/windowPrefsGeometry";
 static const char* key_windowAppInfoGeometry       = "UserPrefs/windowAppInfoGeometry";
+static const char* key_applicationLanguage      = "UserPrefs/applicationLanguage";
 
 static const char* keyBase_channelName      = "UserPrefs/channelName";
 static const char* keyBase_probeName        = "UserPrefs/probeName";
@@ -147,6 +149,10 @@ QByteArray Preferences::windowAppInfoGeometry(QByteArray defaultVal) const
     return m_settings.value(key_windowAppInfoGeometry, defaultVal).toByteArray();
 }
 
+QString Preferences::applicationLanguage(QString defaultVal) const
+{
+    return m_settings.value(key_applicationLanguage, defaultVal).toString();
+}
 
 QString Preferences::channelName(unsigned channel, QString defaultVal) const
 {
@@ -267,6 +273,13 @@ void Preferences::setWindowPrefsGeometry(const QByteArray& windowGeometry)
 void Preferences::setWindowAppInfoGeometry(const QByteArray& windowGeometry)
 {
     m_settings.setValue(key_windowAppInfoGeometry, windowGeometry);
+}
+
+void Preferences::setApplicationLanguage(const QString& language)
+{
+    Languages lang;
+    QString languageFile = lang.convertLanguageToFile(language);
+    m_settings.setValue(key_applicationLanguage, languageFile);
 }
 
 void Preferences::setChannelName(unsigned channel, const QString& name)

@@ -46,6 +46,7 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
 {
     setOrganizationName("Phoebetria");
     setApplicationName("Phoebetria");
+
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
     DatabaseManager db;

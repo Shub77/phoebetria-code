@@ -63,6 +63,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::gui_MainWindow)
 {
+    translator.load(ph_prefs().applicationLanguage());
+    PhoebetriaApp::installTranslator(&translator);
+
     ui->setupUi(this);
     restoreGeometry(ph_prefs().windowGeometry());
     restoreState(ph_prefs().windowState());

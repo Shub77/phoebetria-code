@@ -12,7 +12,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Phoebetria
 TEMPLATE = app
 
-TRANSLATIONS = phoebetria_de.ts
+TRANSLATIONS =  Languages/phoebetria_de.ts \
+                Languages/phoebetria_en.ts
 
 PREFIX = /usr
 BINDIR = $$PREFIX/bin
@@ -82,7 +83,8 @@ SOURCES += main.cpp \
     themes.cpp \
     timestampedtemperature.cpp \
     averager.cpp \
-    appinfo.cpp
+    appinfo.cpp \
+    languages.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -110,7 +112,8 @@ HEADERS  += gui_mainwindow.h \
     themes.h \
     timestampedtemperature.h \
     averager.h \
-    appinfo.h
+    appinfo.h \
+    languages.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
