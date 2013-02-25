@@ -454,7 +454,7 @@
          <item row="2" column="0">
           <widget class="QLabel" name="lbl_selectLanguage">
            <property name="text">
-            <string>TextLabel</string>
+            <string>Language</string>
            </property>
           </widget>
          </item>
