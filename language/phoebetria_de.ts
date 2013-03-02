@@ -25,12 +25,12 @@
 <context>
     <name>PhoebetriaApp</name>
     <message>
-        <location filename="../phoebetriaapp.cpp" line="58"/>
+        <location filename="../phoebetriaapp.cpp" line="59"/>
         <source>Could not set style.</source>
         <translation>Stil konnte nicht erstellt werden.</translation>
     </message>
     <message>
-        <location filename="../phoebetriaapp.cpp" line="59"/>
+        <location filename="../phoebetriaapp.cpp" line="60"/>
         <source>Could not set the application style. It may not exist. Please check preferences.
 
 Style filename: %1
@@ -212,27 +212,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../gui_mainwindow.ui" line="1572"/>
-        <location filename="../gui_mainwindow.cpp" line="208"/>
+        <location filename="../gui_mainwindow.cpp" line="203"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="86"/>
+        <location filename="../gui_mainwindow.cpp" line="81"/>
         <source>Profile database error.</source>
         <translation>Profilfehler in der Datenbank.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="87"/>
+        <location filename="../gui_mainwindow.cpp" line="82"/>
         <source>The profile database could not be initialised or another error has occurred. Profile management will not work!</source>
         <translation>Das Datenbankprofil konnte nicht initialisiert werden oder ein anderer Fehler ist aufgetreten. Profilverwaltung funktioniert nicht!</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="105"/>
+        <location filename="../gui_mainwindow.cpp" line="100"/>
         <source>Could not switch to startup profile.</source>
         <translation>Wechsel in Startprofil nicht möglich.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="106"/>
+        <location filename="../gui_mainwindow.cpp" line="101"/>
         <source>Could not switch to the startup profile. The profile may not exist.
 
 Profile name: %1
@@ -245,83 +245,83 @@ Profilname: %1
 Bitte Einstellungen prüfen.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="179"/>
+        <location filename="../gui_mainwindow.cpp" line="174"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="182"/>
+        <location filename="../gui_mainwindow.cpp" line="177"/>
         <source>Load Profile</source>
         <translation>Profil laden</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="189"/>
+        <location filename="../gui_mainwindow.cpp" line="184"/>
         <source>Preferences</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="195"/>
+        <location filename="../gui_mainwindow.cpp" line="190"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="200"/>
+        <location filename="../gui_mainwindow.cpp" line="195"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="203"/>
-        <location filename="../gui_mainwindow.cpp" line="1235"/>
+        <location filename="../gui_mainwindow.cpp" line="198"/>
+        <location filename="../gui_mainwindow.cpp" line="1230"/>
         <source>Diagnostic Report</source>
         <translation>Fehlerhinweis senden</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="276"/>
+        <location filename="../gui_mainwindow.cpp" line="271"/>
         <source>Load profile</source>
         <translation>Profil laden</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="320"/>
+        <location filename="../gui_mainwindow.cpp" line="315"/>
         <source>More...</source>
         <translation>Mehr...</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="478"/>
+        <location filename="../gui_mainwindow.cpp" line="473"/>
         <source>Current RPM: </source>
         <translation>Aktuelle RPM:</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="482"/>
+        <location filename="../gui_mainwindow.cpp" line="477"/>
         <source>Target RPM: </source>
         <translation>Ziel RPM:</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="494"/>
+        <location filename="../gui_mainwindow.cpp" line="489"/>
         <source>Min Temp: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="500"/>
+        <location filename="../gui_mainwindow.cpp" line="495"/>
         <source>Max Temp: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="506"/>
+        <location filename="../gui_mainwindow.cpp" line="501"/>
         <source>Min logged RPM: </source>
         <translation>Min geloggte RPM:</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="510"/>
+        <location filename="../gui_mainwindow.cpp" line="505"/>
         <source>Max logged RPM: </source>
         <translation>Max geloggte RPM:</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="834"/>
+        <location filename="../gui_mainwindow.cpp" line="829"/>
         <source>Not switching to shutdown profile.</source>
         <translation>Kein umschalten ins Abschaltprofi.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="835"/>
+        <location filename="../gui_mainwindow.cpp" line="830"/>
         <source>The chosen profile is a Software Auto profile that requires Phoebetria to be running.
 
 Profile name: %1
@@ -334,12 +334,12 @@ Profilname: %1
 Profil aus den Einstellungen entfernen.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="853"/>
+        <location filename="../gui_mainwindow.cpp" line="848"/>
         <source>Could not switch to shutdown profile.</source>
         <translation>Abschaltprofil konnte nicht erstellt werden.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="854"/>
+        <location filename="../gui_mainwindow.cpp" line="849"/>
         <source>Could not switch to the shutdown profile. The profile may not exist.
 
 Profile name: %1
@@ -352,36 +352,36 @@ Profilname: %1
 Bitte Einstellungen prüfen.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1087"/>
+        <location filename="../gui_mainwindow.cpp" line="1082"/>
         <source>Enter new alarm temperature %1 for channel %2.
 Range is %3 to %4</source>
         <translation>Eingabe der Alarmtemperatur %1 für Kanal %2
 Reichweite ist %3 bis %4</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1095"/>
+        <location filename="../gui_mainwindow.cpp" line="1090"/>
         <source>Enter alarm temperature</source>
         <translation>Temperatur für Alarm eingeben</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1282"/>
+        <location filename="../gui_mainwindow.cpp" line="1277"/>
         <source>Load profile failed</source>
         <translation>Laden des Profils gescheitert</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1283"/>
+        <location filename="../gui_mainwindow.cpp" line="1278"/>
         <source>An error occurred load the profile.
 The profile has not been loaded!</source>
         <translation>Beim Laden des Profils ist ein Fehler aufgetreten.
 Das Profil wurde nicht geladen!</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1295"/>
+        <location filename="../gui_mainwindow.cpp" line="1290"/>
         <source>Save failed</source>
         <translation>Speicher fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1296"/>
+        <location filename="../gui_mainwindow.cpp" line="1291"/>
         <source>An error occurred saving the profile.
 The profile has NOT been saved!</source>
         <translation>im Laden des Profils ist ein Fehler aufgetreten.
@@ -396,97 +396,102 @@ Das Profil wurde NICHT gespeichert!</translation>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="90"/>
+        <location filename="../gui_preferences.ui" line="153"/>
         <source>Startup Profile</source>
         <translation>Startprofil</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="116"/>
+        <location filename="../gui_preferences.ui" line="179"/>
         <source>Shutdown Profile</source>
         <translation>Abschaltprofil</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="165"/>
+        <location filename="../gui_preferences.ui" line="228"/>
         <source>Show Tooltips while Minimized</source>
         <translation>Zeige Werkzeughilfe wenn minimiert</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="191"/>
+        <location filename="../gui_preferences.ui" line="254"/>
         <source>Minimize to Tray</source>
         <translation>In den Infobereich minimieren</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="198"/>
+        <location filename="../gui_preferences.ui" line="261"/>
         <source>Start Minimized</source>
         <translation>Minimiert starten</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="205"/>
+        <location filename="../gui_preferences.ui" line="268"/>
         <source>Quit on Close</source>
         <translation>Beim Schließen Beenden</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="242"/>
+        <location filename="../gui_preferences.ui" line="305"/>
         <source>Always Show Tray Icon</source>
         <translation>Symbol im Infobereich immer anzeigen</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="253"/>
+        <location filename="../gui_preferences.ui" line="316"/>
         <source>RPM sliders use logarithmic scale</source>
         <translation>Drehzahlregler benutzen Logarithmische Darstellung</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="298"/>
+        <location filename="../gui_preferences.ui" line="361"/>
         <source>Channel 2</source>
         <translation>Kanal 2</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="317"/>
+        <location filename="../gui_preferences.ui" line="380"/>
         <source>Channel 3</source>
         <translation>Kanal 3</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="324"/>
+        <location filename="../gui_preferences.ui" line="387"/>
         <source>Channel 4</source>
         <translation>Kanal 4</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="331"/>
+        <location filename="../gui_preferences.ui" line="394"/>
         <source>Channel 5</source>
         <translation>Kanal 5</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="338"/>
+        <location filename="../gui_preferences.ui" line="401"/>
         <source>Channel 1</source>
         <translation>Kanal 1</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="360"/>
+        <location filename="../gui_preferences.ui" line="423"/>
         <source>Fan Name</source>
         <translation>Lüftername</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="367"/>
+        <location filename="../gui_preferences.ui" line="430"/>
         <source>Temperature Probe</source>
         <translation>Temperaturfühler</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="381"/>
+        <location filename="../gui_preferences.ui" line="444"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="428"/>
+        <location filename="../gui_preferences.ui" line="457"/>
+        <source>Language</source>
+        <translation>Sprache</translation>
+    </message>
+    <message>
+        <location filename="../gui_preferences.ui" line="104"/>
         <source>General Settings</source>
         <translation>Programmeinstellungen</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="437"/>
+        <location filename="../gui_preferences.ui" line="113"/>
         <source>Channel Settings</source>
         <translation>Kanaleinstellungen</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="446"/>
+        <location filename="../gui_preferences.ui" line="122"/>
         <source>Appearance</source>
         <translation>Erscheinungsbild</translation>
     </message>

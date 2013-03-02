@@ -12,8 +12,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Phoebetria
 TEMPLATE = app
 
-TRANSLATIONS =  Languages/phoebetria_de.ts \
-                Languages/phoebetria_en.ts
+TRANSLATIONS =  language/phoebetria_de.ts \
+                language/phoebetria_en.ts
 
 PREFIX = /usr
 BINDIR = $$PREFIX/bin
