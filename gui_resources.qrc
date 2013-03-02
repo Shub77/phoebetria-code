@@ -48,8 +48,6 @@
         <file>Images/checkbox.png</file>
         <file>Images/down_arrow.png</file>
         <file>Images/handle.png</file>
-        <file>Languages/phoebetria_de.qm</file>
-        <file>Languages/phoebetria_en.qm</file>
     </qresource>
     <qresource prefix="/html">
         <file alias="GPL3_Brief">LICENSE-BRIEF.html</file>

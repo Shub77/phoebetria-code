@@ -123,7 +123,8 @@ FORMS    += gui_mainwindow.ui \
     gui_setmanualrpm.ui
 
 RESOURCES += \
-    gui_resources.qrc
+    gui_resources.qrc \
+    gui_languages.qrc
 
 #-------------------------------------------------
 # Config for the HID API library

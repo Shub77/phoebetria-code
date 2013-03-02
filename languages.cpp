@@ -19,7 +19,7 @@ QStringList Languages::getSupportedLanguagesList(void)
     Languages lang;
     supportedLanguages.clear();
 
-    QDirIterator translationFiles(":/Languages"
+    QDirIterator translationFiles(":/language"
                                   , QStringList("Phoebetria*.qm")
                                   , QDir::Files
                                   , QDirIterator::Subdirectories);
@@ -29,11 +29,6 @@ QStringList Languages::getSupportedLanguagesList(void)
         translationFiles.next();
 
         QString file = translationFiles.fileName();
-//        locale.truncate(locale.lastIndexOf('.'));
-//        locale.remove(0, locale.lastIndexOf('_') +1);
-
-//        QString lang = QLocale::languageToString(QLocale(locale).language());
-
         supportedLanguages.append(lang.convertFileToLanguage(file));
     }
 
@@ -53,7 +48,7 @@ QString Languages::convertLanguageToFile(QString lang)
         language_code = "en";
     }
 
-    QString file = QString(":/Languages/phoebetria_%1.qm").arg(language_code);
+    QString file = QString(":/language/phoebetria_%1.qm").arg(language_code);
 
     return file;
 }

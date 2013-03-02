@@ -157,7 +157,8 @@ void gui_Preferences::populateLanguageComboBox(void)
 
     foreach(language, languages)
     {
-        ui->ctrl_language->addItem(language);
+        QString icon=QString(":/language/%1.png").arg(language);
+        ui->ctrl_language->addItem(QIcon(icon), language);
     }
 }
 
