@@ -164,7 +164,7 @@ void gui_Preferences::populateLanguageComboBox(void)
 
 
 
-void gui_Preferences::commitChanges(void) const
+void gui_Preferences::commitChanges(void)
 {
     ph_prefs().setStartMinimized(ui->ctrl_minimizeOnStart->isChecked());
     ph_prefs().setMinimizeToTray(ui->ctrl_minimizeToTray->isChecked());
@@ -208,7 +208,24 @@ void gui_Preferences::commitChanges(void) const
         ph_phoebetriaApp()->setTheme(themeFilename);
     }
 
+    QEvent e(QEvent::LanguageChange);
+    emit changeEvent(&e);
+
     ph_prefs().sync();
+}
+
+void gui_Preferences::changeEvent(QEvent *e)
+{
+    switch (e->type())
+    {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+
+    QWidget::changeEvent(e);
 }
 
 void gui_Preferences::on_ctrl_actionButtons_accepted()
