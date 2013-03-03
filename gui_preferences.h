@@ -38,6 +38,8 @@ protected:
 
     void commitChanges(void) const;
 
+public slots:
+
 private slots:
     void on_ctrl_actionButtons_accepted();
 

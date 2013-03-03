@@ -776,9 +776,10 @@ void gui_MainWindow::changeEvent(QEvent* e)
                 updateTrayIconTooltip();
             }
         }
-
         break;
-
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
     default:
         break;
     }
@@ -1258,6 +1259,8 @@ void gui_MainWindow::when_actionPreferences_selected()
     preferencesDlg.exec();
     updateChannelControlTooltips();
     updateAllSpeedCtrls();
+    translator.load(ph_prefs().applicationLanguage());
+    ui->retranslateUi(this);
 }
 
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
