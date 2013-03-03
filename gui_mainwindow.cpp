@@ -1259,8 +1259,15 @@ void gui_MainWindow::when_actionPreferences_selected()
     preferencesDlg.exec();
     updateChannelControlTooltips();
     updateAllSpeedCtrls();
+
+
+    PhoebetriaApp::removeTranslator(&translator);
     translator.load(ph_prefs().applicationLanguage());
-    ui->retranslateUi(this);
+    PhoebetriaApp::installTranslator(&translator);
+
+    // "Slight" hack to retranslate the menus :-)
+    this->menuBar()->clear();
+    this->initMenus();
 }
 
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()
