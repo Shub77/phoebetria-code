@@ -36,11 +36,9 @@ protected:
 
     void initControls(void);
 
-    void commitChanges(void);
+    void commitChanges(void) const;
 
 public slots:
-
-    void changeEvent(QEvent* e);
 
 private slots:
     void on_ctrl_actionButtons_accepted();
