@@ -479,7 +479,13 @@
           <number>-1</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <layout class="QVBoxLayout" name="layout_probe1Temp">
+           <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QLineEdit" name="ctrl_probe1Temp">
              <property name="enabled">
@@ -602,26 +608,30 @@
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QVBoxLayout" name="layout_channel1Select">
            <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
             <number>0</number>
            </property>
            <item>
             <widget class="QPushButton" name="ctrl_channel1Select">
              <property name="minimumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>16777215</width>
+               <height>16777215</height>
               </size>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
@@ -632,12 +642,13 @@
 }
 
 QPushButton:hover {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
 	font-size: 20px;
 	font-weight: bold;
-	color: lightgrey;
+	color: grey;
 	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
@@ -707,7 +718,13 @@ QPushButton:hover {
           <number>-1</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <layout class="QVBoxLayout" name="layout_probe2Temp">
+           <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QLineEdit" name="ctrl_probe2Temp">
              <property name="enabled">
@@ -818,26 +835,30 @@ QPushButton:hover {
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_20">
+          <layout class="QVBoxLayout" name="layout_channel2Select">
            <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
             <number>0</number>
            </property>
            <item>
             <widget class="QPushButton" name="ctrl_channel2Select">
              <property name="minimumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>16777215</width>
+               <height>16777215</height>
               </size>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
@@ -848,12 +869,13 @@ QPushButton:hover {
 }
 
 QPushButton:hover {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
 	font-size: 20px;
 	font-weight: bold;
-	color: lightgrey;
+	color: grey;
 	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
@@ -923,7 +945,13 @@ QPushButton:hover {
           <number>-1</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <layout class="QVBoxLayout" name="layout_probe3Temp">
+           <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QLineEdit" name="ctrl_probe3Temp">
              <property name="enabled">
@@ -1034,26 +1062,30 @@ QPushButton:hover {
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_26">
+          <layout class="QVBoxLayout" name="layout_channel3Select">
            <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
             <number>0</number>
            </property>
            <item>
             <widget class="QPushButton" name="ctrl_channel3Select">
              <property name="minimumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>16777215</width>
+               <height>16777215</height>
               </size>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
@@ -1064,12 +1096,13 @@ QPushButton:hover {
 }
 
 QPushButton:hover {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
 	font-size: 20px;
 	font-weight: bold;
-	color: lightgrey;
+	color: grey;
 	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
@@ -1139,7 +1172,13 @@ QPushButton:hover {
           <number>-1</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <layout class="QVBoxLayout" name="layout_probe4Temp">
+           <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QLineEdit" name="ctrl_probe4Temp">
              <property name="enabled">
@@ -1250,26 +1289,30 @@ QPushButton:hover {
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_28">
+          <layout class="QVBoxLayout" name="layout_channel4Select">
            <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
             <number>0</number>
            </property>
            <item>
             <widget class="QPushButton" name="ctrl_channel4Select">
              <property name="minimumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>16777215</width>
+               <height>16777215</height>
               </size>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
@@ -1280,12 +1323,13 @@ QPushButton:hover {
 }
 
 QPushButton:hover {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
 	font-size: 20px;
 	font-weight: bold;
-	color: lightgrey;
+	color: grey;
 	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>
@@ -1355,7 +1399,13 @@ QPushButton:hover {
           <number>-1</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_31">
+          <layout class="QVBoxLayout" name="layout_probe5Temp">
+           <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QLineEdit" name="ctrl_probe5Temp">
              <property name="enabled">
@@ -1466,22 +1516,25 @@ QPushButton:hover {
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_33">
+          <layout class="QVBoxLayout" name="layout_channel5Select">
            <property name="spacing">
+            <number>-1</number>
+           </property>
+           <property name="topMargin">
             <number>0</number>
            </property>
            <item>
             <widget class="QPushButton" name="ctrl_channel5Select">
              <property name="minimumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>50</width>
-               <height>30</height>
+               <width>16777215</width>
+               <height>16777215</height>
               </size>
              </property>
              <property name="font">
@@ -1493,6 +1546,7 @@ QPushButton:hover {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
@@ -1503,12 +1557,13 @@ QPushButton:hover {
 }
 
 QPushButton:hover {
+	background-color: rgba(230, 230, 230, 0%);
 	border: none;
 	margin: 0px;
     padding: 0px;
 	font-size: 20px;
 	font-weight: bold;
-	color: lightgrey;
+	color: grey;
 	image: url(:/Images/icon_channels_lite_blue.png)
 }</string>
              </property>

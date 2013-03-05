@@ -86,6 +86,7 @@ void gui_Preferences::initControls(void)
     ui->ctrl_channel4TempName->setText(ph_prefs().probeName(3));
     ui->ctrl_channel5TempName->setText(ph_prefs().probeName(4));
 
+    ui->ctrl_showChannelLabels->setChecked(ph_prefs().showChannelLabels());
 }
 
 void gui_Preferences::populateProfileComboBoxes(void)
@@ -207,6 +208,8 @@ void gui_Preferences::commitChanges(void) const
         ph_prefs().setStylesheet(themeFilename);
         ph_phoebetriaApp()->setTheme(themeFilename);
     }
+
+    ph_prefs().setShowChannelLabels(ui->ctrl_showChannelLabels->isChecked());
 
     ph_prefs().sync();
 }

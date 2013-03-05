@@ -46,6 +46,13 @@ public:
      LabelOverlay(QLabel *parent = 0);
 };
 
+class ChannelLabel : public QLabel
+{
+    Q_OBJECT
+public:
+     ChannelLabel(QLabel *parent = 0);
+};
+
 namespace Ui
 {
 class gui_MainWindow;
@@ -256,6 +263,14 @@ private:
 
     LabelOverlay* m_ctrls_probeAffinityOverlay[FC_MAX_CHANNELS];
     QHBoxLayout* m_layout_probeAffinityOverlay[FC_MAX_CHANNELS];
+
+    // Channel Labels (Temp and Rpm)
+    void addChannelLabels();
+    void updateChannelLabels();
+    QVBoxLayout* m_layout_probeTemps[FC_MAX_CHANNELS];
+    ChannelLabel* m_lbl_probeTemps[FC_MAX_CHANNELS];
+    QVBoxLayout* m_layout_channel[FC_MAX_CHANNELS];
+    ChannelLabel* m_lbl_channel[FC_MAX_CHANNELS];
 
     // These are initialised at run time by this class
     SliderOverlay* m_ctrls_targetRpmOverlay[FC_MAX_CHANNELS];

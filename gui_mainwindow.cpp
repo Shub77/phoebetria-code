@@ -154,6 +154,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     initWaitForReqChannelParams();
 
+    addChannelLabels();
+    updateChannelLabels();
     updateChannelControlTooltips();
 }
 
@@ -371,6 +373,12 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_probeTemps[3] = ui->ctrl_probe4Temp;
     m_ctrls_probeTemps[4] = ui->ctrl_probe5Temp;
 
+    m_layout_probeTemps[0] = ui->layout_probe1Temp;
+    m_layout_probeTemps[1] = ui->layout_probe2Temp;
+    m_layout_probeTemps[2] = ui->layout_probe3Temp;
+    m_layout_probeTemps[3] = ui->layout_probe4Temp;
+    m_layout_probeTemps[4] = ui->layout_probe5Temp;
+
     m_ctrls_currentRPM[0] = ui->ctrl_channel1speed;
     m_ctrls_currentRPM[1] = ui->ctrl_channel2speed;
     m_ctrls_currentRPM[2] = ui->ctrl_channel3speed;
@@ -394,6 +402,13 @@ void gui_MainWindow::initCtrlArrays(void)
     m_ctrls_channel[2] = ui->ctrl_channel3Select;
     m_ctrls_channel[3] = ui->ctrl_channel4Select;
     m_ctrls_channel[4] = ui->ctrl_channel5Select;
+
+    m_layout_channel[0] = ui->layout_channel1Select;
+    m_layout_channel[1] = ui->layout_channel2Select;
+    m_layout_channel[2] = ui->layout_channel3Select;
+    m_layout_channel[3] = ui->layout_channel4Select;
+    m_layout_channel[4] = ui->layout_channel5Select;
+
 }
 
 FanControllerData& gui_MainWindow::fcdata(void) const
@@ -658,6 +673,56 @@ void gui_MainWindow::updateAllSpeedCtrls(bool useManualRpm)
     {
         int rpm = useManualRpm ? fcdata().manualRPM(i) : fcdata().lastRPM(i);
         updateSpeedControl(i, rpm);
+    }
+}
+
+void gui_MainWindow::addChannelLabels()
+{
+    for (int i = 0; i < FC_MAX_CHANNELS; i++)
+    {
+        m_lbl_probeTemps[i] = new ChannelLabel();
+        m_layout_probeTemps[i]->insertWidget(0, m_lbl_probeTemps[i]);
+        m_lbl_channel[i] = new ChannelLabel();
+        m_layout_channel[i]->insertWidget(0, m_lbl_channel[i]);
+
+    }
+}
+
+void gui_MainWindow::updateChannelLabels()
+{
+    bool showChannelLabels = ph_prefs().showChannelLabels();
+    if (showChannelLabels)
+    {
+        QString tlbl;
+        QString rlbl;
+
+        for (int i = 0; i < FC_MAX_CHANNELS; i++)
+        {
+            tlbl = ph_prefs().probeName(i);
+            if (showChannelLabels)
+            {
+                tlbl = "Probe ";
+                tlbl += QString::number(i+1);
+            }
+
+            rlbl = ph_prefs().channelName(i);
+            if (rlbl.isEmpty())
+            {
+                rlbl = "Fan ";
+                rlbl += QString::number(i+1);
+            }
+
+            m_lbl_probeTemps[i]->setText(tlbl);
+            m_lbl_channel[i]->setText(rlbl);
+        }
+    }
+    else
+    {
+        for (int i = 0; i < FC_MAX_CHANNELS; i++)
+        {
+            m_lbl_probeTemps[i]->setText("");
+            m_lbl_channel[i]->setText("");
+        }
     }
 }
 
@@ -1257,6 +1322,7 @@ void gui_MainWindow::when_actionPreferences_selected()
 {
     gui_Preferences preferencesDlg(this);
     preferencesDlg.exec();
+    updateChannelLabels();
     updateChannelControlTooltips();
     updateAllSpeedCtrls();
 
@@ -1643,6 +1709,15 @@ LabelOverlay::LabelOverlay(QLabel *parent)
     font.setPointSize(font.pointSize()-1);
     this->setFont(font);
     this->setAlignment(Qt::AlignRight | Qt::AlignTop);
+}
+
+ChannelLabel::ChannelLabel(QLabel *parent)
+    : QLabel(parent)
+{
+    QFont f("",9);
+
+    ;setFont(f);
+    ;setAlignment(Qt::AlignHCenter);
 }
 
 void gui_MainWindow::on_pushButton_2_clicked()

@@ -69,6 +69,7 @@ public:
     QString channelName(unsigned channel, QString defaultVal = "") const;
     QString probeName(unsigned channel, QString defaultVal = "") const;
     QString stylesheet(void) const;
+    bool    showChannelLabels(bool defaultVal = true) const;
 
     void setStartMinimized(bool istrue);
     void setMinimizeToTray(bool istrue);
@@ -90,6 +91,7 @@ public:
     void setChannelName(unsigned channel, const QString& name);
     void setProbeName(unsigned channel, const QString& name);
     void setStylesheet(const QString& filenameAndPath);
+    void setShowChannelLabels(bool istrue);
 
     inline void sync(void);
 

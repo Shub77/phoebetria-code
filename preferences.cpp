@@ -32,18 +32,19 @@ static const char* key_shutdownProfile      = "UserPrefs/shutdownProfile";
 static const char* key_quitOnClose          = "UserPrefs/quitOnClose";
 static const char* key_windowGeometry       = "UserPrefs/windowGeometry";
 static const char* key_windowState          = "UserPrefs/windowState";
-static const char* key_windowProfileGeometry       = "UserPrefs/windowProfileGeometry";
-static const char* key_splitterProfileState       = "UserPrefs/windowProfileGeometry";
-static const char* key_windowSWAutoGeometry       = "UserPrefs/windowSWAutoGeometry";
-static const char* key_windowAboutGeometry       = "UserPrefs/windowAboutGeometry";
-static const char* key_windowPrefsGeometry       = "UserPrefs/windowPrefsGeometry";
-static const char* key_windowAppInfoGeometry       = "UserPrefs/windowAppInfoGeometry";
+static const char* key_windowProfileGeometry        = "UserPrefs/windowProfileGeometry";
+static const char* key_splitterProfileState         = "UserPrefs/windowProfileGeometry";
+static const char* key_windowSWAutoGeometry         = "UserPrefs/windowSWAutoGeometry";
+static const char* key_windowAboutGeometry          = "UserPrefs/windowAboutGeometry";
+static const char* key_windowPrefsGeometry          = "UserPrefs/windowPrefsGeometry";
+static const char* key_windowAppInfoGeometry        = "UserPrefs/windowAppInfoGeometry";
 static const char* key_applicationLanguage      = "UserPrefs/applicationLanguage";
 
-static const char* keyBase_channelName      = "UserPrefs/channelName";
-static const char* keyBase_probeName        = "UserPrefs/probeName";
+static const char* keyBase_channelName          = "UserPrefs/channelName";
+static const char* keyBase_probeName            = "UserPrefs/probeName";
 
-static const char* key_stylesheet       = "UserPrefs/stylesheet";
+static const char* key_stylesheet               = "UserPrefs/stylesheet";
+static const char* key_showChannelLabels     = "UserPrefs/showChannelLabels";
 
 Preferences::Preferences(QObject *parent) :
     QObject(parent),
@@ -90,7 +91,6 @@ bool Preferences::useLogScaleRpmSliders(bool defaultVal) const
 {
     return m_settings.value(key_useLogScaleRpmSliders, defaultVal).toBool();
 }
-
 
 QString Preferences::startupProfile(QString defaultVal) const
 {;
@@ -189,6 +189,11 @@ QString Preferences::stylesheet(void) const
         fn = Themes::getBuiltInStyleSheetName();
 
     return fn;
+}
+
+bool Preferences::showChannelLabels(bool defaultVal) const
+{
+    return m_settings.value(key_showChannelLabels, defaultVal).toBool();
 }
 
 /****************************************************************************
@@ -299,6 +304,11 @@ void Preferences::setProbeName(unsigned channel, const QString& name)
 void Preferences::setStylesheet(const QString& filenameAndPath)
 {
     m_settings.setValue(key_stylesheet, filenameAndPath);
+}
+
+void Preferences::setShowChannelLabels(bool istrue)
+{
+    m_settings.setValue(key_showChannelLabels, istrue);
 }
 
 /****************************************************************************
