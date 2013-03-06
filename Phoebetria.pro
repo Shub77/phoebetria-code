@@ -84,7 +84,8 @@ SOURCES += main.cpp \
     timestampedtemperature.cpp \
     averager.cpp \
     appinfo.cpp \
-    languages.cpp
+    languages.cpp \
+    gui_diagnostic.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -113,14 +114,16 @@ HEADERS  += gui_mainwindow.h \
     timestampedtemperature.h \
     averager.h \
     appinfo.h \
-    languages.h
+    languages.h \
+    gui_diagnostic.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
     gui_preferences.ui \
     gui_softwareautosetup.ui \
     gui_profiles.ui \
-    gui_setmanualrpm.ui
+    gui_setmanualrpm.ui \
+    gui_diagnostic.ui
 
 RESOURCES += \
     gui_resources.qrc \

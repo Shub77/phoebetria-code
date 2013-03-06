@@ -39,6 +39,7 @@
 #include "gui_setmanualrpm.h"
 #include "maindb.h"
 #include "appinfo.h"
+#include "gui_diagnostic.h"
 
 static const char* style_sliderOverylay_blue =
             "SliderOverlay::groove:vertical { border: 0px transparant; width: 0px; }"
@@ -1280,36 +1281,8 @@ void gui_MainWindow::when_actionAbout_selected()
 
 void gui_MainWindow::when_actionDiagnosticReport_selected()
 {
-    QByteArray m_dialogAppInfoGeometry = ph_prefs().windowAppInfoGeometry();
-
-    QDialog dlg(this);
-
-    if (m_dialogAppInfoGeometry.isEmpty())
-    {
-        dlg.resize(QSize(600, 400));
-    }
-    else
-    {
-        dlg.restoreGeometry(m_dialogAppInfoGeometry);
-    }
-
-    dlg.setWindowTitle(tr("Diagnostic Report"));
-
-    QTextBrowser* tb = new QTextBrowser();
-    QFont font = tb->font();
-    //font.setFamily("Courier New");
-    font.setPointSize(9);
-    tb->setFont(font);
-
-    tb->setText(AppInfo::basicInfoReport());
-
-    QVBoxLayout* vLayout = new QVBoxLayout();
-    vLayout->addWidget(tb);
-
-    dlg.setLayout(vLayout);
-
-    dlg.exec();
-    ph_prefs().setWindowAppInfoGeometry(dlg.saveGeometry());
+    gui_Diagnostic diagDlg(this);
+    diagDlg.exec();
 
 }
 

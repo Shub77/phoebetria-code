@@ -37,7 +37,7 @@ static const char* key_splitterProfileState         = "UserPrefs/windowProfileGe
 static const char* key_windowSWAutoGeometry         = "UserPrefs/windowSWAutoGeometry";
 static const char* key_windowAboutGeometry          = "UserPrefs/windowAboutGeometry";
 static const char* key_windowPrefsGeometry          = "UserPrefs/windowPrefsGeometry";
-static const char* key_windowAppInfoGeometry        = "UserPrefs/windowAppInfoGeometry";
+static const char* key_windowDiagGeometry        = "UserPrefs/windowDiagGeometry";
 static const char* key_applicationLanguage      = "UserPrefs/applicationLanguage";
 
 static const char* keyBase_channelName          = "UserPrefs/channelName";
@@ -144,9 +144,9 @@ QByteArray Preferences::windowPrefsGeometry(QByteArray defaultVal) const
 }
 
 
-QByteArray Preferences::windowAppInfoGeometry(QByteArray defaultVal) const
+QByteArray Preferences::windowDiagGeometry(QByteArray defaultVal) const
 {
-    return m_settings.value(key_windowAppInfoGeometry, defaultVal).toByteArray();
+    return m_settings.value(key_windowDiagGeometry, defaultVal).toByteArray();
 }
 
 QString Preferences::applicationLanguage(QString defaultVal) const
@@ -275,9 +275,9 @@ void Preferences::setWindowPrefsGeometry(const QByteArray& windowGeometry)
     m_settings.setValue(key_windowPrefsGeometry, windowGeometry);
 }
 
-void Preferences::setWindowAppInfoGeometry(const QByteArray& windowGeometry)
+void Preferences::setWindowDiagGeometry(const QByteArray& windowGeometry)
 {
-    m_settings.setValue(key_windowAppInfoGeometry, windowGeometry);
+    m_settings.setValue(key_windowDiagGeometry, windowGeometry);
 }
 
 void Preferences::setApplicationLanguage(const QString& language)
