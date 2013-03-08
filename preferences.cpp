@@ -38,6 +38,7 @@ static const char* key_windowSWAutoGeometry         = "UserPrefs/windowSWAutoGeo
 static const char* key_windowAboutGeometry          = "UserPrefs/windowAboutGeometry";
 static const char* key_windowPrefsGeometry          = "UserPrefs/windowPrefsGeometry";
 static const char* key_windowDiagGeometry        = "UserPrefs/windowDiagGeometry";
+static const char* key_windowHelpGeometry        = "UserPrefs/windowHelpGeometry";
 static const char* key_applicationLanguage      = "UserPrefs/applicationLanguage";
 
 static const char* keyBase_channelName          = "UserPrefs/channelName";
@@ -147,6 +148,11 @@ QByteArray Preferences::windowPrefsGeometry(QByteArray defaultVal) const
 QByteArray Preferences::windowDiagGeometry(QByteArray defaultVal) const
 {
     return m_settings.value(key_windowDiagGeometry, defaultVal).toByteArray();
+}
+
+QByteArray Preferences::windowHelpGeometry(QByteArray defaultVal) const
+{
+    return m_settings.value(key_windowHelpGeometry, defaultVal).toByteArray();
 }
 
 QString Preferences::applicationLanguage(QString defaultVal) const
@@ -278,6 +284,11 @@ void Preferences::setWindowPrefsGeometry(const QByteArray& windowGeometry)
 void Preferences::setWindowDiagGeometry(const QByteArray& windowGeometry)
 {
     m_settings.setValue(key_windowDiagGeometry, windowGeometry);
+}
+
+void Preferences::setWindowHelpGeometry(const QByteArray& windowGeometry)
+{
+    m_settings.setValue(key_windowHelpGeometry, windowGeometry);
 }
 
 void Preferences::setApplicationLanguage(const QString& language)
