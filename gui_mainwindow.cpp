@@ -40,6 +40,7 @@
 #include "maindb.h"
 #include "appinfo.h"
 #include "gui_diagnostic.h"
+#include "gui_Help.h"
 
 static const char* style_sliderOverylay_blue =
             "SliderOverlay::groove:vertical { border: 0px transparant; width: 0px; }"
@@ -198,6 +199,8 @@ void gui_MainWindow::initMenus(void)
     menu = ui->menuBar->addMenu(tr("Help"));
 
     // Help/Disgnostic Report
+    action = menu->addAction(tr("Phoebetria Help"));
+    connect (action, SIGNAL(triggered()), this, SLOT(when_actionHelp_selected()));
     action = menu->addAction(tr("Diagnostic Report"));
     connect (action, SIGNAL(triggered()), this, SLOT(when_actionDiagnosticReport_selected()));
 
@@ -1307,6 +1310,12 @@ void gui_MainWindow::when_actionPreferences_selected()
     // "Slight" hack to retranslate the menus :-)
     this->menuBar()->clear();
     this->initMenus();
+}
+
+void gui_MainWindow::when_actionHelp_selected()
+{
+    gui_Help helpDlg(this);
+    helpDlg.exec();
 }
 
 void gui_MainWindow::on_ctrl_ModifyProfile_clicked()

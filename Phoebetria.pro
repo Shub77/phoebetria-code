@@ -85,7 +85,8 @@ SOURCES += main.cpp \
     averager.cpp \
     appinfo.cpp \
     languages.cpp \
-    gui_diagnostic.cpp
+    gui_diagnostic.cpp \
+    gui_help.cpp
 
 HEADERS  += gui_mainwindow.h \
     phoebetriaapp.h \
@@ -115,7 +116,8 @@ HEADERS  += gui_mainwindow.h \
     averager.h \
     appinfo.h \
     languages.h \
-    gui_diagnostic.h
+    gui_diagnostic.h \
+    gui_help.h
 
 FORMS    += gui_mainwindow.ui \
     gui_about.ui \
@@ -123,11 +125,13 @@ FORMS    += gui_mainwindow.ui \
     gui_softwareautosetup.ui \
     gui_profiles.ui \
     gui_setmanualrpm.ui \
-    gui_diagnostic.ui
+    gui_diagnostic.ui \
+    gui_help.ui
 
 RESOURCES += \
     gui_resources.qrc \
-    gui_languages.qrc
+    gui_languages.qrc \
+    gui_help.qrc
 
 #-------------------------------------------------
 # Config for the HID API library

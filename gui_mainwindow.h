@@ -174,6 +174,7 @@ private slots:
     void when_actionQuit_selected();
 
     // HELP MENU
+    void when_actionHelp_selected();
     void when_actionDiagnosticReport_selected();
     void when_actionAbout_selected();
 
