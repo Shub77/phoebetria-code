@@ -76,6 +76,8 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     initTargetRpmOverlays();
     initProbeAffinityOverlays();
 
+    addChannelLabels();
+
     if (!MainDb::isValid())
     {
         QMessageBox::critical(
@@ -126,6 +128,9 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     ui->pushButton_2->hide();
 #endif
 
+    updateChannelLabels();
+    updateChannelControlTooltips();
+
     if (ph_prefs().alwaysShowTrayIcon() && QSystemTrayIcon::isSystemTrayAvailable())
     {
             m_trayIcon.show();
@@ -156,9 +161,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
 
     initWaitForReqChannelParams();
 
-    addChannelLabels();
-    updateChannelLabels();
-    updateChannelControlTooltips();
 }
 
 void gui_MainWindow::initMenus(void)
@@ -1425,6 +1427,7 @@ bool gui_MainWindow::loadProfile(const QString& profileName)
             syncGuiCtrlsWithFanController();
             updateProfileDisplay(fcp.profileName(),
                                  fcp.profileDescription());
+            updateChannelLabels();
         }
         else
         {
