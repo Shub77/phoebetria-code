@@ -1,13 +1,10 @@
-phoebetria (1.3.0-1) stable; urgency=low
-   * This is a major feature release and is a direct result of the solid
-     framework built into the previous releases. We’ve included a new preference
-     panel that allows you to set some basic environment settings, name fans and
-     temperatures, set startup and shutdown profiles and use custom themes. If
-     you know how to write custom stylesheets for the web then creating your own
-     custom themes will be familiar. The RPM indicators have been modified to
-     move with the current rpm until they reach their target RPM. The RPM sliders
-     now use a logarithmic scale instead of the previous linear scale; this can
-     be toggled in preferences. Software auto has been tweaked to operate more
-     smoothly and reliably, and finally the usual bug fixes.
+phoebetria (1.4.0-1) stable; urgency=low
+   * This will be the last major release for the 1.x series of Phoebetria so
+     we can focus on version 2.x development.  The release focused on adding
+     some of the features users requested.  The most significant change we've
+     made is localization.  Phoebetria can now be translated into any language
+     and German has already been added thanks to Akron from our forums. 
+     The newly added Help Menu was added after the German translation so
+     that, unfortunately, remains English only at the moment.
 
- -- Christopher Ferris (Phoebetria.com) <cwferis@gmail.com>  Sun, 23 Dec 2012 12:05:39 -0800
+ -- Christopher Ferris (Phoebetria.com) <cwferis@gmail.com>  Fri, 08 Mar 2013 19:00:00 -0800

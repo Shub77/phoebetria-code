@@ -53,7 +53,7 @@ icon or in Finder use the key combination Command + Delete.
 
 Fedora:
   The Fedora build is distributed as a standard RedHat package or .RPM
-  file.  To manage this application simply download the latest rpm,
+  file.  To install this application simply download the latest rpm,
   launch your terminal application of choice and execute the following
   commands as desired.
 
@@ -77,10 +77,26 @@ Fedora:
   go there freely via the Terminal application or in Nautilus (Files) use
   the key combination Control + L and paste in the path.
 
-Others:
-  At this time we only include the installation process for the Fedora.
-  Instructions for other distributions may follow as time permits.
+1.4 Debian
+---------
 
+Ubuntu:
+  The Ubuntu build is distributed as a standard Debian package or .deb file.
+  This package has been tested on both Ubuntu and Mint and to install this
+  application simply download the latest .deb, launch your terminal
+  application of choice and execute the following commands as desired. 
+
+  To Install:
+  sudo dpkg -i /{pathtodownload}/Phoebetria-debian-x86_64-{version}.deb
+
+  To Remove:
+  sudo dpkg -r phoebetria
+
+  The settings and profiles are stored in your $HOME/.config/Phoebetria 
+  folder. By default this folder is hidden in Nautilus (Files) but you can
+  go there freely via the Terminal application or in Nautilus (Files) use
+  the key combination Control + L and paste in the path.
+  
 2. Compiling from source
 ========================
 
