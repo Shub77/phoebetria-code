@@ -17,5 +17,7 @@
         <file>help/window_main.html</file>
         <file>help/window_profile.html</file>
         <file>help/window_softwareauto.html</file>
+        <file>help/window_into.html</file>
+        <file>help/preferences_intro.html</file>
     </qresource>
 </RCC>
