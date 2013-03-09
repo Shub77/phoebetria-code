@@ -40,7 +40,7 @@
 #include "maindb.h"
 #include "appinfo.h"
 #include "gui_diagnostic.h"
-#include "gui_Help.h"
+#include "gui_help.h"
 
 static const char* style_sliderOverylay_blue =
             "SliderOverlay::groove:vertical { border: 0px transparant; width: 0px; }"
