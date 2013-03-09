@@ -286,6 +286,8 @@ private:
 
     bool m_reqChannelParamsAreSet;
 
+    bool m_channelLabelsCreated;
+
 };
 
 #endif // GUI_MAINWINDOW_H

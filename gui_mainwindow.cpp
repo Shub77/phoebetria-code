@@ -682,23 +682,36 @@ void gui_MainWindow::updateAllSpeedCtrls(bool useManualRpm)
 
 void gui_MainWindow::addChannelLabels()
 {
+    if (!ph_prefs().showChannelLabels())
+    {
+        m_channelLabelsCreated = false;
+        return;
+    }
+
     for (int i = 0; i < FC_MAX_CHANNELS; i++)
     {
         m_lbl_probeTemps[i] = new ChannelLabel();
         m_layout_probeTemps[i]->insertWidget(0, m_lbl_probeTemps[i]);
         m_lbl_channel[i] = new ChannelLabel();
         m_layout_channel[i]->insertWidget(0, m_lbl_channel[i]);
-
     }
+
+    m_channelLabelsCreated = true;
 }
 
 void gui_MainWindow::updateChannelLabels()
 {
     bool showChannelLabels = ph_prefs().showChannelLabels();
+
     if (showChannelLabels)
     {
         QString tlbl;
         QString rlbl;
+
+        if (!m_channelLabelsCreated)
+        {
+            addChannelLabels();
+        }
 
         for (int i = 0; i < FC_MAX_CHANNELS; i++)
         {
@@ -720,14 +733,30 @@ void gui_MainWindow::updateChannelLabels()
             m_lbl_channel[i]->setText(rlbl);
         }
     }
-    else
+    else if (m_channelLabelsCreated)
     {
+        // Destory the channel labels (they have been turned off)
         for (int i = 0; i < FC_MAX_CHANNELS; i++)
         {
-            m_lbl_probeTemps[i]->setText("");
-            m_lbl_channel[i]->setText("");
+            m_layout_probeTemps[i]->removeWidget(m_lbl_probeTemps[i]);
+            delete m_lbl_probeTemps[i];
+            m_lbl_probeTemps[i] = NULL;
+
+            m_layout_channel[i]->removeWidget(m_lbl_channel[i]);
+            delete m_lbl_channel[i];
+            m_lbl_channel[i] = NULL;
         }
+        m_channelLabelsCreated = false;
+
     }
+//    else
+//    {
+//        for (int i = 0; i < FC_MAX_CHANNELS; i++)
+//        {
+//            m_lbl_probeTemps[i]->setText("");
+//            m_lbl_channel[i]->setText("");
+//        }
+//    }
 }
 
 void gui_MainWindow::updateTargetRpmOverlay(int channel)
@@ -1298,10 +1327,10 @@ void gui_MainWindow::when_actionPreferences_selected()
 {
     gui_Preferences preferencesDlg(this);
     preferencesDlg.exec();
+
     updateChannelLabels();
     updateChannelControlTooltips();
     updateAllSpeedCtrls();
-
 
     PhoebetriaApp::removeTranslator(&translator);
     translator.load(ph_prefs().applicationLanguage());
