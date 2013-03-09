@@ -161,7 +161,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>6</number>
+      <number>9</number>
      </property>
      <widget class="QWidget" name="page_Start">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -389,52 +389,6 @@
          </property>
          <property name="lineWidth">
           <number>2</number>
-         </property>
-         <property name="html">
-          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;title&gt;General Preferences&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:18pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;table border=&quot;0&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;&quot; cellspacing=&quot;5&quot; cellpadding=&quot;5&quot;&gt;
-&lt;tr&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;table border=&quot;1&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;&quot; cellspacing=&quot;0&quot; cellpadding=&quot;5&quot;&gt;
-&lt;tr&gt;
-&lt;td colspan=&quot;2&quot; style=&quot; vertical-align:top;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;General Preferences&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;pref_mintray&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;inimize to Tray&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When enabled and the system tray is avaialble this will force Phoebetria to minimize to the tray instead of the task bar.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;pref_showtray&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;lways Show Tray Icon&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When enabled and the system tray is available this will alway display the Phoebetria icon in the system tray.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;pref_startmin&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;S&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;tart Minimized&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When enabled this will automatically minimize Phoebetria when launched.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;pref_quit&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Q&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;uit on Close&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When disabled Phoebetria will always remain running and will minimize or hide itself instead of exiting.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;pref_startpro&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;S&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;tartup Profile&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Phoebetria will attempt to load this profile when starting.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;pref_stoppro&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;S&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;hutdown Profile&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Phoebetria will attempt to load this profile when shutdown.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot; vertical-align:top;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;images/preferences_general.png&quot; style=&quot;vertical-align: top;&quot; /&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="source">
           <url>
