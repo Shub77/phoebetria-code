@@ -715,12 +715,20 @@ void gui_MainWindow::updateChannelLabels()
 
         for (int i = 0; i < FC_MAX_CHANNELS; i++)
         {
-            tlbl = ph_prefs().probeName(i);
-            if (showChannelLabels)
+            if (fcdata().isSoftwareAuto())
+            {
+                tlbl = ph_prefs().probeName(fcdata().ramp(i).probeAffinity());
+            }
+            else
+            {
+                tlbl = ph_prefs().probeName(i);
+            }
+
+            if (tlbl.isEmpty())
             {
                 tlbl = "Probe ";
                 tlbl += QString::number(i+1);
-            }
+            }           
 
             rlbl = ph_prefs().channelName(i);
             if (rlbl.isEmpty())
