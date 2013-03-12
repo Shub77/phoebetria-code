@@ -81,12 +81,12 @@ Das angelegtes Profil wird importiert.</translation>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../gui_about.ui" line="321"/>
+        <location filename="../gui_about.ui" line="299"/>
         <source>qrc:/html/Acknowledgments</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="../gui_about.ui" line="378"/>
+        <location filename="../gui_about.ui" line="356"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -95,19 +95,251 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_about.ui" line="401"/>
+        <location filename="../gui_about.ui" line="379"/>
         <source>License</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../gui_about.ui" line="425"/>
+        <location filename="../gui_about.ui" line="399"/>
         <source>qrc:/html/GPL3_Brief</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_about.ui" line="452"/>
+        <location filename="../gui_about.ui" line="426"/>
         <source>Close</source>
         <translation>Schließen</translation>
+    </message>
+</context>
+<context>
+    <name>gui_Diagnostic</name>
+    <message>
+        <location filename="../gui_diagnostic.ui" line="20"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_diagnostic.ui" line="31"/>
+        <source>Save PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_diagnostic.ui" line="38"/>
+        <source>Close</source>
+        <translation type="unfinished">Schließen</translation>
+    </message>
+</context>
+<context>
+    <name>gui_Help</name>
+    <message>
+        <location filename="../gui_help.ui" line="20"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="41"/>
+        <source>Close</source>
+        <translation type="unfinished">Schließen</translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="63"/>
+        <source>Help</source>
+        <translation type="unfinished">Hilfe</translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="73"/>
+        <location filename="../gui_help.ui" line="147"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="76"/>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="80"/>
+        <source>About</source>
+        <translation type="unfinished">Über</translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="83"/>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="91"/>
+        <source>Diagnostic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="94"/>
+        <source>2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="99"/>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="102"/>
+        <source>3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="107"/>
+        <source>Profile</source>
+        <translation type="unfinished">Profil</translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="110"/>
+        <source>4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="115"/>
+        <source>Software Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="118"/>
+        <source>5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="124"/>
+        <source>Preferences</source>
+        <translation type="unfinished">Einstellungen</translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="127"/>
+        <source>6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="131"/>
+        <source>Appearance</source>
+        <translation type="unfinished">Erscheinungsbild</translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="134"/>
+        <source>7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="139"/>
+        <source>Channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="142"/>
+        <source>8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="150"/>
+        <source>9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="171"/>
+        <source>Phoebetria Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="182"/>
+        <source>qrc:/help/window_into.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="197"/>
+        <source>About Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="208"/>
+        <source>qrc:/help/window_about.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="220"/>
+        <source>Diagnostic Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="231"/>
+        <source>qrc:/help/window_diagnostic.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="243"/>
+        <source>Main Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="254"/>
+        <source>qrc:/help/window_main.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="266"/>
+        <source>Profile Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="277"/>
+        <source>qrc:/help/window_profile.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="289"/>
+        <source>Software Auto Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="300"/>
+        <source>qrc:/help/window_softwareauto.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="312"/>
+        <source>Phoebetria Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="323"/>
+        <source>qrc:/help/preferences_intro.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="335"/>
+        <source>Appearance Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="346"/>
+        <source>qrc:/help/preferences_appearance.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="358"/>
+        <source>Channel Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="366"/>
+        <source>qrc:/help/preferences_channel.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="378"/>
+        <source>General Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_help.ui" line="395"/>
+        <source>qrc:/help/preferences_general.html</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -168,71 +400,71 @@ p, li { white-space: pre-wrap; }
         <translation>Softwareautomatik einstellen (Stufen)</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.ui" line="501"/>
-        <location filename="../gui_mainwindow.ui" line="717"/>
-        <location filename="../gui_mainwindow.ui" line="933"/>
-        <location filename="../gui_mainwindow.ui" line="1149"/>
-        <location filename="../gui_mainwindow.ui" line="1365"/>
+        <location filename="../gui_mainwindow.ui" line="507"/>
+        <location filename="../gui_mainwindow.ui" line="734"/>
+        <location filename="../gui_mainwindow.ui" line="961"/>
+        <location filename="../gui_mainwindow.ui" line="1188"/>
+        <location filename="../gui_mainwindow.ui" line="1415"/>
         <source>Temperature</source>
         <translation>Temperatur</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.ui" line="645"/>
+        <location filename="../gui_mainwindow.ui" line="656"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.ui" line="675"/>
-        <location filename="../gui_mainwindow.ui" line="891"/>
-        <location filename="../gui_mainwindow.ui" line="1107"/>
-        <location filename="../gui_mainwindow.ui" line="1323"/>
-        <location filename="../gui_mainwindow.ui" line="1546"/>
+        <location filename="../gui_mainwindow.ui" line="686"/>
+        <location filename="../gui_mainwindow.ui" line="913"/>
+        <location filename="../gui_mainwindow.ui" line="1140"/>
+        <location filename="../gui_mainwindow.ui" line="1367"/>
+        <location filename="../gui_mainwindow.ui" line="1601"/>
         <source>Alarm Temperature</source>
         <translation>Alarmtemperatur</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.ui" line="861"/>
+        <location filename="../gui_mainwindow.ui" line="883"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.ui" line="1077"/>
+        <location filename="../gui_mainwindow.ui" line="1110"/>
         <source>3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.ui" line="1293"/>
+        <location filename="../gui_mainwindow.ui" line="1337"/>
         <source>4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.ui" line="1516"/>
+        <location filename="../gui_mainwindow.ui" line="1571"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.ui" line="1572"/>
-        <location filename="../gui_mainwindow.cpp" line="203"/>
+        <location filename="../gui_mainwindow.ui" line="1627"/>
+        <location filename="../gui_mainwindow.cpp" line="211"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="81"/>
+        <location filename="../gui_mainwindow.cpp" line="85"/>
         <source>Profile database error.</source>
         <translation>Profilfehler in der Datenbank.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="82"/>
+        <location filename="../gui_mainwindow.cpp" line="86"/>
         <source>The profile database could not be initialised or another error has occurred. Profile management will not work!</source>
         <translation>Das Datenbankprofil konnte nicht initialisiert werden oder ein anderer Fehler ist aufgetreten. Profilverwaltung funktioniert nicht!</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="100"/>
+        <location filename="../gui_mainwindow.cpp" line="104"/>
         <source>Could not switch to startup profile.</source>
         <translation>Wechsel in Startprofil nicht möglich.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="101"/>
+        <location filename="../gui_mainwindow.cpp" line="105"/>
         <source>Could not switch to the startup profile. The profile may not exist.
 
 Profile name: %1
@@ -245,83 +477,87 @@ Profilname: %1
 Bitte Einstellungen prüfen.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="174"/>
+        <location filename="../gui_mainwindow.cpp" line="180"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="177"/>
+        <location filename="../gui_mainwindow.cpp" line="183"/>
         <source>Load Profile</source>
         <translation>Profil laden</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="184"/>
+        <location filename="../gui_mainwindow.cpp" line="190"/>
         <source>Preferences</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="190"/>
+        <location filename="../gui_mainwindow.cpp" line="196"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="195"/>
+        <location filename="../gui_mainwindow.cpp" line="201"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="198"/>
-        <location filename="../gui_mainwindow.cpp" line="1230"/>
+        <location filename="../gui_mainwindow.cpp" line="204"/>
+        <source>Phoebetria Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui_mainwindow.cpp" line="206"/>
         <source>Diagnostic Report</source>
         <translation>Fehlerhinweis senden</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="271"/>
+        <location filename="../gui_mainwindow.cpp" line="279"/>
         <source>Load profile</source>
         <translation>Profil laden</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="315"/>
+        <location filename="../gui_mainwindow.cpp" line="323"/>
         <source>More...</source>
         <translation>Mehr...</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="473"/>
+        <location filename="../gui_mainwindow.cpp" line="494"/>
         <source>Current RPM: </source>
         <translation>Aktuelle RPM:</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="477"/>
+        <location filename="../gui_mainwindow.cpp" line="498"/>
         <source>Target RPM: </source>
         <translation>Ziel RPM:</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="489"/>
+        <location filename="../gui_mainwindow.cpp" line="510"/>
         <source>Min Temp: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="495"/>
+        <location filename="../gui_mainwindow.cpp" line="516"/>
         <source>Max Temp: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="501"/>
+        <location filename="../gui_mainwindow.cpp" line="522"/>
         <source>Min logged RPM: </source>
         <translation>Min geloggte RPM:</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="505"/>
+        <location filename="../gui_mainwindow.cpp" line="526"/>
         <source>Max logged RPM: </source>
         <translation>Max geloggte RPM:</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="829"/>
+        <location filename="../gui_mainwindow.cpp" line="938"/>
         <source>Not switching to shutdown profile.</source>
         <translation>Kein umschalten ins Abschaltprofi.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="830"/>
+        <location filename="../gui_mainwindow.cpp" line="939"/>
         <source>The chosen profile is a Software Auto profile that requires Phoebetria to be running.
 
 Profile name: %1
@@ -334,12 +570,12 @@ Profilname: %1
 Profil aus den Einstellungen entfernen.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="848"/>
+        <location filename="../gui_mainwindow.cpp" line="957"/>
         <source>Could not switch to shutdown profile.</source>
         <translation>Abschaltprofil konnte nicht erstellt werden.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="849"/>
+        <location filename="../gui_mainwindow.cpp" line="958"/>
         <source>Could not switch to the shutdown profile. The profile may not exist.
 
 Profile name: %1
@@ -352,36 +588,36 @@ Profilname: %1
 Bitte Einstellungen prüfen.</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1082"/>
+        <location filename="../gui_mainwindow.cpp" line="1191"/>
         <source>Enter new alarm temperature %1 for channel %2.
 Range is %3 to %4</source>
         <translation>Eingabe der Alarmtemperatur %1 für Kanal %2
 Reichweite ist %3 bis %4</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1090"/>
+        <location filename="../gui_mainwindow.cpp" line="1199"/>
         <source>Enter alarm temperature</source>
         <translation>Temperatur für Alarm eingeben</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1277"/>
+        <location filename="../gui_mainwindow.cpp" line="1374"/>
         <source>Load profile failed</source>
         <translation>Laden des Profils gescheitert</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1278"/>
+        <location filename="../gui_mainwindow.cpp" line="1375"/>
         <source>An error occurred load the profile.
 The profile has not been loaded!</source>
         <translation>Beim Laden des Profils ist ein Fehler aufgetreten.
 Das Profil wurde nicht geladen!</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1290"/>
+        <location filename="../gui_mainwindow.cpp" line="1387"/>
         <source>Save failed</source>
         <translation>Speicher fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../gui_mainwindow.cpp" line="1291"/>
+        <location filename="../gui_mainwindow.cpp" line="1388"/>
         <source>An error occurred saving the profile.
 The profile has NOT been saved!</source>
         <translation>im Laden des Profils ist ein Fehler aufgetreten.
@@ -471,14 +707,19 @@ Das Profil wurde NICHT gespeichert!</translation>
         <translation>Temperaturfühler</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="444"/>
+        <location filename="../gui_preferences.ui" line="447"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../gui_preferences.ui" line="457"/>
+        <location filename="../gui_preferences.ui" line="454"/>
         <source>Language</source>
         <translation>Sprache</translation>
+    </message>
+    <message>
+        <location filename="../gui_preferences.ui" line="497"/>
+        <source>Show Channel Labels</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gui_preferences.ui" line="104"/>

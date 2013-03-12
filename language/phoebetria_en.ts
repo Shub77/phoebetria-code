@@ -87,6 +87,192 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>gui_Diagnostic</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui_Help</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diagnostic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Software Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phoebetria Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/window_into.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/window_about.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diagnostic Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/window_diagnostic.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/window_main.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/window_profile.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Software Auto Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/window_softwareauto.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phoebetria Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/preferences_intro.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Appearance Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/preferences_appearance.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/preferences_channel.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qrc:/help/preferences_general.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui_MainWindow</name>
     <message>
         <source>Phoebetria - BitFenix Recon Fan Controller</source>
@@ -291,6 +477,10 @@ The profile has not been loaded!</source>
 The profile has NOT been saved!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Phoebetria Help</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui_Preferences</name>
@@ -376,6 +566,10 @@ The profile has NOT been saved!</source>
     </message>
     <message>
         <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Channel Labels</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
