@@ -269,6 +269,7 @@ void FanChannelData::clearRpmAndTemp(void)
     m_lastTemp = temperatureNotSetValue;
     m_lastRPM = rpmNotSetValue;
     m_manualRPM = rpmNotSetValue;
+    m_alarmTemp = temperatureNotSetValue;
 
 }
 

@@ -160,7 +160,6 @@ gui_MainWindow::gui_MainWindow(QWidget *parent) :
     connectCustomSignals();
 
     initWaitForReqChannelParams();
-
 }
 
 void gui_MainWindow::initMenus(void)
