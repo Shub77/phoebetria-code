@@ -19,7 +19,9 @@
 
 #include "fancontrollerdata.h"
 #include "phoebetriaapp.h"
-#include "bfx-recon/fancontrollerio.h"
+// (c) 2018 Shub
+// #include "bfx-recon/fancontrollerio.h"
+#include "fancontrollerio.h"
 
 gui_SoftwareAutoSetup::gui_SoftwareAutoSetup(QWidget *parent) :
     QDialog(parent),

@@ -17,11 +17,14 @@
 #include "fancontrollerdata.h"
 #include "fanchanneldata.h"
 #include "phoebetriaapp.h"
-#include <cmath>
+
+// TODO: hack
+#define round(x) ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
 
 #include <QDebug>
 
-//#define SHOW_SW_WAUTO_DETAILS
+
+#define SHOW_SW_WAUTO_DETAILS
 
 FanControllerData::FanControllerState::FanControllerState() :
     m_isSet(false)
@@ -205,6 +208,7 @@ void FanControllerData::updateManualRPM(int channel, int to, bool emitSignal)
 
 void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
 {
+
     FanChannelData& cd = m_channelSettings[channel];
 
     cd.addTempAvgSample(to);
@@ -222,7 +226,7 @@ void FanControllerData::updateTempF(int channel, int to, bool emitSignal)
         int tempToUse;
         tempToUse = cd.tempAveraged_isOk() ? cd.tempAveraged() : to;
 
-        //qDebug() << "Channel" << channel << "temp:" << tempToUse;
+        // qDebug() << "Channel" << channel << "temp:" << tempToUse;
         doSoftwareAuto(channel, tempToUse);
     }
 }
@@ -587,6 +591,15 @@ int FanControllerData::toCelcius(int tempInF)
     return round((tempInF-32)*5.0/9);
 }
 
+/* it seems thre is a -10 °C delta between coretemp and displayed data. Little hack.
+   TODO: understand this topic
+       */
+
+int FanControllerData::toCelcius_ct(int tempInF)
+{
+    return (10+round((tempInF-32)*5.0/9));
+}
+
 double FanControllerData::toCelciusReal(int tempInF)
 {
     return (tempInF-32)*5.0/9;
@@ -686,7 +699,9 @@ void FanControllerData::onReset(void)
 
     emit gui_sync();
 
+#if defined QT_DEBUG
     qDebug() << "FanControllerData::onReset() called";
+#endif
 }
 
 void FanControllerData::softReset(void)

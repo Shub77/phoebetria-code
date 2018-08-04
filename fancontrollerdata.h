@@ -159,6 +159,9 @@ public:
     { return temperatureString(temperature, addScaleSymbol, m_isCelcius); }
 
     static int toCelcius(int tempInF);
+    /**/
+    static int toCelcius_ct(int tempInF);
+    /**/
     static double toCelciusReal(int tempInF);
     static int toFahrenheit(int tempInC, double errCorr = 0);
 

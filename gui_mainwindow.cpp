@@ -29,7 +29,9 @@
 #include "gui_mainwindow.h"
 #include "ui_gui_mainwindow.h"
 #include "phoebetriaapp.h"
-#include "bfx-recon/fancontrollerio.h"
+// (c) 2018 Shub
+// #include "bfx-recon/fancontrollerio.h"
+#include "fancontrollerio.h"
 #include "gui_about.h"
 #include "gui_preferences.h"
 #include "fanprofiles.h"
@@ -58,8 +60,8 @@ static const char* style_sliderOverylay_yellow =
             "SliderOverlay::add-page:vertical { border: 0px transparant; }"
             "SliderOverlay::sub-page:vertical { border: 0px transparant; }";
 
-const double gui_MainWindow::toLogScale       = log(101) / 100;
-const double gui_MainWindow::toLinearScale    = (log(101) - log(1)) / 100;
+const double gui_MainWindow::toLogScale       = log((double)101) / 100;
+const double gui_MainWindow::toLinearScale    = (log((double)101) - log((double)1)) / 100;
 
 gui_MainWindow::gui_MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -1134,7 +1136,10 @@ void gui_MainWindow::userReleasedChannelRpmSlider(int channel)
 
     if (val != fcdata().manualRPM(channel) || val == 0)
     {
+        // (c) 2018 Shub
+#ifdef QT_DEBUG
         qDebug() << "Last value:" << fcdata().manualRPM(channel) << "New:" << val;
+#endif
         fcdata().updateManualRPM(channel, val, false);
         fc->setChannelSettings(channel, fcdata().alarmTemp(channel), val);
         updateSpeedControl(channel, val, true);
@@ -1167,8 +1172,10 @@ int gui_MainWindow::rpmSliderValueToRPM(int channel, int value) const
         value = valueToLogScale(value);
 
     int rpm = fcdata().percentageToRpm(channel, value, RECON_RPM_STEPSIZE);
-
+    // (c) 2018 Shub
+#ifdef QT_DEBUG
     qDebug() << "Slider RPM:" << rpm;
+#endif
     return rpm < channelMinRPM ? 0 : rpm;
 }
 

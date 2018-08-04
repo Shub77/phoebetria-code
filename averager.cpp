@@ -21,7 +21,9 @@
 
 #include <QDebug>
 
-const int Averager::m_sampleSize = 10;
+// const int Averager::m_sampleSize = 10;
+
+const int Averager::m_sampleSize = 2;
 
 Averager::Averager() :
     m_samples(NULL),

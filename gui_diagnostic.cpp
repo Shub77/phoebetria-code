@@ -15,8 +15,9 @@ gui_Diagnostic::gui_Diagnostic(QWidget *parent) :
     m_font.setPointSize(8);
 
     initControls();
-
-    connect(ui->ctrl_saveAsPDF, SIGNAL(clicked), this, SLOT(on_ctrl_saveAsPDF_clicked(m_diagnosticReport)));
+    // (c) 2018 Shub
+    connect(ui->ctrl_saveAsPDF,SIGNAL(clicked()), this, SLOT(on_ctrl_saveAsPDF_clicked()));
+    // connect(ui->ctrl_saveAsPDF, SIGNAL(clicked), this, SLOT(on_ctrl_saveAsPDF_clicked(m_diagnosticReport)));
 
 }
 

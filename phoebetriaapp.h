@@ -17,7 +17,8 @@
 #ifndef PHOEBETRIA_APP_H
 #define PHOEBETRIA_APP_H
 
-#include "bfx-recon/fancontrollerio.h"
+// (c) 2018 Shub
+#include "fancontrollerio.h"
 
 #include <QApplication>
 #include <QTimer>

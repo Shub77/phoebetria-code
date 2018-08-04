@@ -39,6 +39,7 @@ void CloseHelper::onLastWindowClosed(void)
 
 int main(int argc, char *argv[])
 {
+
     PhoebetriaApp a(argc, argv);
     gui_MainWindow w;
     CloseHelper chelper;

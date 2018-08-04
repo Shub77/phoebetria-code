@@ -229,7 +229,7 @@ private:
 
     int valueToLogScale(int linearValue) const
     {
-        return ceil(log(linearValue+1) / toLogScale);
+        return ceil(log((double)linearValue+1) / toLogScale);
     }
 
     int valueToLinearScale(int linearValue) const
