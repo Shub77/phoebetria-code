@@ -20,7 +20,7 @@ BINDIR = $$PREFIX/bin
 DATADIR = $$PREFIX/share
 ICONDIR = $$DATADIR/icons/hicolor
 
-INSTALLS += target desktop udev icon16 icon22 icon32 icon48 icon64 icon128 icon256 pixmap
+INSTALLS += target desktop udev icon16 icon22 icon32 icon48 icon64 icon128 icon256 pixmap coretemp
 
 target.path = $${BINDIR}
 
@@ -57,6 +57,7 @@ icon512.files += Images/icons/512x512/phoebetria.png
 pixmap.path = $${DATADIR}/pixmaps
 pixmap.files += Images/icons/48x48/phoebetria.png
 
+coretemp.path = $${BINDIR}
 
 SOURCES += main.cpp \
     gui_mainwindow.cpp \
@@ -66,7 +67,6 @@ SOURCES += main.cpp \
     fancontrollerdata.cpp \
     gui_about.cpp \
     builddetails.cpp \
-    bfx-recon/fancontrollerio.cpp \
     utils.cpp \
     preferences.cpp \
     dispatcher.cpp \
@@ -95,7 +95,6 @@ HEADERS  += gui_mainwindow.h \
     fancontrollerdata.h \
     gui_about.h \
     builddetails.h \
-    bfx-recon/fancontrollerio.h \
     utils.h \
     preferences.h \
     bfx-recon/bfxrecon.h \
@@ -149,8 +148,14 @@ HEADERS += hidapi/hidapi/hidapi.h
 #-------------------------------------------------
 
 win32 {
-    SOURCES += hidapi/windows/hid.c
-    LIBS += -lsetupapi
+    SOURCES += hidapi/windows/hid.c \
+               bfx-recon/windows/fancontrollerio.cpp
+    HEADERS += coretemp/GetCoreTempInfo.h \
+               bfx-recon/windows/fancontrollerio.h
+    INCLUDEPATH += coretemp \
+    							 bfx-recon/windows
+    LIBS += coretemp\\GetCoreTempInfo.lib -lsetupapi
+    # -lGetCoreTempInfo
     RC_FILE = Windows/Phoebetria.rc
     CONFIG += exceptions rtti
 }
@@ -174,6 +179,3 @@ macx {
 }
 
 OTHER_FILES +=
-
-
-
