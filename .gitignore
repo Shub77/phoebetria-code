@@ -6,3 +6,4 @@ Makefile.Release
 *.obj
 release/*
 debug/*
+ui_gui*.h
