@@ -154,8 +154,9 @@ win32 {
                bfx-recon/windows/fancontrollerio.h
     INCLUDEPATH += coretemp \
     							 bfx-recon/windows
-    LIBS += coretemp\\GetCoreTempInfo.lib -lsetupapi
-    # -lGetCoreTempInfo
+    LIBS += -lsetupapi -lGetCoreTempInfo
+    QMAKE_LIBDIR += coretemp
+    # -lGetCoreTempInfo coretemp\\GetCoreTempInfo.lib
     RC_FILE = Windows/Phoebetria.rc
     CONFIG += exceptions rtti
 }
