@@ -1,0 +1,8 @@
+
+Makefile
+Makefile.Debug
+Makefile.Release
+*.bak
+*.obj
+release/*
+debug/*
