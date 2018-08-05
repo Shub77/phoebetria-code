@@ -23,7 +23,7 @@
 #include <QString>
 
 // (c) 2018 Shub
-#include "coretemp/GetCoreTempInfo.h"
+#include "GetCoreTempInfo.h"
 #include <cmath>
 
 // Maximum length of the command queue. Set to -1 for no max length

@@ -150,12 +150,12 @@ HEADERS += hidapi/hidapi/hidapi.h
 win32 {
     SOURCES += hidapi/windows/hid.c \
                bfx-recon/windows/fancontrollerio.cpp
-    HEADERS += coretemp/GetCoreTempInfo.h \
+    HEADERS += Windows/coretemp/GetCoreTempInfo.h \
                bfx-recon/windows/fancontrollerio.h
-    INCLUDEPATH += coretemp \
+    INCLUDEPATH += Windows/coretemp \
     							 bfx-recon/windows
     LIBS += -lsetupapi -lGetCoreTempInfo
-    QMAKE_LIBDIR += coretemp
+    QMAKE_LIBDIR += Windows\\coretemp
     # -lGetCoreTempInfo coretemp\\GetCoreTempInfo.lib
     RC_FILE = Windows/Phoebetria.rc
     CONFIG += exceptions rtti
