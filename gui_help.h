@@ -17,7 +17,9 @@ public:
     ~gui_Help();
     
 private slots:
-    void on_ctrl_helpList_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    // (c) 2018 Shub
+    void on_ctrl_helpList_currentItemChanged(QTreeWidgetItem *current);
+    // void on_ctrl_helpList_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
     void on_ctrl_close_clicked();
 

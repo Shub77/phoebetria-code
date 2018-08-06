@@ -20,7 +20,9 @@ gui_Help::~gui_Help()
     delete ui;
 }
 
-void gui_Help::on_ctrl_helpList_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+// (c) 2018 Shub
+// void gui_Help::on_ctrl_helpList_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void gui_Help::on_ctrl_helpList_currentItemChanged(QTreeWidgetItem *current)
 {
     ui->ctrl_helpBrowser->setCurrentIndex(current->text(1).toInt());
 }

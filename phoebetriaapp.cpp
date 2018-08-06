@@ -78,8 +78,9 @@ PhoebetriaApp::PhoebetriaApp(int &argc, char **argv)
 void PhoebetriaApp::commitData(QSessionManager& manager)
 {
     shutdown();
-
-    QApplication::commitData(manager);
+    // (c) 2018 Shub
+    // QApplication::commitData(manager);
+    QGuiApplication::commitDataRequest(manager);
 }
 
 

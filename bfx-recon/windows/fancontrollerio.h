@@ -226,7 +226,7 @@ public:
 
     void doSoftwareAuto(int channel, int tempF);
     void doSoftwareAutoChannel(int channel, int tempF);
-    int readCpuTemp(int probetemp, int channel);
+    int readCpuTemp(char probetemp, int channel);
 
     // Requests
 

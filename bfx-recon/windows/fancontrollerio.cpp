@@ -71,7 +71,8 @@ bool FanControllerIO::Input::set(int blockLen, const unsigned char *block)
     }
 
     m_dataLen = *block;
-    m_controlByte = (ControlByte) (*(block+1));
+    // (c) 2018 Shub
+    m_controlByte = static_cast<ControlByte> (*(block+1));
 
     if (m_controlByte == FanControllerIO::NOTSET) return false;
 
@@ -343,7 +344,7 @@ void FanControllerIO::onDispatcherSignal(EventDispatcher::TaskId taskId)
     }
 }
 
-int FanControllerIO::readCpuTemp(int probetemp, int channel)
+int FanControllerIO::readCpuTemp(char probetemp, int channel)
 {
      CoreTempProxy ctp;
      int tmp;
@@ -369,7 +370,7 @@ int FanControllerIO::readCpuTemp(int probetemp, int channel)
                  for (UINT g = 0; g < ctp.GetCoreCount(); g++)
                  {
                      index = g + (i * ctp.GetCoreCount());
-                     tmp = ctp.GetTemp(index);
+                     tmp = static_cast<int>(ctp.GetTemp(static_cast<int>(index)));
                      if (tmp > high) { high = tmp; }
                  }
              }
@@ -377,7 +378,7 @@ int FanControllerIO::readCpuTemp(int probetemp, int channel)
              if (ctp.IsFahrenheit()) {
 
 #ifdef QT_DEBUG
-                 qDebug() << "coretemp is °F " "temp:" << high;
+                 qDebug() << "coretemp is Â°F " "temp:" << high;
 #endif
 
                  //to = FanControllerData::toCelcius_ct(high);
@@ -385,11 +386,11 @@ int FanControllerIO::readCpuTemp(int probetemp, int channel)
              }
              else {
 #ifdef QT_DEBUG
-                 qDebug() << "coretemp is °C " "temp:" << high;
+                 qDebug() << "coretemp is Â°C " "temp:" << high;
 #endif
                  temp = (int) ceil( high * 9/5.0 + 32);
 #ifdef QT_DEBUG
-                 qDebug() << "coretemp is now °F " "temp:" << temp;
+                 qDebug() << "coretemp is now Â°F " "temp:" << temp;
 #endif
              }
 #ifdef QT_DEBUG
@@ -421,8 +422,8 @@ void FanControllerIO::onRawData(QByteArray rawdata)
     qDebug() << "#### Raw Data From Device:"
              << toHexString((const unsigned char*)rawdata.constData(), rawdata.length());
 #endif
-
-    inputParsed = parsedData.set(rawdata.length(), (const unsigned char*)rawdata.constData());
+    // (c) 2018 Shub
+    inputParsed = parsedData.set(rawdata.length(), reinterpret_cast<const unsigned char*> (rawdata.constData()));
 
     if (!inputParsed)
     {

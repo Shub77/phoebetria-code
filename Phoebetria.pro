@@ -9,6 +9,9 @@ QT       += core gui sql
 #Added in anticipation of QT 5
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+# (c) Shub 2018
+greaterThan(QT_MAJOR_VERSION, 4): QT += printsupport
+
 TARGET = Phoebetria
 TEMPLATE = app
 
@@ -155,7 +158,7 @@ win32 {
     INCLUDEPATH += Windows/coretemp \
     							 bfx-recon/windows
     LIBS += -lsetupapi -lGetCoreTempInfo
-    QMAKE_LIBDIR += Windows\\coretemp
+    QMAKE_LIBDIR += ..\\phoebetria-code\\Windows\\coretemp
     # -lGetCoreTempInfo coretemp\\GetCoreTempInfo.lib
     RC_FILE = Windows/Phoebetria.rc
     CONFIG += exceptions rtti
